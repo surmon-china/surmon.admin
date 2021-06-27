@@ -1,0 +1,33 @@
+@import "@/styles/init.less";
+
+.imageUploader {
+  width: 100%;
+}
+
+.uploader {
+  width: 100%;
+
+  :global(.ant-upload.ant-upload-select-picture-card) {
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  .image {
+    width: 100%;
+    min-height: 100px;
+  }
+
+  .tigger {
+    width: 100%;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .uploadText {
+    margin-top: 8px;
+  }
+}

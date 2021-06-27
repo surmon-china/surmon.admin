@@ -1,0 +1,88 @@
+@import "@/styles/init.less";
+
+.dashboard {
+  width: 100%;
+
+  .statistic {
+    width: 100%;
+    > * {
+      flex: 1;
+    }
+
+    .statisticCard {
+      user-select: none;
+
+      .icon {
+        font-size: @font-size-h1;
+        line-height: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+  .gaCard {
+    min-height: 400px;
+    position: relative;
+
+    .toolbar {
+      display: flex;
+      width: fit-content;
+
+      .toggler {
+        margin-right: 1rem;
+      }
+
+      .selector {
+        flex-grow: 1;
+        display: flex;
+
+        &.hide {
+          opacity: 0;
+          visibility: hidden;
+          transition: visibility opacity @transition-time-fast;
+        }
+
+        &.show {
+          opacity: 1;
+          visibility: visible;
+          transition: visibility opacity @transition-time-fast;
+        }
+
+        table {
+          margin-right: 1rem;
+
+          tr {
+            td {
+              &:last-child * {
+                display: block;
+                text-align: left;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .pieCharts {
+      display: flex;
+      justify-content: space-between;
+      min-height: 200px;
+
+      .chart {
+        width: calc(100% - (3rem) / 4);
+
+        &.country,
+        &.city,
+        &.browser {
+          margin-right: 1rem;
+        }
+      }
+    }
+
+    .timeline {
+      min-height: 200px;
+    }
+  }
+}

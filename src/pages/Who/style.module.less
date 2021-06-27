@@ -1,0 +1,38 @@
+@import "@/styles/init.less";
+
+.whoPage {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: @font-size-h1;
+    background-color: @module-bg;
+    user-select: none;
+    cursor: pointer;
+    &:hover {
+      background-color: @module-bg-lighter;
+    }
+  }
+
+  .input {
+    display: block;
+    width: 30rem;
+    height: 6rem;
+    padding: 2rem;
+    border-radius: @radius * 2;
+    background-color: @module-bg;
+    font-size: @font-size-h2;
+    text-align: center;
+    border: none;
+    outline: none;
+  }
+}

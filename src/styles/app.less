@@ -1,0 +1,56 @@
+// init
+@import "./init";
+
+// Ant design
+@import "./antd";
+
+// transition
+@import "./transition";
+
+// font
+@font-face {
+  font-display: swap;
+  font-family: DINRegular;
+  src: url("/fonts/DIN-Regular.ttf");
+  // CSS Unicode Range Generator https://codepen.io/elifitch/pen/Ljqway
+  // abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/.=-;',?!#@$%^&*()_+\|:"[]{}
+  unicode-range: U+21-3B, U+3D, U+3F-5F, U+61-7D;
+}
+
+// scrollbar
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: @module-bg-lighter;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 0;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background-color: rgba(@primary, 0.4);
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: @primary;
+  }
+}
+
+// global
+html {
+  background-color: @body-bg;
+}
+
+body {
+  margin: 0;
+  overflow-y: scroll;
+  font-family: "DINRegular", "PingFang SC", -apple-system, BlinkMacSystemFont,
+    "Roboto", "Century Gothic", BlinkMacSystemFont, "Segoe UI",
+    "Microsoft yahei", "微软雅黑", "Helvetica Neue", sans-serif, SimHei;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}

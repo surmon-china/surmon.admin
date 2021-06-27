@@ -1,0 +1,47 @@
+export * from './watch';
+
+// redirect all APIs from @vue/reactivity
+export {
+  computed,
+  customRef,
+  effect,
+  enableTracking,
+  isProxy,
+  isReactive,
+  isReadonly,
+  isRef,
+  ITERATE_KEY,
+  markRaw,
+  pauseTracking,
+  reactive,
+  readonly,
+  ref,
+  resetTracking,
+  shallowReactive,
+  shallowReadonly,
+  shallowRef,
+  stop,
+  toRaw,
+  toRef,
+  toRefs,
+  track,
+  trigger,
+  triggerRef,
+  unref,
+} from '@vue/reactivity';
+
+export type {
+  ComputedGetter,
+  ComputedRef,
+  ComputedSetter,
+  DebuggerEvent,
+  DeepReadonly,
+  ReactiveEffect,
+  ReactiveEffectOptions,
+  Ref,
+  RefUnwrapBailTypes,
+  ToRefs,
+  UnwrapRef,
+  WritableComputedOptions,
+  WritableComputedRef,
+} from '@vue/reactivity';
