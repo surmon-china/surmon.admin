@@ -5,12 +5,7 @@ import { PlusOutlined, LoadingOutlined, FileImageOutlined } from '@ant-design/ic
 import moment from 'moment';
 import * as OSS from 'ali-oss';
 
-import {
-  STATIC_URL,
-  ALIYUN_OSS_REGION,
-  ALIYUN_OSS_BUCKET,
-  APP_CONTENT_SPACE_SIZE,
-} from '@/config';
+import { STATIC_URL, ALIYUN_OSS_REGION, ALIYUN_OSS_BUCKET } from '@/config';
 import { useLoading } from '@/services/loading';
 import { getOSSUpToken, AliYunOSSUpToken } from '@/store/system';
 import styles from './style.module.less';
@@ -119,11 +114,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
   });
 
   return (
-    <Space
-      size={APP_CONTENT_SPACE_SIZE}
-      direction="vertical"
-      className={styles.imageUploader}
-    >
+    <Space direction="vertical" className={styles.imageUploader}>
       <Upload
         name="file"
         listType="picture-card"

@@ -3,6 +3,8 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import { SizeType } from 'antd/lib/config-provider/SizeContext';
+
 export const APP_TITLE = 'Surmon.me';
 export const BLOG_HOST = '//surmon.me';
 export const BLOG_SITE = `https:${BLOG_HOST}`;
@@ -16,8 +18,8 @@ export const GITHUB_REPO_URL = 'https://github.com/surmon-china/veact-admin';
 export const APP_AUTH_HEADER_KEY = 'Authorization';
 export const APP_SIDER_WIDTH = 180;
 export const APP_SIDER_COLLAPSED_WIDTH = 80;
-export const APP_LAYOUT_SPACE_SIZE = 'large';
-export const APP_CONTENT_SPACE_SIZE = 'middle';
+export const APP_LAYOUT_SPACE_SIZE: SizeType = 'large';
+export const APP_CONTENT_SPACE_SIZE: SizeType = 'middle';
 export const APP_COLORS = Object.freeze({
   primary: '#177ddc',
   error: '#ff4d4f',

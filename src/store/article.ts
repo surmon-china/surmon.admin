@@ -5,16 +5,24 @@
  */
 
 import http from '@/services/http';
-import { Article, ArticleId } from '@/constants/article';
 import { PublishState } from '@/constants/publish-state';
+import { SortType } from '@/constants/general-state';
+import { ArticleId, Article } from '@/constants/article';
+import { ArticleOrigin } from '@/constants/article/origin';
+import { ArticlePublic } from '@/constants/article/public';
 import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request';
 
 export const ARTICLE_API_PATH = '/article';
 
 /** 获取文章参数 */
 export interface GetArticleParams extends GeneralGetPageParams {
-  /** 搜索关键词 */
   keyword?: string;
+  tag?: string;
+  category?: string;
+  sort?: SortType;
+  state?: PublishState;
+  public?: ArticlePublic;
+  origin?: ArticleOrigin;
 }
 /** 获取文章列表 */
 export function getArticles(params: GetArticleParams = {}) {
@@ -47,15 +55,15 @@ export function putArticle(article: Article) {
 }
 
 /** 批量修改文章状态 */
-export function patchArticlesState(articleIds: ArticleId[], state: PublishState): void {
-  http
+export function patchArticlesState(articleIds: ArticleId[], state: PublishState) {
+  return http
     .patch(ARTICLE_API_PATH, { article_ids: articleIds, state })
     .then((response) => response.result);
 }
 
 /** 批量删除文章 */
-export function delArticles(articleIds: ArticleId[]) {
-  http
+export function deleteArticles(articleIds: ArticleId[]) {
+  return http
     .delete(ARTICLE_API_PATH, { data: { article_ids: articleIds } })
     .then((response) => response.result);
 }

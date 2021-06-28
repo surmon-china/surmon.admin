@@ -9,7 +9,6 @@ import {
   ReloadOutlined,
 } from '@ant-design/icons';
 
-import { APP_CONTENT_SPACE_SIZE } from '@/config';
 import {
   getCategoriesAntdTreeByTree,
   CategoryTree,
@@ -117,17 +116,22 @@ export const CategoryPage: React.FC = () => {
 
   return (
     <Card
-      title={`分类列表（${categories.pagination?.total || '-'}）`}
+      title={`分类列表（${categories.pagination?.total ?? '-'}）`}
       bordered={false}
       className={styles.category}
       extra={
-        <Button type="primary" icon={<PlusOutlined />} onClick={createNewData}>
+        <Button
+          type="primary"
+          size="small"
+          icon={<PlusOutlined />}
+          onClick={createNewData}
+        >
           创建新分类
         </Button>
       }
     >
       <Space className={styles.toolbar}>
-        <Space size={APP_CONTENT_SPACE_SIZE}>
+        <Space>
           <Button
             icon={<ReloadOutlined />}
             loading={loading.state.value}

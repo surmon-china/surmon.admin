@@ -26,7 +26,6 @@ import {
   ReloadOutlined,
 } from '@ant-design/icons';
 
-import { APP_CONTENT_SPACE_SIZE } from '@/config';
 import { DropdownMenu } from '@/components/common/DropdownMenu';
 import {
   getAnnouncements,
@@ -172,17 +171,22 @@ export const AnnouncementPage: React.FC = () => {
 
   return (
     <Card
-      title={`公告列表（${announcement.pagination?.total || '-'}）`}
+      title={`公告列表（${announcement.pagination?.total ?? '-'}）`}
       bordered={false}
       className={styles.announcement}
       extra={
-        <Button type="primary" icon={<PlusOutlined />} onClick={createNewData}>
+        <Button
+          type="primary"
+          size="small"
+          icon={<PlusOutlined />}
+          onClick={createNewData}
+        >
           发布新公告
         </Button>
       }
     >
       <Space align="center" className={styles.toolbar}>
-        <Space size={APP_CONTENT_SPACE_SIZE}>
+        <Space>
           <Select
             className={styles.selec}
             loading={loading.state.value}

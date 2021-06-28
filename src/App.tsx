@@ -13,10 +13,12 @@ import { NotFoundPage } from './pages/NotFound';
 import { DashboardPage } from './pages/Dashboard';
 import { AnnouncementPage } from './pages/Announcement';
 import { CategoryPage } from './pages/Category';
-import { CommentPage } from './pages/Comment';
-import { ProfilePage } from './pages/Profile';
-import { ArticleTest } from './pages/Article/Form';
 import { TagPage } from './pages/Tag';
+import { CommentPage } from './pages/Comment';
+import { ArticleList } from './pages/Article/List';
+import { ArticleEdit } from './pages/Article/Edit';
+import { ArticleCreate } from './pages/Article/Create';
+import { ProfilePage } from './pages/Profile';
 
 export const App: React.FC = () => {
   onMounted(() => {
@@ -56,14 +58,13 @@ export const App: React.FC = () => {
                   <Route path={rc(RouteKey.Article).path}>
                     <Switch>
                       <Route path={rc(RouteKey.ArticlePost).path} exact>
-                        <span>新撰文章</span>
-                        <ArticleTest />
-                      </Route>
-                      <Route path={rc(RouteKey.ArticleList).path} exact>
-                        <span>文章列表</span>
+                        <ArticleCreate />
                       </Route>
                       <Route path={rc(RouteKey.ArticleEdit).path} exact>
-                        <span>文章详情</span>
+                        <ArticleEdit />
+                      </Route>
+                      <Route path={rc(RouteKey.ArticleList).path} exact>
+                        <ArticleList />
                       </Route>
                       <Redirect to={rc(RouteKey.ArticleList).path} />
                     </Switch>

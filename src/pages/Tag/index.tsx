@@ -15,7 +15,6 @@ import {
   ReloadOutlined,
 } from '@ant-design/icons';
 
-import { APP_CONTENT_SPACE_SIZE } from '@/config';
 import { DropdownMenu } from '@/components/common/DropdownMenu';
 import {
   getTags,
@@ -147,17 +146,22 @@ export const TagPage: React.FC = () => {
 
   return (
     <Card
-      title={`标签列表（${tag.pagination?.total || '-'}）`}
+      title={`标签列表（${tag.pagination?.total ?? '-'}）`}
       bordered={false}
       className={styles.tag}
       extra={
-        <Button type="primary" icon={<PlusOutlined />} onClick={createNewData}>
+        <Button
+          type="primary"
+          size="small"
+          icon={<PlusOutlined />}
+          onClick={createNewData}
+        >
           创建新标签
         </Button>
       }
     >
       <Space className={styles.toolbar}>
-        <Space size={APP_CONTENT_SPACE_SIZE}>
+        <Space>
           <Input.Search
             className={styles.search}
             placeholder="输入关键词搜索"

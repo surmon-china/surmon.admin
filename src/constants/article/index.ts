@@ -4,24 +4,12 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { DataExtends } from './general-state';
-import { PublishState } from './publish-state';
-import { Tag } from './tag';
-import { Category } from './category';
-
-/** 文章来源 */
-export enum ArticleOrigin {
-  Original = 0, // 原创
-  Reprint = 1, // 转载
-  Hybrid = 2, // 混合
-}
-
-/** 文章公开状态 */
-export enum ArticlePublic {
-  Password = 0, // 需要密码
-  Public = 1, // 公开状态
-  Secret = -1, // 私密
-}
+import { DataExtends } from '../general-state';
+import { PublishState } from '../publish-state';
+import { Tag } from '../tag';
+import { Category } from '../category';
+import { ArticleOrigin } from './origin';
+import { ArticlePublic } from './public';
 
 export type ArticleId = string | number;
 

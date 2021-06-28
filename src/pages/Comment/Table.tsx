@@ -10,7 +10,6 @@ import {
 } from '@ant-design/icons';
 import { Pagination } from '@/constants/request';
 import { Comment as CommentType, CommentState, cs } from '@/constants/comment';
-import { APP_CONTENT_SPACE_SIZE } from '@/config';
 import { parseBrowser, parseOS } from '@/transformers/ua';
 import { stringToYMD } from '@/transformers/date';
 import { getGravatar } from '@/transformers/gravatar';
@@ -96,7 +95,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
           dataIndex: 'author',
           render(_, comment) {
             return (
-              <Space direction="vertical" size={APP_CONTENT_SPACE_SIZE}>
+              <Space direction="vertical">
                 <span>
                   头像：
                   <Avatar
@@ -137,7 +136,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
           dataIndex: 'agent',
           render(_, comment) {
             return (
-              <Space direction="vertical" size={APP_CONTENT_SPACE_SIZE}>
+              <Space direction="vertical">
                 <span>
                   IP：
                   <Typography.Text copyable={true}>{comment.ip || '-'}</Typography.Text>
@@ -178,7 +177,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
           render: (_, comment) => {
             const state = cs(comment.state);
             return (
-              <Space direction="vertical" size={APP_CONTENT_SPACE_SIZE}>
+              <Space direction="vertical">
                 <Tag
                   icon={<HeartOutlined />}
                   color={comment.likes > 0 ? 'magenta' : undefined}
@@ -197,7 +196,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
           width: 110,
           dataIndex: 'actions',
           render: (_, comment, index) => (
-            <Space direction="vertical" size={APP_CONTENT_SPACE_SIZE}>
+            <Space direction="vertical">
               <Button
                 size="small"
                 type="text"

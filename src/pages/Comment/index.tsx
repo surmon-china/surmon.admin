@@ -19,7 +19,6 @@ import {
 import _ from 'lodash';
 import classnames from 'classnames';
 
-import { APP_CONTENT_SPACE_SIZE } from '@/config';
 import { DropdownMenu } from '@/components/common/DropdownMenu';
 import {
   getComments,
@@ -179,14 +178,15 @@ export const CommentPage: React.FC = () => {
 
   return (
     <Card
-      title={`评论列表（${comment.pagination?.total || '-'}）`}
+      title={`评论列表（${comment.pagination?.total ?? '-'}）`}
       bordered={false}
       className={styles.comment}
       extra={
         <Button
           type="primary"
-          icon={<RocketOutlined />}
+          size="small"
           target="_blank"
+          icon={<RocketOutlined />}
           href={getFEGuestbookPath()}
         >
           去留言板
@@ -194,7 +194,7 @@ export const CommentPage: React.FC = () => {
       }
     >
       <Space align="center" className={styles.toolbar}>
-        <Space size={APP_CONTENT_SPACE_SIZE}>
+        <Space>
           <Select
             className={classnames(styles.select, styles.type)}
             loading={loading.state.value}

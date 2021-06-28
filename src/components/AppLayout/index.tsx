@@ -26,7 +26,7 @@ export const AppLayout: React.FC = (props) => {
   });
 
   return (
-    <ConfigProvider locale={zhCN}>
+    <ConfigProvider locale={zhCN} space={{ size: CONFIG.APP_CONTENT_SPACE_SIZE }}>
       <Layout id="app-layout" className={styles.appLayout}>
         <Layout.Sider
           trigger={null}

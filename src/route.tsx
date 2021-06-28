@@ -9,7 +9,7 @@ import {
   DashboardOutlined,
   BulbOutlined,
   SettingOutlined,
-  TagOutlined,
+  TagsOutlined,
   FolderOpenOutlined,
   EditOutlined,
   CoffeeOutlined,
@@ -73,7 +73,7 @@ export const routeMap: ReadonlyMap<RouteKey, RouteConfig> = new Map(
       id: RouteKey.Tag,
       name: '标签管理',
       path: '/tag',
-      icon: <TagOutlined />,
+      icon: <TagsOutlined />,
     },
     {
       id: RouteKey.Comment,
