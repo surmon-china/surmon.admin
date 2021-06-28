@@ -23,8 +23,6 @@ import { PublishState, ps } from '@/constants/publish-state';
 import { stringToYMD } from '@/transformers/date';
 import { getFEArticleUrl } from '@/transformers/url';
 
-import styles from './style.module.less';
-
 export interface ArticleListTableProps {
   loading: boolean;
   data: Array<Article>;
@@ -59,26 +57,34 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
         },
         {
           title: '文章',
-          width: 300,
+          width: 360,
           dataIndex: 'content',
           render: (_, comment) => (
             <Card
               size="small"
               bordered={false}
-              cover={
-                <img
-                  alt="example"
-                  // src={comment.thumb}
-                  src="/images/profile/article-thumb.jpg"
-                />
-              }
+              bodyStyle={{
+                minHeight: '100px',
+                backdropFilter: 'blur(2px)',
+              }}
+              style={{
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                minHeight: '100px',
+                backgroundImage: `url(${comment.thumb})`,
+                // backgroundImage: `url(/images/profile/article-thumb.jpg)`,
+              }}
             >
               <Card.Meta
-                title={comment.title}
+                title={
+                  <Typography.Title style={{ marginTop: '10px' }} level={5}>
+                    {comment.title}
+                  </Typography.Title>
+                }
                 description={
                   <Typography.Paragraph
-                    className={styles.content}
-                    ellipsis={{ rows: 2, expandable: true }}
+                    type="secondary"
+                    ellipsis={{ rows: 3, expandable: true }}
                   >
                     {comment.description}
                   </Typography.Paragraph>
@@ -116,15 +122,15 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           render(_, article) {
             return (
               <Space direction="vertical">
-                <Space>
+                <Space size="small">
                   <EyeOutlined />
                   浏览 {article.meta?.views} 次
                 </Space>
-                <Space>
+                <Space size="small">
                   <HeartOutlined />
                   喜欢 {article.meta?.likes} 次
                 </Space>
-                <Space>
+                <Space size="small">
                   <CommentOutlined />
                   评论 {article.meta?.comments} 条
                 </Space>
