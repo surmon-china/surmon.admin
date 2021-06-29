@@ -77,10 +77,11 @@ export const CategoryPage: React.FC = () => {
       title: `确定要删除分类 “${category.name}” 吗？`,
       content: '删除后不可恢复',
       centered: true,
-      onOk: () =>
-        deleteCategory(category._id!).then(() => {
+      onOk: () => {
+        return deleteCategory(category._id!).then(() => {
           refreshData();
-        }),
+        });
+      },
     });
   };
 

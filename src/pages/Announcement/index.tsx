@@ -39,6 +39,7 @@ import { Announcement as AnnouncementType } from '@/constants/announcement';
 import { ResponsePaginationData } from '@/constants/request';
 import { PublishState, ps } from '@/constants/publish-state';
 import { useLoading } from '@/services/loading';
+import { scrollTo } from '@/services/scroller';
 import { stringToYMD } from '@/transformers/date';
 import { EditModal } from './EditModal';
 import styles from './style.module.less';
@@ -88,16 +89,16 @@ export const AnnouncementPage: React.FC = () => {
   };
 
   const fetchData = (params?: GetAnnouncementsParams) => {
-    const getParams = { ...params };
-    if (filterParams.state !== SELECT_ALL_VALUE) {
-      getParams.state = filterParams.state;
-    }
-    if (!!filterParams.keyword) {
-      getParams.keyword = filterParams.keyword;
-    }
+    const getParams: GetAnnouncementsParams = {
+      ...params,
+      state: filterParams.state !== SELECT_ALL_VALUE ? filterParams.state : undefined,
+      keyword: Boolean(filterParams.keyword) ? filterParams.keyword : undefined,
+    };
+
     loading.promise(getAnnouncements(getParams)).then((response) => {
       announcement.data = response.data;
       announcement.pagination = response.pagination;
+      scrollTo(document.body);
     });
   };
 

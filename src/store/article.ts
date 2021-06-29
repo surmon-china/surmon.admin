@@ -50,7 +50,7 @@ export function createArticle(article: Article) {
 /** 修改文章 */
 export function putArticle(article: Article) {
   return http
-    .put<Article>(`${ARTICLE_API_PATH}/${article.id}`, article)
+    .put<Article>(`${ARTICLE_API_PATH}/${article._id}`, article)
     .then((response) => response.result);
 }
 

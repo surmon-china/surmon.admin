@@ -11,7 +11,7 @@ export const FormDataExtend: React.FC<FormDataExtendProps> = (props) => {
   return (
     <Form.List name={props.fieldName}>
       {(extendsData, { add, remove }) => (
-        <>
+        <div>
           {extendsData.map((extend, index) => (
             <Space size="middle" key={index} className={styles.inputGroup}>
               <Form.Item
@@ -40,12 +40,15 @@ export const FormDataExtend: React.FC<FormDataExtendProps> = (props) => {
               />
             </Space>
           ))}
-          <Form.Item>
-            <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-              增加扩展
-            </Button>
-          </Form.Item>
-        </>
+          <Button
+            type="dashed"
+            block={true}
+            icon={<PlusOutlined />}
+            onClick={() => add()}
+          >
+            增加扩展
+          </Button>
+        </div>
       )}
     </Form.List>
   );

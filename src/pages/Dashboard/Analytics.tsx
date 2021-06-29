@@ -4,7 +4,7 @@ import { StockOutlined, MehOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import { useRef, onMounted } from '@/veact';
 
-import { APP_COLORS } from '@/config';
+import { APP_COLOR_PRIMARY } from '@/config';
 import { getGAToken } from '@/store/system';
 import { useLoading } from '@/services/loading';
 import storage from '@/services/storage';
@@ -24,7 +24,7 @@ const GOOGLE_CHART_ID_MAP = {
 
 const GOOGLE_CHART_BG_OPACITY = 0.05;
 const GOOGLE_CHART_COLORS = [
-  APP_COLORS.primary,
+  APP_COLOR_PRIMARY,
   '#2fc32f',
   '#b0dc0b',
   '#eab404',

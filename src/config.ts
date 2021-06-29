@@ -18,15 +18,10 @@ export const GITHUB_REPO_URL = 'https://github.com/surmon-china/veact-admin';
 export const APP_AUTH_HEADER_KEY = 'Authorization';
 export const APP_SIDER_WIDTH = 180;
 export const APP_SIDER_COLLAPSED_WIDTH = 80;
+export const APP_LAYOUT_GUTTER_SIZE = 24;
 export const APP_LAYOUT_SPACE_SIZE: SizeType = 'large';
 export const APP_CONTENT_SPACE_SIZE: SizeType = 'middle';
-export const APP_COLORS = Object.freeze({
-  primary: '#177ddc',
-  error: '#ff4d4f',
-  warning: '#faad14',
-  success: '#52c41a',
-  info: '#1890ff',
-});
+export const APP_COLOR_PRIMARY = '#177ddc';
 
 export enum Environment {
   Development = 'development',

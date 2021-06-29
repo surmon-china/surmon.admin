@@ -24,9 +24,10 @@ import {
   putTag,
   createTag,
 } from '@/store/tag';
-import { Tag as TagType } from '@/constants/tag';
+import { Tag } from '@/constants/tag';
 import { ResponsePaginationData } from '@/constants/request';
 import { useLoading } from '@/services/loading';
+import { scrollTo } from '@/services/scroller';
 import { getFETagPath } from '@/transformers/url';
 import { EditModal } from './EditModal';
 
@@ -35,7 +36,7 @@ import styles from './style.module.less';
 export const TagPage: React.FC = () => {
   const loading = useLoading();
   const submitting = useLoading();
-  const tag = useShallowReactive<ResponsePaginationData<TagType>>({
+  const tag = useShallowReactive<ResponsePaginationData<Tag>>({
     data: [],
     pagination: undefined,
   });
@@ -76,9 +77,11 @@ export const TagPage: React.FC = () => {
     if (!!filterParams.keyword) {
       getParams.keyword = filterParams.keyword;
     }
+
     loading.promise(getTags(getParams)).then((response) => {
       tag.data = response.data;
       tag.pagination = response.pagination;
+      scrollTo(document.body);
     });
   };
 
@@ -94,7 +97,7 @@ export const TagPage: React.FC = () => {
     }
   };
 
-  const handleDelete = (tag: TagType) => {
+  const handleDelete = (tag: Tag) => {
     Modal.confirm({
       title: `确定要删除标签 “${tag.name}” 吗？`,
       content: '删除后不可恢复',
@@ -119,7 +122,7 @@ export const TagPage: React.FC = () => {
     });
   };
 
-  const handleSubmit = (tag: TagType) => {
+  const handleSubmit = (tag: Tag) => {
     if (activeEditData.value) {
       submitting
         .promise(
@@ -197,7 +200,7 @@ export const TagPage: React.FC = () => {
       </Space>
       <Divider />
       <Spin spinning={loading.state.value}>
-        <Table<TagType>
+        <Table<Tag>
           rowKey="_id"
           dataSource={tag.data}
           rowSelection={{

@@ -89,9 +89,9 @@ export const ArticleList: React.FC = () => {
       }
     });
 
-    loading.promise(getArticles(getParams)).then((response) => {
-      article.data = response.data;
-      article.pagination = response.pagination;
+    loading.promise(getArticles(getParams)).then((result) => {
+      article.data = result.data;
+      article.pagination = result.pagination;
       scrollTo(document.body);
     });
   };
@@ -99,12 +99,10 @@ export const ArticleList: React.FC = () => {
   const refreshData = (reset: boolean = false) => {
     if (reset) {
       serarchKeyword.value = '';
-      filterParams.sort = DEFAULT_FILTER_PARAMS.sort;
-      filterParams.tag = DEFAULT_FILTER_PARAMS.tag;
-      filterParams.category = DEFAULT_FILTER_PARAMS.category;
-      filterParams.public = DEFAULT_FILTER_PARAMS.public;
-      filterParams.origin = DEFAULT_FILTER_PARAMS.origin;
-      filterParams.state = DEFAULT_FILTER_PARAMS.state;
+      Object.keys(DEFAULT_FILTER_PARAMS).forEach((paramKey) => {
+        // @ts-ignore
+        filterParams[paramKey] = Reflect.get(DEFAULT_FILTER_PARAMS, paramKey);
+      });
       fetchData();
     } else {
       fetchData({

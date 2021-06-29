@@ -68,6 +68,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 backdropFilter: 'blur(2px)',
               }}
               style={{
+                margin: '1rem 0',
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
                 minHeight: '100px',
@@ -77,14 +78,15 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
             >
               <Card.Meta
                 title={
-                  <Typography.Title style={{ marginTop: '10px' }} level={5}>
+                  <Typography.Title style={{ marginTop: '5px' }} level={5}>
                     {comment.title}
                   </Typography.Title>
                 }
                 description={
                   <Typography.Paragraph
                     type="secondary"
-                    ellipsis={{ rows: 3, expandable: true }}
+                    style={{ marginBottom: '5px' }}
+                    ellipsis={{ rows: 2, expandable: true }}
                   >
                     {comment.description}
                   </Typography.Paragraph>
@@ -101,14 +103,16 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
             return (
               <Space direction="vertical">
                 {article.category.map((category) => (
-                  <Space>
+                  <Space size="small" key={category._id}>
                     <FolderOpenOutlined />
                     {category.name}
                   </Space>
                 ))}
                 <Space size="small" wrap={true}>
                   {article.tag.map((tag) => (
-                    <Tag icon={<TagOutlined />}>{tag.name}</Tag>
+                    <Tag icon={<TagOutlined />} key={tag._id}>
+                      {tag.name}
+                    </Tag>
                   ))}
                 </Space>
               </Space>
@@ -162,7 +166,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
             return (
               <Space direction="vertical">
                 {[_state, _public, _origin].map((s) => (
-                  <Tag icon={s.icon} color={s.color}>
+                  <Tag icon={s.icon} color={s.color} key={s.id}>
                     {s.name}
                   </Tag>
                 ))}
@@ -192,20 +196,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                   <Typography.Text type="success">直接发布</Typography.Text>
                 </Button>
               )}
-              {[PublishState.Published, PublishState.Recycle].includes(
-                article.state
-              ) && (
-                <Button
-                  size="small"
-                  type="text"
-                  block={true}
-                  icon={<RollbackOutlined />}
-                  onClick={() => props.onUpdateState(article, PublishState.Draft)}
-                >
-                  <Typography.Text type="warning">退至草稿</Typography.Text>
-                </Button>
-              )}
-              {article.state !== PublishState.Recycle && (
+              {article.state === PublishState.Published && (
                 <Button
                   size="small"
                   type="text"
@@ -215,6 +206,17 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                   onClick={() => props.onUpdateState(article, PublishState.Recycle)}
                 >
                   移回收站
+                </Button>
+              )}
+              {article.state === PublishState.Recycle && (
+                <Button
+                  size="small"
+                  type="text"
+                  block={true}
+                  icon={<RollbackOutlined />}
+                  onClick={() => props.onUpdateState(article, PublishState.Draft)}
+                >
+                  <Typography.Text type="warning">退至草稿</Typography.Text>
                 </Button>
               )}
               <Button

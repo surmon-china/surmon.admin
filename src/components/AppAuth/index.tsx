@@ -38,7 +38,7 @@ export const AppAuth: React.FC = (props) => {
     console.info(`Token 自动续约正在工作，Token 将在 ${seconds}s 后自动更新！`);
     renewalTimer = window.setTimeout(() => {
       renewalToken().then((auth) => {
-        setToken(auth.result.access_token, auth.result.expires_in);
+        setToken(auth.access_token, auth.expires_in);
         runRenewalToken();
       });
     }, seconds * 1000);

@@ -84,11 +84,11 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
           icon={rc(RouteKey.Article).icon}
           title={rc(RouteKey.Article).name}
         >
-          <Menu.Item key={rc(RouteKey.ArticlePost).path}>
-            {rc(RouteKey.ArticlePost).name}
-          </Menu.Item>
           <Menu.Item key={rc(RouteKey.ArticleList).path}>
             {rc(RouteKey.ArticleList).name}
+          </Menu.Item>
+          <Menu.Item key={rc(RouteKey.ArticlePost).path}>
+            {rc(RouteKey.ArticlePost).name}
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.Item key={rc(RouteKey.Profile).path} icon={rc(RouteKey.Profile).icon}>
