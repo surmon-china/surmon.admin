@@ -1,7 +1,13 @@
 import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Modal, Button, Space, Badge } from 'antd';
-import { DeleteOutlined, CommentOutlined, RocketOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  CommentOutlined,
+  RocketOutlined,
+  HeartOutlined,
+  EyeOutlined,
+} from '@ant-design/icons';
 import { useRef, onMounted } from '@/veact';
 import { RouteKey, rc } from '@/route';
 import { Article } from '@/constants/article';
@@ -38,11 +44,13 @@ export const ArticleEdit: React.FC = () => {
 
   // Comment
   const commentLoading = useLoading();
+  const commentCount = useRef<number>(0);
   const comments = useRef<Array<CommentTree>>([]);
   const fetchComments = (articleId: number) => {
     commentLoading
       .promise(getComments({ per_page: 999, sort: SortType.Asc, post_id: articleId }))
       .then((result) => {
+        commentCount.value = result.pagination?.total!;
         comments.value = result.tree;
       });
   };
@@ -102,7 +110,7 @@ export const ArticleEdit: React.FC = () => {
             >
               删除文章
             </Button>
-            <Badge count={article.value?.meta?.comments}>
+            <Badge count={commentCount.value}>
               <Button
                 type="ghost"
                 size="small"
@@ -113,13 +121,20 @@ export const ArticleEdit: React.FC = () => {
                 文章评论
               </Button>
             </Badge>
-            <Button
-              size="small"
-              type="primary"
-              icon={<RocketOutlined />}
-              target="_blank"
-              href={getFEArticleUrl(article.value?.id!)}
-            />
+            <Button.Group>
+              <Button size="small" icon={<HeartOutlined />} disabled={true}>
+                {article.value?.meta?.likes} 喜欢
+              </Button>
+              <Button size="small" icon={<EyeOutlined />} disabled={true}>
+                {article.value?.meta?.views} 阅读
+              </Button>
+              <Button
+                size="small"
+                icon={<RocketOutlined />}
+                target="_blank"
+                href={getFEArticleUrl(article.value?.id!)}
+              />
+            </Button.Group>
           </Space>
         }
         article={article}
@@ -130,6 +145,7 @@ export const ArticleEdit: React.FC = () => {
       <ArticleComment
         visible={isVisibleCommentModal.value}
         loading={commentLoading.state.value}
+        count={commentCount.value}
         comments={comments.value}
         onClose={closeCommentModal}
         onManage={handleManageComment}

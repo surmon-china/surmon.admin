@@ -81,17 +81,18 @@ const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
 export interface ArticleCommentProps {
   visible: boolean;
   loading: boolean;
+  count: number;
   comments: Array<CommentTree>;
   onClose(): void;
   onRefresh(): void;
   onManage(): void;
 }
 export const ArticleComment: React.FC<ArticleCommentProps> = (props) => {
-  const { visible, loading, comments } = props;
+  const { visible, loading, count, comments } = props;
   return (
     <Drawer
       width="48rem"
-      title={`文章评论（${comments.length ?? '-'}）`}
+      title={`文章评论（${count ?? '-'}）`}
       visible={visible}
       onClose={props.onClose}
       footer={
@@ -117,7 +118,7 @@ export const ArticleComment: React.FC<ArticleCommentProps> = (props) => {
       }
     >
       <Spin spinning={loading}>
-        {!comments.length ? (
+        {!count ? (
           <Empty description="无数据" />
         ) : (
           <CommentTreeList comments={comments} />
