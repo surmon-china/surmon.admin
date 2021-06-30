@@ -13,7 +13,6 @@ import {
   RollbackOutlined,
   LinkOutlined,
 } from '@ant-design/icons';
-
 import { RouteKey, rc } from '@/route';
 import { Pagination } from '@/constants/request';
 import { Article } from '@/constants/article';
@@ -97,7 +96,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
         },
         {
           title: '归类',
-          width: 180,
+          width: 130,
           dataIndex: 'create_at',
           render(_, article) {
             return (

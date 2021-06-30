@@ -3,13 +3,8 @@ import { useRef, onMounted } from '@/veact';
 import { Spin, Button, Form, Tree, Typography, Divider, Space } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { ReloadOutlined } from '@ant-design/icons';
-
 import { useLoading } from '@/services/loading';
-import {
-  getCategories,
-  CategoryTree,
-  getCategoriesAntdTreeByTree,
-} from '@/store/category';
+import { getCategories, CategoryTree, getAntdTreeByTree } from '@/store/category';
 import { CategoryFormModel } from '.';
 
 import styles from './style.module.less';
@@ -33,31 +28,35 @@ const CategorySelect: React.FC<TagSelectProps> = (props) => {
 
   return (
     <Spin spinning={categoriesLoading.state.value}>
-      <Tree
-        className={styles.categorySelect}
-        showLine={true}
-        showIcon={true}
-        checkable={true}
-        blockNode={true}
-        defaultExpandAll={true}
-        checkStrictly={true}
-        checkedKeys={props.value}
-        onCheck={(data) => {
-          const ids = Array.isArray(data) ? data : data.checked;
-          props.onChange?.(ids as string[]);
-        }}
-        treeData={getCategoriesAntdTreeByTree(categories.value)}
-        titleRender={(nodeData) => {
-          const category: CategoryTree = (nodeData as any).data;
-          return (
-            <Space size="small">
-              <Typography.Text strong={true}>{category.name}</Typography.Text>
-              <Divider type="vertical" />
-              {category.slug}
-            </Space>
-          );
-        }}
-      />
+      {!categories.value.length ? (
+        <Typography.Text type="secondary">无分类</Typography.Text>
+      ) : (
+        <Tree
+          className={styles.categorySelect}
+          showLine={true}
+          showIcon={true}
+          checkable={true}
+          blockNode={true}
+          defaultExpandAll={true}
+          checkStrictly={true}
+          checkedKeys={props.value}
+          onCheck={(data) => {
+            const ids = Array.isArray(data) ? data : data.checked;
+            props.onChange?.(ids as string[]);
+          }}
+          treeData={getAntdTreeByTree(categories.value)}
+          titleRender={(nodeData) => {
+            const category: CategoryTree = (nodeData as any).data;
+            return (
+              <Space size="small">
+                <Typography.Text strong={true}>{category.name}</Typography.Text>
+                <Divider type="vertical" />
+                {category.slug}
+              </Space>
+            );
+          }}
+        />
+      )}
       <Divider />
       <Button
         size="small"

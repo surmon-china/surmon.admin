@@ -1,6 +1,5 @@
 /**
  * @file Category store
- * @module store.category
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -35,7 +34,7 @@ export function getCategories(params: GeneralGetPageParams = {}) {
 }
 
 /** 获取符合 Antd 的分类树 */
-export function getCategoriesAntdTreeByTree(
+export function getAntdTreeByTree(
   tree: Array<CategoryTree>,
   currentCategoryId?: string
 ) {

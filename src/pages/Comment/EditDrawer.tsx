@@ -72,11 +72,9 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
         form.setFieldsValue(targetComment || {});
         if (targetComment) {
           if (!!targetComment.pid) {
-            console.log('-----fetchParentComment', targetComment);
             fetchParentComment(targetComment.pid!);
           }
           if (targetComment.post_id !== COMMENT_GUESTBOOK_ID) {
-            console.log('-----fetchArticle', targetComment);
             fetchArticle(targetComment.post_id);
           }
         }

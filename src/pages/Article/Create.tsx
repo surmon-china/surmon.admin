@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-
 import { RouteKey, rc } from '@/route';
 import { Article } from '@/constants/article';
 import { useLoading } from '@/services/loading';

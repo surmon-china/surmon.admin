@@ -1,15 +1,18 @@
 /**
  * @file Comment store
- * @module store.comment
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import { arrayToTree } from 'performant-array-to-tree';
 import http from '@/services/http';
 import { SortType } from '@/constants/general-state';
 import { Comment, CommentState } from '@/constants/comment';
 import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request';
 
 export const COMMENT_API_PATH = '/comment';
+export interface CommentTree extends Comment {
+  children?: Array<CommentTree>;
+}
 
 /** 获取评论参数 */
 export interface GetCommentsParams extends GeneralGetPageParams {
@@ -22,7 +25,18 @@ export interface GetCommentsParams extends GeneralGetPageParams {
 export function getComments(params: GetCommentsParams = {}) {
   return http
     .get<ResponsePaginationData<Comment>>(COMMENT_API_PATH, { params })
-    .then((response) => response.result);
+    .then((response) => ({
+      ...response.result,
+      tree: arrayToTree(response.result.data, {
+        id: 'id',
+        parentId: 'pid',
+        childrenField: 'children',
+        dataField: null,
+        rootParentIds: {
+          0: true,
+        },
+      }) as Array<CommentTree>,
+    }));
 }
 
 /** 获取评论详情 */

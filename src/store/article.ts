@@ -1,6 +1,5 @@
 /**
  * @file Article store
- * @module store.article
  * @author Surmon <https://github.com/surmon-china>
  */
 

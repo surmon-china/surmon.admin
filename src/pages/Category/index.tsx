@@ -8,19 +8,18 @@ import {
   PlusOutlined,
   ReloadOutlined,
 } from '@ant-design/icons';
-
+import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request';
+import { Category as CategoryType } from '@/constants/category';
+import { getFECategoryPath } from '@/transformers/url';
+import { useLoading } from '@/services/loading';
 import {
-  getCategoriesAntdTreeByTree,
+  getAntdTreeByTree,
   CategoryTree,
   getCategories,
   deleteCategory,
   putCategory,
   createCategory,
 } from '@/store/category';
-import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request';
-import { Category as CategoryType } from '@/constants/category';
-import { useLoading } from '@/services/loading';
-import { getFECategoryPath } from '@/transformers/url';
 import { EditModal } from './EditModal';
 
 import styles from './style.module.less';
@@ -154,7 +153,7 @@ export const CategoryPage: React.FC = () => {
             showLine={true}
             showIcon={false}
             selectable={false}
-            treeData={getCategoriesAntdTreeByTree(categories.tree)}
+            treeData={getAntdTreeByTree(categories.tree)}
             titleRender={(nodeData) => {
               const category: CategoryTree = (nodeData as any).data;
               return (
@@ -216,7 +215,7 @@ export const CategoryPage: React.FC = () => {
       <EditModal
         title={activeEditData.value ? '编辑分类' : '新分类'}
         loading={submitting.state.value}
-        tree={getCategoriesAntdTreeByTree(categories.tree, activeEditData.value?._id)}
+        tree={getAntdTreeByTree(categories.tree, activeEditData.value?._id)}
         categories={categories.data}
         visible={isVisibleModal}
         category={activeEditData}

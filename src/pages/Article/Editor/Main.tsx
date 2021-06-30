@@ -1,9 +1,8 @@
 import React from 'react';
 import { useRef, onMounted } from '@/veact';
-import { Spin, Button, Form, Select, Input, Divider, Space } from 'antd';
-import { FormInstance } from 'antd/lib/form';
+import { Spin, Button, Form, Select, Input, Divider, Space, Typography } from 'antd';
 import { ReloadOutlined, CheckCircleOutlined, TagOutlined } from '@ant-design/icons';
-
+import { FormInstance } from 'antd/lib/form';
 import { useLoading } from '@/services/loading';
 import { getTags } from '@/store/tag';
 import { Tag } from '@/constants/tag';
@@ -35,22 +34,24 @@ const TagSelect: React.FC<TagSelectProps> = (props) => {
   return (
     <Spin spinning={tagsLoading.state.value}>
       <Space wrap={true} size={[12, 12]}>
-        {!tags.value.length
-          ? 'meishuju '
-          : tags.value.map((tag) => {
-              const isChecked = values.includes(tag._id!);
-              return (
-                <Button
-                  size="small"
-                  key={tag._id!}
-                  type={isChecked ? 'primary' : 'default'}
-                  icon={isChecked ? <CheckCircleOutlined /> : <TagOutlined />}
-                  onClick={() => handleClick(tag, !isChecked)}
-                >
-                  {tag.name}
-                </Button>
-              );
-            })}
+        {!tags.value.length ? (
+          <Typography.Text type="secondary">无数据</Typography.Text>
+        ) : (
+          tags.value.map((tag) => {
+            const isChecked = values.includes(tag._id!);
+            return (
+              <Button
+                size="small"
+                key={tag._id!}
+                type={isChecked ? 'primary' : 'default'}
+                icon={isChecked ? <CheckCircleOutlined /> : <TagOutlined />}
+                onClick={() => handleClick(tag, !isChecked)}
+              >
+                {tag.name}
+              </Button>
+            );
+          })
+        )}
         <Divider type="vertical" />
         <Button
           size="small"

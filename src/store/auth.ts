@@ -1,6 +1,5 @@
 /**
  * @file Auth store
- * @module store.auth
  * @author Surmon <https://github.com/surmon-china>
  */
 

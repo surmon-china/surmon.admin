@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Form, Select, Input, Divider, Space } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { CheckOutlined } from '@ant-design/icons';
-
 import { publishStates } from '@/constants/publish-state';
 import { articleOrigins } from '@/constants/article/origin';
 import { articlePublics, ArticlePublic } from '@/constants/article/public';
@@ -22,7 +21,7 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
   return (
     <Form
       scrollToFirstError={true}
-      labelCol={{ span: 5 }}
+      labelCol={{ span: 6 }}
       wrapperCol={{ span: 13, offset: 1 }}
       colon={false}
       form={props.form}

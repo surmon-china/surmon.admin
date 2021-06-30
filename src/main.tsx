@@ -1,3 +1,8 @@
+/**
+ * @file App entry
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 

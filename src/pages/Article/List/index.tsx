@@ -9,25 +9,20 @@ import {
   CheckOutlined,
   ReloadOutlined,
 } from '@ant-design/icons';
-
 import { RouteKey, rc } from '@/route';
 import { DropdownMenu } from '@/components/common/DropdownMenu';
-import { getArticles, GetArticleParams, patchArticlesState } from '@/store/article';
-import {
-  getCategories,
-  getCategoriesAntdTreeByTree,
-  CategoryTree,
-} from '@/store/category';
-import { getTags } from '@/store/tag';
+import { ResponsePaginationData } from '@/constants/request';
+import { sortTypes, SortType } from '@/constants/general-state';
+import { publishStates, PublishState, ps } from '@/constants/publish-state';
 import { Tag } from '@/constants/tag';
 import { ArticleId, Article } from '@/constants/article';
 import { ArticleOrigin, articleOrigins } from '@/constants/article/origin';
 import { ArticlePublic, articlePublics } from '@/constants/article/public';
-import { ResponsePaginationData } from '@/constants/request';
-import { sortTypes, SortType } from '@/constants/general-state';
-import { publishStates, PublishState, ps } from '@/constants/publish-state';
 import { useLoading } from '@/services/loading';
 import { scrollTo } from '@/services/scroller';
+import { getTags } from '@/store/tag';
+import { getArticles, GetArticleParams, patchArticlesState } from '@/store/article';
+import { getCategories, getAntdTreeByTree, CategoryTree } from '@/store/category';
 import { ArticleListTable } from './Table';
 
 import styles from './style.module.less';
@@ -269,7 +264,7 @@ export const ArticleList: React.FC = () => {
                   key: SELECT_ALL_VALUE,
                   value: SELECT_ALL_VALUE,
                 },
-                ...getCategoriesAntdTreeByTree(categoriesTree.value),
+                ...getAntdTreeByTree(categoriesTree.value),
               ]}
             />
           </Space>

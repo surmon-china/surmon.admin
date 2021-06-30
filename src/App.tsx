@@ -1,3 +1,8 @@
+/**
+ * @file App component
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { onMounted } from '@/veact';

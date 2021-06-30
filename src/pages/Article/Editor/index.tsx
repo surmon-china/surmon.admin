@@ -1,9 +1,7 @@
 import React from 'react';
 import { Ref, useWatch, onMounted } from '@/veact';
-import { Button, Card, Row, Col, Modal, Form, message, Spin } from 'antd';
+import { Card, Row, Col, Form, message, Spin } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import { DeleteOutlined } from '@ant-design/icons';
-
 import { APP_LAYOUT_GUTTER_SIZE } from '@/config';
 import { ImageUploader } from '@/components/common/ImageUploader';
 import { FormDataExtend } from '@/components/common/FormDataExtend';
@@ -11,6 +9,7 @@ import { Article } from '@/constants/article';
 import { PublishState } from '@/constants/publish-state';
 import { ArticleOrigin } from '@/constants/article/origin';
 import { ArticlePublic } from '@/constants/article/public';
+import { scrollTo } from '@/services/scroller';
 import { MainForm } from './Main';
 import { CategoryForm } from './Category';
 import { StateForm } from './State';
@@ -42,10 +41,10 @@ const DEFAULT_ARTICLE: Article = Object.freeze({
 
 export interface ArticleEditorProps {
   title: string;
+  extra?: React.ReactNode;
   loading: boolean;
   submitting: boolean;
   article?: Ref<Article | null>;
-  onDelete?(): Promise<any>;
   onSubmit(article: Article): any;
 }
 export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
@@ -80,18 +79,6 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
     }
   };
 
-  const handleDelete = () => {
-    Modal.confirm({
-      title: `你确定要彻底删除文章 《${props.article!.value!.title}》 吗？`,
-      content: '该行为是物理删除，不可恢复！',
-      onOk: props.onDelete,
-      okButtonProps: {
-        danger: true,
-        type: 'ghost',
-      },
-    });
-  };
-
   useWatch(
     () => props.article?.value,
     (article) => {
@@ -103,6 +90,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
 
   onMounted(() => {
     setFormsValue(DEFAULT_ARTICLE);
+    scrollTo(document.body);
   });
 
   return (
@@ -113,18 +101,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
             title={props.title}
             bordered={false}
             className={styles.articleeEitor}
-            extra={
-              <Button
-                type="dashed"
-                size="small"
-                danger={true}
-                icon={<DeleteOutlined />}
-                disabled={!props.article}
-                onClick={handleDelete}
-              >
-                删除文章
-              </Button>
-            }
+            extra={props.extra}
           >
             <Spin spinning={props.loading}>
               <MainForm form={mainForm} />

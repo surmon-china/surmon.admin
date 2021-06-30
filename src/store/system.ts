@@ -1,6 +1,5 @@
 /**
  * @file System store
- * @module store.system
  * @author Surmon <https://github.com/surmon-china>
  */
 

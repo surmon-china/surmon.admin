@@ -1,4 +1,6 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 import {
   useShallowReactive,
   useRef,
@@ -53,6 +55,12 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
 });
 
 export const CommentPage: React.FC = () => {
+  // params
+  const location = useLocation();
+  const { post_id } = queryString.parse(location.search);
+  const postIdParam = post_id ? Number(post_id) : undefined;
+
+  // comments
   const loading = useLoading();
   const submitting = useLoading();
   const comment = useShallowReactive<ResponsePaginationData<CommentType>>({
@@ -62,7 +70,10 @@ export const CommentPage: React.FC = () => {
 
   // 过滤参数
   const serarchKeyword = useRef('');
-  const filterParams = useReactive({ ...DEFAULT_FILTER_PARAMS });
+  const filterParams = useReactive({
+    ...DEFAULT_FILTER_PARAMS,
+    postId: postIdParam || DEFAULT_FILTER_PARAMS.postId,
+  });
   const updatePostId = (postId: number | string) => {
     filterParams.postId = Number(postId);
   };

@@ -1,6 +1,5 @@
 /**
- * @file 路由配置
- * @module routes
+ * @file App route config
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -115,7 +114,6 @@ export const rc = (routeKey: RouteKey): RouteConfig => {
 export const rcByPath = (routePath: string) => {
   return Array.from(routeMap.values()).find((route) => route.path === routePath);
 };
-
 export const isRoute = (routePath: string, routeKey: RouteKey) => {
   return routeMap.get(routeKey)?.path === routePath;
 };
