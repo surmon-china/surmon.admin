@@ -1,8 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { useReactive } from '@/veact';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
-
 import tokenService from '@/services/token';
 import { useLoading } from '@/services/loading';
 import { authLogin } from '@/store/auth';
@@ -56,34 +57,40 @@ export const WhoPage: React.FC = () => {
 
   return (
     <div className={styles.whoPage}>
-      <SwitchTransition mode="out-in">
-        <CSSTransition
-          classNames="fade-fast"
-          key={Number(inputState.isEdit)}
-          addEndListener={(node, done) => {
-            node.addEventListener('transitionend', done, false);
-          }}
-        >
-          {inputState.isEdit ? (
-            <input
-              type="password"
-              id="password"
-              className={styles.input}
-              autoComplete="true"
-              autoFocus={true}
-              disabled={loading.state.value}
-              value={inputState.value}
-              onInput={handleInputChange}
-              onBlur={quitEdit}
-              onKeyDownCapture={handleInputKeyDown}
-            />
-          ) : (
-            <div className={styles.title} onClick={toEditMode} onTouchEnd={toEditMode}>
-              🤘
-            </div>
-          )}
-        </CSSTransition>
-      </SwitchTransition>
+      <Spin spinning={loading.state.value} indicator={<LoadingOutlined />}>
+        <SwitchTransition mode="out-in">
+          <CSSTransition
+            classNames="fade-fast"
+            key={Number(inputState.isEdit)}
+            addEndListener={(node, done) => {
+              node.addEventListener('transitionend', done, false);
+            }}
+          >
+            {inputState.isEdit ? (
+              <input
+                type="password"
+                id="password"
+                className={styles.input}
+                autoComplete="true"
+                autoFocus={true}
+                disabled={loading.state.value}
+                value={inputState.value}
+                onInput={handleInputChange}
+                onBlur={quitEdit}
+                onKeyDownCapture={handleInputKeyDown}
+              />
+            ) : (
+              <div
+                className={styles.title}
+                onClick={toEditMode}
+                onTouchEnd={toEditMode}
+              >
+                🤘
+              </div>
+            )}
+          </CSSTransition>
+        </SwitchTransition>
+      </Spin>
     </div>
   );
 };
