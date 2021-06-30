@@ -27,35 +27,37 @@ const CategorySelect: React.FC<TagSelectProps> = (props) => {
   });
 
   return (
-    <Spin spinning={categoriesLoading.state.value}>
+    <div>
       {!categories.value.length ? (
         <Typography.Text type="secondary">无分类</Typography.Text>
       ) : (
-        <Tree
-          className={styles.categorySelect}
-          showLine={true}
-          showIcon={true}
-          checkable={true}
-          blockNode={true}
-          defaultExpandAll={true}
-          checkStrictly={true}
-          checkedKeys={props.value}
-          onCheck={(data) => {
-            const ids = Array.isArray(data) ? data : data.checked;
-            props.onChange?.(ids as string[]);
-          }}
-          treeData={getAntdTreeByTree(categories.value)}
-          titleRender={(nodeData) => {
-            const category: CategoryTree = (nodeData as any).data;
-            return (
-              <Space size="small">
-                <Typography.Text strong={true}>{category.name}</Typography.Text>
-                <Divider type="vertical" />
-                {category.slug}
-              </Space>
-            );
-          }}
-        />
+        <Spin spinning={categoriesLoading.state.value}>
+          <Tree
+            className={styles.categorySelect}
+            showLine={true}
+            showIcon={true}
+            checkable={true}
+            blockNode={true}
+            defaultExpandAll={true}
+            checkStrictly={true}
+            checkedKeys={props.value}
+            onCheck={(data) => {
+              const ids = Array.isArray(data) ? data : data.checked;
+              props.onChange?.(ids as string[]);
+            }}
+            treeData={getAntdTreeByTree(categories.value)}
+            titleRender={(nodeData) => {
+              const category: CategoryTree = (nodeData as any).data;
+              return (
+                <Space size="small">
+                  <Typography.Text strong={true}>{category.name}</Typography.Text>
+                  <Divider type="vertical" />
+                  {category.slug}
+                </Space>
+              );
+            }}
+          />
+        </Spin>
       )}
       <Divider />
       <Button
@@ -67,7 +69,7 @@ const CategorySelect: React.FC<TagSelectProps> = (props) => {
       >
         刷新列表
       </Button>
-    </Spin>
+    </div>
   );
 };
 
