@@ -3,6 +3,7 @@ import { useRef, onMounted } from '@/veact';
 import { Spin, Button, Form, Select, Input, Divider, Space, Typography } from 'antd';
 import { ReloadOutlined, CheckCircleOutlined, TagOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
+import { UniversalEditor } from '@/components/common/UniversalEditor';
 import { useLoading } from '@/services/loading';
 import { getTags } from '@/store/tag';
 import { Tag } from '@/constants/tag';
@@ -70,7 +71,6 @@ const TagSelect: React.FC<TagSelectProps> = (props) => {
 export interface MainFormProps {
   form: FormInstance<BaseFormModel>;
 }
-
 export const MainForm: React.FC<MainFormProps> = (props) => {
   return (
     <Form
@@ -129,6 +129,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
       <Form.Item label="标签" name="tag">
         <TagSelect />
       </Form.Item>
+      <br />
       <Form.Item
         label="内容"
         name="content"
@@ -140,10 +141,9 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
           },
         ]}
       >
-        <Input.TextArea
-          rows={28}
-          style={{ marginTop: '1rem' }}
-          placeholder="文章内容"
+        <UniversalEditor
+          cacheId={window.location.pathname}
+          placeholder="输入文章内容..."
         />
       </Form.Item>
     </Form>

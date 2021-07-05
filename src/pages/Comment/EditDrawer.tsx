@@ -21,11 +21,11 @@ import {
   SendOutlined,
   LinkOutlined,
 } from '@ant-design/icons';
-
+import { UniversalEditor } from '@/components/common/UniversalEditor';
+import { FormDataExtend } from '@/components/common/FormDataExtend';
 import { useLoading } from '@/services/loading';
 import { getComment } from '@/store/comment';
 import { getArticle } from '@/store/article';
-import { FormDataExtend } from '@/components/common/FormDataExtend';
 import { Comment, commentStates, COMMENT_GUESTBOOK_ID } from '@/constants/comment';
 import { Article } from '@/constants/article';
 import { stringToYMD } from '@/transformers/date';
@@ -225,7 +225,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             name="content"
             rules={[{ required: true, message: '请输入内容' }]}
           >
-            <Input.TextArea rows={14} />
+            <UniversalEditor minRows={14} maxRows={18} />
           </Form.Item>
           <Form.Item
             label="自定义扩展"

@@ -35,7 +35,6 @@ const CategorySelect: React.FC<TagSelectProps> = (props) => {
           <Tree
             className={styles.categorySelect}
             showLine={true}
-            showIcon={true}
             checkable={true}
             blockNode={true}
             defaultExpandAll={true}
@@ -76,7 +75,6 @@ const CategorySelect: React.FC<TagSelectProps> = (props) => {
 export interface CategoryFormProps {
   form: FormInstance<CategoryFormModel>;
 }
-
 export const CategoryForm: React.FC<CategoryFormProps> = (props) => {
   return (
     <Form scrollToFirstError={true} form={props.form}>

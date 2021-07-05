@@ -7,11 +7,12 @@ import {
   CheckOutlined,
   HeartOutlined,
 } from '@ant-design/icons';
-
+import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor';
 import { Option } from '@/constants/option';
 import { useLoading } from '@/services/loading';
 import { scrollTo } from '@/services/scroller';
 import { getOption, putOption } from '@/store/system';
+import { formatJSONString } from '@/transformers/json';
 import styles from './style.module.less';
 
 export interface BaseFormProps {
@@ -26,7 +27,10 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
   const [form] = Form.useForm<Option>();
   const resetDataForm = (option: Option) => {
     data.value = option;
-    form.setFieldsValue(option);
+    form.setFieldsValue({
+      ...option,
+      ad_config: formatJSONString(option.ad_config, 2),
+    });
   };
 
   const fetchOption = () => {
@@ -34,7 +38,14 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
   };
 
   const updateOption = (newOption: Option) => {
-    return submitting.promise(putOption(newOption)).then(resetDataForm);
+    return submitting
+      .promise(
+        putOption({
+          ...newOption,
+          ad_config: formatJSONString(newOption.ad_config),
+        })
+      )
+      .then(resetDataForm);
   };
 
   const handleSubmit = () => {
@@ -107,8 +118,31 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
         >
           <Select placeholder="回车以输入多个关键字" mode="tags" />
         </Form.Item>
-        <Form.Item name="ad_config" label="广告配置">
-          <Input.TextArea rows={4} placeholder="站点描述" />
+        <Form.Item
+          name="ad_config"
+          label="广告配置"
+          rules={[
+            {
+              required: true,
+              message: '请输入合法的 JSON 数据',
+              validator(_, value) {
+                try {
+                  formatJSONString(value || '');
+                  return Promise.resolve();
+                } catch (error) {
+                  return Promise.reject(error);
+                }
+              },
+            },
+          ]}
+        >
+          <UniversalEditor
+            minRows={22}
+            maxRows={30}
+            cacheId="AD_CONFIG"
+            language={UEditorLanguage.Json}
+            placeholder="站点描述"
+          />
         </Form.Item>
         <Form.Item label=" ">
           <Button

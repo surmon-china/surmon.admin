@@ -1,15 +1,15 @@
 import React from 'react';
 import { Ref, useWatch } from '@/veact';
-import { Form, Input, Select, Modal, Space, Divider, Typography } from 'antd';
-
+import { Form, Select, Modal, Space, Divider, Typography } from 'antd';
+import { UniversalEditor } from '@/components/common/UniversalEditor';
 import { Announcement } from '@/constants/announcement';
 import { ps } from '@/constants/publish-state';
 import { stringToYMD } from '@/transformers/date';
 import { STATE_IDS } from './index';
 
 const formLayout = {
-  labelCol: { span: 5 },
-  wrapperCol: { span: 18 },
+  labelCol: { span: 4 },
+  wrapperCol: { span: 19 },
 };
 
 export interface EditModalProps {
@@ -38,6 +38,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
 
   return (
     <Modal
+      width={680}
       title={props.title}
       confirmLoading={props.loading}
       visible={props.visible.value}
@@ -92,7 +93,12 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
           name="content"
           rules={[{ required: true, message: '请输入内容' }]}
         >
-          <Input.TextArea rows={10} />
+          <UniversalEditor
+            disabledMinimap={true}
+            disabledToolbar={true}
+            minRows={10}
+            maxRows={18}
+          />
         </Form.Item>
       </Form>
     </Modal>
