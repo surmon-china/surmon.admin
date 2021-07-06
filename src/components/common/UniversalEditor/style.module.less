@@ -1,5 +1,13 @@
 @import "@/styles/init.less";
 
+:global(.ant-form-item-has-error) {
+  .universalEditor {
+    &.formStatus {
+      border-color: @error;
+    }
+  }
+}
+
 @toolbar-height: 3rem;
 .universalEditor {
   width: 100%;
@@ -32,6 +40,10 @@
     justify-content: space-between;
     align-items: center;
 
+    .logo {
+      user-select: none;
+    }
+
     .language {
       width: 120px;
     }
@@ -62,6 +74,12 @@
 
     .preview {
       position: absolute;
+      left: 50%;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      padding: 2rem;
+      overflow-y: scroll;
 
       .markdown {
         a {

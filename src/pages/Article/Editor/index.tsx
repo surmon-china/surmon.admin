@@ -45,6 +45,7 @@ export interface ArticleEditorProps {
   loading: boolean;
   submitting: boolean;
   article?: Ref<Article | null>;
+  editorCacheID?: string;
   onSubmit(article: Article): any;
 }
 export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
@@ -75,7 +76,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
       props.onSubmit?.(data as Article);
     } catch (error) {
       console.warn('Article 提交错误：', error);
-      message.error(`请检查表单：${JSON.stringify(error)}`);
+      message.error('请检查表单中的不合法项');
     }
   };
 
@@ -98,13 +99,13 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
       <Row gutter={APP_LAYOUT_GUTTER_SIZE}>
         <Col span={17}>
           <Card
-            title={props.title}
             bordered={false}
+            title={props.title}
             className={styles.articleeEitor}
             extra={props.extra}
           >
             <Spin spinning={props.loading}>
-              <MainForm form={mainForm} />
+              <MainForm form={mainForm} editorCacheID={props.editorCacheID} />
             </Spin>
           </Card>
         </Col>

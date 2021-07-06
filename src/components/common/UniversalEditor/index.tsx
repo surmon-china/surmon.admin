@@ -1,23 +1,25 @@
+import { debounce } from 'lodash';
 import classnames from 'classnames';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import { useWatch } from '@/veact';
-import { Button, Select, Space, Drawer } from 'antd';
+import { Button, Select, Space, Typography, Spin } from 'antd';
 import {
   FullscreenOutlined,
   DownloadOutlined,
   EyeOutlined,
+  LoadingOutlined,
   EyeInvisibleOutlined,
   FullscreenExitOutlined,
 } from '@ant-design/icons';
 import { useGeneralState } from '@/state/general';
 import { saveFile } from '@/services/file';
+import storage from '@/services/storage';
 import { timestampToYMD } from '@/transformers/date';
 import { markdownToHTML } from '@/transformers/markdown';
 import { editor, KeyMod, KeyCode } from './monaco';
 
 import styles from './style.module.less';
-
-// TODO: 本地缓存
 
 export enum UEditorLanguage {
   Markdown = 'markdown',
@@ -33,20 +35,43 @@ const SINGLE_LINE_HEIGHT = 24;
 const MIN_ROWS = 34;
 const MAX_ROWS = 40;
 
+const getEditorCacheStorageKey = (id: string) => {
+  return `ueditor-${id}`;
+};
+
+const setUEditorCache = debounce((id: string, content: string) => {
+  return storage.set(getEditorCacheStorageKey(id), content);
+}, 666);
+
+export const getUEditorCache = (id: string) => {
+  return storage.get(getEditorCacheStorageKey(id));
+};
+
 export interface UniversalEditorProps {
   value?: string;
   onChange?(value?: string): void;
   placeholder?: string;
+  disbaled?: boolean;
+  loading?: boolean;
   minRows?: number;
   maxRows?: number;
-  cacheId?: string | false;
+  // 编辑区域唯一 ID，默认为 window.location.pathname
+  cacheID?: string | false;
+  /** 是否禁用顶部工具栏 */
   disabledToolbar?: boolean;
+  /** 是否禁用编辑器 minimap */
   disabledMinimap?: boolean;
+  /** 是否禁用草稿缓存 */
+  disabledCacheDraft?: boolean;
+  /** 是否在 UI 上响应 Form 状态 */
+  formStatus?: boolean;
   language?: UEditorLanguage;
   style?: React.CSSProperties;
 }
 export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
   const placeholder = props.placeholder || '请输入内容...';
+  const propValue = props.value || '';
+  const cacheID = props.cacheID || window.location.pathname;
   const generalState = useGeneralState();
   const containerRef = useRef<HTMLDivElement>(null);
   const ueditor = useRef<editor.IStandaloneCodeEditor>();
@@ -56,13 +81,10 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
   );
 
   const handleSaveContent = () => {
-    const content = props.value || '';
-    const cacheId = props.cacheId || '';
-    const shortContent = content.slice(0, 10);
     const time = timestampToYMD(Date.now());
     const fileExt = fileExtMap.get(language);
-    const fileName = `${cacheId}-${shortContent}-${time}.${fileExt}`;
-    saveFile(content, fileName);
+    const fileName = `${cacheID}-${time}.${fileExt}`;
+    saveFile(propValue, fileName);
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -117,13 +139,14 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
 
   const createEditor = () => {
     const ueditor = editor.create(containerRef.current!, {
-      value: props.value || '',
+      value: propValue,
       language: language,
       theme: 'vs-dark',
       tabSize: 2,
       fontSize: 14,
       lineHeight: SINGLE_LINE_HEIGHT,
       smoothScrolling: true,
+      readOnly: Boolean(props.disbaled),
       minimap: {
         enabled: !props.disabledMinimap,
       },
@@ -154,16 +177,6 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
     return ueditor;
   };
 
-  // value change
-  useEffect(() => {
-    ueditor.current?.executeEdits(null, [
-      {
-        text: props.value || '',
-        range: ueditor.current?.getModel()?.getFullModelRange()!,
-      },
-    ]);
-  }, [props.value]);
-
   // fullscreen change
   useWatch(
     () => generalState.data,
@@ -183,13 +196,28 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
     }
   }, [language]);
 
+  // disbaled change
+  useEffect(() => {
+    ueditor.current?.updateOptions({ readOnly: props.disbaled });
+  }, [props.disbaled]);
+
+  // prop value change
+  useEffect(() => {
+    if (props.value !== ueditor.current?.getValue()) {
+      ueditor.current?.setValue(props.value || '');
+    }
+  }, [props.value]);
+
   useEffect(() => {
     ueditor.current = createEditor();
     // content height change
     const sizeDisposer = ueditor.current.onDidContentSizeChange(handleResizeHeight);
-    // value change
+    // editor value change
     const modelDisposer = ueditor.current.onDidChangeModelContent(() => {
       const newValue = ueditor.current!.getValue();
+      if (!props.disabledCacheDraft) {
+        setUEditorCache(cacheID, newValue);
+      }
       if (newValue !== props.value) {
         props.onChange?.(newValue);
       }
@@ -204,33 +232,40 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
 
   return (
     <div
+      style={props.style}
       className={classnames(
         styles.universalEditor,
+        props.formStatus && styles.formStatus,
         generalState.data.fullscreen && styles.fullScreen
       )}
-      style={props.style}
     >
       {!props.disabledToolbar && (
         <div className={styles.toolbar}>
           <Space className={styles.left}>
+            <Typography.Text type="secondary" strong={true} className={styles.logo}>
+              UEditor
+            </Typography.Text>
+            <Button
+              size="small"
+              disabled={props.disbaled}
+              icon={<DownloadOutlined />}
+              onClick={handleSaveContent}
+            />
+          </Space>
+          <Space className={styles.right}>
             {language === UEditorLanguage.Markdown && (
               <Button
                 size="small"
+                disabled={props.disbaled}
                 icon={isPreview ? <EyeInvisibleOutlined /> : <EyeOutlined />}
                 onClick={() => setPreview(!isPreview)}
               />
             )}
-          </Space>
-          <Space className={styles.right}>
-            <Button
-              size="small"
-              icon={<DownloadOutlined />}
-              onClick={handleSaveContent}
-            />
             <Select
               size="small"
               value={language}
               onChange={setLanguage}
+              disabled={props.disbaled}
               className={styles.language}
               options={[
                 {
@@ -245,6 +280,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
             />
             <Button
               size="small"
+              disabled={props.disbaled}
               icon={
                 generalState.data.fullscreen ? (
                   <FullscreenExitOutlined />
@@ -257,30 +293,34 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
           </Space>
         </div>
       )}
-      <div className={styles.container}>
-        <div
-          id="container"
-          ref={containerRef}
-          className={classnames(styles.editor, !props.value && styles.placeholder)}
-          placeholder={placeholder}
-        ></div>
-        <Drawer
-          className={classnames(styles.preview)}
-          width="50%"
-          getContainer={false}
-          closable={false}
-          mask={false}
-          destroyOnClose={true}
-          visible={isPreview}
-        >
+      <Spin
+        spinning={Boolean(props.loading)}
+        indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+      >
+        <div className={styles.container}>
           <div
-            className={styles.markdown}
-            dangerouslySetInnerHTML={{
-              __html: isPreview ? markdownToHTML(props.value || '') : '',
-            }}
+            id="container"
+            ref={containerRef}
+            className={classnames(styles.editor, !props.value && styles.placeholder)}
+            placeholder={placeholder}
           ></div>
-        </Drawer>
-      </div>
+          <CSSTransition
+            in={isPreview}
+            timeout={200}
+            unmountOnExit={true}
+            classNames="fade-fast"
+          >
+            <div className={classnames(styles.preview)}>
+              <div
+                className={styles.markdown}
+                dangerouslySetInnerHTML={{
+                  __html: markdownToHTML(propValue),
+                }}
+              ></div>
+            </div>
+          </CSSTransition>
+        </div>
+      </Spin>
     </div>
   );
 };

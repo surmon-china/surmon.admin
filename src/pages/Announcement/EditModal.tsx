@@ -96,6 +96,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
           <UniversalEditor
             disabledMinimap={true}
             disabledToolbar={true}
+            disabledCacheDraft={true}
             minRows={10}
             maxRows={18}
           />

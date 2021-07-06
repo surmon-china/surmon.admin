@@ -225,7 +225,12 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             name="content"
             rules={[{ required: true, message: '请输入内容' }]}
           >
-            <UniversalEditor minRows={14} maxRows={18} />
+            <UniversalEditor
+              disabledMinimap={true}
+              disabledCacheDraft={true}
+              minRows={14}
+              maxRows={18}
+            />
           </Form.Item>
           <Form.Item
             label="自定义扩展"

@@ -139,7 +139,8 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
           <UniversalEditor
             minRows={22}
             maxRows={30}
-            cacheId="AD_CONFIG"
+            cacheID="APP_AD_CONFIG"
+            disabledCacheDraft={true}
             language={UEditorLanguage.Json}
             placeholder="站点描述"
           />

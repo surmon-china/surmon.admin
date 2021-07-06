@@ -25,7 +25,8 @@ const TagSelect: React.FC<TagSelectProps> = (props) => {
   const values = props.value || [];
   const handleClick = (tag: Tag, checked: boolean) => {
     const tagID = tag._id!;
-    props.onChange?.(checked ? [...values, tagID] : values.filter((t) => t !== tagID));
+    const tagIDs = checked ? [...values, tagID] : values.filter((t) => t !== tagID);
+    props.onChange?.(tagIDs);
   };
 
   onMounted(() => {
@@ -70,6 +71,7 @@ const TagSelect: React.FC<TagSelectProps> = (props) => {
 
 export interface MainFormProps {
   form: FormInstance<BaseFormModel>;
+  editorCacheID?: string;
 }
 export const MainForm: React.FC<MainFormProps> = (props) => {
   return (
@@ -115,11 +117,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
           {
             message: '至少应该有一个关键词',
             validator(_, value: string[]) {
-              if (!!value?.length) {
-                return Promise.resolve();
-              } else {
-                return Promise.reject();
-              }
+              return Boolean(value?.length) ? Promise.resolve() : Promise.reject();
             },
           },
         ]}
@@ -142,7 +140,9 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
         ]}
       >
         <UniversalEditor
-          cacheId={window.location.pathname}
+          formStatus={true}
+          minRows={28}
+          cacheID={props.editorCacheID}
           placeholder="输入文章内容..."
         />
       </Form.Item>

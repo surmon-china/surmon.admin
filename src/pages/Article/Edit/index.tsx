@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Modal, Button, Space, Badge } from 'antd';
 import {
@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import { useRef, onMounted } from '@/veact';
 import { RouteKey, rc } from '@/route';
+import { getUEditorCache } from '@/components/common/UniversalEditor';
 import { Article } from '@/constants/article';
 import { SortType } from '@/constants/general-state';
 import { useLoading } from '@/services/loading';
@@ -26,12 +27,10 @@ export const ArticleEdit: React.FC = () => {
   const fetching = useLoading();
   const submitting = useLoading();
   const article = useRef<Article | null>(null);
-  const fetchArticle = () => {
-    return fetching.promise(getArticle(articleId)).then((result) => {
-      article.value = result;
-      return result;
-    });
-  };
+  const articleCacheID = useMemo(
+    () => rc(RouteKey.ArticleEdit).getter!(articleId),
+    [articleId]
+  );
 
   // Modal
   const isVisibleCommentModal = useRef<boolean>(false);
@@ -89,8 +88,28 @@ export const ArticleEdit: React.FC = () => {
   };
 
   onMounted(() => {
-    fetchArticle().then((_article) => {
+    fetching.promise(getArticle(articleId)).then((_article) => {
       fetchComments(_article.id!);
+      const localContent = getUEditorCache(articleCacheID);
+      if (Boolean(localContent) && localContent !== _article.content) {
+        Modal.confirm({
+          title: '本地缓存存在未保存的文章，是否要覆盖远程数据？',
+          content: '如果覆盖错了，就自己刷新吧',
+          okText: '本地覆盖远程',
+          cancelText: '使用远程数据',
+          okButtonProps: {
+            danger: true,
+          },
+          onOk() {
+            article.value = { ..._article, content: localContent || '' };
+          },
+          onCancel() {
+            article.value = _article;
+          },
+        });
+      } else {
+        article.value = _article;
+      }
     });
   });
 
@@ -98,6 +117,11 @@ export const ArticleEdit: React.FC = () => {
     <>
       <ArticleEditor
         title="编辑文章"
+        article={article}
+        editorCacheID={articleCacheID}
+        loading={fetching.state.value}
+        submitting={submitting.state.value}
+        onSubmit={fetchUpdateArticle}
         extra={
           <Space>
             <Button
@@ -137,10 +161,6 @@ export const ArticleEdit: React.FC = () => {
             </Button.Group>
           </Space>
         }
-        article={article}
-        loading={fetching.state.value}
-        submitting={submitting.state.value}
-        onSubmit={fetchUpdateArticle}
       />
       <ArticleComment
         visible={isVisibleCommentModal.value}

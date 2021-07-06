@@ -72,7 +72,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 backgroundSize: 'cover',
                 minHeight: '100px',
                 backgroundImage: `url(${comment.thumb})`,
-                // backgroundImage: `url(/images/profile/article-thumb.jpg)`,
+                backgroundBlendMode: 'soft-light',
               }}
             >
               <Card.Meta
