@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/facebook/react/" target="blank">
-    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K" height="90" alt="React logo" />
+    <img src="https://raw.githubusercontent.com/surmon-china/veact-admin/master/presses/react.svg" height="90" alt="React logo" />
   </a>
   <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
   <a href="https://github.com/surmon-china/nodepress" target="blank">
@@ -24,15 +24,15 @@
 
 **其他相关项目：**
 
-- **RESTful API service:** [nodepress](https://github.com/surmon-china/nodepress) powered by [nestjs](https://github.com/nestjs/nest)
-- **web client for user:** [surmon.me](https://github.com/surmon-china/surmon.me) powered by [Vue (3)](https://vuejs.org/)
-- **native app client:** [surmon.me.native](https://github.com/surmon-china/surmon.me.native) powered by [react-native](https://github.com/facebook/react-native)
+- **[nodepress](https://github.com/surmon-china/nodepress)** 😎 RESTful API service | 博客服务端
+- **[surmon.me](https://github.com/surmon-china/surmon.me)** 🆒 Frontend blog site | 博客前端
+- **[surmon.me.native](https://github.com/surmon-china/surmon.me.native)** 📱Native app client | 博客 App
 
 **更新记录：[CHANGELOG.md](https://github.com/surmon-china/veact-admin/blob/master/CHANGELOG.md#changelog)**
 
 ## Screenshot
 
-![](https://raw.githubusercontent.com/surmon-china/veact-admin/master/presses/thumbnail.jpg)
+![](https://raw.githubusercontent.com/surmon-china/veact-admin/master/presses/thumbnail.png)
 
 ## Development setup
 
