@@ -4,9 +4,6 @@ dist
 dist-ssr
 *.local
 
-# dev temp
-angular-app
-
 # compiled output
 /dist
 /tmp
