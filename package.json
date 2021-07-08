@@ -16,10 +16,9 @@
     "dev:proxy": "PROXY=true vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "local:tar": "rm -rf ./product/www.tar.gz && tar -zcvf ./product/www.tar.gz -C ./dist/angular-admin .",
+    "local:tar": "rm -rf ./product/www.tar.gz && tar -zcvf ./product/www.tar.gz -C ./dist .",
     "local:build:tar": "npm run build && npm run local:tar",
-    "local:deploy": "npm run local:build:tar && sh .deploy/decompression.sh",
-    "local:server": "http-server ./dist/angular-admin"
+    "local:deploy": "npm run local:build:tar && sh .deploy/decompression.sh"
   },
   "husky": {
     "hooks": {

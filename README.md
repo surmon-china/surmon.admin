@@ -46,12 +46,11 @@ yarn dev
 # lint
 yarn lint
 
-# test
-yarn test
-yarn e2e
-
 # build
 yarn build
+
+# preview
+yarn serve
 
 # CD (local build)
 yarn local:build:tar

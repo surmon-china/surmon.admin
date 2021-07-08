@@ -1,12 +1,10 @@
 node_modules
 .DS_Store
-dist
-dist-ssr
 *.local
 
 # compiled output
-/dist
-/tmp
+dist
+tmp
 
 # prodect files
 /product/*
