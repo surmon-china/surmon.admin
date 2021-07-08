@@ -1,3 +1,8 @@
+/**
+ * @file Dashboard page
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import { useRef, onMounted } from '@/veact';
 import { Row, Col, Card, Statistic, Space } from 'antd';

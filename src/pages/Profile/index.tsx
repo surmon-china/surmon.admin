@@ -1,3 +1,8 @@
+/**
+ * @file Global setting page
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import { Card, Tabs, Typography, Space } from 'antd';
 import { SettingOutlined, UserOutlined, DatabaseOutlined } from '@ant-design/icons';

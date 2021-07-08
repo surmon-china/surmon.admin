@@ -1,3 +1,8 @@
+/**
+ * @file Comment list page
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
@@ -37,7 +42,7 @@ import {
   cs,
 } from '@/constants/comment';
 import { ResponsePaginationData } from '@/constants/request';
-import { sortTypes, SortType } from '@/constants/general-state';
+import { sortTypes, SortType } from '@/constants/sort';
 import { useLoading } from '@/services/loading';
 import { scrollTo } from '@/services/scroller';
 import { getFEGuestbookPath } from '@/transformers/url';

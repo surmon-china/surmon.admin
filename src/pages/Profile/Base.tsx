@@ -76,22 +76,50 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
         <Form.Item label={<HeartOutlined />}>
           {data.value?.meta.likes || '-'} 次
         </Form.Item>
-        <Form.Item name="title" label="站点标题">
+        <Form.Item name="title" label="站点标题" required={true}>
           <Input placeholder="站点标题" />
         </Form.Item>
-        <Form.Item name="sub_title" label="副标题">
+        <Form.Item name="sub_title" label="副标题" required={true}>
           <Input placeholder="副标题" />
         </Form.Item>
-        <Form.Item name="description" label="站点描述">
+        <Form.Item name="description" label="站点描述" required={true}>
           <Input.TextArea rows={4} placeholder="站点描述" />
         </Form.Item>
-        <Form.Item name="keywords" label="关键词">
+        <Form.Item name="keywords" label="关键词" required={true}>
           <Select placeholder="输入关键词后回车" mode="tags" />
         </Form.Item>
-        <Form.Item name="site_url" label="站点地址">
+        <Form.Item
+          name="site_url"
+          label="站点地址"
+          required={true}
+          rules={[
+            {
+              message: '请输入',
+              required: true,
+            },
+            {
+              message: '请输入正确的 URL',
+              type: 'url',
+            },
+          ]}
+        >
           <Input suffix={<LinkOutlined />} placeholder="https://example.me" />
         </Form.Item>
-        <Form.Item name="site_email" label="电子邮件">
+        <Form.Item
+          name="site_email"
+          label="电子邮件"
+          required={true}
+          rules={[
+            {
+              message: '请输入',
+              required: true,
+            },
+            {
+              message: '请输入正确的邮箱地址',
+              type: 'email',
+            },
+          ]}
+        >
           <Input suffix={<MailOutlined />} placeholder="example@xxx.me" />
         </Form.Item>
         <Form.Item name="site_icp" label="ICP备案号">

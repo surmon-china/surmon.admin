@@ -1,6 +1,5 @@
 /**
- * @file 通用的业务数据状态
- * @module constants.general-state
+ * @file General sort state
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -10,13 +9,6 @@ import {
   SortDescendingOutlined,
   FireOutlined,
 } from '@ant-design/icons';
-
-/** 通用的数据扩展 */
-export interface DataExtends {
-  _id: string;
-  name: string;
-  value: string;
-}
 
 /** 数据排序状态 */
 export enum SortType {

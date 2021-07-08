@@ -17,8 +17,6 @@ export const isObject = (value: unknown): value is object => {
   return Object.prototype.toString.call(value) === '[Object Object]';
 };
 
-export type ArgumentTypes<F extends Function> = F extends (
-  ...args: infer A
-) => any
+export type ArgumentTypes<F extends Function> = F extends (...args: infer A) => any
   ? A
   : never;

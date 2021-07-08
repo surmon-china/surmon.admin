@@ -134,13 +134,29 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
           <Form.Item
             name={['author', 'email']}
             label="用户邮箱"
-            rules={[{ required: true, message: '必填' }]}
+            rules={[
+              { required: true, message: '必填' },
+              {
+                message: '请输入正确的邮箱',
+                type: 'email',
+              },
+            ]}
           >
-            <Input prefix={<MailOutlined />} />
+            <Input prefix={<MailOutlined />} type="email" />
           </Form.Item>
-          <Form.Item name={['author', 'site']} label="用户网址">
+          <Form.Item
+            name={['author', 'site']}
+            label="用户网址"
+            rules={[
+              {
+                message: '请输入正确的 URL',
+                type: 'url',
+              },
+            ]}
+          >
             <Input
               prefix={<LinkOutlined />}
+              type="url"
               placeholder="URL"
               suffix={
                 <SendOutlined

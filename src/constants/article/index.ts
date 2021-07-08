@@ -1,11 +1,10 @@
 /**
- * @file Article
- * @module constants.article
+ * @file Article constant
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { DataExtends } from '../general-state';
-import { PublishState } from '../publish-state';
+import { DataExtends } from '../general';
+import { PublishState } from '../publish';
 import { Tag } from '../tag';
 import { Category } from '../category';
 import { ArticleOrigin } from './origin';

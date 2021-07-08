@@ -1,3 +1,8 @@
+/**
+ * @file Article category page
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import { useShallowReactive, useRef, onMounted, useComputed } from '@/veact';
 import { Button, Card, Divider, Modal, Space, Spin, Tree, Typography } from 'antd';

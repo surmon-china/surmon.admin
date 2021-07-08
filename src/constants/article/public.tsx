@@ -1,6 +1,5 @@
 /**
- * @file Article
- * @module constants.article.public
+ * @file Article public state
  * @author Surmon <https://github.com/surmon-china>
  */
 

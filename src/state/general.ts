@@ -1,5 +1,5 @@
 /**
- * @desc Global genera state
+ * @desc Global general state
  * @author Surmon <https://github.com/surmon-china>
  */
 

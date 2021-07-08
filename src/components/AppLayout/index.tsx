@@ -1,3 +1,8 @@
+/**
+ * @desc App layout
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import { useRef, useComputed, onMounted } from '@/veact';
 import { ConfigProvider, Layout } from 'antd';

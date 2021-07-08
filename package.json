@@ -15,7 +15,11 @@
     "dev": "vite",
     "dev:proxy": "PROXY=true vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "local:tar": "rm -rf ./product/www.tar.gz && tar -zcvf ./product/www.tar.gz -C ./dist/angular-admin .",
+    "local:build:tar": "npm run build && npm run local:tar",
+    "local:deploy": "npm run local:build:tar && sh .deploy/decompression.sh",
+    "local:server": "http-server ./dist/angular-admin"
   },
   "husky": {
     "hooks": {
@@ -37,7 +41,6 @@
     ]
   },
   "dependencies": {
-    "@types/marked": "^2.0.3",
     "@vue/reactivity": "^3.1.1",
     "ali-oss": "^6.15.2",
     "antd": "^4.16.2",
@@ -63,6 +66,7 @@
   "devDependencies": {
     "@types/ali-oss": "^6.0.8",
     "@types/gravatar": "^1.8.1",
+    "@types/marked": "^2.0.3",
     "@types/lodash": "^4.14.170",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.7",

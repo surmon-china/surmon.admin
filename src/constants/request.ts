@@ -1,6 +1,5 @@
 /**
- * @file 业务数据需要的公共类型常量
- * @module constants.request
+ * @file Global http request and response interface
  * @author Surmon <https://github.com/surmon-china>
  */
 

@@ -1,3 +1,8 @@
+/**
+ * @file Article detail comment list
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import {
   Spin,

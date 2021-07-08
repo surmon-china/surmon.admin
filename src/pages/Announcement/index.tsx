@@ -1,3 +1,8 @@
+/**
+ * @file Announcement page
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import {
   useShallowReactive,
@@ -37,7 +42,7 @@ import {
 } from '@/store/announcement';
 import { Announcement as AnnouncementType } from '@/constants/announcement';
 import { ResponsePaginationData } from '@/constants/request';
-import { PublishState, ps } from '@/constants/publish-state';
+import { PublishState, ps } from '@/constants/publish';
 import { useLoading } from '@/services/loading';
 import { scrollTo } from '@/services/scroller';
 import { stringToYMD } from '@/transformers/date';

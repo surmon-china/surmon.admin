@@ -1,10 +1,9 @@
 /**
- * @file Category
- * @module constants.category
+ * @file Category constant
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { DataExtends } from './general-state';
+import { DataExtends } from './general';
 
 /** 分类 */
 export interface Category {

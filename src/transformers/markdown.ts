@@ -1,3 +1,8 @@
+/**
+ * @file Markdown 解释器
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import marked from 'marked';
 import hljs from 'highlight.js';
 

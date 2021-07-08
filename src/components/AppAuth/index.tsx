@@ -1,3 +1,8 @@
+/**
+ * @desc App auth interceptor component
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRef, onMounted, onUnmount } from '@/veact';

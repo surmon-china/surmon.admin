@@ -20,7 +20,7 @@
 
 **Admin client for [surmon.me](https://github.com/surmon-china/surmon.me) blog, powered by [React](https://github.com/facebook/react) and [veactjs](https://github.com/veactjs).**
 
-**适用于 [surmon.me](https://github.com/surmon-china/surmon.me) 管理员后台的前端应用，使用 [React](https://github.com/facebook/react) 和 [veactjs](https://github.com/veactjs) 进行开发。**
+**适用于 [surmon.me](https://github.com/surmon-china/surmon.me) 博客的管理员后台应用，使用 [React](https://github.com/facebook/react) 和 [veactjs](https://github.com/veactjs) 进行开发。**
 
 **其他相关项目：**
 

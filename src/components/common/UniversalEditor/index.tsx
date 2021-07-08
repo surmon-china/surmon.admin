@@ -1,3 +1,8 @@
+/**
+ * @desc General universal editor
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { debounce } from 'lodash';
 import classnames from 'classnames';
 import React, { useRef, useState, useEffect, useCallback } from 'react';

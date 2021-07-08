@@ -5,7 +5,7 @@
 
 import { arrayToTree } from 'performant-array-to-tree';
 import http from '@/services/http';
-import { SortType } from '@/constants/general-state';
+import { SortType } from '@/constants/sort';
 import { Comment, CommentState } from '@/constants/comment';
 import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request';
 

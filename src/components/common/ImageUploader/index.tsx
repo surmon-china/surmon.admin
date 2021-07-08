@@ -1,3 +1,8 @@
+/**
+ * @desc General image uploader
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import { useRef, onMounted } from '@/veact';
 import { Upload, notification, Input, Space } from 'antd';

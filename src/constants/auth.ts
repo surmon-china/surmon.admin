@@ -1,6 +1,5 @@
 /**
- * @file Auth
- * @module constants.auth
+ * @file Auth constant
  * @author Surmon <https://github.com/surmon-china>
  */
 

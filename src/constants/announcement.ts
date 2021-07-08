@@ -1,5 +1,5 @@
 /**
- * @file Announcement
+ * @file Announcement constants
  * @module constants.announcement
  * @author Surmon <https://github.com/surmon-china>
  */

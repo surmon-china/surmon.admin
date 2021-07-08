@@ -20,20 +20,3 @@ export function onUpdated(callback: () => void) {
     callback();
   });
 }
-
-// export function inject<T>(Context: React.Context<T>): T {
-//   const context = assertCompositionContext();
-//   return context.addContext(Context);
-// }
-
-// export function useDisposer() {
-//   const context = assertCompositionContext();
-//   return (fn: () => void) => {
-//     context.addDisposer(fn);
-//   };
-// }
-
-// export function expose(value: any) {
-// const context = assertCompositionContext()
-// context.addExpose(value)
-// }

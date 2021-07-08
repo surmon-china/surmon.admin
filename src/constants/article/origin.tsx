@@ -1,6 +1,5 @@
 /**
- * @file Article
- * @module constants.article.origin
+ * @file Article origin state
  * @author Surmon <https://github.com/surmon-china>
  */
 

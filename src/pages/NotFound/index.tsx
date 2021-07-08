@@ -1,3 +1,8 @@
+/**
+ * @file App 404 page
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Result, Button } from 'antd';

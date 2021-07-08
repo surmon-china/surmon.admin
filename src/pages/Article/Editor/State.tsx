@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Form, Select, Input, Divider, Space } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { CheckOutlined } from '@ant-design/icons';
-import { publishStates } from '@/constants/publish-state';
+import { publishStates } from '@/constants/publish';
 import { articleOrigins } from '@/constants/article/origin';
 import { articlePublics, ArticlePublic } from '@/constants/article/public';
 import { StateFormModel } from '.';

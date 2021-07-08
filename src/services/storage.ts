@@ -1,5 +1,5 @@
 /**
- * @file Localstorage
+ * @file Local storage
  * @module service.storage
  * @author Surmon <https://github.com/surmon-china>
  */

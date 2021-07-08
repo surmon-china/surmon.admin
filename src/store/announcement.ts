@@ -5,7 +5,7 @@
 
 import http from '@/services/http';
 import { Announcement } from '@/constants/announcement';
-import { PublishState } from '@/constants/publish-state';
+import { PublishState } from '@/constants/publish';
 import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request';
 
 export const ANNOUNCEMENT_API_PATH = '/announcement';

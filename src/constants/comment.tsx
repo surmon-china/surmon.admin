@@ -1,6 +1,5 @@
 /**
- * @file Comment
- * @module constants.comment
+ * @file Comment constant
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -11,7 +10,7 @@ import {
   CheckOutlined,
   StopOutlined,
 } from '@ant-design/icons';
-import { DataExtends } from './general-state';
+import { DataExtends } from './general';
 
 /** 留言板 */
 export const COMMENT_GUESTBOOK_ID = 0;

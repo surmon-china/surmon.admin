@@ -1,3 +1,8 @@
+/**
+ * @file Article editor form
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import { Ref, useWatch, onMounted } from '@/veact';
 import { Card, Row, Col, Form, message, Spin } from 'antd';
@@ -6,7 +11,7 @@ import { APP_LAYOUT_GUTTER_SIZE } from '@/config';
 import { ImageUploader } from '@/components/common/ImageUploader';
 import { FormDataExtend } from '@/components/common/FormDataExtend';
 import { Article } from '@/constants/article';
-import { PublishState } from '@/constants/publish-state';
+import { PublishState } from '@/constants/publish';
 import { ArticleOrigin } from '@/constants/article/origin';
 import { ArticlePublic } from '@/constants/article/public';
 import { scrollTo } from '@/services/scroller';

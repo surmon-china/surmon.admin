@@ -2,7 +2,6 @@ import {
   useEffect as useReactEffect,
   useMemo as useReactMemo,
   useState as useReactState,
-  useRef as useReactRef,
 } from 'react';
 
 import {
@@ -10,10 +9,7 @@ import {
   reactive as vReactive,
   shallowReactive as vShallowReactive,
   ref as vRef,
-  isReactive,
-  isRef,
   ComputedGetter,
-  ReactiveEffect,
   ReactiveEffectOptions,
 } from './reactivity';
 import { watch, WatchFn, WatchCallback } from './watch';

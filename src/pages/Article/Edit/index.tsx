@@ -1,3 +1,8 @@
+/**
+ * @file Article edit page
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React, { useMemo } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Modal, Button, Space, Badge } from 'antd';
@@ -12,7 +17,7 @@ import { useRef, onMounted } from '@/veact';
 import { RouteKey, rc } from '@/route';
 import { getUEditorCache } from '@/components/common/UniversalEditor';
 import { Article } from '@/constants/article';
-import { SortType } from '@/constants/general-state';
+import { SortType } from '@/constants/sort';
 import { useLoading } from '@/services/loading';
 import { scrollTo } from '@/services/scroller';
 import { getArticle, putArticle, deleteArticles } from '@/store/article';
@@ -94,9 +99,10 @@ export const ArticleEdit: React.FC = () => {
       if (Boolean(localContent) && localContent !== _article.content) {
         Modal.confirm({
           title: '本地缓存存在未保存的文章，是否要覆盖远程数据？',
-          content: '如果覆盖错了，就自己刷新吧',
+          content: '如果覆盖错了，就自己刷新吧！',
           okText: '本地覆盖远程',
           cancelText: '使用远程数据',
+          centered: true,
           okButtonProps: {
             danger: true,
           },

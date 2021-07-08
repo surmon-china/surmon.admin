@@ -1,6 +1,5 @@
 /**
  * @file Option interface
- * @module constants.option
  * @author Surmon <https://github.com/surmon-china>
  */
 

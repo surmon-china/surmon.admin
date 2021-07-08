@@ -1,6 +1,5 @@
 /**
- * @file 通用的业务数据状态
- * @module constants.general-state
+ * @file General publish state
  * @author Surmon <https://github.com/surmon-china>
  */
 

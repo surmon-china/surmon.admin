@@ -1,3 +1,8 @@
+/**
+ * @file Article list page
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useShallowReactive, useRef, onMounted, useReactive, useWatch } from '@/veact';
@@ -12,8 +17,8 @@ import {
 import { RouteKey, rc } from '@/route';
 import { DropdownMenu } from '@/components/common/DropdownMenu';
 import { ResponsePaginationData } from '@/constants/request';
-import { sortTypes, SortType } from '@/constants/general-state';
-import { publishStates, PublishState, ps } from '@/constants/publish-state';
+import { sortTypes, SortType } from '@/constants/sort';
+import { publishStates, PublishState, ps } from '@/constants/publish';
 import { Tag } from '@/constants/tag';
 import { ArticleId, Article } from '@/constants/article';
 import { ArticleOrigin, articleOrigins } from '@/constants/article/origin';

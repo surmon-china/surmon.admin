@@ -1,6 +1,5 @@
 /**
  * @file 日期处理
- * @module transformers.date
  * @author Surmon <https://github.com/surmon-china>
  */
 

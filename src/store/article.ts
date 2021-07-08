@@ -4,8 +4,8 @@
  */
 
 import http from '@/services/http';
-import { PublishState } from '@/constants/publish-state';
-import { SortType } from '@/constants/general-state';
+import { PublishState } from '@/constants/publish';
+import { SortType } from '@/constants/sort';
 import { ArticleId, Article } from '@/constants/article';
 import { ArticleOrigin } from '@/constants/article/origin';
 import { ArticlePublic } from '@/constants/article/public';

@@ -1,10 +1,9 @@
 /**
- * @file Tag
- * @module constants.tag
+ * @file Tag interface
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { DataExtends } from './general-state';
+import { DataExtends } from './general';
 
 /** 标签数据 */
 export interface Tag {
