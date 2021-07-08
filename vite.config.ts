@@ -37,14 +37,13 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // TODO: runtime issue
-        // manualChunks(id) {
-        //   if (id.includes('node_modules/monaco-editor')) {
-        //     return 'monaco-editor';
-        //   } else if (id.includes('node_modules')) {
-        //     return 'vendor';
-        //   }
-        // }
+        manualChunks(id) {
+          if (id.includes('node_modules/monaco-editor')) {
+            return 'monaco-editor';
+          } else if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        }
       }
     }
   }
