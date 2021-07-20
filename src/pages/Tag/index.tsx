@@ -90,16 +90,16 @@ export const TagPage: React.FC = () => {
     });
   };
 
-  const refreshData = (reset: boolean = false) => {
-    if (reset) {
-      filterParams.keyword = '';
-      fetchData();
-    } else {
-      fetchData({
-        page: tag.pagination?.current_page,
-        per_page: tag.pagination?.per_page,
-      });
-    }
+  const resetParamsAndRefresh = () => {
+    filterParams.keyword = '';
+    fetchData();
+  };
+
+  const refreshData = () => {
+    fetchData({
+      page: tag.pagination?.current_page,
+      per_page: tag.pagination?.per_page,
+    });
   };
 
   const handleDelete = (tag: Tag) => {
@@ -183,7 +183,7 @@ export const TagPage: React.FC = () => {
           <Button
             icon={<ReloadOutlined />}
             loading={loading.state.value}
-            onClick={() => refreshData(true)}
+            onClick={resetParamsAndRefresh}
           >
             重置并刷新
           </Button>

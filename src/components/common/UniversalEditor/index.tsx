@@ -6,8 +6,8 @@
 import { debounce } from 'lodash';
 import classnames from 'classnames';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import { useWatch, useReactivity } from '@/veact/src';
+import { CSSTransition } from 'react-transition-group';
 import { Button, Select, Space, Typography, Spin } from 'antd';
 import {
   FullscreenOutlined,
@@ -184,7 +184,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
 
   // fullscreen change
   useWatch(
-    () => general.data,
+    () => general.data.fullscreen,
     () => handleResizeHeight()
   );
 

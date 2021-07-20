@@ -102,7 +102,7 @@ export function watch<T extends object, Immediate extends Readonly<boolean> = fa
 // implementation
 export function watch<T = any, Immediate extends Readonly<boolean> = false>(
   source: T | WatchSource<T>,
-  callback: WatchCallback,
+  callback: WatchCallback<T>,
   options: WatchOptions<Immediate> = {}
 ): WatchStopHandle {
   if (!isFunction(callback)) {
@@ -219,9 +219,44 @@ export function watch<T = any, Immediate extends Readonly<boolean> = false>(
   return () => effector.stop();
 }
 
-type WatchArguments = ArgumentTypes<typeof watch>;
-export function useWatch(...args: WatchArguments): WatchStopHandle {
-  const [stopHandler] = useReactState(() => watch(...args));
+// ------------------------------
+
+// fork watch types
+export function useWatch<
+  T extends MultiWatchSources,
+  Immediate extends Readonly<boolean> = false
+>(
+  sources: [...T],
+  cb: WatchCallback<MapSources<T, false>, MapSources<T, Immediate>>,
+  options?: WatchOptions<Immediate>
+): WatchStopHandle;
+export function useWatch<
+  T extends Readonly<MultiWatchSources>,
+  Immediate extends Readonly<boolean> = false
+>(
+  source: T,
+  cb: WatchCallback<MapSources<T, false>, MapSources<T, Immediate>>,
+  options?: WatchOptions<Immediate>
+): WatchStopHandle;
+// overload: single source + cb
+export function useWatch<T, Immediate extends Readonly<boolean> = false>(
+  source: WatchSource<T>,
+  cb: WatchCallback<T, Immediate extends true ? T | undefined : T>,
+  options?: WatchOptions<Immediate>
+): WatchStopHandle;
+// overload: watching reactive object w/ cb
+export function useWatch<T extends object, Immediate extends Readonly<boolean> = false>(
+  source: T,
+  cb: WatchCallback<T, Immediate extends true ? T | undefined : T>,
+  options?: WatchOptions<Immediate>
+): WatchStopHandle;
+// implementation
+export function useWatch<T = any, Immediate extends Readonly<boolean> = false>(
+  source: T | WatchSource<T>,
+  callback: WatchCallback<T>,
+  options: WatchOptions<Immediate> = {}
+): WatchStopHandle {
+  const [stopHandler] = useReactState(() => watch(source as any, callback, options));
   onBeforeUnmount(() => stopHandler?.());
   return stopHandler;
 }

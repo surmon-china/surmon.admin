@@ -32,14 +32,9 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
     form.validateFields().then(props.onSubmit);
   };
 
-  useWatch(
-    () => props.visible.value,
-    (visible) => {
-      visible
-        ? form.setFieldsValue(props.announcement.value || {})
-        : form.resetFields();
-    }
-  );
+  useWatch(props.visible, (visible) => {
+    visible ? form.setFieldsValue(props.announcement.value || {}) : form.resetFields();
+  });
 
   return (
     <Modal

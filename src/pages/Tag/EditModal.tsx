@@ -26,25 +26,22 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
     form.validateFields().then(props.onSubmit);
   };
 
-  useWatch(
-    () => props.visible.value,
-    (visible) => {
-      if (!visible) {
-        form.resetFields();
-      } else {
-        form.setFieldsValue(
-          props.tag.value || {
-            extends: [
-              {
-                name: 'icon',
-                value: 'icon-tag',
-              },
-            ],
-          }
-        );
-      }
+  useWatch(props.visible, (visible) => {
+    if (!visible) {
+      form.resetFields();
+    } else {
+      form.setFieldsValue(
+        props.tag.value || {
+          extends: [
+            {
+              name: 'icon',
+              value: 'icon-tag',
+            },
+          ],
+        }
+      );
     }
-  );
+  });
 
   return (
     <Modal

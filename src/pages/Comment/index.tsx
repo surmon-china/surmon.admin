@@ -3,6 +3,8 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import _ from 'lodash';
+import classnames from 'classnames';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
@@ -12,6 +14,8 @@ import {
   onMounted,
   useReactive,
   useWatch,
+  toRaw,
+  batchedUpdates,
   useComputed,
 } from '@/veact/src';
 import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd';
@@ -23,8 +27,6 @@ import {
   CheckOutlined,
   ReloadOutlined,
 } from '@ant-design/icons';
-import _ from 'lodash';
-import classnames from 'classnames';
 
 import { DropdownMenu } from '@/components/common/DropdownMenu';
 import {
@@ -123,19 +125,24 @@ export const CommentPage: React.FC = () => {
     });
   };
 
-  const refreshData = (reset: boolean = false) => {
-    if (reset) {
-      filterParams.state = DEFAULT_FILTER_PARAMS.state;
-      filterParams.sort = DEFAULT_FILTER_PARAMS.sort;
-      filterParams.postId = DEFAULT_FILTER_PARAMS.postId;
-      serarchKeyword.value = '';
+  const resetParamsAndRefresh = () => {
+    serarchKeyword.value = '';
+    if (_.isEqual(toRaw(filterParams), DEFAULT_FILTER_PARAMS)) {
       fetchData();
     } else {
-      fetchData({
-        page: comment.pagination?.current_page,
-        per_page: comment.pagination?.per_page,
+      batchedUpdates(() => {
+        filterParams.state = DEFAULT_FILTER_PARAMS.state;
+        filterParams.sort = DEFAULT_FILTER_PARAMS.sort;
+        filterParams.postId = DEFAULT_FILTER_PARAMS.postId;
       });
     }
+  };
+
+  const refreshData = () => {
+    fetchData({
+      page: comment.pagination?.current_page,
+      per_page: comment.pagination?.per_page,
+    });
   };
 
   const handleDelete = (comments: Array<CommentType>) => {
@@ -183,10 +190,7 @@ export const CommentPage: React.FC = () => {
       });
   };
 
-  useWatch(
-    () => filterParams,
-    () => fetchData()
-  );
+  useWatch(filterParams, () => fetchData());
 
   onMounted(() => {
     fetchData();
@@ -299,7 +303,7 @@ export const CommentPage: React.FC = () => {
           <Button
             icon={<ReloadOutlined />}
             loading={loading.state.value}
-            onClick={() => refreshData(true)}
+            onClick={() => resetParamsAndRefresh()}
           >
             重置并刷新
           </Button>

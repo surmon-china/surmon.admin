@@ -3,12 +3,15 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import _ from 'lodash';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   useShallowReactive,
   useRef,
+  toRaw,
   onMounted,
+  batchedUpdates,
   useReactive,
   useWatch,
 } from '@/veact/src';
@@ -96,26 +99,33 @@ export const ArticleList: React.FC = () => {
     });
 
     loading.promise(getArticles(getParams)).then((result) => {
-      article.data = result.data;
-      article.pagination = result.pagination;
+      batchedUpdates(() => {
+        article.data = result.data;
+        article.pagination = result.pagination;
+      });
       scrollTo(document.body);
     });
   };
 
-  const refreshData = (reset: boolean = false) => {
-    if (reset) {
-      serarchKeyword.value = '';
-      Object.keys(DEFAULT_FILTER_PARAMS).forEach((paramKey) => {
-        // @ts-ignore
-        filterParams[paramKey] = Reflect.get(DEFAULT_FILTER_PARAMS, paramKey);
-      });
+  const resetParamsAndRefresh = () => {
+    serarchKeyword.value = '';
+    if (_.isEqual(toRaw(filterParams), DEFAULT_FILTER_PARAMS)) {
       fetchData();
     } else {
-      fetchData({
-        page: article.pagination?.current_page,
-        per_page: article.pagination?.per_page,
+      batchedUpdates(() => {
+        Object.keys(DEFAULT_FILTER_PARAMS).forEach((paramKey) => {
+          // @ts-ignore
+          filterParams[paramKey] = Reflect.get(DEFAULT_FILTER_PARAMS, paramKey);
+        });
       });
     }
+  };
+
+  const refreshData = () => {
+    fetchData({
+      page: article.pagination?.current_page,
+      per_page: article.pagination?.per_page,
+    });
   };
 
   const handleStateChange = (articleIds: Array<ArticleId>, state: PublishState) => {
@@ -133,10 +143,7 @@ export const ArticleList: React.FC = () => {
     });
   };
 
-  useWatch(
-    () => filterParams,
-    () => fetchData()
-  );
+  useWatch(filterParams, () => fetchData());
 
   onMounted(() => {
     fetchData();
@@ -293,7 +300,7 @@ export const ArticleList: React.FC = () => {
             <Button
               icon={<ReloadOutlined />}
               loading={loading.state.value}
-              onClick={() => refreshData(true)}
+              onClick={resetParamsAndRefresh}
             >
               重置并刷新
             </Button>

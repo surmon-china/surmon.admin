@@ -64,25 +64,22 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
     });
   };
 
-  useWatch(
-    () => props.visible.value,
-    (visible) => {
-      if (visible) {
-        const targetComment = props.comment.value;
-        form.setFieldsValue(targetComment || {});
-        if (targetComment) {
-          if (!!targetComment.pid) {
-            fetchParentComment(targetComment.pid!);
-          }
-          if (targetComment.post_id !== COMMENT_GUESTBOOK_ID) {
-            fetchArticle(targetComment.post_id);
-          }
+  useWatch(props.visible, (visible) => {
+    if (visible) {
+      const targetComment = props.comment.value;
+      form.setFieldsValue(targetComment || {});
+      if (targetComment) {
+        if (!!targetComment.pid) {
+          fetchParentComment(targetComment.pid!);
         }
-      } else {
-        form.resetFields();
+        if (targetComment.post_id !== COMMENT_GUESTBOOK_ID) {
+          fetchArticle(targetComment.post_id);
+        }
       }
+    } else {
+      form.resetFields();
     }
-  );
+  });
 
   return (
     <Drawer

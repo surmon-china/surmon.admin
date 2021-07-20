@@ -9,6 +9,7 @@ import {
   useRef,
   onMounted,
   useReactive,
+  batchedUpdates,
   useWatch,
   useComputed,
 } from '@/veact/src';
@@ -101,23 +102,28 @@ export const AnnouncementPage: React.FC = () => {
     };
 
     loading.promise(getAnnouncements(getParams)).then((response) => {
-      announcement.data = response.data;
-      announcement.pagination = response.pagination;
+      batchedUpdates(() => {
+        announcement.data = response.data;
+        announcement.pagination = response.pagination;
+      });
       scrollTo(document.body);
     });
   };
 
-  const refreshData = (reset: boolean = false) => {
-    if (reset) {
-      filterParams.keyword = '';
-      filterParams.state = SELECT_ALL_VALUE;
+  const resetParamsAndRefresh = () => {
+    filterParams.keyword = '';
+    if (filterParams.state === SELECT_ALL_VALUE) {
       fetchData();
     } else {
-      fetchData({
-        page: announcement.pagination?.current_page,
-        per_page: announcement.pagination?.per_page,
-      });
+      filterParams.state = SELECT_ALL_VALUE;
     }
+  };
+
+  const refreshData = () => {
+    fetchData({
+      page: announcement.pagination?.current_page,
+      per_page: announcement.pagination?.per_page,
+    });
   };
 
   const handleDelete = (id: string) => {
@@ -229,7 +235,7 @@ export const AnnouncementPage: React.FC = () => {
           <Button
             icon={<ReloadOutlined />}
             loading={loading.state.value}
-            onClick={() => refreshData(true)}
+            onClick={() => resetParamsAndRefresh()}
           >
             重置并刷新
           </Button>
