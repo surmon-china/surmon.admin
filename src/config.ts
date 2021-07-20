@@ -28,8 +28,7 @@ export enum Environment {
   Production = 'production',
 }
 
-// export const API_URL = import.meta.env.VITE_API_URL as string;
-export const API_URL = '/api';
+export const API_URL = import.meta.env.VITE_API_URL as string;
 export const ENV = import.meta.env.MODE as Environment;
 export const isDev = import.meta.env.DEV;
 export const isProd = import.meta.env.PROD;
