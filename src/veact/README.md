@@ -30,6 +30,28 @@ yarn add veact react react-dom
 
 ### Usage
 
+**Lifecycle**
+
+```tsx
+import { onMounted, onBeforeUnmount, onUpdated } from "veact";
+
+export const component = () => {
+  onMounted(() => {
+    console.log("component mounted");
+  });
+
+  onUpdated(() => {
+    console.log("component updated");
+  });
+
+  onBeforeUnmount(() => {
+    console.log("component will unmount");
+  });
+
+  return <div>component</div>;
+};
+```
+
 **Base**
 
 ```tsx
@@ -107,25 +129,57 @@ export const component = () => {
 };
 ```
 
-**Lifecycle**
+**Computed**
 
 ```tsx
-import { onMounted, onBeforeUnmount, onUpdated } from "veact";
+import { useReactive, useComputed } from "veact";
 
 export const component = () => {
+  const data = useReactive({
+    count: 4,
+    year: 3,
+  });
+  const total = useComputed(() => {
+    return data.count * data.year;
+  });
+
+  const incrementCount = () => {
+    data.count++;
+  };
+
+  return (
+    <div>
+      <span>{total.value}</span>
+      <Button onClick={incrementCount}>incrementCount</Button>
+    </div>
+  );
+};
+```
+
+**Enhancer**
+
+```tsx
+import { useReactive, onMounted, batchedUpdates } from "veact";
+
+export const component = () => {
+  const data = useReactive({
+    count: 0,
+    list: [],
+  });
+  const fetch = () => {
+    fetchData().then((result) => {
+      batchedUpdates(() => {
+        data.count = result.count;
+        data.list = result.list;
+      });
+    });
+  };
+
   onMounted(() => {
-    console.log("component mounted");
+    fetch();
   });
 
-  onUpdated(() => {
-    console.log("component updated");
-  });
-
-  onBeforeUnmount(() => {
-    console.log("component will unmount");
-  });
-
-  return <div>component</div>;
+  return <div>{data.count}</div>;
 };
 ```
 
@@ -134,25 +188,25 @@ export const component = () => {
 ```ts
 import {
   // veact APIs
-  //
+
   // lifecycle
   onMounted, // lifecycle for react mounted
   onBeforeUnmount, // lifecycle for react will unmount
   onUpdated, // lifecycle for react updated
-  //
+
   // data
   useRef, // ref hook
   useShallowRef, // shallowRef hook
   useReactive, // reactive hook
   useShallowReactive, // shallowReactive hook
   useComputed, // computed hook
-  //
+
   // watch
   watch, // watch for reactivity data
   useWatch, // watch hook
   watchEffect, // watchEffect for reactivity data
   useWatchEffect, // watchEffect hook
-  //
+
   // enhancer
   useReactivity, // any object data to reactivity data
   batchedUpdates, // batchedUpdates === ReactDOM.unstable_batchedUpdates
