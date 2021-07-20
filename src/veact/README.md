@@ -32,7 +32,7 @@ yarn add veact react react-dom
 
 **Base**
 
-```ts
+```tsx
 import { useRef } from "veact";
 
 export const component = () => {
@@ -54,7 +54,7 @@ export const component = () => {
 
 transform any object to reactivity.
 
-```ts
+```tsx
 import { ref, useReactivity } from "veact";
 
 const _count = useRef(0);
@@ -76,7 +76,7 @@ export const component = () => {
 
 **Watch**
 
-```ts
+```tsx
 import { useReactive, useWatch } from "veact";
 
 export const component = () => {
@@ -109,7 +109,7 @@ export const component = () => {
 
 **Lifecycle**
 
-```ts
+```tsx
 import { onMounted, onBeforeUnmount, onUpdated } from "veact";
 
 export const component = () => {
