@@ -33,21 +33,21 @@ yarn add veact react react-dom
 **Base**
 
 ```ts
-import { useRef } from 'veact'
+import { useRef } from "veact";
 
-export component = () => {
-  const count = useRef(0)
+export const component = () => {
+  const count = useRef(0);
   const increment = () => {
-    count.value ++
-  }
+    count.value++;
+  };
 
   return (
     <div>
       <span>{count.value}</span>
       <Button onClick={increment}>increment</Button>
     </div>
-  )
-}
+  );
+};
 ```
 
 **Reactivity**
@@ -55,78 +55,78 @@ export component = () => {
 transform any object to reactivity.
 
 ```ts
-import { ref, useReactivity } from 'veact'
+import { ref, useReactivity } from "veact";
 
-const _count = useRef(0)
+const _count = useRef(0);
 
-export component = () => {
-  const count = useReactivity(() => _count)
+export const component = () => {
+  const count = useReactivity(() => _count);
   const increment = () => {
-    data.value ++
-  }
+    data.value++;
+  };
 
   return (
     <div>
       <span>{count.value}</span>
       <Button onClick={increment}>increment</Button>
     </div>
-  )
-}
+  );
+};
 ```
 
 **Watch**
 
 ```ts
-import { useReactive, useWatch } from 'veact'
+import { useReactive, useWatch } from "veact";
 
-export component = () => {
+export const component = () => {
   const data = useReactive({
-    count: 0
-  })
+    count: 0,
+  });
   const increment = () => {
-    data.count ++
-  }
+    data.count++;
+  };
 
   useWatch(data, (newData) => {
-    console.log('data changed', newData)
-  })
+    console.log("data changed", newData);
+  });
 
-  useWatch(() => data.count, (newCount) => {
-    console.log('count changed', newCount)
-  })
+  useWatch(
+    () => data.count,
+    (newCount) => {
+      console.log("count changed", newCount);
+    }
+  );
 
   return (
     <div>
       <span>{data.count}</span>
       <Button onClick={increment}>increment</Button>
     </div>
-  )
-}
+  );
+};
 ```
 
 **Lifecycle**
 
 ```ts
-import { onMounted, onBeforeUnmount, onUpdated } from 'veact'
+import { onMounted, onBeforeUnmount, onUpdated } from "veact";
 
-export component = () => {
-
+export const component = () => {
   onMounted(() => {
-    console.log('component mounted')
-  })
+    console.log("component mounted");
+  });
 
   onUpdated(() => {
-    console.log('component updated')
-  })
+    console.log("component updated");
+  });
 
   onBeforeUnmount(() => {
-    console.log('component will unmount')
-  })
+    console.log("component will unmount");
+  });
 
-  return (
-    <div>component</div>
-  )
-}
+  return <div>component</div>;
+};
 ```
 
 ### API
