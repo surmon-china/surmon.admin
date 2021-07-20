@@ -153,7 +153,7 @@ import {
   watchEffect, // watchEffect for reactivity data
   useWatchEffect, // watchEffect hook
   //
-  // ehancer
+  // enhancer
   useReactivity, // any object data to reactivity data
   batchedUpdates, // batchedUpdates === ReactDOM.unstable_batchedUpdates
 
