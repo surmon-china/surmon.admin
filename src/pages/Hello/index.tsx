@@ -7,7 +7,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { useReactive } from '@/veact';
+import { useReactive } from '@/veact/src';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 import tokenService from '@/services/token';
 import { useLoading } from '@/services/loading';
@@ -16,7 +16,7 @@ import { RouteKey, rc } from '@/route';
 
 import styles from './style.module.less';
 
-export const WhoPage: React.FC = () => {
+export const HelloPage: React.FC = () => {
   const history = useHistory();
   const loading = useLoading(false);
   const inputState = useReactive({
@@ -61,7 +61,7 @@ export const WhoPage: React.FC = () => {
   };
 
   return (
-    <div className={styles.whoPage}>
+    <div className={styles.helloPage}>
       <Spin spinning={loading.state.value} indicator={<LoadingOutlined />}>
         <SwitchTransition mode="out-in">
           <CSSTransition

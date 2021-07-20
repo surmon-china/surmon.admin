@@ -34,7 +34,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
       onOk() {
         console.log('退出系统');
         removeToken();
-        history.push(rc(RouteKey.Who).path);
+        history.push(rc(RouteKey.Hello).path);
       },
     });
   };
@@ -54,7 +54,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
         ></Button>
       </div>
       <div className={styles.user}>
-        <Spin spinning={admin.loading} size="small">
+        <Spin spinning={admin.loading.value} size="small">
           <Dropdown
             placement="bottomRight"
             overlay={

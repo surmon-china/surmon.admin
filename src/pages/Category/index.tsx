@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { useShallowReactive, useRef, onMounted, useComputed } from '@/veact';
+import { useShallowReactive, useRef, onMounted, useComputed } from '@/veact/src';
 import { Button, Card, Divider, Modal, Space, Spin, Tree, Typography } from 'antd';
 import {
   DeleteOutlined,

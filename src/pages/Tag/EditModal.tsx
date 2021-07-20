@@ -1,5 +1,5 @@
 import React from 'react';
-import { Ref, useWatch } from '@/veact';
+import { Ref, useWatch } from '@/veact/src';
 import { Form, Input, Modal, Divider, Typography } from 'antd';
 
 import { FormDataExtend } from '@/components/common/FormDataExtend';

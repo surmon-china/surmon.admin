@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { useRef, onMounted } from '@/veact';
+import { useRef, onMounted } from '@/veact/src';
 import { Row, Col, Card, Statistic, Space } from 'antd';
 import {
   EyeOutlined,

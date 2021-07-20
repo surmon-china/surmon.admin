@@ -110,7 +110,7 @@ http.interceptors.response.use(
     // 如果是 401，即：登陆失败，则删除 token 并跳转到登陆页
     if (error.response.status === HTTPCode.UNAUTHORIZED) {
       token.removeToken();
-      window.location.href = rc(RouteKey.Who).path;
+      window.location.href = rc(RouteKey.Hello).path;
     }
     return Promise.reject(errorInfo);
   }

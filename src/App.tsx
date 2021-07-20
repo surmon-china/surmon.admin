@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { onMounted } from '@/veact';
+import { onMounted } from '@/veact/src';
 import 'moment/locale/zh-cn';
 
 import { ENV } from '@/config';
@@ -13,7 +13,7 @@ import { RouteKey, routeMap, rc } from '@/route';
 import { AppAuth } from '@/components/AppAuth';
 import { AppLayout } from '@/components/AppLayout';
 
-import { WhoPage } from '@/pages/Who';
+import { HelloPage } from '@/pages/Hello';
 import { NotFoundPage } from './pages/NotFound';
 import { DashboardPage } from './pages/Dashboard';
 import { AnnouncementPage } from './pages/Announcement';
@@ -39,7 +39,7 @@ export const App: React.FC = () => {
           </Route>
           <Route
             path={Array.from(routeMap.values())
-              .filter((route) => route.id !== RouteKey.Who)
+              .filter((route) => route.id !== RouteKey.Hello)
               .map((route) => route.path)}
           >
             <AppAuth>
@@ -81,8 +81,8 @@ export const App: React.FC = () => {
               </AppLayout>
             </AppAuth>
           </Route>
-          <Route path={rc(RouteKey.Who).path} exact>
-            <WhoPage />
+          <Route path={rc(RouteKey.Hello).path} exact>
+            <HelloPage />
           </Route>
           <Route path="*">
             <NotFoundPage />

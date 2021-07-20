@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { ref, reactive, readonly, useReactivity } from '@/veact';
+import { ref, reactive, readonly, useReactivity } from '@/veact/src';
 import { createLoading } from '@/services/loading';
 import { getAdminInfo } from '@/store/auth';
 
@@ -30,8 +30,6 @@ export const adminState = {
   refresh: fetch,
 };
 
-export const useAdminState = () => ({
-  ...adminState,
-  data: useReactivity(() => adminState.data),
-  loading: useReactivity(() => adminState.loading.value),
-});
+export const useAdminState = () => {
+  return useReactivity(() => adminState);
+};

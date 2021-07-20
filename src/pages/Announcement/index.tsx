@@ -11,7 +11,7 @@ import {
   useReactive,
   useWatch,
   useComputed,
-} from '@/veact';
+} from '@/veact/src';
 import {
   Table,
   Button,

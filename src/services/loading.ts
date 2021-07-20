@@ -4,7 +4,7 @@
  * @author Surmon <macichong@bytedance.com>
  */
 
-import { ref, useRef, useReactive, computed } from '@/veact';
+import { ref, useRef, useReactive, computed } from '@/veact/src';
 
 export function useLoading(initState = false) {
   return createLoading(initState, useRef);

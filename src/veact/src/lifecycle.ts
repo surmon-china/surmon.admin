@@ -1,5 +1,10 @@
+/**
+ * @module veact.lifecycle
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 export function onMounted(callback: () => any) {
   useEffect(() => {
@@ -7,7 +12,7 @@ export function onMounted(callback: () => any) {
   }, []);
 }
 
-export function onUnmount(callback: () => void) {
+export function onBeforeUnmount(callback: () => void) {
   useEffect(() => {
     return () => {
       callback();

@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { useRef, useComputed, onMounted } from '@/veact';
+import { useRef, useComputed, onMounted } from '@/veact/src';
 import { ConfigProvider, Layout } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 

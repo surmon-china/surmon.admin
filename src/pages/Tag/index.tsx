@@ -10,7 +10,7 @@ import {
   onMounted,
   useReactive,
   useComputed,
-} from '@/veact';
+} from '@/veact/src';
 import { Table, Button, Card, Input, Divider, Spin, Modal, Space } from 'antd';
 import {
   DeleteOutlined,

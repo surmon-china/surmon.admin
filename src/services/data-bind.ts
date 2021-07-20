@@ -1,4 +1,4 @@
-import { Ref, UnwrapNestedRefs, isReactive, isRef } from '@/veact';
+import { Ref, UnwrapNestedRefs, isReactive, isRef } from '@/veact/src';
 
 export function bindRef<T extends Ref>(refValue: T) {
   return {

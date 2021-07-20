@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useRef, onMounted, onUnmount } from '@/veact';
+import { useRef, onMounted, onBeforeUnmount } from '@/veact/src';
 import { notification, Typography } from 'antd';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 
@@ -72,11 +72,11 @@ export const AppAuth: React.FC = (props) => {
         description: '你还好吗？',
       });
       removeToken();
-      history.push(rc(RouteKey.Who).path);
+      history.push(rc(RouteKey.Hello).path);
     }
   });
 
-  onUnmount(() => {
+  onBeforeUnmount(() => {
     stopRenewalToken();
   });
 

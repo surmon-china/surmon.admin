@@ -43,8 +43,8 @@ export default defineConfig({
           } else if (id.includes('node_modules')) {
             return 'vendor';
           }
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 });

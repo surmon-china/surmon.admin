@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { reactive, readonly, watch, useReactivity } from '@/veact';
+import { reactive, readonly, watch } from '@/veact/src';
 
 const general = reactive({
   fullscreen: false,
@@ -26,8 +26,3 @@ export const generalState = {
   data: readonly(general),
   setFullscreen,
 };
-
-export const useGeneralState = () => ({
-  ...generalState,
-  data: useReactivity(() => generalState.data),
-});

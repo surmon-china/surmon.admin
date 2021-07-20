@@ -5,7 +5,13 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useShallowReactive, useRef, onMounted, useReactive, useWatch } from '@/veact';
+import {
+  useShallowReactive,
+  useRef,
+  onMounted,
+  useReactive,
+  useWatch,
+} from '@/veact/src';
 import { Button, Card, Input, Select, Divider, Modal, Space, TreeSelect } from 'antd';
 import {
   EditOutlined,

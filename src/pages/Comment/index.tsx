@@ -13,7 +13,7 @@ import {
   useReactive,
   useWatch,
   useComputed,
-} from '@/veact';
+} from '@/veact/src';
 import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd';
 import {
   DeleteOutlined,

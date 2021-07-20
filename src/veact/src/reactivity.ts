@@ -1,4 +1,9 @@
-// redirect all APIs from @vue/reactivity
+/**
+ * @module veact.reactivity
+ * @description redirect all APIs from @vue/reactivity
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 export {
   computed,
   customRef,
@@ -26,15 +31,17 @@ export {
   trigger,
   triggerRef,
   unref,
+  ReactiveEffect,
 } from '@vue/reactivity';
 
 export type {
+  EffectScheduler,
+  DebuggerOptions,
   ComputedGetter,
   ComputedRef,
   ComputedSetter,
   DebuggerEvent,
   DeepReadonly,
-  ReactiveEffect,
   ReactiveEffectOptions,
   Ref,
   RefUnwrapBailTypes,

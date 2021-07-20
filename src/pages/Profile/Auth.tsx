@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { onMounted } from '@/veact';
+import { onMounted } from '@/veact/src';
 import { Form, Input, Button, Spin, Divider, notification } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 
@@ -37,7 +37,7 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
         });
         setTimeout(() => {
           removeToken();
-          history.push(rc(RouteKey.Who).path);
+          history.push(rc(RouteKey.Hello).path);
         }, 1688);
       } else {
         fetchNewAdminAuth();

@@ -30,7 +30,7 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
           )}
         />
       </Link>
-      <Spin spinning={admin.loading} size="small">
+      <Spin spinning={admin.loading.value} size="small">
         <div className={styles.userInfo}>
           <img
             src={admin.data.gravatar}

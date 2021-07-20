@@ -17,7 +17,7 @@ import {
 } from '@ant-design/icons';
 
 export enum RouteKey {
-  Who,
+  Hello,
   Dashboard,
   Profile,
   Announcement,
@@ -40,9 +40,9 @@ export interface RouteConfig {
 export const routeMap: ReadonlyMap<RouteKey, RouteConfig> = new Map(
   [
     {
-      id: RouteKey.Who,
+      id: RouteKey.Hello,
       name: '来者何人',
-      path: '/who',
+      path: '/hello',
     },
     {
       id: RouteKey.Dashboard,

@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Ref, useWatch, onMounted } from '@/veact';
+import { Ref, useWatch, onMounted } from '@/veact/src';
 import { Card, Row, Col, Form, message, Spin } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { APP_LAYOUT_GUTTER_SIZE } from '@/config';

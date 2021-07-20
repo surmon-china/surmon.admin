@@ -7,7 +7,7 @@ import { debounce } from 'lodash';
 import classnames from 'classnames';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { useWatch } from '@/veact';
+import { useWatch, useReactivity } from '@/veact/src';
 import { Button, Select, Space, Typography, Spin } from 'antd';
 import {
   FullscreenOutlined,
@@ -17,7 +17,7 @@ import {
   EyeInvisibleOutlined,
   FullscreenExitOutlined,
 } from '@ant-design/icons';
-import { useGeneralState } from '@/state/general';
+import { generalState } from '@/state/general';
 import { saveFile } from '@/services/file';
 import storage from '@/services/storage';
 import { timestampToYMD } from '@/transformers/date';
@@ -77,7 +77,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
   const placeholder = props.placeholder || '请输入内容...';
   const propValue = props.value || '';
   const cacheID = props.cacheID || window.location.pathname;
-  const generalState = useGeneralState();
+  const general = useReactivity(() => generalState);
   const containerRef = useRef<HTMLDivElement>(null);
   const ueditor = useRef<editor.IStandaloneCodeEditor>();
   const [isPreview, setPreview] = useState<boolean>(false);
@@ -97,7 +97,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
     const widthRatio = isPreview ? 0.5 : 1;
     const layoutInfo = ueditor.current?.getLayoutInfo()!;
     ueditor.current?.layout({
-      width: generalState.data.fullscreen
+      width: general.data.fullscreen
         ? window.innerWidth * widthRatio
         : containerRef.current!.clientWidth * widthRatio,
       height: layoutInfo.height,
@@ -112,7 +112,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
     const layoutInfo = ueditor.current.getLayoutInfo()!;
     let targetHeight: number = 0;
 
-    if (generalState.data.fullscreen) {
+    if (general.data.fullscreen) {
       targetHeight = window.innerHeight - TOOLBAR_HEIGHT;
     } else {
       // 非全屏，则计算高度
@@ -140,7 +140,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
         height: targetHeight,
       });
     }
-  }, [generalState.data.fullscreen, props.maxRows, props.minRows]);
+  }, [general.data.fullscreen, props.maxRows, props.minRows]);
 
   const createEditor = () => {
     const ueditor = editor.create(containerRef.current!, {
@@ -184,7 +184,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
 
   // fullscreen change
   useWatch(
-    () => generalState.data,
+    () => general.data,
     () => handleResizeHeight()
   );
 
@@ -241,7 +241,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
       className={classnames(
         styles.universalEditor,
         props.formStatus && styles.formStatus,
-        generalState.data.fullscreen && styles.fullScreen
+        general.data.fullscreen && styles.fullScreen
       )}
     >
       {!props.disabledToolbar && (
@@ -287,13 +287,13 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
               size="small"
               disabled={props.disbaled}
               icon={
-                generalState.data.fullscreen ? (
+                general.data.fullscreen ? (
                   <FullscreenExitOutlined />
                 ) : (
                   <FullscreenOutlined />
                 )
               }
-              onClick={() => generalState.setFullscreen(!generalState.data.fullscreen)}
+              onClick={() => general.setFullscreen(!general.data.fullscreen)}
             />
           </Space>
         </div>

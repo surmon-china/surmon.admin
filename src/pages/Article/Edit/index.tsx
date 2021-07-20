@@ -13,7 +13,7 @@ import {
   HeartOutlined,
   EyeOutlined,
 } from '@ant-design/icons';
-import { useRef, onMounted } from '@/veact';
+import { useRef, onMounted } from '@/veact/src';
 import { RouteKey, rc } from '@/route';
 import { getUEditorCache } from '@/components/common/UniversalEditor';
 import { Article } from '@/constants/article';
