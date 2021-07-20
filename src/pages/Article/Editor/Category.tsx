@@ -9,11 +9,11 @@ import { CategoryFormModel } from '.';
 
 import styles from './style.module.less';
 
-interface TagSelectProps {
+interface CategorySelectProps {
   value?: Array<string>;
   onChange?(value: Array<string>): void;
 }
-const CategorySelect: React.FC<TagSelectProps> = (props) => {
+const CategorySelect: React.FC<CategorySelectProps> = (props) => {
   const categoriesLoading = useLoading();
   const categories = useRef<Array<CategoryTree>>([]);
   const fetchCategories = () => {
