@@ -5,12 +5,12 @@
 
 import { reactive, readonly, watch } from '@/veact/src';
 
-const general = reactive({
+const state = reactive({
   fullscreen: false,
 });
 
 watch(
-  () => general.fullscreen,
+  () => state.fullscreen,
   (fullscreen) => {
     fullscreen
       ? document.body.classList.add('fullscreen')
@@ -19,10 +19,10 @@ watch(
 );
 
 const setFullscreen = (value: boolean) => {
-  general.fullscreen = value;
+  state.fullscreen = value;
 };
 
-export const generalState = {
-  data: readonly(general),
+export const general = {
+  state: readonly(state),
   setFullscreen,
 };

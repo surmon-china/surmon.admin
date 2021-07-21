@@ -7,6 +7,7 @@
 import { notification } from 'antd';
 import axios, { AxiosInstance } from 'axios';
 
+import { loading } from '@/state/loading';
 import { AUTH_API_PATH } from '@/store/auth';
 import { API_URL, APP_AUTH_HEADER_KEY } from '@/config';
 import { rc, RouteKey } from '@/route';
@@ -57,6 +58,7 @@ const http = axios.create({
 
 // request
 http.interceptors.request.use((config) => {
+  loading.start();
   if (token.isTokenValid()) {
     config.headers[APP_AUTH_HEADER_KEY] = `Bearer ${token.getToken()}`;
   } else if (config.url !== AUTH_API_PATH.LOGIN) {
@@ -73,6 +75,7 @@ http.interceptors.request.use((config) => {
 http.interceptors.response.use(
   (response) => {
     if (response.data.status === HTTPStatus.Success) {
+      loading.complete();
       notification.success({
         message: '数据请求成功',
         description: response.data.message,
@@ -102,6 +105,7 @@ http.interceptors.response.use(
       message: messageText + ': ' + errorText,
     };
     console.debug('axios error:', errorInfo);
+    loading.fail();
     notification.error({
       message: messageText,
       description: errorText,

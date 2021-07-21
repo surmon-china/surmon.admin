@@ -5,11 +5,13 @@
 
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { onMounted } from '@/veact/src';
+import LoadingBar from 'react-top-loading-bar';
+import { onMounted, useReactivity } from '@/veact/src';
 import 'moment/locale/zh-cn';
 
-import { ENV } from '@/config';
+import { ENV, APP_COLOR_PRIMARY } from '@/config';
 import { RouteKey, routeMap, rc } from '@/route';
+import { loading } from '@/state/loading';
 import { AppAuth } from '@/components/AppAuth';
 import { AppLayout } from '@/components/AppLayout';
 
@@ -26,12 +28,23 @@ import { ArticleCreate } from './pages/Article/Create';
 import { ProfilePage } from './pages/Profile';
 
 export const App: React.FC = () => {
+  const loadingState = useReactivity(() => loading.state);
+
   onMounted(() => {
     console.info(`系统启动成功！当前运行环境是：${ENV}`);
   });
 
   return (
     <div className="app" id="app">
+      <LoadingBar
+        shadow={false}
+        height={3}
+        waitingTime={200}
+        loaderSpeed={600}
+        className={loadingState.failed ? 'red' : APP_COLOR_PRIMARY}
+        color={loadingState.failed ? 'red' : APP_COLOR_PRIMARY}
+        progress={loadingState.percent}
+      />
       <BrowserRouter>
         <Switch>
           <Route path="/" exact>
