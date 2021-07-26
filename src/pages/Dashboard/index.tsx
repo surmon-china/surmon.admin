@@ -3,36 +3,36 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
-import { useRef, onMounted } from 'veact';
-import { useLoading } from 'veact-use';
-import { Row, Col, Card, Statistic, Space } from 'antd';
+import React from 'react'
+import { useRef, onMounted } from 'veact'
+import { useLoading } from 'veact-use'
+import { Row, Col, Card, Statistic, Space } from 'antd'
 import {
   EyeOutlined,
   TagOutlined,
   CommentOutlined,
   CoffeeOutlined,
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 
-import { APP_LAYOUT_SPACE_SIZE } from '@/config';
-import { Statistics, getStatistics } from '@/store/system';
-import { Analytics } from './Analytics';
+import { APP_LAYOUT_SPACE_SIZE } from '@/config'
+import { Statistics, getStatistics } from '@/store/system'
+import { Analytics } from './Analytics'
 
-import styles from './style.module.less';
+import styles from './style.module.less'
 
 export const DashboardPage: React.FC = () => {
-  const statistics = useRef<Statistics>({});
-  const loading = useLoading();
+  const statistics = useRef<Statistics>({})
+  const loading = useLoading()
 
   const fetchStatistics = () => {
     loading.promise(getStatistics()).then((result) => {
-      statistics.value = result;
-    });
-  };
+      statistics.value = result
+    })
+  }
 
   onMounted(() => {
-    fetchStatistics();
-  });
+    fetchStatistics()
+  })
 
   return (
     <Space
@@ -104,5 +104,5 @@ export const DashboardPage: React.FC = () => {
         </Col>
       </Row>
     </Space>
-  );
-};
+  )
+}

@@ -1,37 +1,37 @@
-import React from 'react';
-import { Ref, useWatch } from 'veact';
-import { Form, Input, Modal, TreeSelect, Typography, Divider } from 'antd';
-import { DataNode } from 'antd/lib/tree';
-import { FormDataExtend } from '@/components/common/FormDataExtend';
-import { Category as CategoryType } from '@/constants/category';
-import { stringToYMD } from '@/transformers/date';
+import React from 'react'
+import { Ref, useWatch } from 'veact'
+import { Form, Input, Modal, TreeSelect, Typography, Divider } from 'antd'
+import { DataNode } from 'antd/lib/tree'
+import { FormDataExtend } from '@/components/common/FormDataExtend'
+import { Category as CategoryType } from '@/constants/category'
+import { stringToYMD } from '@/transformers/date'
 
-const CATEGORY_NULL_VALUE = null as any;
+const CATEGORY_NULL_VALUE = null as any
 const formLayout = {
   labelCol: { span: 5 },
   wrapperCol: { span: 18 },
-};
+}
 
 export interface EditModalProps {
-  title: string;
-  loading: boolean;
-  visible: Ref<boolean>;
-  category: Ref<CategoryType | null>;
-  tree: DataNode[];
-  categories: CategoryType[];
-  onSubmit(category: CategoryType): void;
-  onCancel(): void;
+  title: string
+  loading: boolean
+  visible: Ref<boolean>
+  category: Ref<CategoryType | null>
+  tree: DataNode[]
+  categories: CategoryType[]
+  onSubmit(category: CategoryType): void
+  onCancel(): void
 }
 
 export const EditModal: React.FC<EditModalProps> = (props) => {
-  const [form] = Form.useForm<CategoryType>();
+  const [form] = Form.useForm<CategoryType>()
   const handleSubmit = () => {
-    form.validateFields().then(props.onSubmit);
-  };
+    form.validateFields().then(props.onSubmit)
+  }
 
   useWatch(props.visible, (visible) => {
     if (!visible) {
-      form.resetFields();
+      form.resetFields()
     } else {
       form.setFieldsValue(
         props.category.value || {
@@ -43,9 +43,9 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
             },
           ],
         }
-      );
+      )
     }
-  });
+  })
 
   return (
     <Modal
@@ -103,15 +103,15 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
               message: '请选择正确的父分类',
               validator(_, value) {
                 if (value === CATEGORY_NULL_VALUE) {
-                  return Promise.resolve();
+                  return Promise.resolve()
                 }
                 if (value === props.category.value?._id) {
-                  return Promise.reject();
+                  return Promise.reject()
                 }
                 if (props.categories.some((c) => c._id === value)) {
-                  return Promise.resolve();
+                  return Promise.resolve()
                 } else {
-                  return Promise.reject();
+                  return Promise.reject()
                 }
               },
             },
@@ -146,5 +146,5 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
         </Form.Item>
       </Form>
     </Modal>
-  );
-};
+  )
+}

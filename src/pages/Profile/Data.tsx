@@ -1,17 +1,17 @@
-import React from 'react';
-import { useLoadings } from 'veact-use';
-import { Button, Row, Col, Divider, Modal } from 'antd';
+import React from 'react'
+import { useLoadings } from 'veact-use'
+import { Button, Row, Col, Divider, Modal } from 'antd'
 import {
   CloudUploadOutlined,
   CloudDownloadOutlined,
   SyncOutlined,
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 
-import { updateDatabaseBackup, updateSyndicationCache } from '@/store/system';
+import { updateDatabaseBackup, updateSyndicationCache } from '@/store/system'
 
 export interface DataFormProps {
-  labelSpan: number;
-  wrapperSpan: number;
+  labelSpan: number
+  wrapperSpan: number
 }
 
 enum LoadingKey {
@@ -20,30 +20,30 @@ enum LoadingKey {
 }
 
 export const DataForm: React.FC<DataFormProps> = (props) => {
-  const loading = useLoadings(LoadingKey.Databse, LoadingKey.Syndication);
+  const loading = useLoadings(LoadingKey.Databse, LoadingKey.Syndication)
   const updateDatebaseBackup = () => {
-    return loading.promise(LoadingKey.Databse, updateDatabaseBackup()).then();
-  };
+    return loading.promise(LoadingKey.Databse, updateDatabaseBackup()).then()
+  }
 
   const updateSyndication = () => {
-    return loading.promise(LoadingKey.Syndication, updateSyndicationCache()).then();
-  };
+    return loading.promise(LoadingKey.Syndication, updateSyndicationCache()).then()
+  }
 
   const handleUpdateDatabaseBackup = () => {
     Modal.confirm({
       centered: true,
       title: '更新备份会导致强制覆盖旧的数据库备份，确定要继续吗？',
       onOk: updateDatebaseBackup,
-    });
-  };
+    })
+  }
 
   const handleUpdateSyndication = () => {
     Modal.confirm({
       centered: true,
       title: '将会更新 Sitemap 以及 SSR 所需而生成的 XML 文件，确定要继续吗？',
       onOk: updateSyndication,
-    });
-  };
+    })
+  }
 
   return (
     <Row>
@@ -72,5 +72,5 @@ export const DataForm: React.FC<DataFormProps> = (props) => {
         </Button>
       </Col>
     </Row>
-  );
-};
+  )
+}

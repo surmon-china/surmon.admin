@@ -3,12 +3,12 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
+import React from 'react'
 import {
   SortAscendingOutlined,
   SortDescendingOutlined,
   FireOutlined,
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 
 /** 数据排序状态 */
 export enum SortType {
@@ -35,9 +35,9 @@ const sortTypeMap = new Map(
       icon: <FireOutlined />,
     },
   ].map((item) => [item.id, item])
-);
+)
 
 export const st = (state: SortType) => {
-  return sortTypeMap.get(state)!;
-};
-export const sortTypes = Array.from<ReturnType<typeof st>>(sortTypeMap.values());
+  return sortTypeMap.get(state)!
+}
+export const sortTypes = Array.from<ReturnType<typeof st>>(sortTypeMap.values())

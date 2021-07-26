@@ -3,19 +3,19 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
-import { Button, Dropdown, Menu } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import React from 'react'
+import { Button, Dropdown, Menu } from 'antd'
+import { DownOutlined } from '@ant-design/icons'
 
 export interface ButtonMenuProps {
-  className?: string;
-  disabled?: boolean;
-  onClick?(): any;
+  className?: string
+  disabled?: boolean
+  onClick?(): any
   options: Array<{
-    icon?: React.ReactNode;
-    label: React.ReactNode;
-    onClick(): any;
-  }>;
+    icon?: React.ReactNode
+    label: React.ReactNode
+    onClick(): any
+  }>
 }
 
 export const DropdownMenu: React.FC<ButtonMenuProps> = (props) => {
@@ -37,5 +37,5 @@ export const DropdownMenu: React.FC<ButtonMenuProps> = (props) => {
         {props.children} <DownOutlined />
       </Button>
     </Dropdown>
-  );
-};
+  )
+}

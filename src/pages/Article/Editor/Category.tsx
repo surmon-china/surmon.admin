@@ -1,30 +1,30 @@
-import React from 'react';
-import { useRef, onMounted } from 'veact';
-import { Spin, Button, Form, Tree, Typography, Divider, Space } from 'antd';
-import { FormInstance } from 'antd/lib/form';
-import { ReloadOutlined } from '@ant-design/icons';
-import { useLoading } from 'veact-use';
-import { getCategories, CategoryTree, getAntdTreeByTree } from '@/store/category';
-import { CategoryFormModel } from '.';
+import React from 'react'
+import { useRef, onMounted } from 'veact'
+import { Spin, Button, Form, Tree, Typography, Divider, Space } from 'antd'
+import { FormInstance } from 'antd/lib/form'
+import { ReloadOutlined } from '@ant-design/icons'
+import { useLoading } from 'veact-use'
+import { getCategories, CategoryTree, getAntdTreeByTree } from '@/store/category'
+import { CategoryFormModel } from '.'
 
-import styles from './style.module.less';
+import styles from './style.module.less'
 
 interface CategorySelectProps {
-  value?: Array<string>;
-  onChange?(value: Array<string>): void;
+  value?: Array<string>
+  onChange?(value: Array<string>): void
 }
 const CategorySelect: React.FC<CategorySelectProps> = (props) => {
-  const categoriesLoading = useLoading();
-  const categories = useRef<Array<CategoryTree>>([]);
+  const categoriesLoading = useLoading()
+  const categories = useRef<Array<CategoryTree>>([])
   const fetchCategories = () => {
     categoriesLoading.promise(getCategories({ per_page: 999 })).then((result) => {
-      categories.value = result.tree;
-    });
-  };
+      categories.value = result.tree
+    })
+  }
 
   onMounted(() => {
-    fetchCategories();
-  });
+    fetchCategories()
+  })
 
   return (
     <div>
@@ -41,19 +41,19 @@ const CategorySelect: React.FC<CategorySelectProps> = (props) => {
             checkStrictly={true}
             checkedKeys={props.value}
             onCheck={(data) => {
-              const ids = Array.isArray(data) ? data : data.checked;
-              props.onChange?.(ids as string[]);
+              const ids = Array.isArray(data) ? data : data.checked
+              props.onChange?.(ids as string[])
             }}
             treeData={getAntdTreeByTree(categories.value)}
             titleRender={(nodeData) => {
-              const category: CategoryTree = (nodeData as any).data;
+              const category: CategoryTree = (nodeData as any).data
               return (
                 <Space size="small">
                   <Typography.Text strong={true}>{category.name}</Typography.Text>
                   <Divider type="vertical" />
                   {category.slug}
                 </Space>
-              );
+              )
             }}
           />
         </Spin>
@@ -69,11 +69,11 @@ const CategorySelect: React.FC<CategorySelectProps> = (props) => {
         刷新列表
       </Button>
     </div>
-  );
-};
+  )
+}
 
 export interface CategoryFormProps {
-  form: FormInstance<CategoryFormModel>;
+  form: FormInstance<CategoryFormModel>
 }
 export const CategoryForm: React.FC<CategoryFormProps> = (props) => {
   return (
@@ -87,9 +87,9 @@ export const CategoryForm: React.FC<CategoryFormProps> = (props) => {
             message: '至少应该选择一个分类',
             validator(_, value: string[]) {
               if (!!value?.length) {
-                return Promise.resolve();
+                return Promise.resolve()
               } else {
-                return Promise.reject();
+                return Promise.reject()
               }
             },
           },
@@ -98,5 +98,5 @@ export const CategoryForm: React.FC<CategoryFormProps> = (props) => {
         <CategorySelect />
       </Form.Item>
     </Form>
-  );
-};
+  )
+}

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Table, Button, Typography, Popover, Avatar, Tag, Space } from 'antd';
+import React from 'react'
+import { Table, Button, Typography, Popover, Avatar, Tag, Space } from 'antd'
 import {
   DeleteOutlined,
   LinkOutlined,
@@ -7,27 +7,27 @@ import {
   HeartOutlined,
   CheckOutlined,
   StopOutlined,
-} from '@ant-design/icons';
-import { Pagination } from '@/constants/request';
-import { Comment as CommentType, CommentState, cs } from '@/constants/comment';
-import { parseBrowser, parseOS } from '@/transformers/ua';
-import { stringToYMD } from '@/transformers/date';
-import { getGravatar } from '@/transformers/gravatar';
-import { getFEArticleUrl } from '@/transformers/url';
+} from '@ant-design/icons'
+import { Pagination } from '@/constants/request'
+import { Comment as CommentType, CommentState, cs } from '@/constants/comment'
+import { parseBrowser, parseOS } from '@/transformers/ua'
+import { stringToYMD } from '@/transformers/date'
+import { getGravatar } from '@/transformers/gravatar'
+import { getFEArticleUrl } from '@/transformers/url'
 
-import styles from './style.module.less';
+import styles from './style.module.less'
 
 export interface CommentListTableProps {
-  loading: boolean;
-  data: Array<CommentType>;
-  pagination: Pagination;
-  selectedIds: Array<string>;
-  onPostId(id: number): any;
-  onSelecte(ids: Array<any>): any;
-  onPagination(page: number, pageSize?: number): any;
-  onDetail(comment: CommentType, index: number): any;
-  onDelete(comment: CommentType, index: number): any;
-  onUpdateState(comment: CommentType, state: CommentState): any;
+  loading: boolean
+  data: Array<CommentType>
+  pagination: Pagination
+  selectedIds: Array<string>
+  onPostId(id: number): any
+  onSelecte(ids: Array<any>): any
+  onPagination(page: number, pageSize?: number): any
+  onDetail(comment: CommentType, index: number): any
+  onDelete(comment: CommentType, index: number): any
+  onUpdateState(comment: CommentType, state: CommentState): any
 }
 export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
   return (
@@ -57,7 +57,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
           width: 40,
           dataIndex: 'pid',
           render(_, comment) {
-            return comment.pid || '-';
+            return comment.pid || '-'
           },
         },
         {
@@ -73,7 +73,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
               >
                 {comment.post_id || '留言板'}
               </Button>
-            );
+            )
           },
         },
         {
@@ -127,7 +127,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   )}
                 </span>
               </Space>
-            );
+            )
           },
         },
         {
@@ -167,7 +167,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   {stringToYMD(comment.create_at!)}
                 </span>
               </Space>
-            );
+            )
           },
         },
         {
@@ -175,7 +175,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
           width: 120,
           dataIndex: 'state',
           render: (_, comment) => {
-            const state = cs(comment.state);
+            const state = cs(comment.state)
             return (
               <Space direction="vertical">
                 <Tag
@@ -188,7 +188,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   {state.name}
                 </Tag>
               </Space>
-            );
+            )
           },
         },
         {
@@ -281,5 +281,5 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
         },
       ]}
     />
-  );
-};
+  )
+}

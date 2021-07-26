@@ -3,38 +3,38 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
-import { Ref, useWatch } from 'veact';
-import { Form, Select, Modal, Space, Divider, Typography } from 'antd';
-import { UniversalEditor } from '@/components/common/UniversalEditor';
-import { Announcement } from '@/constants/announcement';
-import { ps } from '@/constants/publish';
-import { stringToYMD } from '@/transformers/date';
-import { STATE_IDS } from './index';
+import React from 'react'
+import { Ref, useWatch } from 'veact'
+import { Form, Select, Modal, Space, Divider, Typography } from 'antd'
+import { UniversalEditor } from '@/components/common/UniversalEditor'
+import { Announcement } from '@/constants/announcement'
+import { ps } from '@/constants/publish'
+import { stringToYMD } from '@/transformers/date'
+import { STATE_IDS } from './index'
 
 const formLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 19 },
-};
+}
 
 export interface EditModalProps {
-  title: string;
-  loading: boolean;
-  visible: Ref<boolean>;
-  announcement: Ref<Announcement | null>;
-  onSubmit(announcement: Announcement): void;
-  onCancel(): void;
+  title: string
+  loading: boolean
+  visible: Ref<boolean>
+  announcement: Ref<Announcement | null>
+  onSubmit(announcement: Announcement): void
+  onCancel(): void
 }
 
 export const EditModal: React.FC<EditModalProps> = (props) => {
-  const [form] = Form.useForm<Announcement>();
+  const [form] = Form.useForm<Announcement>()
   const handleSubmit = () => {
-    form.validateFields().then(props.onSubmit);
-  };
+    form.validateFields().then(props.onSubmit)
+  }
 
   useWatch(props.visible, (visible) => {
-    visible ? form.setFieldsValue(props.announcement.value || {}) : form.resetFields();
-  });
+    visible ? form.setFieldsValue(props.announcement.value || {}) : form.resetFields()
+  })
 
   return (
     <Modal
@@ -75,7 +75,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
           <Select
             placeholder="选择状态"
             options={STATE_IDS.map((state) => {
-              const target = ps(state);
+              const target = ps(state)
               return {
                 value: target.id,
                 label: (
@@ -84,7 +84,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
                     {target.name}
                   </Space>
                 ),
-              };
+              }
             })}
           />
         </Form.Item>
@@ -103,5 +103,5 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
         </Form.Item>
       </Form>
     </Modal>
-  );
-};
+  )
+}

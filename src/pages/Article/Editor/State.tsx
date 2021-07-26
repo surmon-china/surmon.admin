@@ -1,21 +1,21 @@
-import React from 'react';
-import { Button, Form, Select, Input, Divider, Space } from 'antd';
-import { FormInstance } from 'antd/lib/form';
-import { CheckOutlined } from '@ant-design/icons';
-import { publishStates } from '@/constants/publish';
-import { articleOrigins } from '@/constants/article/origin';
-import { articlePublics, ArticlePublic } from '@/constants/article/public';
-import { StateFormModel } from '.';
+import React from 'react'
+import { Button, Form, Select, Input, Divider, Space } from 'antd'
+import { FormInstance } from 'antd/lib/form'
+import { CheckOutlined } from '@ant-design/icons'
+import { publishStates } from '@/constants/publish'
+import { articleOrigins } from '@/constants/article/origin'
+import { articlePublics, ArticlePublic } from '@/constants/article/public'
+import { StateFormModel } from '.'
 
 const requiredRule = {
   message: '必选',
   required: true,
-};
+}
 
 export interface StateFormProps {
-  form: FormInstance<StateFormModel>;
-  submitting: boolean;
-  onSubmit(): void;
+  form: FormInstance<StateFormModel>
+  submitting: boolean
+  onSubmit(): void
 }
 export const StateForm: React.FC<StateFormProps> = (props) => {
   return (
@@ -38,7 +38,7 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
                   {state.name}
                 </Space>
               ),
-            };
+            }
           })}
         />
       </Form.Item>
@@ -54,7 +54,7 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
                   {state.name}
                 </Space>
               ),
-            };
+            }
           })}
         />
       </Form.Item>
@@ -70,7 +70,7 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
                   {state.name}
                 </Space>
               ),
-            };
+            }
           })}
         />
       </Form.Item>
@@ -95,5 +95,5 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
         提交
       </Button>
     </Form>
-  );
-};
+  )
+}

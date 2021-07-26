@@ -1,28 +1,28 @@
-import React from 'react';
-import { Card, Divider, Button, Spin, Result } from 'antd';
-import { StockOutlined, MehOutlined } from '@ant-design/icons';
-import classnames from 'classnames';
-import { useRef, onMounted } from 'veact';
+import React from 'react'
+import { Card, Divider, Button, Spin, Result } from 'antd'
+import { StockOutlined, MehOutlined } from '@ant-design/icons'
+import classnames from 'classnames'
+import { useRef, onMounted } from 'veact'
 
-import { APP_COLOR_PRIMARY } from '@/config';
-import { getGAToken } from '@/store/system';
-import { useLoading } from 'veact-use';
-import storage from '@/services/storage';
-import styles from './style.module.less';
+import { APP_COLOR_PRIMARY } from '@/config'
+import { getGAToken } from '@/store/system'
+import { useLoading } from 'veact-use'
+import storage from '@/services/storage'
+import styles from './style.module.less'
 
 // @ts-ignore
-import { loadScript } from './analytics-loader.js';
+import { loadScript } from './analytics-loader.js'
 
-const GOOGLE_CHART_VIEW_SELECTOR_ID = 'view-selector';
-const GOOGLE_CHART_TIMELINE_ID = 'timeline';
+const GOOGLE_CHART_VIEW_SELECTOR_ID = 'view-selector'
+const GOOGLE_CHART_TIMELINE_ID = 'timeline'
 const GOOGLE_CHART_ID_MAP = {
   COUNTRY: 'country',
   CITY: 'city',
   BROWSER: 'browser',
   OS: 'os',
-};
+}
 
-const GOOGLE_CHART_BG_OPACITY = 0.05;
+const GOOGLE_CHART_BG_OPACITY = 0.05
 const GOOGLE_CHART_COLORS = [
   APP_COLOR_PRIMARY,
   '#2fc32f',
@@ -35,29 +35,29 @@ const GOOGLE_CHART_COLORS = [
   '#1c7cd5',
   '#56b9f7',
   '#0ae8eb',
-];
+]
 
 export const Analytics: React.FC = () => {
-  const isDisabled = useRef(Boolean(storage.get('DISABLED_GA')));
-  const isShowSelectView = useRef(false);
-  const loading = useLoading();
+  const isDisabled = useRef(Boolean(storage.get('DISABLED_GA')))
+  const isShowSelectView = useRef(false)
+  const loading = useLoading()
 
   const handleToggleShow = () => {
-    isShowSelectView.value = !isShowSelectView.value;
-  };
+    isShowSelectView.value = !isShowSelectView.value
+  }
 
   const instanceGA = async (access_token: string): Promise<void> => {
-    const gapi = (window as any).gapi;
+    const gapi = (window as any).gapi
     gapi.analytics.ready(() => {
       // 服务端授权立即生效，无需事件处理
       gapi.analytics.auth.authorize({
         serverAuth: { access_token },
-      });
+      })
 
       const viewSelector = new gapi.analytics.ViewSelector({
         container: GOOGLE_CHART_VIEW_SELECTOR_ID,
-      });
-      viewSelector.execute();
+      })
+      viewSelector.execute()
 
       const timeline = new gapi.analytics.googleCharts.DataChart({
         reportType: 'ga',
@@ -109,7 +109,7 @@ export const Analytics: React.FC = () => {
             },
           },
         },
-      });
+      })
 
       const getPieChart = (dimensions: string, container: string, title: string) =>
         new gapi.analytics.googleCharts.DataChart({
@@ -165,61 +165,61 @@ export const Analytics: React.FC = () => {
               },
             },
           },
-        });
+        })
 
       const countryChart = getPieChart(
         'ga:country',
         GOOGLE_CHART_ID_MAP.COUNTRY,
         '国家地区'
-      );
-      const cityChart = getPieChart('ga:city', GOOGLE_CHART_ID_MAP.CITY, '城市');
+      )
+      const cityChart = getPieChart('ga:city', GOOGLE_CHART_ID_MAP.CITY, '城市')
       const browserChart = getPieChart(
         'ga:browser',
         GOOGLE_CHART_ID_MAP.BROWSER,
         '浏览器'
-      );
+      )
       const osChart = getPieChart(
         'ga:operatingSystem',
         GOOGLE_CHART_ID_MAP.OS,
         '操作系统'
-      );
+      )
 
       viewSelector.on('change', (ids: any) => {
         const newIds = {
           query: { ids },
-        };
-        timeline.set(newIds).execute();
-        countryChart.set(newIds).execute();
-        cityChart.set(newIds).execute();
-        browserChart.set(newIds).execute();
-        osChart.set(newIds).execute();
-      });
-    });
-  };
+        }
+        timeline.set(newIds).execute()
+        countryChart.set(newIds).execute()
+        cityChart.set(newIds).execute()
+        browserChart.set(newIds).execute()
+        osChart.set(newIds).execute()
+      })
+    })
+  }
 
   const initGAClient = async () => {
-    loading.start();
+    loading.start()
     if (!(window as any).gapi) {
-      loadScript();
+      loadScript()
     }
     getGAToken()
       .then(instanceGA)
       .finally(() => {
-        loading.stop();
-      });
-  };
+        loading.stop()
+      })
+  }
 
   const handleEnable = () => {
-    isDisabled.value = false;
-    initGAClient();
-  };
+    isDisabled.value = false
+    initGAClient()
+  }
 
   onMounted(() => {
     // 由于阿里云无法访问到 googleapis 服务，所以生产环境不可用，为了使其可退化，用 localStorage 存一个特殊字段来判断吧
     if (!isDisabled.value) {
-      initGAClient();
+      initGAClient()
     }
-  });
+  })
 
   return (
     <Card
@@ -301,5 +301,5 @@ export const Analytics: React.FC = () => {
         </Spin>
       )}
     </Card>
-  );
-};
+  )
+}

@@ -1,22 +1,22 @@
-import React from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import classnames from 'classnames';
-import { Menu, Spin } from 'antd';
-import { GithubOutlined } from '@ant-design/icons';
+import React from 'react'
+import { Link, useHistory, useLocation } from 'react-router-dom'
+import classnames from 'classnames'
+import { Menu, Spin } from 'antd'
+import { GithubOutlined } from '@ant-design/icons'
 
-import * as CONFIG from '@/config';
-import { RouteKey, routeMap, rc } from '@/route';
-import { useAdminState } from '@/state/admin';
+import * as CONFIG from '@/config'
+import { RouteKey, routeMap, rc } from '@/route'
+import { useAdminState } from '@/state/admin'
 
-import styles from './style.module.less';
+import styles from './style.module.less'
 
 export interface AppSiderProps {
-  isSiderCollapsed: boolean;
+  isSiderCollapsed: boolean
 }
 export const AppSider: React.FC<AppSiderProps> = (props) => {
-  const history = useHistory();
-  const location = useLocation();
-  const admin = useAdminState();
+  const history = useHistory()
+  const location = useLocation()
+  const admin = useAdminState()
 
   return (
     <div className={styles.siderMenu}>
@@ -105,5 +105,5 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
         </Menu.Item>
       </Menu>
     </div>
-  );
-};
+  )
+}

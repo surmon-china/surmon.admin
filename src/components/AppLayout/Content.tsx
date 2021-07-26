@@ -1,23 +1,23 @@
-import React from 'react';
-import { matchPath } from 'react-router';
-import { useLocation } from 'react-router-dom';
-import { Breadcrumb, BackTop, Typography } from 'antd';
-import { CaretUpOutlined } from '@ant-design/icons';
+import React from 'react'
+import { matchPath } from 'react-router'
+import { useLocation } from 'react-router-dom'
+import { Breadcrumb, BackTop, Typography } from 'antd'
+import { CaretUpOutlined } from '@ant-design/icons'
 
-import { scrollTo } from '@/services/scroller';
-import { routeMap } from '@/route';
+import { scrollTo } from '@/services/scroller'
+import { routeMap } from '@/route'
 
-import styles from './style.module.less';
+import styles from './style.module.less'
 
 export const AppContent: React.FC = (props) => {
-  const location = useLocation();
-  const [, ...paths] = location.pathname.split('/');
+  const location = useLocation()
+  const [, ...paths] = location.pathname.split('/')
   const currentRoute = Array.from(routeMap.values()).find((route) =>
     matchPath(location.pathname, {
       path: route.path,
       exact: true,
     })
-  );
+  )
 
   return (
     <div className={styles.pageContainer}>
@@ -36,7 +36,7 @@ export const AppContent: React.FC = (props) => {
       <BackTop
         className={styles.backTop}
         onClick={() => {
-          scrollTo(document.body);
+          scrollTo(document.body)
         }}
       >
         <div className={styles.tigger}>
@@ -44,5 +44,5 @@ export const AppContent: React.FC = (props) => {
         </div>
       </BackTop>
     </div>
-  );
-};
+  )
+}

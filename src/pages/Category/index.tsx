@@ -3,20 +3,20 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
-import { useShallowReactive, useRef, onMounted, useComputed } from 'veact';
-import { useLoading } from 'veact-use';
-import { Button, Card, Divider, Modal, Space, Spin, Tree, Typography } from 'antd';
+import React from 'react'
+import { useShallowReactive, useRef, onMounted, useComputed } from 'veact'
+import { useLoading } from 'veact-use'
+import { Button, Card, Divider, Modal, Space, Spin, Tree, Typography } from 'antd'
 import {
   DeleteOutlined,
   EditOutlined,
   LinkOutlined,
   PlusOutlined,
   ReloadOutlined,
-} from '@ant-design/icons';
-import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request';
-import { Category as CategoryType } from '@/constants/category';
-import { getFECategoryPath } from '@/transformers/url';
+} from '@ant-design/icons'
+import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request'
+import { Category as CategoryType } from '@/constants/category'
+import { getFECategoryPath } from '@/transformers/url'
 import {
   getAntdTreeByTree,
   CategoryTree,
@@ -24,57 +24,57 @@ import {
   deleteCategory,
   putCategory,
   createCategory,
-} from '@/store/category';
-import { EditModal } from './EditModal';
+} from '@/store/category'
+import { EditModal } from './EditModal'
 
-import styles from './style.module.less';
+import styles from './style.module.less'
 
 export const CategoryPage: React.FC = () => {
-  const loading = useLoading();
-  const submitting = useLoading();
-  const loaded = useRef(false);
+  const loading = useLoading()
+  const submitting = useLoading()
+  const loaded = useRef(false)
   const categories = useShallowReactive<
     ResponsePaginationData<CategoryType> & { tree: Array<CategoryTree> }
   >({
     tree: [],
     data: [],
     pagination: undefined,
-  });
+  })
 
   // 弹窗
-  const activeEditDataId = useRef<string | null>(null);
-  const isVisibleModal = useRef(false);
+  const activeEditDataId = useRef<string | null>(null)
+  const isVisibleModal = useRef(false)
   const activeEditData = useComputed(() => {
-    const id = activeEditDataId.value;
-    return id !== null ? categories.data.find((c) => c._id === id)! : null;
-  });
+    const id = activeEditDataId.value
+    return id !== null ? categories.data.find((c) => c._id === id)! : null
+  })
   const closeModal = () => {
-    isVisibleModal.value = false;
-  };
+    isVisibleModal.value = false
+  }
   // 编辑创建
   const editData = (id: string) => {
-    activeEditDataId.value = id;
-    isVisibleModal.value = true;
-  };
+    activeEditDataId.value = id
+    isVisibleModal.value = true
+  }
   const createNewData = () => {
-    activeEditDataId.value = null;
-    isVisibleModal.value = true;
-  };
+    activeEditDataId.value = null
+    isVisibleModal.value = true
+  }
 
   const fetchData = (params?: GeneralGetPageParams) => {
     return loading.promise(getCategories(params)).then((result) => {
-      categories.data = result.data;
-      categories.tree = result.tree;
-      categories.pagination = result.pagination;
-    });
-  };
+      categories.data = result.data
+      categories.tree = result.tree
+      categories.pagination = result.pagination
+    })
+  }
 
   const refreshData = () => {
     fetchData({
       page: categories.pagination?.current_page,
       per_page: categories.pagination?.per_page,
-    });
-  };
+    })
+  }
 
   const handleDelete = (category: CategoryType) => {
     Modal.confirm({
@@ -83,11 +83,11 @@ export const CategoryPage: React.FC = () => {
       centered: true,
       onOk: () => {
         return deleteCategory(category._id!).then(() => {
-          refreshData();
-        });
+          refreshData()
+        })
       },
-    });
-  };
+    })
+  }
 
   const handleSubmit = (category: CategoryType) => {
     if (activeEditData.value) {
@@ -99,25 +99,25 @@ export const CategoryPage: React.FC = () => {
           })
         )
         .then(() => {
-          closeModal();
-          refreshData();
-        });
+          closeModal()
+          refreshData()
+        })
     } else {
       submitting.promise(createCategory(category)).then(() => {
-        closeModal();
-        refreshData();
-      });
+        closeModal()
+        refreshData()
+      })
     }
-  };
+  }
 
   onMounted(() => {
     fetchData().then(() => {
       // Fix for Tree
       setTimeout(() => {
-        loaded.value = true;
-      });
-    });
-  });
+        loaded.value = true
+      })
+    })
+  })
 
   return (
     <Card
@@ -160,7 +160,7 @@ export const CategoryPage: React.FC = () => {
             selectable={false}
             treeData={getAntdTreeByTree(categories.tree)}
             titleRender={(nodeData) => {
-              const category: CategoryTree = (nodeData as any).data;
+              const category: CategoryTree = (nodeData as any).data
               return (
                 <div className={styles.categoryNode}>
                   <div className={styles.content}>
@@ -212,7 +212,7 @@ export const CategoryPage: React.FC = () => {
                     </Button>
                   </div>
                 </div>
-              );
+              )
             }}
           />
         )}
@@ -228,5 +228,5 @@ export const CategoryPage: React.FC = () => {
         onSubmit={handleSubmit}
       />
     </Card>
-  );
-};
+  )
+}

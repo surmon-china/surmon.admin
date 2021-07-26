@@ -3,14 +3,14 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
-import { Button, Input, Form, Space } from 'antd';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import React from 'react'
+import { Button, Input, Form, Space } from 'antd'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
-import styles from './style.module.less';
+import styles from './style.module.less'
 
 export interface FormDataExtendProps {
-  fieldName: string;
+  fieldName: string
 }
 export const FormDataExtend: React.FC<FormDataExtendProps> = (props) => {
   return (
@@ -56,5 +56,5 @@ export const FormDataExtend: React.FC<FormDataExtendProps> = (props) => {
         </div>
       )}
     </Form.List>
-  );
-};
+  )
+}

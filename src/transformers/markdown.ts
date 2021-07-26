@@ -3,13 +3,13 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import marked from 'marked';
-import hljs from 'highlight.js';
+import marked from 'marked'
+import hljs from 'highlight.js'
 
-const renderer = new marked.Renderer();
+const renderer = new marked.Renderer()
 
 renderer.link = (href, title, text) => {
-  const textIsImage = text.includes('<img');
+  const textIsImage = text.includes('<img')
   const linkHtml = `
     <a
       href="${href}"
@@ -19,9 +19,9 @@ renderer.link = (href, title, text) => {
     >
       ${text}
     </a>
-  `;
-  return linkHtml.replace(/\s+/g, ' ').replace(/\n/g, ' ');
-};
+  `
+  return linkHtml.replace(/\s+/g, ' ').replace(/\n/g, ' ')
+}
 
 marked.setOptions({
   renderer,
@@ -32,8 +32,8 @@ marked.setOptions({
   smartLists: true,
   smartypants: false,
   highlight(code) {
-    return hljs.highlightAuto(code).value;
+    return hljs.highlightAuto(code).value
   },
-});
+})
 
-export const markdownToHTML = marked;
+export const markdownToHTML = marked

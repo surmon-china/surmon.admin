@@ -4,9 +4,9 @@
  */
 
 export interface Auth {
-  name: string;
-  slogan: string;
-  gravatar?: string;
-  password?: string;
-  new_password?: string;
+  name: string
+  slogan: string
+  gravatar?: string
+  password?: string
+  new_password?: string
 }

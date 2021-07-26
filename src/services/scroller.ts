@@ -4,7 +4,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import BezierEasing from 'bezier-easing';
+import BezierEasing from 'bezier-easing'
 
 export const Easing = {
   ease: [0.25, 0.1, 0.25, 1.0],
@@ -12,7 +12,7 @@ export const Easing = {
   easeIn: [0.42, 0.0, 1, 1.0],
   easeOut: [0, 0.0, 0.58, 1.0],
   easeInOut: [0.42, 0.0, 0.58, 1.0],
-};
+}
 
 enum ElementEvent {
   scroll = 'scroll',
@@ -26,34 +26,34 @@ enum ElementEvent {
 
 const _ = {
   $(selector: string) {
-    return document.querySelector(selector);
+    return document.querySelector(selector)
   },
   on(element: Element, events: ElementEvent[], handler: any) {
     if (!Array.isArray(events)) {
-      events = [events];
+      events = [events]
     }
     events.forEach((event) => {
-      element.addEventListener(event, handler, { passive: true });
-    });
+      element.addEventListener(event, handler, { passive: true })
+    })
   },
   off(element: Element, events: ElementEvent[], handler: any) {
     if (!Array.isArray(events)) {
-      events = [events];
+      events = [events]
     }
     events.forEach((event) => {
-      element.removeEventListener(event, handler);
-    });
+      element.removeEventListener(event, handler)
+    })
   },
-};
+}
 
 export const scrollTo = (
   target: string | number | Element,
   duration: number = 500,
   options: any = {}
 ) => {
-  options.easing = Easing.ease;
+  options.easing = Easing.ease
 
-  const page = _.$('html, body') as Element;
+  const page = _.$('html, body') as Element
   const events: ElementEvent[] = [
     ElementEvent.scroll,
     ElementEvent.mousedown,
@@ -62,71 +62,71 @@ export const scrollTo = (
     ElementEvent.mousewheel,
     ElementEvent.keyup,
     ElementEvent.touchmove,
-  ];
+  ]
 
-  let abort = false;
+  let abort = false
 
   const abortFn = function () {
-    abort = true;
-  };
+    abort = true
+  }
 
-  _.on(page, events, abortFn);
+  _.on(page, events, abortFn)
 
-  let elementY = 0;
-  const initialY = window.pageYOffset;
+  let elementY = 0
+  const initialY = window.pageYOffset
 
   if (typeof target === 'number') {
-    elementY = target;
+    elementY = target
   } else {
-    const element = (typeof target === 'string' ? _.$(target) : target) as Element;
-    elementY = initialY + element.getBoundingClientRect().top;
+    const element = (typeof target === 'string' ? _.$(target) : target) as Element
+    elementY = initialY + element.getBoundingClientRect().top
   }
 
   let targetY =
     document.body.scrollHeight - elementY < window.innerHeight
       ? document.body.scrollHeight - window.innerHeight
-      : elementY;
+      : elementY
 
   if (options.offset) {
-    targetY += options.offset;
+    targetY += options.offset
   }
 
-  const diff = targetY - initialY;
-  const easing = Reflect.apply(BezierEasing, BezierEasing, options.easing);
-  let start: number;
+  const diff = targetY - initialY
+  const easing = Reflect.apply(BezierEasing, BezierEasing, options.easing)
+  let start: number
 
   const done = function () {
-    _.off(page, events, abortFn);
+    _.off(page, events, abortFn)
     if (abort && options.onCancel) {
-      options.onCancel();
+      options.onCancel()
     }
     if (!abort && options.onDone) {
-      options.onDone();
+      options.onDone()
     }
-  };
+  }
 
   if (!diff) {
-    return;
+    return
   }
 
   window.requestAnimationFrame(function step(timestamp) {
     if (abort) {
-      return done();
+      return done()
     }
     if (!start) {
-      start = timestamp;
+      start = timestamp
     }
 
-    const time = timestamp - start;
-    let progress = Math.min(time / duration, 1);
-    progress = easing(progress);
+    const time = timestamp - start
+    let progress = Math.min(time / duration, 1)
+    progress = easing(progress)
 
-    window.scrollTo(0, initialY + diff * progress);
+    window.scrollTo(0, initialY + diff * progress)
 
     if (time < duration) {
-      window.requestAnimationFrame(step);
+      window.requestAnimationFrame(step)
     } else {
-      done();
+      done()
     }
-  });
-};
+  })
+}

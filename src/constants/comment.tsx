@@ -3,39 +3,39 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
+import React from 'react'
 import {
   DeleteOutlined,
   EditOutlined,
   CheckOutlined,
   StopOutlined,
-} from '@ant-design/icons';
-import { DataExtends } from './general';
+} from '@ant-design/icons'
+import { DataExtends } from './general'
 
 /** 留言板 */
-export const COMMENT_GUESTBOOK_ID = 0;
+export const COMMENT_GUESTBOOK_ID = 0
 
 /** 单个评论 */
 export interface Comment {
-  ip?: number;
-  id?: number;
-  _id?: string;
-  pid?: number;
-  post_id: number;
-  content: string;
-  agent: string;
-  state: CommentState;
-  likes: number;
-  is_top: boolean;
+  ip?: number
+  id?: number
+  _id?: string
+  pid?: number
+  post_id: number
+  content: string
+  agent: string
+  state: CommentState
+  likes: number
+  is_top: boolean
   author: {
-    email: string;
-    name: string;
-    site?: string;
-  };
-  ip_location?: any;
-  extends: Array<DataExtends>;
-  update_at?: string;
-  create_at?: string;
+    email: string
+    name: string
+    site?: string
+  }
+  ip_location?: any
+  extends: Array<DataExtends>
+  update_at?: string
+  create_at?: string
 }
 
 /** 评论状态 */
@@ -73,12 +73,10 @@ const commentStateMap = new Map(
       color: 'orange',
     },
   ].map((item) => [item.id, item])
-);
+)
 
 export const cs = (state: CommentState) => {
-  return commentStateMap.get(state)!;
-};
+  return commentStateMap.get(state)!
+}
 
-export const commentStates = Array.from<ReturnType<typeof cs>>(
-  commentStateMap.values()
-);
+export const commentStates = Array.from<ReturnType<typeof cs>>(commentStateMap.values())

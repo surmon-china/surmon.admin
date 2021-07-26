@@ -3,36 +3,36 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import LoadingBar from 'react-top-loading-bar';
-import { onMounted, useReactivity } from 'veact';
-import 'moment/locale/zh-cn';
+import React from 'react'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import LoadingBar from 'react-top-loading-bar'
+import { onMounted, useReactivity } from 'veact'
+import 'moment/locale/zh-cn'
 
-import { ENV, APP_COLOR_PRIMARY } from '@/config';
-import { RouteKey, routeMap, rc } from '@/route';
-import { loading } from '@/state/loading';
-import { AppAuth } from '@/components/AppAuth';
-import { AppLayout } from '@/components/AppLayout';
+import { ENV, APP_COLOR_PRIMARY } from '@/config'
+import { RouteKey, routeMap, rc } from '@/route'
+import { loading } from '@/state/loading'
+import { AppAuth } from '@/components/AppAuth'
+import { AppLayout } from '@/components/AppLayout'
 
-import { HelloPage } from '@/pages/Hello';
-import { NotFoundPage } from './pages/NotFound';
-import { DashboardPage } from './pages/Dashboard';
-import { AnnouncementPage } from './pages/Announcement';
-import { CategoryPage } from './pages/Category';
-import { TagPage } from './pages/Tag';
-import { CommentPage } from './pages/Comment';
-import { ArticleList } from './pages/Article/List';
-import { ArticleEdit } from './pages/Article/Edit';
-import { ArticleCreate } from './pages/Article/Create';
-import { ProfilePage } from './pages/Profile';
+import { HelloPage } from '@/pages/Hello'
+import { NotFoundPage } from './pages/NotFound'
+import { DashboardPage } from './pages/Dashboard'
+import { AnnouncementPage } from './pages/Announcement'
+import { CategoryPage } from './pages/Category'
+import { TagPage } from './pages/Tag'
+import { CommentPage } from './pages/Comment'
+import { ArticleList } from './pages/Article/List'
+import { ArticleEdit } from './pages/Article/Edit'
+import { ArticleCreate } from './pages/Article/Create'
+import { ProfilePage } from './pages/Profile'
 
 export const App: React.FC = () => {
-  const loadingState = useReactivity(() => loading.state);
+  const loadingState = useReactivity(() => loading.state)
 
   onMounted(() => {
-    console.info(`系统启动成功！当前运行环境是：${ENV}`);
-  });
+    console.info(`系统启动成功！当前运行环境是：${ENV}`)
+  })
 
   return (
     <div className="app" id="app">
@@ -103,5 +103,5 @@ export const App: React.FC = () => {
         </Switch>
       </BrowserRouter>
     </div>
-  );
-};
+  )
+}

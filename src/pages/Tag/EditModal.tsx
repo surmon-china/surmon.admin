@@ -1,34 +1,34 @@
-import React from 'react';
-import { Ref, useWatch } from 'veact';
-import { Form, Input, Modal, Divider, Typography } from 'antd';
+import React from 'react'
+import { Ref, useWatch } from 'veact'
+import { Form, Input, Modal, Divider, Typography } from 'antd'
 
-import { FormDataExtend } from '@/components/common/FormDataExtend';
-import { Tag as TagType } from '@/constants/tag';
-import { stringToYMD } from '@/transformers/date';
+import { FormDataExtend } from '@/components/common/FormDataExtend'
+import { Tag as TagType } from '@/constants/tag'
+import { stringToYMD } from '@/transformers/date'
 
 const formLayout = {
   labelCol: { span: 5 },
   wrapperCol: { span: 18 },
-};
+}
 
 export interface EditModalProps {
-  title: string;
-  loading: boolean;
-  visible: Ref<boolean>;
-  tag: Ref<TagType | null>;
-  onSubmit(tag: TagType): void;
-  onCancel(): void;
+  title: string
+  loading: boolean
+  visible: Ref<boolean>
+  tag: Ref<TagType | null>
+  onSubmit(tag: TagType): void
+  onCancel(): void
 }
 
 export const EditModal: React.FC<EditModalProps> = (props) => {
-  const [form] = Form.useForm<TagType>();
+  const [form] = Form.useForm<TagType>()
   const handleSubmit = () => {
-    form.validateFields().then(props.onSubmit);
-  };
+    form.validateFields().then(props.onSubmit)
+  }
 
   useWatch(props.visible, (visible) => {
     if (!visible) {
-      form.resetFields();
+      form.resetFields()
     } else {
       form.setFieldsValue(
         props.tag.value || {
@@ -39,9 +39,9 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
             },
           ],
         }
-      );
+      )
     }
-  });
+  })
 
   return (
     <Modal
@@ -102,5 +102,5 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
         </Form.Item>
       </Form>
     </Modal>
-  );
-};
+  )
+}

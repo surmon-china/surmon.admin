@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Table, Button, Typography, Card, Tag, Space } from 'antd';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Table, Button, Typography, Card, Tag, Space } from 'antd'
 import {
   DeleteOutlined,
   EyeOutlined,
@@ -12,24 +12,24 @@ import {
   TagOutlined,
   RollbackOutlined,
   LinkOutlined,
-} from '@ant-design/icons';
-import { RouteKey, rc } from '@/route';
-import { Pagination } from '@/constants/request';
-import { Article } from '@/constants/article';
-import { ao } from '@/constants/article/origin';
-import { ap } from '@/constants/article/public';
-import { PublishState, ps } from '@/constants/publish';
-import { stringToYMD } from '@/transformers/date';
-import { getFEArticleUrl } from '@/transformers/url';
+} from '@ant-design/icons'
+import { RouteKey, rc } from '@/route'
+import { Pagination } from '@/constants/request'
+import { Article } from '@/constants/article'
+import { ao } from '@/constants/article/origin'
+import { ap } from '@/constants/article/public'
+import { PublishState, ps } from '@/constants/publish'
+import { stringToYMD } from '@/transformers/date'
+import { getFEArticleUrl } from '@/transformers/url'
 
 export interface ArticleListTableProps {
-  loading: boolean;
-  data: Array<Article>;
-  pagination: Pagination;
-  selectedIds: Array<string>;
-  onSelecte(ids: Array<any>): any;
-  onPagination(page: number, pageSize?: number): any;
-  onUpdateState(comment: Article, state: PublishState): any;
+  loading: boolean
+  data: Array<Article>
+  pagination: Pagination
+  selectedIds: Array<string>
+  onSelecte(ids: Array<any>): any
+  onPagination(page: number, pageSize?: number): any
+  onUpdateState(comment: Article, state: PublishState): any
 }
 export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
   return (
@@ -115,7 +115,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                   ))}
                 </Space>
               </Space>
-            );
+            )
           },
         },
         {
@@ -138,7 +138,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                   评论 {article.meta?.comments} 条
                 </Space>
               </Space>
-            );
+            )
           },
         },
         {
@@ -151,7 +151,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 <span>最早发布：{stringToYMD(article.create_at!)}</span>
                 <span>最后更新：{stringToYMD(article.update_at!)}</span>
               </Space>
-            );
+            )
           },
         },
         {
@@ -159,9 +159,9 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           width: 120,
           dataIndex: 'state',
           render: (_, article) => {
-            const _state = ps(article.state);
-            const _public = ap(article.public);
-            const _origin = ao(article.origin);
+            const _state = ps(article.state)
+            const _public = ap(article.public)
+            const _origin = ao(article.origin)
             return (
               <Space direction="vertical">
                 {[_state, _public, _origin].map((s) => (
@@ -170,14 +170,14 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                   </Tag>
                 ))}
               </Space>
-            );
+            )
           },
         },
         {
           title: '操作',
           width: 110,
           dataIndex: 'actions',
-          render: (_, article, index) => (
+          render: (_, article) => (
             <Space direction="vertical">
               <Link to={rc(RouteKey.ArticleEdit).getter!(article._id!)}>
                 <Button size="small" type="text" block={true} icon={<EditOutlined />}>
@@ -233,5 +233,5 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
         },
       ]}
     />
-  );
-};
+  )
+}

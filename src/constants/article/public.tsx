@@ -3,8 +3,8 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
-import { LockOutlined, UnlockOutlined, StopOutlined } from '@ant-design/icons';
+import React from 'react'
+import { LockOutlined, UnlockOutlined, StopOutlined } from '@ant-design/icons'
 
 /** 文章公开状态 */
 export enum ArticlePublic {
@@ -34,11 +34,11 @@ const articlePublicMap = new Map(
       color: 'red',
     },
   ].map((item) => [item.id, item])
-);
+)
 
 export const ap = (state: ArticlePublic) => {
-  return articlePublicMap.get(state)!;
-};
+  return articlePublicMap.get(state)!
+}
 export const articlePublics = Array.from<ReturnType<typeof ap>>(
   articlePublicMap.values()
-);
+)

@@ -3,8 +3,8 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
-import { CheckOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import React from 'react'
+import { CheckOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 /** 数据发布状态 */
 export enum PublishState {
@@ -34,12 +34,10 @@ const publishStateMap = new Map(
       color: 'red',
     },
   ].map((item) => [item.id, item])
-);
+)
 
 export const ps = (state: PublishState) => {
-  return publishStateMap.get(state)!;
-};
+  return publishStateMap.get(state)!
+}
 
-export const publishStates = Array.from<ReturnType<typeof ps>>(
-  publishStateMap.values()
-);
+export const publishStates = Array.from<ReturnType<typeof ps>>(publishStateMap.values())

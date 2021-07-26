@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
+import React from 'react'
 import {
   Spin,
   Row,
@@ -15,16 +15,16 @@ import {
   Empty,
   Tag,
   Typography,
-} from 'antd';
-import { ReloadOutlined, HeartOutlined, EditOutlined } from '@ant-design/icons';
-import { cs } from '@/constants/comment';
-import { CommentTree } from '@/store/comment';
-import { getGravatar } from '@/transformers/gravatar';
-import { stringToYMD } from '@/transformers/date';
-import { parseBrowser, parseOS } from '@/transformers/ua';
+} from 'antd'
+import { ReloadOutlined, HeartOutlined, EditOutlined } from '@ant-design/icons'
+import { cs } from '@/constants/comment'
+import { CommentTree } from '@/store/comment'
+import { getGravatar } from '@/transformers/gravatar'
+import { stringToYMD } from '@/transformers/date'
+import { parseBrowser, parseOS } from '@/transformers/ua'
 
 interface CommentTreeListProps {
-  comments: Array<CommentTree>;
+  comments: Array<CommentTree>
 }
 const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
   return (
@@ -80,20 +80,20 @@ const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
         </Comment>
       ))}
     </>
-  );
-};
+  )
+}
 
 export interface ArticleCommentProps {
-  visible: boolean;
-  loading: boolean;
-  count: number;
-  comments: Array<CommentTree>;
-  onClose(): void;
-  onRefresh(): void;
-  onManage(): void;
+  visible: boolean
+  loading: boolean
+  count: number
+  comments: Array<CommentTree>
+  onClose(): void
+  onRefresh(): void
+  onManage(): void
 }
 export const ArticleComment: React.FC<ArticleCommentProps> = (props) => {
-  const { visible, loading, count, comments } = props;
+  const { visible, loading, count, comments } = props
   return (
     <Drawer
       width="48rem"
@@ -130,5 +130,5 @@ export const ArticleComment: React.FC<ArticleCommentProps> = (props) => {
         )}
       </Spin>
     </Drawer>
-  );
-};
+  )
+}

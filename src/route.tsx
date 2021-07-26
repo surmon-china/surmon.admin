@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
+import React from 'react'
 import {
   DashboardOutlined,
   BulbOutlined,
@@ -14,7 +14,7 @@ import {
   CoffeeOutlined,
   CommentOutlined,
   OrderedListOutlined,
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 
 export enum RouteKey {
   Hello,
@@ -31,11 +31,11 @@ export enum RouteKey {
 }
 
 export interface RouteConfig {
-  id: RouteKey;
-  name: string;
-  path: string;
-  icon?: React.ReactElement;
-  getter?(...args: Array<any>): string;
+  id: RouteKey
+  name: string
+  path: string
+  icon?: React.ReactElement
+  getter?(...args: Array<any>): string
 }
 export const routeMap: ReadonlyMap<RouteKey, RouteConfig> = new Map(
   [
@@ -106,14 +106,14 @@ export const routeMap: ReadonlyMap<RouteKey, RouteConfig> = new Map(
       icon: <EditOutlined />,
     },
   ].map((route) => [route.id, route])
-);
+)
 
 export const rc = (routeKey: RouteKey): RouteConfig => {
-  return routeMap.get(routeKey)!;
-};
+  return routeMap.get(routeKey)!
+}
 export const rcByPath = (routePath: string) => {
-  return Array.from(routeMap.values()).find((route) => route.path === routePath);
-};
+  return Array.from(routeMap.values()).find((route) => route.path === routePath)
+}
 export const isRoute = (routePath: string, routeKey: RouteKey) => {
-  return routeMap.get(routeKey)?.path === routePath;
-};
+  return routeMap.get(routeKey)?.path === routePath
+}

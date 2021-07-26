@@ -1,37 +1,37 @@
-import React from 'react';
-import { useRef, onMounted } from 'veact';
-import { useLoading } from 'veact-use';
-import { Spin, Button, Form, Select, Input, Divider, Space, Typography } from 'antd';
-import { ReloadOutlined, CheckCircleOutlined, TagOutlined } from '@ant-design/icons';
-import { FormInstance } from 'antd/lib/form';
-import { UniversalEditor } from '@/components/common/UniversalEditor';
-import { getTags } from '@/store/tag';
-import { Tag } from '@/constants/tag';
-import { BaseFormModel } from './';
+import React from 'react'
+import { useRef, onMounted } from 'veact'
+import { useLoading } from 'veact-use'
+import { Spin, Button, Form, Select, Input, Divider, Space, Typography } from 'antd'
+import { ReloadOutlined, CheckCircleOutlined, TagOutlined } from '@ant-design/icons'
+import { FormInstance } from 'antd/lib/form'
+import { UniversalEditor } from '@/components/common/UniversalEditor'
+import { getTags } from '@/store/tag'
+import { Tag } from '@/constants/tag'
+import { BaseFormModel } from './'
 
 interface TagSelectProps {
-  value?: Array<string>;
-  onChange?(value: Array<string>): void;
+  value?: Array<string>
+  onChange?(value: Array<string>): void
 }
 const TagSelect: React.FC<TagSelectProps> = (props) => {
-  const tagsLoading = useLoading();
-  const tags = useRef<Array<Tag>>([]);
+  const tagsLoading = useLoading()
+  const tags = useRef<Array<Tag>>([])
   const fetchTags = () => {
     tagsLoading.promise(getTags({ per_page: 999 })).then((result) => {
-      tags.value = result.data;
-    });
-  };
+      tags.value = result.data
+    })
+  }
 
-  const values = props.value || [];
+  const values = props.value || []
   const handleClick = (tag: Tag, checked: boolean) => {
-    const tagID = tag._id!;
-    const tagIDs = checked ? [...values, tagID] : values.filter((t) => t !== tagID);
-    props.onChange?.(tagIDs);
-  };
+    const tagID = tag._id!
+    const tagIDs = checked ? [...values, tagID] : values.filter((t) => t !== tagID)
+    props.onChange?.(tagIDs)
+  }
 
   onMounted(() => {
-    fetchTags();
-  });
+    fetchTags()
+  })
 
   return (
     <Spin spinning={tagsLoading.state.value}>
@@ -40,7 +40,7 @@ const TagSelect: React.FC<TagSelectProps> = (props) => {
           <Typography.Text type="secondary">无数据</Typography.Text>
         ) : (
           tags.value.map((tag) => {
-            const isChecked = values.includes(tag._id!);
+            const isChecked = values.includes(tag._id!)
             return (
               <Button
                 size="small"
@@ -51,7 +51,7 @@ const TagSelect: React.FC<TagSelectProps> = (props) => {
               >
                 {tag.name}
               </Button>
-            );
+            )
           })
         )}
         <Divider type="vertical" />
@@ -66,12 +66,12 @@ const TagSelect: React.FC<TagSelectProps> = (props) => {
         </Button>
       </Space>
     </Spin>
-  );
-};
+  )
+}
 
 export interface MainFormProps {
-  form: FormInstance<BaseFormModel>;
-  editorCacheID?: string;
+  form: FormInstance<BaseFormModel>
+  editorCacheID?: string
 }
 export const MainForm: React.FC<MainFormProps> = (props) => {
   return (
@@ -117,7 +117,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
           {
             message: '至少应该有一个关键词',
             validator(_, value: string[]) {
-              return Boolean(value?.length) ? Promise.resolve() : Promise.reject();
+              return Boolean(value?.length) ? Promise.resolve() : Promise.reject()
             },
           },
         ]}
@@ -147,5 +147,5 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
         />
       </Form.Item>
     </Form>
-  );
-};
+  )
+}

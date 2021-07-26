@@ -3,11 +3,11 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Result, Button } from 'antd';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Result, Button } from 'antd'
 
-import styles from './style.module.less';
+import styles from './style.module.less'
 
 export const NotFoundPage: React.FC = () => (
   <div className={styles.notFound}>
@@ -21,4 +21,4 @@ export const NotFoundPage: React.FC = () => (
       }
     />
   </div>
-);
+)

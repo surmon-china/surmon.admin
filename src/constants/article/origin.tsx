@@ -3,8 +3,8 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
-import { EditOutlined, CopyOutlined, PullRequestOutlined } from '@ant-design/icons';
+import React from 'react'
+import { EditOutlined, CopyOutlined, PullRequestOutlined } from '@ant-design/icons'
 
 /** 文章来源 */
 export enum ArticleOrigin {
@@ -34,11 +34,11 @@ const articleOriginMap = new Map(
       color: 'orange',
     },
   ].map((item) => [item.id, item])
-);
+)
 
 export const ao = (state: ArticleOrigin) => {
-  return articleOriginMap.get(state)!;
-};
+  return articleOriginMap.get(state)!
+}
 export const articleOrigins = Array.from<ReturnType<typeof ao>>(
   articleOriginMap.values()
-);
+)

@@ -3,18 +3,18 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
-import { useShallowReactive, useRef, onMounted, useReactive, useComputed } from 'veact';
-import { Table, Button, Card, Input, Divider, Spin, Modal, Space } from 'antd';
+import React from 'react'
+import { useShallowReactive, useRef, onMounted, useReactive, useComputed } from 'veact'
+import { Table, Button, Card, Input, Divider, Spin, Modal, Space } from 'antd'
 import {
   DeleteOutlined,
   EditOutlined,
   LinkOutlined,
   PlusOutlined,
   ReloadOutlined,
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 
-import { DropdownMenu } from '@/components/common/DropdownMenu';
+import { DropdownMenu } from '@/components/common/DropdownMenu'
 import {
   getTags,
   GetTagParams,
@@ -22,79 +22,79 @@ import {
   deleteTags,
   putTag,
   createTag,
-} from '@/store/tag';
-import { Tag } from '@/constants/tag';
-import { ResponsePaginationData } from '@/constants/request';
-import { useLoading } from 'veact-use';
-import { scrollTo } from '@/services/scroller';
-import { getFETagPath } from '@/transformers/url';
-import { EditModal } from './EditModal';
+} from '@/store/tag'
+import { Tag } from '@/constants/tag'
+import { ResponsePaginationData } from '@/constants/request'
+import { useLoading } from 'veact-use'
+import { scrollTo } from '@/services/scroller'
+import { getFETagPath } from '@/transformers/url'
+import { EditModal } from './EditModal'
 
-import styles from './style.module.less';
+import styles from './style.module.less'
 
 export const TagPage: React.FC = () => {
-  const loading = useLoading();
-  const submitting = useLoading();
+  const loading = useLoading()
+  const submitting = useLoading()
   const tag = useShallowReactive<ResponsePaginationData<Tag>>({
     data: [],
     pagination: undefined,
-  });
+  })
 
   // 多选
-  const selectedIDs = useRef<Array<string>>([]);
+  const selectedIDs = useRef<Array<string>>([])
   const handleSelect = (ids: any[]) => {
-    selectedIDs.value = ids;
-  };
+    selectedIDs.value = ids
+  }
 
   // 过滤参数
   const filterParams = useReactive({
     keyword: '',
-  });
+  })
 
   // 弹窗
-  const activeEditDataIndex = useRef<number | null>(null);
-  const isVisibleModal = useRef(false);
+  const activeEditDataIndex = useRef<number | null>(null)
+  const isVisibleModal = useRef(false)
   const activeEditData = useComputed(() => {
-    const index = activeEditDataIndex.value;
-    return index !== null ? tag.data[index] : null;
-  });
+    const index = activeEditDataIndex.value
+    return index !== null ? tag.data[index] : null
+  })
   const closeModal = () => {
-    isVisibleModal.value = false;
-  };
+    isVisibleModal.value = false
+  }
   // 编辑创建
   const editData = (index: number) => {
-    activeEditDataIndex.value = index;
-    isVisibleModal.value = true;
-  };
+    activeEditDataIndex.value = index
+    isVisibleModal.value = true
+  }
   const createNewData = () => {
-    activeEditDataIndex.value = null;
-    isVisibleModal.value = true;
-  };
+    activeEditDataIndex.value = null
+    isVisibleModal.value = true
+  }
 
   const fetchData = (params?: GetTagParams) => {
-    const getParams = { ...params };
+    const getParams = { ...params }
     if (!!filterParams.keyword) {
-      getParams.keyword = filterParams.keyword;
+      getParams.keyword = filterParams.keyword
     }
 
     loading.promise(getTags(getParams)).then((response) => {
-      tag.data = response.data;
-      tag.pagination = response.pagination;
-      scrollTo(document.body);
-    });
-  };
+      tag.data = response.data
+      tag.pagination = response.pagination
+      scrollTo(document.body)
+    })
+  }
 
   const resetParamsAndRefresh = () => {
-    filterParams.keyword = '';
-    fetchData();
-  };
+    filterParams.keyword = ''
+    fetchData()
+  }
 
   const refreshData = () => {
     fetchData({
       page: tag.pagination?.current_page,
       per_page: tag.pagination?.per_page,
-    });
-  };
+    })
+  }
 
   const handleDelete = (tag: Tag) => {
     Modal.confirm({
@@ -103,23 +103,23 @@ export const TagPage: React.FC = () => {
       centered: true,
       onOk: () =>
         deleteTag(tag._id!).then(() => {
-          refreshData();
+          refreshData()
         }),
-    });
-  };
+    })
+  }
 
   const handleDeleteList = () => {
-    const ids = selectedIDs.value;
+    const ids = selectedIDs.value
     Modal.confirm({
       title: `确定要删除 ${ids.length} 个标签吗？`,
       content: '删除后不可恢复',
       centered: true,
       onOk: () =>
         deleteTags(ids).then(() => {
-          refreshData();
+          refreshData()
         }),
-    });
-  };
+    })
+  }
 
   const handleSubmit = (tag: Tag) => {
     if (activeEditData.value) {
@@ -131,20 +131,20 @@ export const TagPage: React.FC = () => {
           })
         )
         .then(() => {
-          closeModal();
-          refreshData();
-        });
+          closeModal()
+          refreshData()
+        })
     } else {
       submitting.promise(createTag(tag)).then(() => {
-        closeModal();
-        refreshData();
-      });
+        closeModal()
+        refreshData()
+      })
     }
-  };
+  }
 
   onMounted(() => {
-    fetchData();
-  });
+    fetchData()
+  })
 
   return (
     <Card
@@ -171,7 +171,7 @@ export const TagPage: React.FC = () => {
             onSearch={() => fetchData()}
             value={filterParams.keyword}
             onChange={(event) => {
-              filterParams.keyword = event.target.value;
+              filterParams.keyword = event.target.value
             }}
           />
           <Button
@@ -212,7 +212,7 @@ export const TagPage: React.FC = () => {
             total: tag.pagination?.total,
             showSizeChanger: true,
             onChange(page, pageSize) {
-              return fetchData({ page, per_page: pageSize });
+              return fetchData({ page, per_page: pageSize })
             },
           }}
           columns={[
@@ -289,5 +289,5 @@ export const TagPage: React.FC = () => {
         onSubmit={handleSubmit}
       />
     </Card>
-  );
-};
+  )
+}

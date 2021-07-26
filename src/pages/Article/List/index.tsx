@@ -3,9 +3,9 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import _ from 'lodash';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import _ from 'lodash'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import {
   useShallowReactive,
   useRef,
@@ -14,34 +14,34 @@ import {
   batchedUpdates,
   useReactive,
   useWatch,
-} from 'veact';
-import { Button, Card, Input, Select, Divider, Modal, Space, TreeSelect } from 'antd';
+} from 'veact'
+import { Button, Card, Input, Select, Divider, Modal, Space, TreeSelect } from 'antd'
 import {
   EditOutlined,
   DeleteOutlined,
   RollbackOutlined,
   CheckOutlined,
   ReloadOutlined,
-} from '@ant-design/icons';
-import { RouteKey, rc } from '@/route';
-import { DropdownMenu } from '@/components/common/DropdownMenu';
-import { ResponsePaginationData } from '@/constants/request';
-import { sortTypes, SortType } from '@/constants/sort';
-import { publishStates, PublishState, ps } from '@/constants/publish';
-import { Tag } from '@/constants/tag';
-import { ArticleId, Article } from '@/constants/article';
-import { ArticleOrigin, articleOrigins } from '@/constants/article/origin';
-import { ArticlePublic, articlePublics } from '@/constants/article/public';
-import { useLoading } from 'veact-use';
-import { scrollTo } from '@/services/scroller';
-import { getTags } from '@/store/tag';
-import { getArticles, GetArticleParams, patchArticlesState } from '@/store/article';
-import { getCategories, getAntdTreeByTree, CategoryTree } from '@/store/category';
-import { ArticleListTable } from './Table';
+} from '@ant-design/icons'
+import { RouteKey, rc } from '@/route'
+import { DropdownMenu } from '@/components/common/DropdownMenu'
+import { ResponsePaginationData } from '@/constants/request'
+import { sortTypes, SortType } from '@/constants/sort'
+import { publishStates, PublishState, ps } from '@/constants/publish'
+import { Tag } from '@/constants/tag'
+import { ArticleId, Article } from '@/constants/article'
+import { ArticleOrigin, articleOrigins } from '@/constants/article/origin'
+import { ArticlePublic, articlePublics } from '@/constants/article/public'
+import { useLoading } from 'veact-use'
+import { scrollTo } from '@/services/scroller'
+import { getTags } from '@/store/tag'
+import { getArticles, GetArticleParams, patchArticlesState } from '@/store/article'
+import { getCategories, getAntdTreeByTree, CategoryTree } from '@/store/category'
+import { ArticleListTable } from './Table'
 
-import styles from './style.module.less';
+import styles from './style.module.less'
 
-const SELECT_ALL_VALUE = 'ALL';
+const SELECT_ALL_VALUE = 'ALL'
 const DEFAULT_FILTER_PARAMS = Object.freeze({
   sort: SortType.Desc,
   tag: SELECT_ALL_VALUE,
@@ -49,84 +49,84 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
   public: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | ArticlePublic,
   origin: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | ArticleOrigin,
   state: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | PublishState,
-});
+})
 
 export const ArticleList: React.FC = () => {
-  const loading = useLoading();
+  const loading = useLoading()
   const article = useShallowReactive<ResponsePaginationData<Article>>({
     data: [],
     pagination: undefined,
-  });
+  })
 
   // 分类
-  const loadingCategory = useLoading();
-  const categoriesTree = useRef<Array<CategoryTree>>([]);
+  const loadingCategory = useLoading()
+  const categoriesTree = useRef<Array<CategoryTree>>([])
   const fetchCategories = () => {
     loadingCategory.promise(getCategories({ per_page: 999 })).then((result) => {
-      categoriesTree.value = result.tree;
-    });
-  };
+      categoriesTree.value = result.tree
+    })
+  }
 
   // 标签
-  const loadingTag = useLoading();
-  const tags = useRef<Array<Tag>>([]);
+  const loadingTag = useLoading()
+  const tags = useRef<Array<Tag>>([])
   const fetchTags = () => {
     loadingTag.promise(getTags({ per_page: 999 })).then((result) => {
-      tags.value = result.data;
-    });
-  };
+      tags.value = result.data
+    })
+  }
 
   // 过滤参数
-  const serarchKeyword = useRef('');
-  const filterParams = useReactive({ ...DEFAULT_FILTER_PARAMS });
+  const serarchKeyword = useRef('')
+  const filterParams = useReactive({ ...DEFAULT_FILTER_PARAMS })
 
   // 多选
-  const selectedIds = useRef<Array<string>>([]);
+  const selectedIds = useRef<Array<string>>([])
   const handleSelect = (ids: any[]) => {
-    selectedIds.value = ids;
-  };
+    selectedIds.value = ids
+  }
 
   const fetchData = (params?: GetArticleParams) => {
     const getParams: any = {
       ...params,
       ...filterParams,
       keyword: Boolean(serarchKeyword.value) ? serarchKeyword.value : undefined,
-    };
+    }
     Object.keys(getParams).forEach((paramKey) => {
       if (getParams[paramKey] === SELECT_ALL_VALUE) {
-        Reflect.deleteProperty(getParams, paramKey);
+        Reflect.deleteProperty(getParams, paramKey)
       }
-    });
+    })
 
     loading.promise(getArticles(getParams)).then((result) => {
       batchedUpdates(() => {
-        article.data = result.data;
-        article.pagination = result.pagination;
-      });
-      scrollTo(document.body);
-    });
-  };
+        article.data = result.data
+        article.pagination = result.pagination
+      })
+      scrollTo(document.body)
+    })
+  }
 
   const resetParamsAndRefresh = () => {
-    serarchKeyword.value = '';
+    serarchKeyword.value = ''
     if (_.isEqual(toRaw(filterParams), DEFAULT_FILTER_PARAMS)) {
-      fetchData();
+      fetchData()
     } else {
       batchedUpdates(() => {
         Object.keys(DEFAULT_FILTER_PARAMS).forEach((paramKey) => {
           // @ts-ignore
-          filterParams[paramKey] = Reflect.get(DEFAULT_FILTER_PARAMS, paramKey);
-        });
-      });
+          filterParams[paramKey] = Reflect.get(DEFAULT_FILTER_PARAMS, paramKey)
+        })
+      })
     }
-  };
+  }
 
   const refreshData = () => {
     fetchData({
       page: article.pagination?.current_page,
       per_page: article.pagination?.per_page,
-    });
-  };
+    })
+  }
 
   const handleStateChange = (articleIds: Array<ArticleId>, state: PublishState) => {
     Modal.confirm({
@@ -137,19 +137,19 @@ export const ArticleList: React.FC = () => {
       centered: true,
       onOk() {
         return patchArticlesState(articleIds, state).then(() => {
-          refreshData();
-        });
+          refreshData()
+        })
       },
-    });
-  };
+    })
+  }
 
-  useWatch(filterParams, () => fetchData());
+  useWatch(filterParams, () => fetchData())
 
   onMounted(() => {
-    fetchData();
-    fetchCategories();
-    fetchTags();
-  });
+    fetchData()
+    fetchCategories()
+    fetchTags()
+  })
 
   return (
     <Card
@@ -172,7 +172,7 @@ export const ArticleList: React.FC = () => {
               loading={loading.state.value}
               value={filterParams.state}
               onChange={(state) => {
-                filterParams.state = state;
+                filterParams.state = state
               }}
               options={[
                 { label: '全部状态', value: SELECT_ALL_VALUE },
@@ -185,7 +185,7 @@ export const ArticleList: React.FC = () => {
                         {state.name}
                       </Space>
                     ),
-                  };
+                  }
                 }),
               ]}
             />
@@ -194,7 +194,7 @@ export const ArticleList: React.FC = () => {
               loading={loading.state.value}
               value={filterParams.public}
               onChange={(state) => {
-                filterParams.public = state;
+                filterParams.public = state
               }}
               options={[
                 { label: '全部可见', value: SELECT_ALL_VALUE },
@@ -207,7 +207,7 @@ export const ArticleList: React.FC = () => {
                         {state.name}
                       </Space>
                     ),
-                  };
+                  }
                 }),
               ]}
             />
@@ -216,7 +216,7 @@ export const ArticleList: React.FC = () => {
               loading={loading.state.value}
               value={filterParams.origin}
               onChange={(state) => {
-                filterParams.origin = state;
+                filterParams.origin = state
               }}
               options={[
                 { label: '全部来源', value: SELECT_ALL_VALUE },
@@ -229,7 +229,7 @@ export const ArticleList: React.FC = () => {
                         {state.name}
                       </Space>
                     ),
-                  };
+                  }
                 }),
               ]}
             />
@@ -238,7 +238,7 @@ export const ArticleList: React.FC = () => {
               loading={loading.state.value}
               value={filterParams.sort}
               onChange={(sort) => {
-                filterParams.sort = sort;
+                filterParams.sort = sort
               }}
               options={sortTypes.map((sort) => {
                 return {
@@ -249,7 +249,7 @@ export const ArticleList: React.FC = () => {
                       {sort.name}
                     </Space>
                   ),
-                };
+                }
               })}
             />
             <Select
@@ -257,7 +257,7 @@ export const ArticleList: React.FC = () => {
               loading={loadingTag.state.value}
               value={filterParams.tag}
               onChange={(tag) => {
-                filterParams.tag = tag;
+                filterParams.tag = tag
               }}
               options={[
                 { label: '全部标签', value: SELECT_ALL_VALUE },
@@ -274,7 +274,7 @@ export const ArticleList: React.FC = () => {
               loading={loadingCategory.state.value}
               value={filterParams.category}
               onChange={(category) => {
-                filterParams.category = category;
+                filterParams.category = category
               }}
               treeData={[
                 {
@@ -294,7 +294,7 @@ export const ArticleList: React.FC = () => {
               onSearch={() => fetchData()}
               value={serarchKeyword.value}
               onChange={(event) => {
-                serarchKeyword.value = event.target.value;
+                serarchKeyword.value = event.target.value
               }}
             />
             <Button
@@ -344,5 +344,5 @@ export const ArticleList: React.FC = () => {
         onPagination={(page, pageSize) => fetchData({ page, per_page: pageSize })}
       />
     </Card>
-  );
-};
+  )
+}

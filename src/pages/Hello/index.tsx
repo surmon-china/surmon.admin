@@ -3,62 +3,62 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
-import { useReactive } from 'veact';
-import { SwitchTransition, CSSTransition } from 'react-transition-group';
-import tokenService from '@/services/token';
-import { useLoading } from 'veact-use';
-import { authLogin } from '@/store/auth';
-import { RouteKey, rc } from '@/route';
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
+import { useReactive } from 'veact'
+import { SwitchTransition, CSSTransition } from 'react-transition-group'
+import tokenService from '@/services/token'
+import { useLoading } from 'veact-use'
+import { authLogin } from '@/store/auth'
+import { RouteKey, rc } from '@/route'
 
-import styles from './style.module.less';
+import styles from './style.module.less'
 
 export const HelloPage: React.FC = () => {
-  const history = useHistory();
-  const loading = useLoading(false);
+  const history = useHistory()
+  const loading = useLoading(false)
   const inputState = useReactive({
     value: '',
     isEdit: false,
-  });
+  })
 
   const toEditMode = () => {
-    inputState.isEdit = true;
-  };
+    inputState.isEdit = true
+  }
 
   const quitEdit = () => {
-    inputState.isEdit = false;
-  };
+    inputState.isEdit = false
+  }
 
   const login = (password: string) => {
     loading
       .promise(authLogin(password))
       .then((newAuth) => {
-        tokenService.setToken(newAuth.access_token, newAuth.expires_in);
-        history.push(rc(RouteKey.Dashboard).path);
+        tokenService.setToken(newAuth.access_token, newAuth.expires_in)
+        history.push(rc(RouteKey.Dashboard).path)
       })
       .catch((error) => {
-        console.warn('登陆系统失败！', error);
-        return Promise.reject(error);
-      });
-  };
+        console.warn('登陆系统失败！', error)
+        return Promise.reject(error)
+      })
+  }
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
-    inputState.value = (event.target as any).value;
-  };
+    inputState.value = (event.target as any).value
+  }
 
   const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
     if (event.key === 'Escape') {
-      quitEdit();
+      quitEdit()
     }
     if (event.key === 'Enter') {
       if (inputState.value) {
-        login(inputState.value);
+        login(inputState.value)
       }
     }
-  };
+  }
 
   return (
     <div className={styles.helloPage}>
@@ -68,7 +68,7 @@ export const HelloPage: React.FC = () => {
             classNames="fade-fast"
             key={Number(inputState.isEdit)}
             addEndListener={(node, done) => {
-              node.addEventListener('transitionend', done, false);
+              node.addEventListener('transitionend', done, false)
             }}
           >
             {inputState.isEdit ? (
@@ -97,5 +97,5 @@ export const HelloPage: React.FC = () => {
         </SwitchTransition>
       </Spin>
     </div>
-  );
-};
+  )
+}

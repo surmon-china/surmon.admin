@@ -1,49 +1,49 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { onMounted } from 'veact';
-import { useLoading } from 'veact-use';
-import { Form, Input, Button, Spin, Divider, notification } from 'antd';
-import { CheckOutlined } from '@ant-design/icons';
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { onMounted } from 'veact'
+import { useLoading } from 'veact-use'
+import { Form, Input, Button, Spin, Divider, notification } from 'antd'
+import { CheckOutlined } from '@ant-design/icons'
 
-import { RouteKey, rc } from '@/route';
-import { ImageUploader } from '@/components/common/ImageUploader';
-import { Auth } from '@/constants/auth';
-import { scrollTo } from '@/services/scroller';
-import { removeToken } from '@/services/token';
-import { putAuth } from '@/store/auth';
-import { useAdminState } from '@/state/admin';
-import styles from './style.module.less';
+import { RouteKey, rc } from '@/route'
+import { ImageUploader } from '@/components/common/ImageUploader'
+import { Auth } from '@/constants/auth'
+import { scrollTo } from '@/services/scroller'
+import { removeToken } from '@/services/token'
+import { putAuth } from '@/store/auth'
+import { useAdminState } from '@/state/admin'
+import styles from './style.module.less'
 
 export interface BaseFormProps {
-  labelSpan: number;
-  wrapperSpan: number;
+  labelSpan: number
+  wrapperSpan: number
 }
 
 export const AuthForm: React.FC<BaseFormProps> = (props) => {
-  const history = useHistory();
-  const submitting = useLoading();
-  const adminAuth = useAdminState();
-  const [form] = Form.useForm<Auth>();
+  const history = useHistory()
+  const submitting = useLoading()
+  const adminAuth = useAdminState()
+  const [form] = Form.useForm<Auth>()
 
   const fetchNewAdminAuth = () => {
-    adminAuth.refresh().then(form.setFieldsValue);
-  };
+    adminAuth.refresh().then(form.setFieldsValue)
+  }
 
   const updateAdminAuth = (_adminAuth: Auth) => {
     return submitting.promise(putAuth(_adminAuth)).then(() => {
       if (_adminAuth.new_password) {
         notification.info({
           message: '修改了新密码，即将跳转到登录页...',
-        });
+        })
         setTimeout(() => {
-          removeToken();
-          history.push(rc(RouteKey.Hello).path);
-        }, 1688);
+          removeToken()
+          history.push(rc(RouteKey.Hello).path)
+        }, 1688)
       } else {
-        fetchNewAdminAuth();
+        fetchNewAdminAuth()
       }
-    });
-  };
+    })
+  }
 
   const handleSubmit = () => {
     form.validateFields().then((newAdminAuth) => {
@@ -51,27 +51,27 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
         ...adminAuth.data,
         ...newAdminAuth,
       }).then(() => {
-        scrollTo(document.body);
-      });
-    });
-  };
+        scrollTo(document.body)
+      })
+    })
+  }
 
   // 验证重复输入密码
   const validatePassword = async () => {
-    const password = form.getFieldValue('password');
-    const newPassword = form.getFieldValue('new_password');
-    const reallyNewPassword = form.getFieldValue('rel_new_password');
+    const password = form.getFieldValue('password')
+    const newPassword = form.getFieldValue('new_password')
+    const reallyNewPassword = form.getFieldValue('rel_new_password')
     if (!password && !newPassword && !reallyNewPassword) {
-      return;
+      return
     }
     if (newPassword !== reallyNewPassword || password === newPassword) {
-      throw new Error();
+      throw new Error()
     }
-  };
+  }
 
   onMounted(() => {
-    fetchNewAdminAuth();
-  });
+    fetchNewAdminAuth()
+  })
 
   return (
     <Spin spinning={submitting.state.value}>
@@ -157,5 +157,5 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
         </Form.Item>
       </Form>
     </Spin>
-  );
-};
+  )
+}

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Ref, useWatch, useRef } from 'veact';
+import React from 'react'
+import { Ref, useWatch, useRef } from 'veact'
 import {
   Form,
   Typography,
@@ -13,73 +13,73 @@ import {
   Drawer,
   Space,
   Spin,
-} from 'antd';
+} from 'antd'
 import {
   UserOutlined,
   CheckOutlined,
   MailOutlined,
   SendOutlined,
   LinkOutlined,
-} from '@ant-design/icons';
-import { UniversalEditor } from '@/components/common/UniversalEditor';
-import { FormDataExtend } from '@/components/common/FormDataExtend';
-import { useLoading } from 'veact-use';
-import { getComment } from '@/store/comment';
-import { getArticle } from '@/store/article';
-import { Comment, commentStates, COMMENT_GUESTBOOK_ID } from '@/constants/comment';
-import { Article } from '@/constants/article';
-import { stringToYMD } from '@/transformers/date';
-import { getGravatar } from '@/transformers/gravatar';
-import { getFEGuestbookPath, getFEArticleUrl } from '@/transformers/url';
-import { parseBrowser, parseOS } from '@/transformers/ua';
+} from '@ant-design/icons'
+import { UniversalEditor } from '@/components/common/UniversalEditor'
+import { FormDataExtend } from '@/components/common/FormDataExtend'
+import { useLoading } from 'veact-use'
+import { getComment } from '@/store/comment'
+import { getArticle } from '@/store/article'
+import { Comment, commentStates, COMMENT_GUESTBOOK_ID } from '@/constants/comment'
+import { Article } from '@/constants/article'
+import { stringToYMD } from '@/transformers/date'
+import { getGravatar } from '@/transformers/gravatar'
+import { getFEGuestbookPath, getFEArticleUrl } from '@/transformers/url'
+import { parseBrowser, parseOS } from '@/transformers/ua'
 
 export interface EditDrawerProps {
-  loading: boolean;
-  visible: Ref<boolean>;
-  comment: Ref<Comment | null>;
-  onSubmit(comment: Comment): void;
-  onCancel(): void;
+  loading: boolean
+  visible: Ref<boolean>
+  comment: Ref<Comment | null>
+  onSubmit(comment: Comment): void
+  onCancel(): void
 }
 
 export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
-  const [form] = Form.useForm<Comment>();
-  const loadingComment = useLoading();
-  const parentComment = useRef<Comment | null>(null);
-  const commentArticle = useRef<Article | null>(null);
+  const [form] = Form.useForm<Comment>()
+  const loadingComment = useLoading()
+  const parentComment = useRef<Comment | null>(null)
+  const commentArticle = useRef<Article | null>(null)
   const handleSubmit = () => {
     form.validateFields().then((formValue) => {
-      props.onSubmit(formValue);
-    });
-  };
+      props.onSubmit(formValue)
+    })
+  }
 
   const fetchParentComment = (pid: number) => {
     loadingComment.promise(getComment(pid)).then((result) => {
-      parentComment.value = result;
-    });
-  };
+      parentComment.value = result
+    })
+  }
 
   const fetchArticle = (articleId: number) => {
     loadingComment.promise(getArticle(articleId)).then((result) => {
-      commentArticle.value = result;
-    });
-  };
+      commentArticle.value = result
+    })
+  }
 
   useWatch(props.visible, (visible) => {
     if (visible) {
-      const targetComment = props.comment.value;
-      form.setFieldsValue(targetComment || {});
+      const targetComment = props.comment.value
+      form.setFieldsValue(targetComment || {})
       if (targetComment) {
         if (!!targetComment.pid) {
-          fetchParentComment(targetComment.pid!);
+          fetchParentComment(targetComment.pid!)
         }
         if (targetComment.post_id !== COMMENT_GUESTBOOK_ID) {
-          fetchArticle(targetComment.post_id);
+          fetchArticle(targetComment.post_id)
         }
       }
     } else {
-      form.resetFields();
+      form.resetFields()
     }
-  });
+  })
 
   return (
     <Drawer
@@ -158,9 +158,9 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
               suffix={
                 <SendOutlined
                   onClick={() => {
-                    const url = props.comment.value?.author.site;
+                    const url = props.comment.value?.author.site
                     if (url) {
-                      window.open(url);
+                      window.open(url)
                     }
                   }}
                 />
@@ -229,7 +229,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
                       {state.name}
                     </Space>
                   ),
-                };
+                }
               })}
             />
           </Form.Item>
@@ -265,5 +265,5 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
         </Form>
       </Spin>
     </Drawer>
-  );
-};
+  )
+}

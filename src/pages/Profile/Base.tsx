@@ -1,41 +1,41 @@
-import React from 'react';
-import { useRef, onMounted } from 'veact';
-import { Form, Input, Button, Select, Spin } from 'antd';
+import React from 'react'
+import { useRef, onMounted } from 'veact'
+import { Form, Input, Button, Select, Spin } from 'antd'
 import {
   MailOutlined,
   LinkOutlined,
   CheckOutlined,
   HeartOutlined,
-} from '@ant-design/icons';
-import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor';
-import { Option } from '@/constants/option';
-import { useLoading } from 'veact-use';
-import { scrollTo } from '@/services/scroller';
-import { getOption, putOption } from '@/store/system';
-import { formatJSONString } from '@/transformers/json';
-import styles from './style.module.less';
+} from '@ant-design/icons'
+import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor'
+import { Option } from '@/constants/option'
+import { useLoading } from 'veact-use'
+import { scrollTo } from '@/services/scroller'
+import { getOption, putOption } from '@/store/system'
+import { formatJSONString } from '@/transformers/json'
+import styles from './style.module.less'
 
 export interface BaseFormProps {
-  labelSpan: number;
-  wrapperSpan: number;
+  labelSpan: number
+  wrapperSpan: number
 }
 
 export const BaseForm: React.FC<BaseFormProps> = (props) => {
-  const loading = useLoading();
-  const submitting = useLoading();
-  const data = useRef<Option | null>(null);
-  const [form] = Form.useForm<Option>();
+  const loading = useLoading()
+  const submitting = useLoading()
+  const data = useRef<Option | null>(null)
+  const [form] = Form.useForm<Option>()
   const resetDataForm = (option: Option) => {
-    data.value = option;
+    data.value = option
     form.setFieldsValue({
       ...option,
       ad_config: formatJSONString(option.ad_config, 2),
-    });
-  };
+    })
+  }
 
   const fetchOption = () => {
-    return loading.promise(getOption()).then(resetDataForm);
-  };
+    return loading.promise(getOption()).then(resetDataForm)
+  }
 
   const updateOption = (newOption: Option) => {
     return submitting
@@ -45,8 +45,8 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
           ad_config: formatJSONString(newOption.ad_config),
         })
       )
-      .then(resetDataForm);
-  };
+      .then(resetDataForm)
+  }
 
   const handleSubmit = () => {
     form.validateFields().then((newOption) => {
@@ -54,14 +54,14 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
         ...data.value,
         ...newOption,
       }).then(() => {
-        scrollTo(document.body);
-      });
-    });
-  };
+        scrollTo(document.body)
+      })
+    })
+  }
 
   onMounted(() => {
-    fetchOption();
-  });
+    fetchOption()
+  })
 
   return (
     <Spin spinning={loading.state.value || submitting.state.value}>
@@ -155,10 +155,10 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
               message: '请输入合法的 JSON 数据',
               validator(_, value) {
                 try {
-                  formatJSONString(value || '');
-                  return Promise.resolve();
+                  formatJSONString(value || '')
+                  return Promise.resolve()
                 } catch (error) {
-                  return Promise.reject(error);
+                  return Promise.reject(error)
                 }
               },
             },
@@ -185,5 +185,5 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
         </Form.Item>
       </Form>
     </Spin>
-  );
-};
+  )
+}

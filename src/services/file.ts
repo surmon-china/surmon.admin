@@ -5,17 +5,17 @@
  */
 
 export const saveFile = (content: string, fileName: string, fileType?: string) => {
-  const blob = new Blob([content], { type: fileType || 'text/plain' });
+  const blob = new Blob([content], { type: fileType || 'text/plain' })
   if ((window as any).saveAs) {
-    (window as any).saveAs(blob, fileName);
+    ;(window as any).saveAs(blob, fileName)
   } else if ((navigator as any).saveBlob) {
-    (navigator as any).saveBlob(blob, fileName);
+    ;(navigator as any).saveBlob(blob, fileName)
   } else {
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', fileName);
-    const event = document.createEvent('MouseEvents');
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.setAttribute('href', url)
+    link.setAttribute('download', fileName)
+    const event = document.createEvent('MouseEvents')
     event.initMouseEvent(
       'click',
       true,
@@ -32,7 +32,7 @@ export const saveFile = (content: string, fileName: string, fileType?: string) =
       false,
       0,
       null
-    );
-    link.dispatchEvent(event);
+    )
+    link.dispatchEvent(event)
   }
-};
+}

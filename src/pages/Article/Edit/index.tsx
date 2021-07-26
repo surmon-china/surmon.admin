@@ -3,82 +3,82 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React, { useMemo } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { Modal, Button, Space, Badge } from 'antd';
+import React, { useMemo } from 'react'
+import { useParams, useHistory } from 'react-router-dom'
+import { Modal, Button, Space, Badge } from 'antd'
 import {
   DeleteOutlined,
   CommentOutlined,
   RocketOutlined,
   HeartOutlined,
   EyeOutlined,
-} from '@ant-design/icons';
-import { useRef, onMounted } from 'veact';
-import { useLoading } from 'veact-use';
-import { RouteKey, rc } from '@/route';
-import { getUEditorCache } from '@/components/common/UniversalEditor';
-import { Article } from '@/constants/article';
-import { SortType } from '@/constants/sort';
-import { scrollTo } from '@/services/scroller';
-import { getArticle, putArticle, deleteArticles } from '@/store/article';
-import { getComments, CommentTree } from '@/store/comment';
-import { getFEArticleUrl } from '@/transformers/url';
-import { ArticleEditor } from '../Editor';
-import { ArticleComment } from './Comment';
+} from '@ant-design/icons'
+import { useRef, onMounted } from 'veact'
+import { useLoading } from 'veact-use'
+import { RouteKey, rc } from '@/route'
+import { getUEditorCache } from '@/components/common/UniversalEditor'
+import { Article } from '@/constants/article'
+import { SortType } from '@/constants/sort'
+import { scrollTo } from '@/services/scroller'
+import { getArticle, putArticle, deleteArticles } from '@/store/article'
+import { getComments, CommentTree } from '@/store/comment'
+import { getFEArticleUrl } from '@/transformers/url'
+import { ArticleEditor } from '../Editor'
+import { ArticleComment } from './Comment'
 
 export const ArticleEdit: React.FC = () => {
-  const { article_id: articleId } = useParams<{ article_id: string }>();
-  const history = useHistory();
-  const fetching = useLoading();
-  const submitting = useLoading();
-  const article = useRef<Article | null>(null);
+  const { article_id: articleId } = useParams<{ article_id: string }>()
+  const history = useHistory()
+  const fetching = useLoading()
+  const submitting = useLoading()
+  const article = useRef<Article | null>(null)
   const articleCacheID = useMemo(
     () => rc(RouteKey.ArticleEdit).getter!(articleId),
     [articleId]
-  );
+  )
 
   // Modal
-  const isVisibleCommentModal = useRef<boolean>(false);
+  const isVisibleCommentModal = useRef<boolean>(false)
   const openCommentModal = () => {
-    isVisibleCommentModal.value = true;
-  };
+    isVisibleCommentModal.value = true
+  }
   const closeCommentModal = () => {
-    isVisibleCommentModal.value = false;
-  };
+    isVisibleCommentModal.value = false
+  }
 
   // Comment
-  const commentLoading = useLoading();
-  const commentCount = useRef<number>(0);
-  const comments = useRef<Array<CommentTree>>([]);
+  const commentLoading = useLoading()
+  const commentCount = useRef<number>(0)
+  const comments = useRef<Array<CommentTree>>([])
   const fetchComments = (articleId: number) => {
     commentLoading
       .promise(getComments({ per_page: 999, sort: SortType.Asc, post_id: articleId }))
       .then((result) => {
-        commentCount.value = result.pagination?.total!;
-        comments.value = result.tree;
-      });
-  };
+        commentCount.value = result.pagination?.total!
+        comments.value = result.tree
+      })
+  }
 
   const fetchUpdateArticle = (_article: Article) => {
     return submitting.promise(putArticle(_article)).then((result) => {
-      article.value = result;
-      scrollTo(document.body);
-    });
-  };
+      article.value = result
+      scrollTo(document.body)
+    })
+  }
 
   const fetchDeleteArticle = () => {
     return submitting.promise(deleteArticles([article.value?._id!])).then(() => {
-      history.push(rc(RouteKey.ArticleList).path);
-      scrollTo(document.body);
-    });
-  };
+      history.push(rc(RouteKey.ArticleList).path)
+      scrollTo(document.body)
+    })
+  }
 
   const handleManageComment = () => {
     history.push({
       pathname: rc(RouteKey.Comment).path,
       search: `post_id=${article.value?.id!}`,
-    });
-  };
+    })
+  }
 
   const handleDelete = () => {
     Modal.confirm({
@@ -89,13 +89,13 @@ export const ArticleEdit: React.FC = () => {
         danger: true,
         type: 'ghost',
       },
-    });
-  };
+    })
+  }
 
   onMounted(() => {
     fetching.promise(getArticle(articleId)).then((_article) => {
-      fetchComments(_article.id!);
-      const localContent = getUEditorCache(articleCacheID);
+      fetchComments(_article.id!)
+      const localContent = getUEditorCache(articleCacheID)
       if (Boolean(localContent) && localContent !== _article.content) {
         Modal.confirm({
           title: '本地缓存存在未保存的文章，是否要覆盖远程数据？',
@@ -107,17 +107,17 @@ export const ArticleEdit: React.FC = () => {
             danger: true,
           },
           onOk() {
-            article.value = { ..._article, content: localContent || '' };
+            article.value = { ..._article, content: localContent || '' }
           },
           onCancel() {
-            article.value = _article;
+            article.value = _article
           },
-        });
+        })
       } else {
-        article.value = _article;
+        article.value = _article
       }
-    });
-  });
+    })
+  })
 
   return (
     <>
@@ -178,5 +178,5 @@ export const ArticleEdit: React.FC = () => {
         onRefresh={() => fetchComments(article.value?.id!)}
       />
     </>
-  );
-};
+  )
+}

@@ -3,11 +3,11 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import _ from 'lodash';
-import classnames from 'classnames';
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import queryString from 'query-string';
+import _ from 'lodash'
+import classnames from 'classnames'
+import React from 'react'
+import { useLocation } from 'react-router-dom'
+import queryString from 'query-string'
 import {
   useShallowReactive,
   useRef,
@@ -17,9 +17,9 @@ import {
   toRaw,
   batchedUpdates,
   useComputed,
-} from 'veact';
-import { useLoading } from 'veact-use';
-import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd';
+} from 'veact'
+import { useLoading } from 'veact-use'
+import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd'
 import {
   DeleteOutlined,
   StopOutlined,
@@ -27,87 +27,87 @@ import {
   EditOutlined,
   CheckOutlined,
   ReloadOutlined,
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 
-import { DropdownMenu } from '@/components/common/DropdownMenu';
+import { DropdownMenu } from '@/components/common/DropdownMenu'
 import {
   getComments,
   GetCommentsParams,
   deleteComments,
   putComment,
   updateCommentsState,
-} from '@/store/comment';
+} from '@/store/comment'
 import {
   Comment as CommentType,
   CommentState,
   commentStates,
   COMMENT_GUESTBOOK_ID,
   cs,
-} from '@/constants/comment';
-import { ResponsePaginationData } from '@/constants/request';
-import { sortTypes, SortType } from '@/constants/sort';
-import { scrollTo } from '@/services/scroller';
-import { getFEGuestbookPath } from '@/transformers/url';
-import { EditDrawer } from './EditDrawer';
-import { CommentListTable } from './Table';
+} from '@/constants/comment'
+import { ResponsePaginationData } from '@/constants/request'
+import { sortTypes, SortType } from '@/constants/sort'
+import { scrollTo } from '@/services/scroller'
+import { getFEGuestbookPath } from '@/transformers/url'
+import { EditDrawer } from './EditDrawer'
+import { CommentListTable } from './Table'
 
-import styles from './style.module.less';
+import styles from './style.module.less'
 
-const LIST_ALL_VALUE = 'ALL';
-const SELECT_ALL_VALUE = 'ALL';
+const LIST_ALL_VALUE = 'ALL'
+const SELECT_ALL_VALUE = 'ALL'
 const DEFAULT_FILTER_PARAMS = Object.freeze({
   postId: LIST_ALL_VALUE as number | typeof LIST_ALL_VALUE,
   state: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | CommentState,
   sort: SortType.Desc,
-});
+})
 
 export const CommentPage: React.FC = () => {
   // params
-  const location = useLocation();
-  const { post_id } = queryString.parse(location.search);
-  const postIdParam = post_id ? Number(post_id) : undefined;
+  const location = useLocation()
+  const { post_id } = queryString.parse(location.search)
+  const postIdParam = post_id ? Number(post_id) : undefined
 
   // comments
-  const loading = useLoading();
-  const submitting = useLoading();
+  const loading = useLoading()
+  const submitting = useLoading()
   const comment = useShallowReactive<ResponsePaginationData<CommentType>>({
     data: [],
     pagination: undefined,
-  });
+  })
 
   // 过滤参数
-  const serarchKeyword = useRef('');
+  const serarchKeyword = useRef('')
   const filterParams = useReactive({
     ...DEFAULT_FILTER_PARAMS,
     postId: postIdParam || DEFAULT_FILTER_PARAMS.postId,
-  });
+  })
   const updatePostId = (postId: number | string) => {
-    filterParams.postId = Number(postId);
-  };
+    filterParams.postId = Number(postId)
+  }
 
   // 多选
-  const selectedIds = useRef<Array<string>>([]);
+  const selectedIds = useRef<Array<string>>([])
   const selectComments = useComputed(() =>
     comment.data.filter((c) => selectedIds.value.includes(c._id!))
-  );
+  )
   const handleSelect = (ids: any[]) => {
-    selectedIds.value = ids;
-  };
+    selectedIds.value = ids
+  }
 
   // 编辑
-  const activeEditDataIndex = useRef<number | null>(null);
-  const isVisibleModal = useRef(false);
+  const activeEditDataIndex = useRef<number | null>(null)
+  const isVisibleModal = useRef(false)
   const activeEditData = useComputed(() => {
-    const index = activeEditDataIndex.value;
-    return index !== null ? comment.data[index] : null;
-  });
+    const index = activeEditDataIndex.value
+    return index !== null ? comment.data[index] : null
+  })
   const closeModal = () => {
-    isVisibleModal.value = false;
-  };
+    isVisibleModal.value = false
+  }
   const editData = (index: number) => {
-    activeEditDataIndex.value = index;
-    isVisibleModal.value = true;
-  };
+    activeEditDataIndex.value = index
+    isVisibleModal.value = true
+  }
 
   const fetchData = (params?: GetCommentsParams) => {
     const getParams = {
@@ -116,34 +116,34 @@ export const CommentPage: React.FC = () => {
       post_id: filterParams.postId !== LIST_ALL_VALUE ? filterParams.postId : undefined,
       state: filterParams.state !== SELECT_ALL_VALUE ? filterParams.state : undefined,
       keyword: Boolean(serarchKeyword.value) ? serarchKeyword.value : undefined,
-    };
+    }
 
     loading.promise(getComments(getParams)).then((response) => {
-      comment.data = response.data;
-      comment.pagination = response.pagination;
-      scrollTo(document.body);
-    });
-  };
+      comment.data = response.data
+      comment.pagination = response.pagination
+      scrollTo(document.body)
+    })
+  }
 
   const resetParamsAndRefresh = () => {
-    serarchKeyword.value = '';
+    serarchKeyword.value = ''
     if (_.isEqual(toRaw(filterParams), DEFAULT_FILTER_PARAMS)) {
-      fetchData();
+      fetchData()
     } else {
       batchedUpdates(() => {
-        filterParams.state = DEFAULT_FILTER_PARAMS.state;
-        filterParams.sort = DEFAULT_FILTER_PARAMS.sort;
-        filterParams.postId = DEFAULT_FILTER_PARAMS.postId;
-      });
+        filterParams.state = DEFAULT_FILTER_PARAMS.state
+        filterParams.sort = DEFAULT_FILTER_PARAMS.sort
+        filterParams.postId = DEFAULT_FILTER_PARAMS.postId
+      })
     }
-  };
+  }
 
   const refreshData = () => {
     fetchData({
       page: comment.pagination?.current_page,
       per_page: comment.pagination?.per_page,
-    });
-  };
+    })
+  }
 
   const handleDelete = (comments: Array<CommentType>) => {
     Modal.confirm({
@@ -155,10 +155,10 @@ export const CommentPage: React.FC = () => {
           comments.map((c) => c._id!),
           _.uniq(comments.map((c) => c.post_id))
         ).then(() => {
-          refreshData();
+          refreshData()
         }),
-    });
-  };
+    })
+  }
 
   const handleStateChange = (comments: Array<CommentType>, state: CommentState) => {
     Modal.confirm({
@@ -171,10 +171,10 @@ export const CommentPage: React.FC = () => {
           _.uniq(comments.map((c) => c.post_id)),
           state
         ).then(() => {
-          refreshData();
+          refreshData()
         }),
-    });
-  };
+    })
+  }
 
   const handleSubmit = (comment: CommentType) => {
     submitting
@@ -185,16 +185,16 @@ export const CommentPage: React.FC = () => {
         })
       )
       .then(() => {
-        closeModal();
-        refreshData();
-      });
-  };
+        closeModal()
+        refreshData()
+      })
+  }
 
-  useWatch(filterParams, () => fetchData());
+  useWatch(filterParams, () => fetchData())
 
   onMounted(() => {
-    fetchData();
-  });
+    fetchData()
+  })
 
   return (
     <Card
@@ -220,7 +220,7 @@ export const CommentPage: React.FC = () => {
             loading={loading.state.value}
             value={filterParams.postId}
             onChange={(postId) => {
-              filterParams.postId = postId;
+              filterParams.postId = postId
             }}
             options={[
               {
@@ -254,7 +254,7 @@ export const CommentPage: React.FC = () => {
             loading={loading.state.value}
             value={filterParams.state}
             onChange={(state) => {
-              filterParams.state = state;
+              filterParams.state = state
             }}
             options={[
               { label: '全部状态', value: SELECT_ALL_VALUE },
@@ -267,7 +267,7 @@ export const CommentPage: React.FC = () => {
                       {state.name}
                     </Space>
                   ),
-                };
+                }
               }),
             ]}
           />
@@ -276,7 +276,7 @@ export const CommentPage: React.FC = () => {
             loading={loading.state.value}
             value={filterParams.sort}
             onChange={(sort) => {
-              filterParams.sort = sort;
+              filterParams.sort = sort
             }}
             options={sortTypes.map((sort) => {
               return {
@@ -287,7 +287,7 @@ export const CommentPage: React.FC = () => {
                     {sort.name}
                   </Space>
                 ),
-              };
+              }
             })}
           />
           <Input.Search
@@ -297,7 +297,7 @@ export const CommentPage: React.FC = () => {
             onSearch={() => fetchData()}
             value={serarchKeyword.value}
             onChange={(event) => {
-              serarchKeyword.value = event.target.value;
+              serarchKeyword.value = event.target.value
             }}
           />
           <Button
@@ -368,5 +368,5 @@ export const CommentPage: React.FC = () => {
         onSubmit={handleSubmit}
       />
     </Card>
-  );
-};
+  )
+}
