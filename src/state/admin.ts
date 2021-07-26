@@ -4,7 +4,7 @@
  */
 
 import { ref, reactive, readonly, useReactivity } from 'veact';
-import { createLoading } from '@/services/loading';
+import { createLoading } from 'veact-use';
 import { getAdminInfo } from '@/store/auth';
 
 const DEFAULT_ADMIN_INFO = Object.freeze({

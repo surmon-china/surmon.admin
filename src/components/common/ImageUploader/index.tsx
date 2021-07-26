@@ -5,13 +5,13 @@
 
 import React from 'react';
 import { useRef, onMounted } from 'veact';
+import { useLoading } from 'veact-use';
 import { Upload, notification, Input, Space } from 'antd';
 import { PlusOutlined, LoadingOutlined, FileImageOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import * as OSS from 'ali-oss';
 
 import { STATIC_URL, ALIYUN_OSS_REGION, ALIYUN_OSS_BUCKET } from '@/config';
-import { useLoading } from '@/services/loading';
 import { getOSSUpToken, AliYunOSSUpToken } from '@/store/system';
 import styles from './style.module.less';
 

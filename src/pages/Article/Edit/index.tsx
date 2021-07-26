@@ -14,11 +14,11 @@ import {
   EyeOutlined,
 } from '@ant-design/icons';
 import { useRef, onMounted } from 'veact';
+import { useLoading } from 'veact-use';
 import { RouteKey, rc } from '@/route';
 import { getUEditorCache } from '@/components/common/UniversalEditor';
 import { Article } from '@/constants/article';
 import { SortType } from '@/constants/sort';
-import { useLoading } from '@/services/loading';
 import { scrollTo } from '@/services/scroller';
 import { getArticle, putArticle, deleteArticles } from '@/store/article';
 import { getComments, CommentTree } from '@/store/comment';

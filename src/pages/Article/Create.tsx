@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useLoading } from 'veact-use';
 import { RouteKey, rc } from '@/route';
 import { Article } from '@/constants/article';
-import { useLoading } from '@/services/loading';
 import { scrollTo } from '@/services/scroller';
 import { createArticle } from '@/store/article';
 import { ArticleEditor } from './Editor';

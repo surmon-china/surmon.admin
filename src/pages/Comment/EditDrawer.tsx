@@ -23,7 +23,7 @@ import {
 } from '@ant-design/icons';
 import { UniversalEditor } from '@/components/common/UniversalEditor';
 import { FormDataExtend } from '@/components/common/FormDataExtend';
-import { useLoading } from '@/services/loading';
+import { useLoading } from 'veact-use';
 import { getComment } from '@/store/comment';
 import { getArticle } from '@/store/article';
 import { Comment, commentStates, COMMENT_GUESTBOOK_ID } from '@/constants/comment';

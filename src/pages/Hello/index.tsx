@@ -10,7 +10,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { useReactive } from 'veact';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 import tokenService from '@/services/token';
-import { useLoading } from '@/services/loading';
+import { useLoading } from 'veact-use';
 import { authLogin } from '@/store/auth';
 import { RouteKey, rc } from '@/route';
 

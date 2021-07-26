@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor';
 import { Option } from '@/constants/option';
-import { useLoading } from '@/services/loading';
+import { useLoading } from 'veact-use';
 import { scrollTo } from '@/services/scroller';
 import { getOption, putOption } from '@/store/system';
 import { formatJSONString } from '@/transformers/json';

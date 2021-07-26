@@ -32,7 +32,7 @@ import { Tag } from '@/constants/tag';
 import { ArticleId, Article } from '@/constants/article';
 import { ArticleOrigin, articleOrigins } from '@/constants/article/origin';
 import { ArticlePublic, articlePublics } from '@/constants/article/public';
-import { useLoading } from '@/services/loading';
+import { useLoading } from 'veact-use';
 import { scrollTo } from '@/services/scroller';
 import { getTags } from '@/store/tag';
 import { getArticles, GetArticleParams, patchArticlesState } from '@/store/article';

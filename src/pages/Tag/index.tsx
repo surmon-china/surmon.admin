@@ -25,7 +25,7 @@ import {
 } from '@/store/tag';
 import { Tag } from '@/constants/tag';
 import { ResponsePaginationData } from '@/constants/request';
-import { useLoading } from '@/services/loading';
+import { useLoading } from 'veact-use';
 import { scrollTo } from '@/services/scroller';
 import { getFETagPath } from '@/transformers/url';
 import { EditModal } from './EditModal';

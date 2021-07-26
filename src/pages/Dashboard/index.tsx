@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { useRef, onMounted } from 'veact';
+import { useLoading } from 'veact-use';
 import { Row, Col, Card, Statistic, Space } from 'antd';
 import {
   EyeOutlined,
@@ -14,7 +15,6 @@ import {
 } from '@ant-design/icons';
 
 import { APP_LAYOUT_SPACE_SIZE } from '@/config';
-import { useLoading } from '@/services/loading';
 import { Statistics, getStatistics } from '@/store/system';
 import { Analytics } from './Analytics';
 

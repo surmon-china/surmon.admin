@@ -1,13 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { onMounted } from 'veact';
+import { useLoading } from 'veact-use';
 import { Form, Input, Button, Spin, Divider, notification } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 
 import { RouteKey, rc } from '@/route';
 import { ImageUploader } from '@/components/common/ImageUploader';
 import { Auth } from '@/constants/auth';
-import { useLoading } from '@/services/loading';
 import { scrollTo } from '@/services/scroller';
 import { removeToken } from '@/services/token';
 import { putAuth } from '@/store/auth';

@@ -6,7 +6,7 @@ import { useRef, onMounted } from 'veact';
 
 import { APP_COLOR_PRIMARY } from '@/config';
 import { getGAToken } from '@/store/system';
-import { useLoading } from '@/services/loading';
+import { useLoading } from 'veact-use';
 import storage from '@/services/storage';
 import styles from './style.module.less';
 

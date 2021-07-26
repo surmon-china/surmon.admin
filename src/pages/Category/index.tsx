@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { useShallowReactive, useRef, onMounted, useComputed } from 'veact';
+import { useLoading } from 'veact-use';
 import { Button, Card, Divider, Modal, Space, Spin, Tree, Typography } from 'antd';
 import {
   DeleteOutlined,
@@ -16,7 +17,6 @@ import {
 import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request';
 import { Category as CategoryType } from '@/constants/category';
 import { getFECategoryPath } from '@/transformers/url';
-import { useLoading } from '@/services/loading';
 import {
   getAntdTreeByTree,
   CategoryTree,

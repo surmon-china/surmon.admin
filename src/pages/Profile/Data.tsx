@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLoadings } from 'veact-use';
 import { Button, Row, Col, Divider, Modal } from 'antd';
 import {
   CloudUploadOutlined,
@@ -6,7 +7,6 @@ import {
   SyncOutlined,
 } from '@ant-design/icons';
 
-import { useLoadings } from '@/services/loading';
 import { updateDatabaseBackup, updateSyndicationCache } from '@/store/system';
 
 export interface DataFormProps {

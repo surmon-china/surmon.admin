@@ -6,12 +6,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRef, onMounted, onBeforeUnmount } from 'veact';
+import { useLoading } from 'veact-use';
 import { notification, Typography } from 'antd';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 
 import { RouteKey, rc } from '@/route';
 import { renewalToken, checkTokenValidity } from '@/store/auth';
-import { useLoading } from '@/services/loading';
 import {
   getTokenCountdown,
   setToken,

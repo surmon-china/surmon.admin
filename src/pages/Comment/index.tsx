@@ -18,6 +18,7 @@ import {
   batchedUpdates,
   useComputed,
 } from 'veact';
+import { useLoading } from 'veact-use';
 import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd';
 import {
   DeleteOutlined,
@@ -45,7 +46,6 @@ import {
 } from '@/constants/comment';
 import { ResponsePaginationData } from '@/constants/request';
 import { sortTypes, SortType } from '@/constants/sort';
-import { useLoading } from '@/services/loading';
 import { scrollTo } from '@/services/scroller';
 import { getFEGuestbookPath } from '@/transformers/url';
 import { EditDrawer } from './EditDrawer';

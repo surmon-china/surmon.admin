@@ -3,7 +3,7 @@ import { useRef, onMounted } from 'veact';
 import { Spin, Button, Form, Tree, Typography, Divider, Space } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { ReloadOutlined } from '@ant-design/icons';
-import { useLoading } from '@/services/loading';
+import { useLoading } from 'veact-use';
 import { getCategories, CategoryTree, getAntdTreeByTree } from '@/store/category';
 import { CategoryFormModel } from '.';
 
