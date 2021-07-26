@@ -1,26 +1,19 @@
 name: Build
+
 on: pull_request
 
 jobs:
   build:
     name: Build test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "14"
+          cache: "yarn"
 
-      - name: Install yarn
-        run: npm install yarn -g
-
-      - name: Install Dependencies
+      - name: Install dependencies
         run: yarn install --frozen-lockfile
 
       - name: Lint

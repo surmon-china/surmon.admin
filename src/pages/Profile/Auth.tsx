@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { onMounted } from '@/veact/src';
+import { onMounted } from 'veact';
 import { Form, Input, Button, Spin, Divider, notification } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 

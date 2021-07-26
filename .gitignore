@@ -5,8 +5,3 @@ node_modules
 # compiled output
 dist
 tmp
-
-# prodect files
-/product/*
-!/product/www.tar.gz
-!/product/.gitkeep

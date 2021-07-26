@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { reactive, readonly, watch } from '@/veact/src';
+import { reactive, readonly, watch } from 'veact';
 
 const state = reactive({
   fullscreen: false,

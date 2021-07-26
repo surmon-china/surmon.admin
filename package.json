@@ -1,11 +1,7 @@
 {
   "name": "veact-admin",
   "version": "1.0.0",
-  "author": {
-    "name": "Surmon",
-    "email": "surmon@foxmail.com",
-    "url": "https://surmon.me"
-  },
+  "author": "Surmon",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -14,34 +10,12 @@
   "scripts": {
     "dev": "vite",
     "dev:proxy": "PROXY=true vite",
+    "lint": "eslint --ext .ts,.vue src",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "local:tar": "rm -rf ./product/www.tar.gz && tar -zcvf ./product/www.tar.gz -C ./dist .",
-    "local:build:tar": "npm run build && npm run local:tar",
-    "local:deploy": "npm run local:build:tar && sh .deploy/decompression.sh"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/*.{js,jsx,mjs,ts,tsx}": [
-      "node_modules/.bin/prettier --write",
-      "node_modules/.bin/eslint --fix",
-      "git add"
-    ],
-    "src/*.{css,scss,less,json,html}": [
-      "node_modules/.bin/prettier --write",
-      "git add"
-    ],
-    "*.md|{.github,benchmark,bin,examples,hot,lib,schemas,setup,tooling}/**/*.{md,yml,yaml,js,json}": [
-      "cspell"
-    ]
+    "release": ". ./scripts/release.sh"
   },
   "dependencies": {
-    "@vue/reactivity": "^3.2.0-beta.2",
-    "add": "^2.0.6",
     "ali-oss": "^6.16.0",
     "antd": "^4.16.8",
     "axios": "^0.21.1",
@@ -63,24 +37,23 @@
     "react-top-loading-bar": "^2.0.1",
     "react-transition-group": "^4.4.2",
     "ua-parser-js": "^0.7.28",
-    "yarn": "^1.22.10"
+    "veact": "^0.1.1"
   },
   "devDependencies": {
     "@types/ali-oss": "^6.0.10",
     "@types/gravatar": "^1.8.3",
     "@types/lodash": "^4.14.171",
     "@types/marked": "^2.0.4",
-    "@types/react": "^17.0.14",
+    "@types/react": "^17.0.15",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.1.8",
     "@types/react-transition-group": "^4.4.2",
     "@types/ua-parser-js": "^0.7.36",
     "@vitejs/plugin-react-refresh": "^1.3.5",
+    "eslint": "^7.31.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "husky": "^7.0.1",
     "less": "^4.1.1",
-    "lint-staged": "^11.0.1",
     "prettier": "^2.3.2",
     "typescript": "^4.3.5",
     "vite": "^2.4.3"

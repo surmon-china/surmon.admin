@@ -17,7 +17,7 @@ import {
   toRaw,
   batchedUpdates,
   useComputed,
-} from '@/veact/src';
+} from 'veact';
 import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd';
 import {
   DeleteOutlined,

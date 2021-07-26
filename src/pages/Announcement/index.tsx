@@ -12,7 +12,7 @@ import {
   batchedUpdates,
   useWatch,
   useComputed,
-} from '@/veact/src';
+} from 'veact';
 import {
   Table,
   Button,

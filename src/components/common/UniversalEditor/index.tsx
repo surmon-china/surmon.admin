@@ -6,7 +6,7 @@
 import { debounce } from 'lodash';
 import classnames from 'classnames';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { useWatch, useReactivity } from '@/veact/src';
+import { useWatch, useReactivity } from 'veact';
 import { CSSTransition } from 'react-transition-group';
 import { Button, Select, Space, Typography, Spin } from 'antd';
 import {

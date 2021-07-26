@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRef, onMounted } from '@/veact/src';
+import { useRef, onMounted } from 'veact';
 import { Spin, Button, Form, Select, Input, Divider, Space, Typography } from 'antd';
 import { ReloadOutlined, CheckCircleOutlined, TagOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';

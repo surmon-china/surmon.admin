@@ -14,7 +14,7 @@ import {
   batchedUpdates,
   useReactive,
   useWatch,
-} from '@/veact/src';
+} from 'veact';
 import { Button, Card, Input, Select, Divider, Modal, Space, TreeSelect } from 'antd';
 import {
   EditOutlined,

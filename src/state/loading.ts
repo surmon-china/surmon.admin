@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { reactive, readonly } from '@/veact/src';
+import { reactive, readonly } from 'veact';
 
 let _throttle = 400;
 let _duration = 160;

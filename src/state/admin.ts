@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { ref, reactive, readonly, useReactivity } from '@/veact/src';
+import { ref, reactive, readonly, useReactivity } from 'veact';
 import { createLoading } from '@/services/loading';
 import { getAdminInfo } from '@/store/auth';
 

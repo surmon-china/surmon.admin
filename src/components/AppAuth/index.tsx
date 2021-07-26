@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useRef, onMounted, onBeforeUnmount } from '@/veact/src';
+import { useRef, onMounted, onBeforeUnmount } from 'veact';
 import { notification, Typography } from 'antd';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 

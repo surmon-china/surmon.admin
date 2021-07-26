@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Ref, useWatch } from '@/veact/src';
+import { Ref, useWatch } from 'veact';
 import { Form, Select, Modal, Space, Divider, Typography } from 'antd';
 import { UniversalEditor } from '@/components/common/UniversalEditor';
 import { Announcement } from '@/constants/announcement';

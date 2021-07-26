@@ -7,7 +7,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { useReactive } from '@/veact/src';
+import { useReactive } from 'veact';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 import tokenService from '@/services/token';
 import { useLoading } from '@/services/loading';

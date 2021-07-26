@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Divider, Button, Spin, Result } from 'antd';
 import { StockOutlined, MehOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
-import { useRef, onMounted } from '@/veact/src';
+import { useRef, onMounted } from 'veact';
 
 import { APP_COLOR_PRIMARY } from '@/config';
 import { getGAToken } from '@/store/system';

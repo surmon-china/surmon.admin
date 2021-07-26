@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { useRef, onMounted } from '@/veact/src';
+import { useRef, onMounted } from 'veact';
 import { Upload, notification, Input, Space } from 'antd';
 import { PlusOutlined, LoadingOutlined, FileImageOutlined } from '@ant-design/icons';
 import moment from 'moment';

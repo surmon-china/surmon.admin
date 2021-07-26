@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRef, onMounted } from '@/veact/src';
+import { useRef, onMounted } from 'veact';
 import { Form, Input, Button, Select, Spin } from 'antd';
 import {
   MailOutlined,

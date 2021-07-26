@@ -6,7 +6,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
-import { onMounted, useReactivity } from '@/veact/src';
+import { onMounted, useReactivity } from 'veact';
 import 'moment/locale/zh-cn';
 
 import { ENV, APP_COLOR_PRIMARY } from '@/config';
