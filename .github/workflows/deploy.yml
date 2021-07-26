@@ -17,8 +17,9 @@ jobs:
           node-version: "14"
           cache: "yarn"
 
-      - name: Vite build
+      - name: Install dependencies
         run: yarn install --frozen-lockfile
+      - name: Vite build
         run: yarn build
 
       - name: Relesae branch
