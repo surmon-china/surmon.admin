@@ -1,15 +1,3 @@
-<p align="center">
-  <a href="https://github.com/facebook/react/" target="blank">
-    <img src="https://raw.githubusercontent.com/surmon-china/veact-admin/main/presses/react.svg" height="90" alt="React logo" />
-  </a>
-  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-  <a href="https://github.com/surmon-china/nodepress" target="blank">
-    <img src="https://raw.githubusercontent.com/surmon-china/veact-admin/main/public/images/profile/logo.png" height="90" alt="nodepress logo" />
-  </a>
-</p>
-
----
-
 # veact-admin
 
 [![veact](https://img.shields.io/badge/WITH-VEACT-42a97a?style=for-the-badge&labelColor=35495d)](https://github.com/veactjs/veact)
@@ -19,9 +7,9 @@
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/surmon-china/veact-admin/Deploy?label=deploy&style=for-the-badge)](https://github.com/surmon-china/veact-admin/actions?query=workflow:%22Deploy%22)
 [![GitHub license](https://img.shields.io/github/license/surmon-china/veact-admin.svg?style=for-the-badge)](https://github.com/surmon-china/veact-admin/blob/main/LICENSE)
 
-**Admin client for [surmon.me](https://github.com/surmon-china/surmon.me) blog, powered by [React](https://github.com/facebook/react) and [Veact](https://github.com/veactjs/veact).**
+> **Admin client for [surmon.me](https://github.com/surmon-china/surmon.me) blog, powered by [`React`](https://github.com/facebook/react) and [`Veact`](https://github.com/veactjs/veact).**
 
-**适用于 [surmon.me](https://github.com/surmon-china/surmon.me) 博客的管理员后台应用，使用 [React](https://github.com/facebook/react) 和 [Veact](https://github.com/veactjs/veact) 进行开发。**
+> **适用于 [surmon.me](https://github.com/surmon-china/surmon.me) 博客的管理员后台应用，使用 [`React`](https://github.com/facebook/react) 和 [`Veact`](https://github.com/veactjs/veact) 进行开发。**
 
 **其他相关项目：**
 
