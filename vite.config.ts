@@ -1,9 +1,9 @@
-import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
-import reactRefresh from '@vitejs/plugin-react-refresh';
+import path from 'path'
+import { defineConfig, loadEnv } from 'vite'
+import reactRefresh from '@vitejs/plugin-react-refresh'
 
-const isProxyDev = Boolean(process.env.PROXY);
-const prodEnv = loadEnv('production', '.');
+const isProxyDev = Boolean(process.env.PROXY)
+const prodEnv = loadEnv('production', '.')
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -39,12 +39,12 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules/monaco-editor')) {
-            return 'monaco-editor';
+            return 'monaco-editor'
           } else if (id.includes('node_modules')) {
-            return 'vendor';
+            return 'vendor'
           }
         },
       },
     },
   },
-});
+})

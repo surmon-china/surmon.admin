@@ -6,13 +6,20 @@
 import React from 'react'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
-import { Upload, notification, Input, Space } from 'antd'
-import { PlusOutlined, LoadingOutlined, FileImageOutlined } from '@ant-design/icons'
+import { Upload, notification, Input, Space, Button, Tooltip } from 'antd'
+import {
+  PlusOutlined,
+  LoadingOutlined,
+  LinkOutlined,
+  FileMarkdownOutlined,
+  CopyOutlined,
+} from '@ant-design/icons'
 import moment from 'moment'
-import * as OSS from 'ali-oss'
+import OSS from 'ali-oss'
 
 import { STATIC_URL, ALIYUN_OSS_REGION, ALIYUN_OSS_BUCKET } from '@/config'
 import { getOSSUpToken, AliYunOSSUpToken } from '@/store/system'
+import { copy } from '@/services/clipboard'
 import styles from './style.module.less'
 
 const UPLOAD_FILE_SIZE_LIMIT = 3000000
@@ -20,6 +27,8 @@ const UPLOAD_FILE_SIZE_LIMIT = 3000000
 export interface ImageUploaderProps {
   value?: string
   onChange?(value: string): void
+  disabledInput?: boolean
+  disabledMarkdown?: boolean
 }
 
 export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
@@ -114,6 +123,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
     props.onChange?.('')
   }
 
+  const getMarkdown = (url: string) => {
+    return `![](${url})`
+  }
+
   onMounted(() => {
     fetchToken()
   })
@@ -146,13 +159,32 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
           </div>
         )}
       </Upload>
-      <Input
-        allowClear={true}
-        placeholder="可以直接输入地址"
-        prefix={<FileImageOutlined />}
-        value={props.value}
-        onChange={(event) => props.onChange?.(event.target.value)}
-      />
+      {!props.disabledInput && (
+        <Input
+          allowClear={true}
+          placeholder="可以直接输入地址"
+          prefix={<LinkOutlined />}
+          value={props.value}
+          onChange={(event) => props.onChange?.(event.target.value)}
+        />
+      )}
+      {!props.disabledMarkdown && props.value && (
+        <Input.Group compact={true}>
+          <Input
+            style={{ width: 'calc(100% - 32px - 1px)' }}
+            placeholder="Markdown image"
+            prefix={<FileMarkdownOutlined />}
+            readOnly={true}
+            value={getMarkdown(props.value)}
+          />
+          <Tooltip title="Copy Markdown">
+            <Button
+              icon={<CopyOutlined />}
+              onClick={() => copy(getMarkdown(props.value!))}
+            />
+          </Tooltip>
+        </Input.Group>
+      )}
     </Space>
   )
 }

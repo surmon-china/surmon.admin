@@ -90,7 +90,7 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
           wrapperCol={{ span: 6 }}
           rules={[{ required: true, message: '请上传图片' }]}
         >
-          <ImageUploader />
+          <ImageUploader disabledMarkdown={true} />
         </Form.Item>
         <Form.Item
           name="name"

@@ -8,15 +8,18 @@ import classnames from 'classnames'
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { useWatch, useReactivity } from 'veact'
 import { CSSTransition } from 'react-transition-group'
-import { Button, Select, Space, Typography, Spin } from 'antd'
+import { Button, Select, Space, Typography, Spin, Modal } from 'antd'
 import {
   FullscreenOutlined,
   DownloadOutlined,
   EyeOutlined,
   LoadingOutlined,
+  CloudUploadOutlined,
   EyeInvisibleOutlined,
   FullscreenExitOutlined,
+  FileImageOutlined,
 } from '@ant-design/icons'
+import { ImageUploader } from '@/components/common/ImageUploader'
 import { general as _general } from '@/state/general'
 import { saveFile } from '@/services/file'
 import storage from '@/services/storage'
@@ -178,6 +181,8 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
 
     // Command + S = save content
     ueditor.addCommand(KeyMod.CtrlCmd | KeyCode.KEY_S, handleSaveContent)
+    // Esc = exit fullscreen
+    ueditor.addCommand(KeyCode.Escape, () => general.setFullscreen(false))
     return ueditor
   }
 
@@ -258,12 +263,41 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
           </Space>
           <Space className={styles.right}>
             {language === UEditorLanguage.Markdown && (
-              <Button
-                size="small"
-                disabled={props.disbaled}
-                icon={isPreview ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-                onClick={() => setPreview(!isPreview)}
-              />
+              <>
+                <Button
+                  size="small"
+                  icon={<CloudUploadOutlined />}
+                  onClick={() => {
+                    Modal.info({
+                      centered: true,
+                      closable: false,
+                      icon: null,
+                      title: (
+                        <Space>
+                          <FileImageOutlined />
+                          上传图片
+                        </Space>
+                      ),
+                      okText: 'OK! nice',
+                      okButtonProps: {
+                        type: 'default',
+                      },
+                      content: (
+                        <>
+                          <br />
+                          <ImageUploader disabledInput={true} />
+                        </>
+                      ),
+                    })
+                  }}
+                />
+                <Button
+                  size="small"
+                  disabled={props.disbaled}
+                  icon={isPreview ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                  onClick={() => setPreview(!isPreview)}
+                />
+              </>
             )}
             <Select
               size="small"
