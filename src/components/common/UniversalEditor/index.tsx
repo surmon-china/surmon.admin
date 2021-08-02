@@ -8,7 +8,7 @@ import classnames from 'classnames'
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { useWatch, useReactivity } from 'veact'
 import { CSSTransition } from 'react-transition-group'
-import { Button, Select, Space, Typography, Spin, Modal } from 'antd'
+import { Button, Select, Space, Typography, Spin } from 'antd'
 import {
   FullscreenOutlined,
   DownloadOutlined,
@@ -17,9 +17,8 @@ import {
   CloudUploadOutlined,
   EyeInvisibleOutlined,
   FullscreenExitOutlined,
-  FileImageOutlined,
 } from '@ant-design/icons'
-import { ImageUploader } from '@/components/common/ImageUploader'
+import { ImageUploaderModal } from '@/components/common/ImageUploader/Modal'
 import { general as _general } from '@/state/general'
 import { saveFile } from '@/services/file'
 import storage from '@/services/storage'
@@ -87,6 +86,8 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
   const [language, setLanguage] = useState<UEditorLanguage>(
     props.language || UEditorLanguage.Markdown
   )
+
+  const [isVisibleUploaderModal, setUploaderModalVisible] = useState(false)
 
   const handleSaveContent = () => {
     const time = timestampToYMD(Date.now())
@@ -264,32 +265,14 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
           <Space className={styles.right}>
             {language === UEditorLanguage.Markdown && (
               <>
+                <ImageUploaderModal
+                  visible={isVisibleUploaderModal}
+                  onClose={() => setUploaderModalVisible(false)}
+                />
                 <Button
                   size="small"
                   icon={<CloudUploadOutlined />}
-                  onClick={() => {
-                    Modal.info({
-                      centered: true,
-                      closable: false,
-                      icon: null,
-                      title: (
-                        <Space>
-                          <FileImageOutlined />
-                          上传图片
-                        </Space>
-                      ),
-                      okText: 'OK! nice',
-                      okButtonProps: {
-                        type: 'default',
-                      },
-                      content: (
-                        <>
-                          <br />
-                          <ImageUploader disabledInput={true} />
-                        </>
-                      ),
-                    })
-                  }}
+                  onClick={() => setUploaderModalVisible(true)}
                 />
                 <Button
                   size="small"

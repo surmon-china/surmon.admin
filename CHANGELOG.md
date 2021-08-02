@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.0.5 (2021-08-03)
+
+- improve `ImageUploaderModal`
+- improve Markdown preview style
+
 ### v1.0.4 (2021-07-30)
 
 - fix `ali-oss` error
