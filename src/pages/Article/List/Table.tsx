@@ -20,7 +20,7 @@ import { ao } from '@/constants/article/origin'
 import { ap } from '@/constants/article/public'
 import { PublishState, ps } from '@/constants/publish'
 import { stringToYMD } from '@/transformers/date'
-import { getFEArticleUrl } from '@/transformers/url'
+import { getBlogArticleUrl } from '@/transformers/url'
 
 export interface ArticleListTableProps {
   loading: boolean
@@ -224,7 +224,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 type="link"
                 target="_blank"
                 icon={<LinkOutlined />}
-                href={getFEArticleUrl(article.id!)}
+                href={getBlogArticleUrl(article.id!)}
               >
                 宿主页面
               </Button>

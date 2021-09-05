@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### v1.1.4 (2021-09-06)
 
 - Fix Demo site bugs
+- Improve resource url
 
 ### v1.1.0 (2021-09-01)
 

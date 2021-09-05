@@ -30,7 +30,7 @@ import { Comment, commentStates, COMMENT_GUESTBOOK_ID } from '@/constants/commen
 import { Article } from '@/constants/article'
 import { stringToYMD } from '@/transformers/date'
 import { getGravatar } from '@/transformers/gravatar'
-import { getFEGuestbookPath, getFEArticleUrl } from '@/transformers/url'
+import { getBlogGuestbookPath, getBlogArticleUrl } from '@/transformers/url'
 import { parseBrowser, parseOS } from '@/transformers/ua'
 
 export interface EditDrawerProps {
@@ -195,8 +195,8 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
               icon={<LinkOutlined />}
               href={
                 props.comment.value?.post_id === COMMENT_GUESTBOOK_ID
-                  ? getFEGuestbookPath()
-                  : getFEArticleUrl(props.comment.value?.post_id!)
+                  ? getBlogGuestbookPath()
+                  : getBlogArticleUrl(props.comment.value?.post_id!)
               }
             >
               {props.comment.value?.post_id === COMMENT_GUESTBOOK_ID

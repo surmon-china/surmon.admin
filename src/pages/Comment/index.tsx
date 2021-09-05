@@ -47,7 +47,7 @@ import {
 import { ResponsePaginationData } from '@/constants/request'
 import { sortTypes, SortType } from '@/constants/sort'
 import { scrollTo } from '@/services/scroller'
-import { getFEGuestbookPath } from '@/transformers/url'
+import { getBlogGuestbookPath } from '@/transformers/url'
 import { EditDrawer } from './EditDrawer'
 import { CommentListTable } from './Table'
 
@@ -207,7 +207,7 @@ export const CommentPage: React.FC = () => {
           size="small"
           target="_blank"
           icon={<RocketOutlined />}
-          href={getFEGuestbookPath()}
+          href={getBlogGuestbookPath()}
         >
           去留言板
         </Button>

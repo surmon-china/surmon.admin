@@ -22,7 +22,7 @@ import { SortType } from '@/constants/sort'
 import { scrollTo } from '@/services/scroller'
 import { getArticle, putArticle, deleteArticles } from '@/store/article'
 import { getComments, CommentTree } from '@/store/comment'
-import { getFEArticleUrl } from '@/transformers/url'
+import { getBlogArticleUrl } from '@/transformers/url'
 import { ArticleEditor } from '../Editor'
 import { ArticleComment } from './Comment'
 
@@ -162,7 +162,7 @@ export const ArticleEdit: React.FC = () => {
                 size="small"
                 icon={<RocketOutlined />}
                 target="_blank"
-                href={getFEArticleUrl(article.value?.id!)}
+                href={getBlogArticleUrl(article.value?.id!)}
               />
             </Button.Group>
           </Space>

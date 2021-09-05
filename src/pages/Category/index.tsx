@@ -16,7 +16,7 @@ import {
 } from '@ant-design/icons'
 import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request'
 import { Category as CategoryType } from '@/constants/category'
-import { getFECategoryPath } from '@/transformers/url'
+import { getBlogCategoryPath } from '@/transformers/url'
 import {
   getAntdTreeByTree,
   CategoryTree,
@@ -206,7 +206,7 @@ export const CategoryPage: React.FC = () => {
                       icon={<LinkOutlined />}
                       type="link"
                       target="_blank"
-                      href={getFECategoryPath(category.slug)}
+                      href={getBlogCategoryPath(category.slug)}
                     >
                       查看
                     </Button>

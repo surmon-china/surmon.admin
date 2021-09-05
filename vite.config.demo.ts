@@ -1,6 +1,6 @@
 import { UserConfig } from 'vite'
 
-const DEMO_BASE_PATH = '/veact-admin'
+const DEMO_BASE_PATH = '/veact-admin/'
 
 export const demoConfiger = (defaultConfig: UserConfig): UserConfig => {
   return {
@@ -15,7 +15,7 @@ export const demoConfiger = (defaultConfig: UserConfig): UserConfig => {
           return html.replace(
             `</head>`,
             // append mock entry
-            `<script src="${DEMO_BASE_PATH}/__demo__/index.js"></script></head>`
+            `<script src="${DEMO_BASE_PATH}__demo__/index.js"></script></head>`
           )
         },
       },

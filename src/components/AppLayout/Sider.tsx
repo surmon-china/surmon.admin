@@ -4,7 +4,8 @@ import classnames from 'classnames'
 import { Menu, Spin } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
 
-import { GITHUB_REPO_URL, GITHUB_REPO_NAME, BASE_PATH } from '@/config'
+import { getResourceUrl } from '@/transformers/url'
+import { GITHUB_REPO_URL, GITHUB_REPO_NAME } from '@/config'
 import { RouteKey, routeMap, rc } from '@/route'
 import { useAdminState } from '@/state/admin'
 
@@ -27,11 +28,9 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
             styles.image,
             props.isSiderCollapsed && styles.collapsed
           )}
-          src={
-            props.isSiderCollapsed
-              ? `${BASE_PATH}/images/logo.mini.svg`
-              : `${BASE_PATH}/images/logo.svg`
-          }
+          src={getResourceUrl(
+            props.isSiderCollapsed ? `/images/logo.mini.svg` : `/images/logo.svg`
+          )}
         />
       </Link>
       <Spin spinning={admin.loading.value} size="small">

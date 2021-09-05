@@ -27,7 +27,7 @@ import { Tag } from '@/constants/tag'
 import { ResponsePaginationData } from '@/constants/request'
 import { useLoading } from 'veact-use'
 import { scrollTo } from '@/services/scroller'
-import { getFETagPath } from '@/transformers/url'
+import { getBlogTagPath } from '@/transformers/url'
 import { EditModal } from './EditModal'
 
 import styles from './style.module.less'
@@ -270,7 +270,7 @@ export const TagPage: React.FC = () => {
                     type="link"
                     target="_blank"
                     icon={<LinkOutlined />}
-                    href={getFETagPath(tag.slug)}
+                    href={getBlogTagPath(tag.slug)}
                   >
                     查看
                   </Button>

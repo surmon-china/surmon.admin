@@ -13,7 +13,7 @@ import { Comment as CommentType, CommentState, cs } from '@/constants/comment'
 import { parseBrowser, parseOS } from '@/transformers/ua'
 import { stringToYMD } from '@/transformers/date'
 import { getGravatar } from '@/transformers/gravatar'
-import { getFEArticleUrl } from '@/transformers/url'
+import { getBlogArticleUrl } from '@/transformers/url'
 
 import styles from './style.module.less'
 
@@ -272,7 +272,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 type="link"
                 target="_blank"
                 icon={<LinkOutlined />}
-                href={getFEArticleUrl(comment.post_id)}
+                href={getBlogArticleUrl(comment.post_id)}
               >
                 宿主页面
               </Button>
