@@ -54,7 +54,7 @@ export interface HTTPResult<T = any> {
 
 const http = axios.create({
   baseURL: API_URL,
-  // WORKAROUND for outside
+  // adapter: WORKAROUND for outside
   adapter: (window as any).__axiosAdapter || undefined,
 })
 

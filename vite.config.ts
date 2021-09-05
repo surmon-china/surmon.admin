@@ -37,13 +37,13 @@ const config: UserConfig = {
   },
 }
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   if (mode === 'proxy') {
     return proxyConfiger(config)
   }
 
   if (mode === 'demo') {
-    return demoConfiger(config)
+    return demoConfiger(config, command)
   }
 
   return config

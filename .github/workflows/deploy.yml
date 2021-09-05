@@ -22,11 +22,11 @@ jobs:
       - name: Vite build
         run: yarn build:demo
 
-      - name: Example branch
+      - name: Demo branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: example
+          publish_branch: demo
           publish_dir: ./dist
 
   blog:

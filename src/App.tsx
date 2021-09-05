@@ -45,7 +45,8 @@ export const App: React.FC = () => {
         color={loadingState.failed ? 'red' : APP_COLOR_PRIMARY}
         progress={loadingState.percent}
       />
-      <BrowserRouter>
+      {/* basename: WORKAROUND for outside */}
+      <BrowserRouter basename={(window as any).basePath}>
         <Switch>
           <Route path="/" exact>
             <Redirect to={rc(RouteKey.Dashboard).path} />
