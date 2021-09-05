@@ -6,11 +6,12 @@
 import { ref, reactive, readonly, useReactivity } from 'veact'
 import { createLoading } from 'veact-use'
 import { getAdminInfo } from '@/store/auth'
+import { BASE_PATH } from '@/config'
 
 const DEFAULT_ADMIN_INFO = Object.freeze({
   name: '管理员',
   slogan: '博客管理后台',
-  gravatar: 'assets/images/profile/logo-smooth.png',
+  gravatar: `${BASE_PATH}/images/profile/logo-smooth.png`,
 })
 
 const data = reactive({ ...DEFAULT_ADMIN_INFO })

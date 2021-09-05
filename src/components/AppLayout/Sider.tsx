@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import { Menu, Spin } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
 
-import * as CONFIG from '@/config'
+import { GITHUB_REPO_URL, GITHUB_REPO_NAME, BASE_PATH } from '@/config'
 import { RouteKey, routeMap, rc } from '@/route'
 import { useAdminState } from '@/state/admin'
 
@@ -23,11 +23,15 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
       <Link to={rc(RouteKey.Dashboard).path} className={styles.logo}>
         <img
           alt="logo"
-          src={props.isSiderCollapsed ? '/images/logo.mini.svg' : '/images/logo.svg'}
           className={classnames(
             styles.image,
             props.isSiderCollapsed && styles.collapsed
           )}
+          src={
+            props.isSiderCollapsed
+              ? `${BASE_PATH}/images/logo.mini.svg`
+              : `${BASE_PATH}/images/logo.svg`
+          }
         />
       </Link>
       <Spin spinning={admin.loading.value} size="small">
@@ -99,9 +103,9 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
         <Menu.Item
           key="github"
           icon={<GithubOutlined />}
-          onClick={() => window.open(CONFIG.GITHUB_REPO_URL)}
+          onClick={() => window.open(GITHUB_REPO_URL)}
         >
-          {CONFIG.GITHUB_REPO_NAME}
+          {GITHUB_REPO_NAME}
         </Menu.Item>
       </Menu>
     </div>

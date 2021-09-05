@@ -4,12 +4,12 @@
  */
 
 import React from 'react'
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { onMounted, useReactivity } from 'veact'
 import LoadingBar from 'react-top-loading-bar'
 import 'moment/locale/zh-cn'
 
-import { ENV, VITE_ENV, APP_COLOR_PRIMARY } from '@/config'
+import { ENV, VITE_ENV, APP_COLOR_PRIMARY, ENABLEd_HASH_ROUTER } from '@/config'
 import { RouteKey, routeMap, rc } from '@/route'
 import { loading } from '@/state/loading'
 import { AppAuth } from '@/components/AppAuth'
@@ -26,6 +26,15 @@ import { ArticleList } from './pages/Article/List'
 import { ArticleEdit } from './pages/Article/Edit'
 import { ArticleCreate } from './pages/Article/Create'
 import { ProfilePage } from './pages/Profile'
+
+// Router: WORKAROUND for outside
+const RouterComponent: React.FC = (props) => {
+  return ENABLEd_HASH_ROUTER ? (
+    <HashRouter>{props.children}</HashRouter>
+  ) : (
+    <BrowserRouter>{props.children}</BrowserRouter>
+  )
+}
 
 export const App: React.FC = () => {
   const loadingState = useReactivity(() => loading.state)
@@ -45,8 +54,7 @@ export const App: React.FC = () => {
         color={loadingState.failed ? 'red' : APP_COLOR_PRIMARY}
         progress={loadingState.percent}
       />
-      {/* basename: WORKAROUND for outside */}
-      <BrowserRouter basename={(window as any).basePath}>
+      <RouterComponent>
         <Switch>
           <Route path="/" exact>
             <Redirect to={rc(RouteKey.Dashboard).path} />
@@ -102,7 +110,7 @@ export const App: React.FC = () => {
             <NotFoundPage />
           </Route>
         </Switch>
-      </BrowserRouter>
+      </RouterComponent>
     </div>
   )
 }

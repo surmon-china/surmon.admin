@@ -17,7 +17,9 @@
 - **[surmon.me](https://github.com/surmon-china/surmon.me)** - SSR blog website | 博客前端
 - **[surmon.me.native](https://github.com/surmon-china/surmon.me.native)** - Blog native app | 博客 App
 
-**更新记录：[CHANGELOG.md](https://github.com/surmon-china/veact-admin/blob/main/CHANGELOG.md#changelog)**
+**👁 在线预览：[Online Demo site](https://github.surmon.me/veact-admin/)**
+
+**📝 更新记录：[CHANGELOG.md](https://github.com/surmon-china/veact-admin/blob/main/CHANGELOG.md#changelog)**
 
 ## Screenshot
 
