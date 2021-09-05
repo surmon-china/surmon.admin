@@ -1,0 +1,8 @@
+{
+  "status": "success",
+  "message": "登陆成功",
+  "result": {
+    "access_token": "veact_admin.mock.token",
+    "expires_in": 3600
+  }
+}
