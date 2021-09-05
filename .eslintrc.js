@@ -16,6 +16,6 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/ban-ts-comment': 0,
     '@typescript-eslint/no-non-null-asserted-optional-chain': 0,
-    '@typescript-eslint/no-inferrable-types': 0
+    '@typescript-eslint/no-inferrable-types': 0,
   },
-};
+}

@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.1.0 (2021-09-01)
+
+- Upgrade deps
+- Demo site: Axios `interceptor` > `adapter`
+- Add AD for demo site
+
+### v1.0.6 (2021-08-03)
+
+- Add demo site (CI & ENV config & AD)
+
 ### v1.0.5 (2021-08-03)
 
 - improve `ImageUploaderModal`

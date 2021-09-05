@@ -1,0 +1,5 @@
+{
+  "status": "success",
+  "message": "获取统计概览成功",
+  "result": { "tags": 28, "views": 1680, "articles": 150, "comments": 1869 }
+}

@@ -54,6 +54,8 @@ export interface HTTPResult<T = any> {
 
 const http = axios.create({
   baseURL: API_URL,
+  // WORKAROUND for outside
+  adapter: (window as any).__axiosAdapter || undefined,
 })
 
 // request
@@ -92,10 +94,10 @@ http.interceptors.response.use(
     }
   },
   (error) => {
-    const errorJSON = error.toJSON()
+    const errorJSON = error?.toJSON?.()
     const messageText = error.response?.data?.message || 'Error'
     const errorText =
-      error.response?.data?.error || error.response?.statusText || errorJSON.message
+      error.response?.data?.error || error.response?.statusText || errorJSON?.message
     const errorInfo = {
       ...errorJSON,
       config: error.config,

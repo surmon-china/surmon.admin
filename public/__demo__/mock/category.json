@@ -1,0 +1,54 @@
+{
+  "status": "success",
+  "message": "获取分类列表成功",
+  "result": {
+    "data": [
+      {
+        "pid": null,
+        "_id": "589e0ad54a4ad562430953d2",
+        "id": 2,
+        "name": "宁静寺",
+        "slug": "code",
+        "description": "说法者，无法可说，是名说法",
+        "extends": [
+          { "_id": "589e0ad54a4ad562430953d3", "name": "icon", "value": "icon-code" },
+          {
+            "_id": "5bca0b204514310c0046dcc0",
+            "name": "background",
+            "value": "https://static.surmon.me/nodepress/image/binary-code-ip.jpg"
+          }
+        ],
+        "__v": 0,
+        "create_at": "2017-02-10T18:47:49.776Z",
+        "update_at": "2020-02-22T10:06:14.459Z",
+        "count": 50
+      },
+      {
+        "pid": null,
+        "_id": "589e07c04a4ad562430953d0",
+        "id": 1,
+        "name": "无色庵",
+        "slug": "insight",
+        "description": "远离颠倒梦想",
+        "extends": [
+          { "value": "icon-thinking", "name": "icon" },
+          {
+            "name": "background",
+            "value": "https://static.surmon.me/18-10-30/42118397.jpg"
+          }
+        ],
+        "__v": 0,
+        "create_at": "2017-02-10T18:34:40.680Z",
+        "update_at": "2020-12-02T18:12:07.019Z",
+        "count": 100
+      }
+    ],
+    "params": {
+      "querys": {},
+      "options": { "sort": { "_id": -1 }, "page": 1 },
+      "params": { "url": "/category" },
+      "isAuthenticated": true
+    },
+    "pagination": { "total": 2, "current_page": 1, "total_page": 1, "per_page": 16 }
+  }
+}

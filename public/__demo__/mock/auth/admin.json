@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "message": "获取管理员信息成功",
+  "result": {
+    "name": "Admin",
+    "slogan": "veact admin system",
+    "gravatar": "/images/profile/logo-smooth.png",
+    "_id": "589e015d5af07d59124234cc",
+    "__v": 0
+  }
+}

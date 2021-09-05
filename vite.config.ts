@@ -1,12 +1,11 @@
 import path from 'path'
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, UserConfig } from 'vite'
 import reactRefresh from '@vitejs/plugin-react-refresh'
-
-const isProxyDev = Boolean(process.env.PROXY)
-const prodEnv = loadEnv('production', '.')
+import { proxyConfiger } from './vite.config.proxy'
+import { demoConfiger } from './vite.config.demo'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+const config: UserConfig = {
   plugins: [reactRefresh()],
   resolve: {
     alias: {
@@ -22,17 +21,6 @@ export default defineConfig({
   },
   server: {
     open: true,
-    proxy: {
-      '/api': {
-        target: isProxyDev ? prodEnv.VITE_API_URL : 'http://localhost:8000',
-        changeOrigin: true,
-        headers: {
-          origin: 'https://surmon.me',
-          referer: 'https://surmon.me',
-        },
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-    },
   },
   build: {
     rollupOptions: {
@@ -47,4 +35,16 @@ export default defineConfig({
       },
     },
   },
+}
+
+export default defineConfig(({ mode }) => {
+  if (mode === 'proxy') {
+    return proxyConfiger(config)
+  }
+
+  if (mode === 'demo') {
+    return demoConfiger(config)
+  }
+
+  return config
 })

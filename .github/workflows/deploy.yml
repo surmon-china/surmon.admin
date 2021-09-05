@@ -5,24 +5,45 @@ on:
     types: [created]
   push:
     tags:
-      - "v*"
+      - 'v*'
 
 jobs:
-  deploy:
+  demo:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: "14"
-          cache: "yarn"
+          node-version: '14'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Vite build
+        run: yarn build:demo
+
+      - name: Example branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: example
+          publish_dir: ./dist
+
+  blog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Vite build
         run: yarn build
 
-      - name: Relesae branch
+      - name: Release branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

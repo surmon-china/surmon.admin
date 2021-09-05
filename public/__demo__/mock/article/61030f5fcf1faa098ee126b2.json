@@ -1,0 +1,24 @@
+{
+  "status": "success",
+  "message": "获取文章详情成功",
+  "result": {
+    "password": "",
+    "keywords": ["旅途日记", "西部之旅"],
+    "state": 0,
+    "public": 1,
+    "origin": 0,
+    "tag": ["594d2b1251c61940c28c854f", "59b18754c8bfdb5b0c06980b"],
+    "category": ["589e07c04a4ad562430953d0"],
+    "_id": "61030f5fcf1faa098ee126b2",
+    "id": 1,
+    "title": "旅途感想",
+    "description": "没有整理好的旅途感想",
+    "content": "\n旅途的开始，心情是轻松的。\n\n此处省略一万字...\n",
+    "thumb": "/images/profile/article-thumb.jpg",
+    "extends": [],
+    "meta": { "likes": 51, "views": 11672, "comments": 39 },
+    "update_at": "2019-07-24T15:53:33.133Z",
+    "create_at": "2017-05-10T16:17:04.716Z",
+    "__v": 0
+  }
+}

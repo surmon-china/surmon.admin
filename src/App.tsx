@@ -9,7 +9,7 @@ import { onMounted, useReactivity } from 'veact'
 import LoadingBar from 'react-top-loading-bar'
 import 'moment/locale/zh-cn'
 
-import { ENV, APP_COLOR_PRIMARY } from '@/config'
+import { ENV, VITE_ENV, APP_COLOR_PRIMARY } from '@/config'
 import { RouteKey, routeMap, rc } from '@/route'
 import { loading } from '@/state/loading'
 import { AppAuth } from '@/components/AppAuth'
@@ -31,7 +31,7 @@ export const App: React.FC = () => {
   const loadingState = useReactivity(() => loading.state)
 
   onMounted(() => {
-    console.info(`系统启动成功！当前运行环境是：${ENV}`)
+    console.info(`Run! env: ${ENV}, vite env: ${JSON.stringify(VITE_ENV)}`)
   })
 
   return (

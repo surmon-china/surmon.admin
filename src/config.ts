@@ -23,12 +23,7 @@ export const APP_LAYOUT_SPACE_SIZE: SizeType = 'large'
 export const APP_CONTENT_SPACE_SIZE: SizeType = 'middle'
 export const APP_COLOR_PRIMARY = '#177ddc'
 
-export enum Environment {
-  Development = 'development',
-  Production = 'production',
-}
-
+export const VITE_ENV = import.meta.env
+export const ENV = import.meta.env.MODE
 export const API_URL = import.meta.env.VITE_API_URL as string
-export const ENV = import.meta.env.MODE as Environment
-export const isDev = import.meta.env.DEV
-export const isProd = import.meta.env.PROD
+export const ENABLED_AD = Boolean(import.meta.env.VITE_ENABLE_AD)

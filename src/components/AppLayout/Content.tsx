@@ -3,9 +3,9 @@ import { matchPath } from 'react-router'
 import { useLocation } from 'react-router-dom'
 import { Breadcrumb, BackTop, Typography } from 'antd'
 import { CaretUpOutlined } from '@ant-design/icons'
-
 import { scrollTo } from '@/services/scroller'
 import { routeMap } from '@/route'
+import { PageHeaderAD } from './PageAD'
 
 import styles from './style.module.less'
 
@@ -32,6 +32,7 @@ export const AppContent: React.FC = (props) => {
           ))}
         </Breadcrumb>
       </div>
+      <PageHeaderAD />
       <div className={styles.pageContent}>{props?.children}</div>
       <BackTop
         className={styles.backTop}
