@@ -1,6 +1,6 @@
 // JSON actions
 const fetchJSON = (filePath) => {
-  return fetch(`${window.basePath}/__demo__/mock/${filePath}.json`).then((response) =>
+  return fetch(`/veact-admin/__demo__/mock/${filePath}.json`).then((response) =>
     response.json()
   )
 }
