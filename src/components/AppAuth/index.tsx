@@ -4,13 +4,13 @@
  */
 
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useRef, onMounted, onBeforeUnmount } from 'veact'
 import { useLoading } from 'veact-use'
 import { notification, Typography } from 'antd'
 import { SwitchTransition, CSSTransition } from 'react-transition-group'
 
-import { RouteKey, rc } from '@/route'
+import { RouteKey, rc } from '@/routes'
 import { renewalToken, checkTokenValidity } from '@/store/auth'
 import {
   getTokenCountdown,
@@ -24,7 +24,7 @@ import styles from './style.module.less'
 let renewalTimer: null | number = null
 
 export const AppAuth: React.FC = (props) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const loading = useLoading()
   const isLogined = useRef(false)
 
@@ -72,7 +72,7 @@ export const AppAuth: React.FC = (props) => {
         description: '你还好吗？',
       })
       removeToken()
-      history.push(rc(RouteKey.Hello).path)
+      navigate(rc(RouteKey.Hello).path)
     }
   })
 

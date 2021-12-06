@@ -13,7 +13,7 @@ import {
   RollbackOutlined,
   LinkOutlined,
 } from '@ant-design/icons'
-import { RouteKey, rc } from '@/route'
+import { RouteKey, rc } from '@/routes'
 import { Pagination } from '@/constants/request'
 import { Article } from '@/constants/article'
 import { ao } from '@/constants/article/origin'
@@ -179,7 +179,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           dataIndex: 'actions',
           render: (_, article) => (
             <Space direction="vertical">
-              <Link to={rc(RouteKey.ArticleEdit).getter!(article._id!)}>
+              <Link to={rc(RouteKey.ArticleEdit).pather!(article._id!)}>
                 <Button size="small" type="text" block={true} icon={<EditOutlined />}>
                   文章详情
                 </Button>

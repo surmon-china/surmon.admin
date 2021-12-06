@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { useReactive } from 'veact'
@@ -12,12 +12,12 @@ import { SwitchTransition, CSSTransition } from 'react-transition-group'
 import tokenService from '@/services/token'
 import { useLoading } from 'veact-use'
 import { authLogin } from '@/store/auth'
-import { RouteKey, rc } from '@/route'
+import { RouteKey, rc } from '@/routes'
 
 import styles from './style.module.less'
 
 export const HelloPage: React.FC = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const loading = useLoading(false)
   const inputState = useReactive({
     value: '',
@@ -37,7 +37,7 @@ export const HelloPage: React.FC = () => {
       .promise(authLogin(password))
       .then((newAuth) => {
         tokenService.setToken(newAuth.access_token, newAuth.expires_in)
-        history.push(rc(RouteKey.Dashboard).path)
+        navigate(rc(RouteKey.Dashboard).path)
       })
       .catch((error) => {
         console.warn('登陆系统失败！', error)

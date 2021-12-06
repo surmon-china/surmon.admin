@@ -10,7 +10,7 @@ import axios, { AxiosInstance } from 'axios'
 import { loading } from '@/state/loading'
 import { AUTH_API_PATH } from '@/store/auth'
 import { API_URL, APP_AUTH_HEADER_KEY } from '@/config'
-import { rc, RouteKey } from '@/route'
+import { rc, RouteKey } from '@/routes'
 import token from './token'
 
 enum HTTPCode {
@@ -62,6 +62,7 @@ const http = axios.create({
 http.interceptors.request.use((config) => {
   loading.start()
   if (token.isTokenValid()) {
+    config.headers = config.headers || {}
     config.headers[APP_AUTH_HEADER_KEY] = `Bearer ${token.getToken()}`
   } else if (config.url !== AUTH_API_PATH.LOGIN) {
     notification.error({

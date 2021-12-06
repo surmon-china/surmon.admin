@@ -23,7 +23,7 @@ import {
   CheckOutlined,
   ReloadOutlined,
 } from '@ant-design/icons'
-import { RouteKey, rc } from '@/route'
+import { RouteKey, rc } from '@/routes'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { ResponsePaginationData } from '@/constants/request'
 import { sortTypes, SortType } from '@/constants/sort'

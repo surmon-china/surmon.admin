@@ -4,7 +4,7 @@
  */
 
 import React, { useMemo } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Modal, Button, Space, Badge } from 'antd'
 import {
   DeleteOutlined,
@@ -15,7 +15,7 @@ import {
 } from '@ant-design/icons'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
-import { RouteKey, rc } from '@/route'
+import { RouteKey, rc } from '@/routes'
 import { getUEditorCache } from '@/components/common/UniversalEditor'
 import { Article } from '@/constants/article'
 import { SortType } from '@/constants/sort'
@@ -27,14 +27,14 @@ import { ArticleEditor } from '../Editor'
 import { ArticleComment } from './Comment'
 
 export const ArticleEdit: React.FC = () => {
-  const { article_id: articleId } = useParams<{ article_id: string }>()
-  const history = useHistory()
+  const { article_id: articleID } = useParams<'article_id'>()
+  const navigate = useNavigate()
   const fetching = useLoading()
   const submitting = useLoading()
   const article = useRef<Article | null>(null)
   const articleCacheID = useMemo(
-    () => rc(RouteKey.ArticleEdit).getter!(articleId),
-    [articleId]
+    () => rc(RouteKey.ArticleEdit).pather!(articleID),
+    [articleID]
   )
 
   // Modal
@@ -68,13 +68,13 @@ export const ArticleEdit: React.FC = () => {
 
   const fetchDeleteArticle = () => {
     return submitting.promise(deleteArticles([article.value?._id!])).then(() => {
-      history.push(rc(RouteKey.ArticleList).path)
+      navigate(rc(RouteKey.ArticleList).path)
       scrollTo(document.body)
     })
   }
 
   const handleManageComment = () => {
-    history.push({
+    navigate({
       pathname: rc(RouteKey.Comment).path,
       search: `post_id=${article.value?.id!}`,
     })
@@ -92,8 +92,9 @@ export const ArticleEdit: React.FC = () => {
     })
   }
 
-  onMounted(() => {
-    fetching.promise(getArticle(articleId)).then((_article) => {
+  onMounted(async () => {
+    try {
+      const _article = await fetching.promise(getArticle(articleID!))
       fetchComments(_article.id!)
       const localContent = getUEditorCache(articleCacheID)
       if (Boolean(localContent) && localContent !== _article.content) {
@@ -116,7 +117,13 @@ export const ArticleEdit: React.FC = () => {
       } else {
         article.value = _article
       }
-    })
+    } catch (error: any) {
+      Modal.error({
+        centered: true,
+        title: '文章请求失败',
+        content: String(error.message),
+      })
+    }
   })
 
   return (

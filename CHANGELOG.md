@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.2.0 (2021-12-06)
+
+- Updrade deps
+- Upgrade `react-router` to v6
+- Update `profile.archive` biz
+
 ### v1.1.4 (2021-09-06)
 
 - Fix Demo site bugs

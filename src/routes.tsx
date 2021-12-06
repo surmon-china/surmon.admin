@@ -4,6 +4,7 @@
  */
 
 import React from 'react'
+import { generatePath } from 'react-router-dom'
 import {
   DashboardOutlined,
   BulbOutlined,
@@ -34,8 +35,9 @@ export interface RouteConfig {
   id: RouteKey
   name: string
   path: string
+  subPath?: string
   icon?: React.ReactElement
-  getter?(...args: Array<any>): string
+  pather?(...args: Array<any>): string
 }
 export const routeMap: ReadonlyMap<RouteKey, RouteConfig> = new Map(
   [
@@ -90,20 +92,25 @@ export const routeMap: ReadonlyMap<RouteKey, RouteConfig> = new Map(
       id: RouteKey.ArticleList,
       name: '文章列表',
       path: '/article/list',
+      subPath: 'list',
       icon: <OrderedListOutlined />,
     },
     {
       id: RouteKey.ArticlePost,
       name: '新撰文章',
       path: '/article/post',
+      subPath: 'post',
       icon: <EditOutlined />,
     },
     {
       id: RouteKey.ArticleEdit,
       name: '编辑文章',
       path: '/article/edit/:article_id',
-      getter: (articleId: string) => `/article/edit/${articleId}`,
+      subPath: 'edit/:article_id',
       icon: <EditOutlined />,
+      pather(article_id: string) {
+        return generatePath(this.path, { article_id })
+      },
     },
   ].map((route) => [route.id, route])
 )

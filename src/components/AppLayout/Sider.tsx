@@ -1,12 +1,12 @@
 import React from 'react'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import classnames from 'classnames'
 import { Menu, Spin } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
 
 import { getResourceUrl } from '@/transformers/url'
 import { GITHUB_REPO_URL, GITHUB_REPO_NAME } from '@/config'
-import { RouteKey, routeMap, rc } from '@/route'
+import { RouteKey, routeMap, rc } from '@/routes'
 import { useAdminState } from '@/state/admin'
 
 import styles from './style.module.less'
@@ -15,7 +15,7 @@ export interface AppSiderProps {
   isSiderCollapsed: boolean
 }
 export const AppSider: React.FC<AppSiderProps> = (props) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const location = useLocation()
   const admin = useAdminState()
 
@@ -56,7 +56,7 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
         theme="dark"
         mode="inline"
         className={styles.menus}
-        onClick={(event) => history.push(event.key)}
+        onClick={(event) => navigate(event.key)}
         selectedKeys={[location.pathname]}
         defaultOpenKeys={Array.from(routeMap.values()).map((route) => route.path)}
       >

@@ -7,7 +7,7 @@ import http from '@/services/http'
 import { Option } from '@/constants/option'
 
 export const OPTION_API_PATH = '/option'
-export const SYNDICATION_API_PATH = '/syndication'
+export const ARCHIVE_API_PATH = '/archive'
 export const EXPANSION_API_PATH = {
   UP_TOKEN: '/expansion/uptoken',
   STATISTIC: '/expansion/statistic',
@@ -32,9 +32,9 @@ export function getGAToken(): Promise<string> {
     .then(({ result: credentials }) => credentials.access_token as string)
 }
 
-/** 更新 Syndication 缓存（RSS） */
-export function updateSyndicationCache() {
-  return http.patch<void>(SYNDICATION_API_PATH).then((response) => response.result)
+/** 更新 Archive 缓存 */
+export function updateArchiveCache() {
+  return http.patch<void>(ARCHIVE_API_PATH).then((response) => response.result)
 }
 
 /** 更新数据库备份 */

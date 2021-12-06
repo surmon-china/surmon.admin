@@ -1,18 +1,18 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useLoading } from 'veact-use'
-import { RouteKey, rc } from '@/route'
+import { RouteKey, rc } from '@/routes'
 import { Article } from '@/constants/article'
 import { scrollTo } from '@/services/scroller'
 import { createArticle } from '@/store/article'
 import { ArticleEditor } from './Editor'
 
 export const ArticleCreate: React.FC = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const submitting = useLoading()
   const fetchCreateArticle = (article: Article) => {
     return submitting.promise(createArticle(article)).then((result) => {
-      history.push(rc(RouteKey.ArticleEdit).getter!(result._id!))
+      navigate(rc(RouteKey.ArticleEdit).pather!(result._id!))
       scrollTo(document.body)
     })
   }

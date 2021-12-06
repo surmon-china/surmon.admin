@@ -1,10 +1,9 @@
 import React from 'react'
-import { matchPath } from 'react-router'
-import { useLocation } from 'react-router-dom'
+import { useLocation, matchPath } from 'react-router-dom'
 import { Breadcrumb, BackTop, Typography } from 'antd'
 import { CaretUpOutlined } from '@ant-design/icons'
 import { scrollTo } from '@/services/scroller'
-import { routeMap } from '@/route'
+import { routeMap } from '@/routes'
 import { PageHeaderAD } from './PageAD'
 
 import styles from './style.module.less'
@@ -12,12 +11,9 @@ import styles from './style.module.less'
 export const AppContent: React.FC = (props) => {
   const location = useLocation()
   const [, ...paths] = location.pathname.split('/')
-  const currentRoute = Array.from(routeMap.values()).find((route) =>
-    matchPath(location.pathname, {
-      path: route.path,
-      exact: true,
-    })
-  )
+  const currentRoute = Array.from(routeMap.values()).find((route) => {
+    return matchPath(route.path, location.pathname)
+  })
 
   return (
     <div className={styles.pageContainer}>

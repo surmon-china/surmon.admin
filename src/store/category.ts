@@ -43,6 +43,7 @@ export function getAntdTreeByTree(
       data: category,
       title: category.name,
       key: category._id!,
+      value: category._id!,
       disabled: Boolean(currentCategoryId && currentCategoryId === category._id),
       children: toAntdTree(category.children || []),
     }))

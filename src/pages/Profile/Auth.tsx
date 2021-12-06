@@ -1,11 +1,11 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import { Form, Input, Button, Spin, Divider, notification } from 'antd'
 import { CheckOutlined } from '@ant-design/icons'
 
-import { RouteKey, rc } from '@/route'
+import { RouteKey, rc } from '@/routes'
 import { ImageUploader } from '@/components/common/ImageUploader'
 import { Auth } from '@/constants/auth'
 import { scrollTo } from '@/services/scroller'
@@ -20,7 +20,7 @@ export interface BaseFormProps {
 }
 
 export const AuthForm: React.FC<BaseFormProps> = (props) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const submitting = useLoading()
   const adminAuth = useAdminState()
   const [form] = Form.useForm<Auth>()
@@ -37,7 +37,7 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
         })
         setTimeout(() => {
           removeToken()
-          history.push(rc(RouteKey.Hello).path)
+          navigate(rc(RouteKey.Hello).path)
         }, 1688)
       } else {
         fetchNewAdminAuth()

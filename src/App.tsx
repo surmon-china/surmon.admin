@@ -4,28 +4,35 @@
  */
 
 import React from 'react'
-import { BrowserRouter, HashRouter, Route, Switch, Redirect } from 'react-router-dom'
+import {
+  BrowserRouter,
+  HashRouter,
+  Route,
+  Routes,
+  Navigate,
+  Outlet,
+} from 'react-router-dom'
 import { onMounted, useReactivity } from 'veact'
 import LoadingBar from 'react-top-loading-bar'
 import 'moment/locale/zh-cn'
 
 import { ENV, VITE_ENV, APP_COLOR_PRIMARY, ENABLEd_HASH_ROUTER } from '@/config'
-import { RouteKey, routeMap, rc } from '@/route'
+import { RouteKey, rc } from '@/routes'
 import { loading } from '@/state/loading'
 import { AppAuth } from '@/components/AppAuth'
 import { AppLayout } from '@/components/AppLayout'
 
 import { HelloPage } from '@/pages/Hello'
-import { NotFoundPage } from './pages/NotFound'
-import { DashboardPage } from './pages/Dashboard'
-import { AnnouncementPage } from './pages/Announcement'
-import { CategoryPage } from './pages/Category'
-import { TagPage } from './pages/Tag'
-import { CommentPage } from './pages/Comment'
-import { ArticleList } from './pages/Article/List'
-import { ArticleEdit } from './pages/Article/Edit'
-import { ArticleCreate } from './pages/Article/Create'
-import { ProfilePage } from './pages/Profile'
+import { NotFoundPage } from '@/pages/NotFound'
+import { DashboardPage } from '@/pages/Dashboard'
+import { AnnouncementPage } from '@/pages/Announcement'
+import { CategoryPage } from '@/pages/Category'
+import { TagPage } from '@/pages/Tag'
+import { CommentPage } from '@/pages/Comment'
+import { ArticleList } from '@/pages/Article/List'
+import { ArticleEdit } from '@/pages/Article/Edit'
+import { ArticleCreate } from '@/pages/Article/Create'
+import { ProfilePage } from '@/pages/Profile'
 
 // Router: WORKAROUND for outside
 const RouterComponent: React.FC = (props) => {
@@ -55,61 +62,63 @@ export const App: React.FC = () => {
         progress={loadingState.percent}
       />
       <RouterComponent>
-        <Switch>
-          <Route path="/" exact>
-            <Redirect to={rc(RouteKey.Dashboard).path} />
-          </Route>
+        <Routes>
+          <Route path={rc(RouteKey.Hello).path} element={<HelloPage />} />
           <Route
-            path={Array.from(routeMap.values())
-              .filter((route) => route.id !== RouteKey.Hello)
-              .map((route) => route.path)}
+            path="/"
+            element={
+              <AppAuth>
+                <AppLayout>
+                  <Outlet />
+                </AppLayout>
+              </AppAuth>
+            }
           >
-            <AppAuth>
-              <AppLayout>
-                <Switch>
-                  <Route path={rc(RouteKey.Dashboard).path} exact>
-                    <DashboardPage />
-                  </Route>
-                  <Route path={rc(RouteKey.Announcement).path} exact>
-                    <AnnouncementPage />
-                  </Route>
-                  <Route path={rc(RouteKey.Category).path} exact>
-                    <CategoryPage />
-                  </Route>
-                  <Route path={rc(RouteKey.Tag).path} exact>
-                    <TagPage />
-                  </Route>
-                  <Route path={rc(RouteKey.Comment).path} exact>
-                    <CommentPage />
-                  </Route>
-                  <Route path={rc(RouteKey.Article).path}>
-                    <Switch>
-                      <Route path={rc(RouteKey.ArticlePost).path} exact>
-                        <ArticleCreate />
-                      </Route>
-                      <Route path={rc(RouteKey.ArticleEdit).path} exact>
-                        <ArticleEdit />
-                      </Route>
-                      <Route path={rc(RouteKey.ArticleList).path} exact>
-                        <ArticleList />
-                      </Route>
-                      <Redirect to={rc(RouteKey.ArticleList).path} />
-                    </Switch>
-                  </Route>
-                  <Route path={rc(RouteKey.Profile).path} exact>
-                    <ProfilePage />
-                  </Route>
-                </Switch>
-              </AppLayout>
-            </AppAuth>
+            <Route
+              index={true}
+              element={<Navigate to={rc(RouteKey.Dashboard).path} replace />}
+            />
+            <Route path={rc(RouteKey.Dashboard).path} element={<DashboardPage />} />
+            <Route
+              path={rc(RouteKey.Announcement).path}
+              element={<AnnouncementPage />}
+            />
+            <Route path={rc(RouteKey.Category).path} element={<CategoryPage />} />
+            <Route path={rc(RouteKey.Tag).path} element={<TagPage />} />
+            <Route path={rc(RouteKey.Comment).path} element={<CommentPage />} />
+            <Route path={rc(RouteKey.Profile).path} element={<ProfilePage />} />
+            <Route
+              path={`${rc(RouteKey.Article).path}/*`}
+              element={
+                <Routes>
+                  <Route
+                    index={true}
+                    element={
+                      <Navigate to={rc(RouteKey.ArticleList).subPath!} replace />
+                    }
+                  />
+                  <Route
+                    path={rc(RouteKey.ArticleList).subPath}
+                    element={<ArticleList />}
+                  />
+                  <Route
+                    path={rc(RouteKey.ArticlePost).subPath}
+                    element={<ArticleCreate />}
+                  />
+                  <Route
+                    path={rc(RouteKey.ArticleEdit).subPath}
+                    element={<ArticleEdit />}
+                  />
+                  <Route
+                    path="*"
+                    element={<Navigate to={rc(RouteKey.ArticleList).path} replace />}
+                  />
+                </Routes>
+              }
+            />
           </Route>
-          <Route path={rc(RouteKey.Hello).path} exact>
-            <HelloPage />
-          </Route>
-          <Route path="*">
-            <NotFoundPage />
-          </Route>
-        </Switch>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
       </RouterComponent>
     </div>
   )

@@ -45,6 +45,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
       onCancel={props.onCancel}
       onOk={handleSubmit}
       centered={true}
+      destroyOnClose={true}
       okText="提交"
     >
       <Form {...formLayout} colon={false} form={form}>

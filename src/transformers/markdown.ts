@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import marked from 'marked'
+import { marked } from 'marked'
 import hljs from 'highlight.js'
 
 const renderer = new marked.Renderer()
@@ -28,7 +28,6 @@ marked.setOptions({
   gfm: true,
   breaks: false,
   pedantic: false,
-  sanitize: false,
   smartLists: true,
   smartypants: false,
   highlight(code) {

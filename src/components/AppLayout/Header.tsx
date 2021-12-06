@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Menu, Dropdown, Avatar, Button, Modal, Spin } from 'antd'
 import {
   LogoutOutlined,
@@ -9,7 +9,7 @@ import {
   MenuFoldOutlined,
 } from '@ant-design/icons'
 
-import { RouteKey, rc } from '@/route'
+import { RouteKey, rc } from '@/routes'
 import { removeToken } from '@/services/token'
 import { useAdminState } from '@/state/admin'
 
@@ -20,11 +20,11 @@ interface AppHeaderProps {
   onToggleSider(): void
 }
 export const AppHeader: React.FC<AppHeaderProps> = (props) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const admin = useAdminState()
 
   const redriectToProfileRoute = () => {
-    history.push(rc(RouteKey.Profile).path)
+    navigate(rc(RouteKey.Profile).path)
   }
 
   const logout = () => {
@@ -34,7 +34,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
       onOk() {
         console.log('退出系统')
         removeToken()
-        history.push(rc(RouteKey.Hello).path)
+        navigate(rc(RouteKey.Hello).path)
       },
     })
   }

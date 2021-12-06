@@ -181,7 +181,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
     })
 
     // Command + S = save content
-    ueditor.addCommand(KeyMod.CtrlCmd | KeyCode.KEY_S, handleSaveContent)
+    ueditor.addCommand(KeyMod.CtrlCmd | KeyCode.KeyS, handleSaveContent)
     // Esc = exit fullscreen
     ueditor.addCommand(KeyCode.Escape, () => general.setFullscreen(false))
     return ueditor

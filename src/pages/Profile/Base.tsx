@@ -148,7 +148,7 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
         </Form.Item>
         <Form.Item
           name="ad_config"
-          label="广告配置"
+          label="AD CONFIG"
           rules={[
             {
               required: true,

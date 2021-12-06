@@ -7,7 +7,7 @@ import {
   SyncOutlined,
 } from '@ant-design/icons'
 
-import { updateDatabaseBackup, updateSyndicationCache } from '@/store/system'
+import { updateDatabaseBackup, updateArchiveCache } from '@/store/system'
 
 export interface DataFormProps {
   labelSpan: number
@@ -16,17 +16,17 @@ export interface DataFormProps {
 
 enum LoadingKey {
   Databse = 'databse',
-  Syndication = 'syndication',
+  Archive = 'archive',
 }
 
 export const DataForm: React.FC<DataFormProps> = (props) => {
-  const loading = useLoadings(LoadingKey.Databse, LoadingKey.Syndication)
+  const loading = useLoadings(LoadingKey.Databse, LoadingKey.Archive)
   const updateDatebaseBackup = () => {
     return loading.promise(LoadingKey.Databse, updateDatabaseBackup()).then()
   }
 
-  const updateSyndication = () => {
-    return loading.promise(LoadingKey.Syndication, updateSyndicationCache()).then()
+  const updateArchive = () => {
+    return loading.promise(LoadingKey.Archive, updateArchiveCache()).then()
   }
 
   const handleUpdateDatabaseBackup = () => {
@@ -37,11 +37,11 @@ export const DataForm: React.FC<DataFormProps> = (props) => {
     })
   }
 
-  const handleUpdateSyndication = () => {
+  const handleUpdateArchive = () => {
     Modal.confirm({
       centered: true,
-      title: '将会更新 Sitemap 以及 SSR 所需而生成的 XML 文件，确定要继续吗？',
-      onOk: updateSyndication,
+      title: '将会更新全站的所有全量数据缓存，确定要继续吗？',
+      onOk: updateArchive,
     })
   }
 
@@ -65,10 +65,10 @@ export const DataForm: React.FC<DataFormProps> = (props) => {
         <Button
           icon={<SyncOutlined />}
           type="primary"
-          loading={loading.isLoading(LoadingKey.Syndication)}
-          onClick={handleUpdateSyndication}
+          loading={loading.isLoading(LoadingKey.Archive)}
+          onClick={handleUpdateArchive}
         >
-          更新 SiteMap & RSS
+          更新 Archive
         </Button>
       </Col>
     </Row>
