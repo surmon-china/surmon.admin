@@ -207,6 +207,7 @@ export const TagPage: React.FC = () => {
             onChange: handleSelect,
           }}
           pagination={{
+            pageSizeOptions: ['10', '20', '50'],
             current: tag.pagination?.current_page,
             pageSize: tag.pagination?.per_page,
             total: tag.pagination?.total,

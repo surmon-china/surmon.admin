@@ -40,6 +40,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
         onChange: props.onSelecte,
       }}
       pagination={{
+        pageSizeOptions: ['10', '20', '50'],
         current: props.pagination?.current_page,
         pageSize: props.pagination?.per_page,
         total: props.pagination?.total,

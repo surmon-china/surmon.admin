@@ -55,7 +55,7 @@ export const AppLayout: React.FC = (props) => {
           <Layout.Content className={styles.appContent}>
             <AppContent>{props?.children}</AppContent>
           </Layout.Content>
-          <Layout.Footer className={styles.appFooter}>Build by ❤️</Layout.Footer>
+          <Layout.Footer className={styles.appFooter}>☮️ ❤️‍🔥 ✌️</Layout.Footer>
         </Layout>
       </Layout>
     </ConfigProvider>

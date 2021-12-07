@@ -265,6 +265,7 @@ export const AnnouncementPage: React.FC = () => {
             onChange: handleSelect,
           }}
           pagination={{
+            pageSizeOptions: ['10', '20', '50'],
             current: announcement.pagination?.current_page,
             pageSize: announcement.pagination?.per_page,
             total: announcement.pagination?.total,
