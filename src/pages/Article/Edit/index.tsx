@@ -52,7 +52,7 @@ export const ArticleEdit: React.FC = () => {
   const comments = useRef<Array<CommentTree>>([])
   const fetchComments = (articleId: number) => {
     commentLoading
-      .promise(getComments({ per_page: 999, sort: SortType.Asc, post_id: articleId }))
+      .promise(getComments({ per_page: 50, sort: SortType.Asc, post_id: articleId }))
       .then((result) => {
         commentCount.value = result.pagination?.total!
         comments.value = result.tree

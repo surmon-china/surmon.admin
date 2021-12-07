@@ -17,7 +17,7 @@ const TagSelect: React.FC<TagSelectProps> = (props) => {
   const tagsLoading = useLoading()
   const tags = useRef<Array<Tag>>([])
   const fetchTags = () => {
-    tagsLoading.promise(getTags({ per_page: 999 })).then((result) => {
+    tagsLoading.promise(getTags({ per_page: 50 })).then((result) => {
       tags.value = result.data
     })
   }

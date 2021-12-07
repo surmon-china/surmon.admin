@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.2.2 (2021-12-07)
+
+- Fix `per_page` value to `50`
+
 ### v1.2.1 (2021-12-07)
 
 - Improve Table page size

@@ -62,7 +62,7 @@ export const ArticleList: React.FC = () => {
   const loadingCategory = useLoading()
   const categoriesTree = useRef<Array<CategoryTree>>([])
   const fetchCategories = () => {
-    loadingCategory.promise(getCategories({ per_page: 999 })).then((result) => {
+    loadingCategory.promise(getCategories({ per_page: 50 })).then((result) => {
       categoriesTree.value = result.tree
     })
   }
@@ -71,7 +71,7 @@ export const ArticleList: React.FC = () => {
   const loadingTag = useLoading()
   const tags = useRef<Array<Tag>>([])
   const fetchTags = () => {
-    loadingTag.promise(getTags({ per_page: 999 })).then((result) => {
+    loadingTag.promise(getTags({ per_page: 50 })).then((result) => {
       tags.value = result.data
     })
   }

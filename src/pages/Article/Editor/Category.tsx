@@ -17,7 +17,7 @@ const CategorySelect: React.FC<CategorySelectProps> = (props) => {
   const categoriesLoading = useLoading()
   const categories = useRef<Array<CategoryTree>>([])
   const fetchCategories = () => {
-    categoriesLoading.promise(getCategories({ per_page: 999 })).then((result) => {
+    categoriesLoading.promise(getCategories({ per_page: 50 })).then((result) => {
       categories.value = result.tree
     })
   }
