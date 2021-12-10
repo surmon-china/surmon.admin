@@ -36,3 +36,5 @@ marked.setOptions({
 })
 
 export const markdownToHTML = marked
+
+export const imageURLToMarkdown = (url: string) => `![](${url})`

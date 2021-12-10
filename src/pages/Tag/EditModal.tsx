@@ -4,7 +4,7 @@ import { Form, Input, Modal, Divider, Typography } from 'antd'
 
 import { FormDataExtend } from '@/components/common/FormDataExtend'
 import { Tag as TagType } from '@/constants/tag'
-import { stringToYMD } from '@/transformers/date'
+import { stringToYMD } from '@/transforms/date'
 
 const formLayout = {
   labelCol: { span: 5 },

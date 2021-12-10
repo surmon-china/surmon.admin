@@ -1,33 +1,43 @@
 @import '@/styles/init.less';
 
-.imageUploader {
+.multipleImageUploader {
   width: 100%;
+
+  .copyButton {
+    margin-bottom: 1rem;
+  }
+
+  :global(.ant-upload-list-item) {
+    margin-top: 1rem !important;
+  }
 }
 
-.uploader {
+.imageUploader {
   width: 100%;
 
-  :global(.ant-upload.ant-upload-select-picture-card) {
-    width: 100%;
-    height: auto;
-    margin: 0;
-  }
+  .uploader {
+    :global(.ant-upload.ant-upload-select-picture-card) {
+      width: 100%;
+      height: auto;
+      margin: 0;
+    }
 
-  .image {
-    width: 100%;
-    min-height: 100px;
-  }
+    .image {
+      width: 100%;
+      min-height: 100px;
+    }
 
-  .tigger {
-    width: 100%;
-    padding: 2rem 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+    .tigger {
+      width: 100%;
+      padding: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
-  .uploadText {
-    margin-top: 8px;
+    .uploadText {
+      margin-top: 8px;
+    }
   }
 }

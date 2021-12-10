@@ -22,7 +22,7 @@ import { SortType } from '@/constants/sort'
 import { scrollTo } from '@/services/scroller'
 import { getArticle, putArticle, deleteArticles } from '@/store/article'
 import { getComments, CommentTree } from '@/store/comment'
-import { getBlogArticleUrl } from '@/transformers/url'
+import { getBlogArticleUrl } from '@/transforms/url'
 import { ArticleEditor } from '../Editor'
 import { ArticleComment } from './Comment'
 

@@ -12,8 +12,8 @@ import { DataForm } from './Data'
 import { AuthForm } from './Auth'
 import styles from './style.module.less'
 
-const FormCard: React.FC<{ title: React.ReactElement }> = (props) => (
-  <div className={styles.formCard}>
+const TabContentCard: React.FC<{ title: React.ReactElement }> = (props) => (
+  <div className={styles.tabContentCard}>
     <Typography.Title level={4} className={styles.title}>
       {props.title}
     </Typography.Title>
@@ -34,19 +34,19 @@ const TabsConfig = [
     key: TabKey.Base,
     name: '基本设置',
     icon: <SettingOutlined />,
-    form: <BaseForm labelSpan={FORM_LABEL_SPAN} wrapperSpan={FORM_WRAPPER_SPAN} />,
+    element: <BaseForm labelSpan={FORM_LABEL_SPAN} wrapperSpan={FORM_WRAPPER_SPAN} />,
   },
   {
     key: TabKey.Auth,
     name: '个人设置',
     icon: <UserOutlined />,
-    form: <AuthForm labelSpan={FORM_LABEL_SPAN} wrapperSpan={FORM_WRAPPER_SPAN} />,
+    element: <AuthForm labelSpan={FORM_LABEL_SPAN} wrapperSpan={FORM_WRAPPER_SPAN} />,
   },
   {
     key: TabKey.Data,
     name: '数据安全',
     icon: <DatabaseOutlined />,
-    form: <DataForm labelSpan={FORM_LABEL_SPAN} wrapperSpan={FORM_WRAPPER_SPAN} />,
+    element: <DataForm labelSpan={FORM_LABEL_SPAN} wrapperSpan={FORM_WRAPPER_SPAN} />,
   },
 ]
 
@@ -68,7 +68,7 @@ export const ProfilePage: React.FC = () => {
               </span>
             }
           >
-            <FormCard
+            <TabContentCard
               title={
                 <Space>
                   {tabConfig.icon}
@@ -76,8 +76,8 @@ export const ProfilePage: React.FC = () => {
                 </Space>
               }
             >
-              {tabConfig.form}
-            </FormCard>
+              {tabConfig.element}
+            </TabContentCard>
           </Tabs.TabPane>
         ))}
       </Tabs>

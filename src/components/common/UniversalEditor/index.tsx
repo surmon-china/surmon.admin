@@ -14,27 +14,25 @@ import {
   DownloadOutlined,
   EyeOutlined,
   LoadingOutlined,
-  CloudUploadOutlined,
   EyeInvisibleOutlined,
   FullscreenExitOutlined,
 } from '@ant-design/icons'
-import { ImageUploaderModal } from '@/components/common/ImageUploader/Modal'
 import { general as _general } from '@/state/general'
 import { saveFile } from '@/services/file'
 import storage from '@/services/storage'
-import { timestampToYMD } from '@/transformers/date'
-import { markdownToHTML } from '@/transformers/markdown'
+import { timestampToYMD } from '@/transforms/date'
+import { markdownToHTML } from '@/transforms/markdown'
 import { editor, KeyMod, KeyCode } from './monaco'
 
 import styles from './style.module.less'
 
 export enum UEditorLanguage {
   Markdown = 'markdown',
-  Json = 'json',
+  JSON = 'json',
 }
 const fileExtMap = new Map([
   [UEditorLanguage.Markdown, 'md'],
-  [UEditorLanguage.Json, 'json'],
+  [UEditorLanguage.JSON, 'json'],
 ])
 
 const TOOLBAR_HEIGHT = 48
@@ -64,15 +62,18 @@ export interface UniversalEditorProps {
   maxRows?: number
   // 编辑区域唯一 ID，默认为 window.location.pathname
   cacheID?: string | false
+  /** 初始化使用语言 */
+  defaultLanguage?: UEditorLanguage
   /** 是否禁用顶部工具栏 */
   disabledToolbar?: boolean
   /** 是否禁用编辑器 minimap */
   disabledMinimap?: boolean
   /** 是否禁用草稿缓存 */
   disabledCacheDraft?: boolean
+  /** 自定义 Toolbar 扩展渲染 */
+  renderToolbarExtra?(language: UEditorLanguage): React.ReactNode
   /** 是否在 UI 上响应 Form 状态 */
   formStatus?: boolean
-  language?: UEditorLanguage
   style?: React.CSSProperties
 }
 export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
@@ -84,10 +85,8 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
   const ueditor = useRef<editor.IStandaloneCodeEditor>()
   const [isPreview, setPreview] = useState<boolean>(false)
   const [language, setLanguage] = useState<UEditorLanguage>(
-    props.language || UEditorLanguage.Markdown
+    props.defaultLanguage || UEditorLanguage.Markdown
   )
-
-  const [isVisibleUploaderModal, setUploaderModalVisible] = useState(false)
 
   const handleSaveContent = () => {
     const time = timestampToYMD(Date.now())
@@ -263,24 +262,14 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
             />
           </Space>
           <Space className={styles.right}>
+            {props.renderToolbarExtra?.(language)}
             {language === UEditorLanguage.Markdown && (
-              <>
-                <ImageUploaderModal
-                  visible={isVisibleUploaderModal}
-                  onClose={() => setUploaderModalVisible(false)}
-                />
-                <Button
-                  size="small"
-                  icon={<CloudUploadOutlined />}
-                  onClick={() => setUploaderModalVisible(true)}
-                />
-                <Button
-                  size="small"
-                  disabled={props.disbaled}
-                  icon={isPreview ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-                  onClick={() => setPreview(!isPreview)}
-                />
-              </>
+              <Button
+                size="small"
+                disabled={props.disbaled}
+                icon={isPreview ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                onClick={() => setPreview(!isPreview)}
+              />
             )}
             <Select
               size="small"
@@ -294,8 +283,8 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
                   value: UEditorLanguage.Markdown,
                 },
                 {
-                  label: 'Json',
-                  value: UEditorLanguage.Json,
+                  label: 'JSON',
+                  value: UEditorLanguage.JSON,
                 },
               ]}
             />

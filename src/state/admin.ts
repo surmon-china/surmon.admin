@@ -6,7 +6,7 @@
 import { ref, reactive, readonly, useReactivity } from 'veact'
 import { createLoading } from 'veact-use'
 import { getAdminInfo } from '@/store/auth'
-import { getResourceUrl } from '@/transformers/url'
+import { getResourceUrl } from '@/transforms/url'
 
 const DEFAULT_ADMIN_INFO = Object.freeze({
   name: '管理员',

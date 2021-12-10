@@ -12,7 +12,7 @@ import { Option } from '@/constants/option'
 import { useLoading } from 'veact-use'
 import { scrollTo } from '@/services/scroller'
 import { getOption, putOption } from '@/store/system'
-import { formatJSONString } from '@/transformers/json'
+import { formatJSONString } from '@/transforms/json'
 import styles from './style.module.less'
 
 export interface BaseFormProps {
@@ -168,8 +168,8 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
             minRows={22}
             maxRows={30}
             cacheID="APP_AD_CONFIG"
+            defaultLanguage={UEditorLanguage.JSON}
             disabledCacheDraft={true}
-            language={UEditorLanguage.Json}
             placeholder="站点描述"
           />
         </Form.Item>

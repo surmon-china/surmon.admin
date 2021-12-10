@@ -4,6 +4,18 @@
  * @author Surmon <macichong@bytedance.com>
  */
 
+export const fileToDataURL = (file: File) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onerror = reject
+    reader.onload = (event) => {
+      const base64 = (event as any).target.result
+      resolve(base64)
+    }
+    reader.readAsDataURL(file)
+  })
+}
+
 export const saveFile = (content: string, fileName: string, fileType?: string) => {
   const blob = new Blob([content], { type: fileType || 'text/plain' })
   if ((window as any).saveAs) {

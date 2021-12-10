@@ -19,8 +19,8 @@ import { Article } from '@/constants/article'
 import { ao } from '@/constants/article/origin'
 import { ap } from '@/constants/article/public'
 import { PublishState, ps } from '@/constants/publish'
-import { stringToYMD } from '@/transformers/date'
-import { getBlogArticleUrl } from '@/transformers/url'
+import { stringToYMD } from '@/transforms/date'
+import { getBlogArticleUrl } from '@/transforms/url'
 
 export interface ArticleListTableProps {
   loading: boolean

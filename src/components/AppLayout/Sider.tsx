@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import { Menu, Spin } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
 
-import { getResourceUrl } from '@/transformers/url'
+import { getResourceUrl } from '@/transforms/url'
 import { GITHUB_REPO_URL, GITHUB_REPO_NAME } from '@/config'
 import { RouteKey, routeMap, rc } from '@/routes'
 import { useAdminState } from '@/state/admin'

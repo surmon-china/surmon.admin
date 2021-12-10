@@ -14,117 +14,67 @@ import {
   FileMarkdownOutlined,
   CopyOutlined,
 } from '@ant-design/icons'
-import moment from 'moment'
-import OSS from 'ali-oss'
-
-import { STATIC_URL, ALIYUN_OSS_REGION, ALIYUN_OSS_BUCKET } from '@/config'
 import { getOSSUpToken, AliYunOSSUpToken } from '@/store/system'
+import { useUploader, UploadErrorCode, isExpirationToken } from '@/services/uploader'
 import { copy } from '@/services/clipboard'
+import { imageURLToMarkdown } from '@/transforms/markdown'
 import styles from './style.module.less'
 
-const UPLOAD_FILE_SIZE_LIMIT = 3000000
+export const getFileName = (file: File, directory?: string) => {
+  const _directory = directory ? `${directory}/` : ''
+  return `${_directory}${file.name.replace(/ /gi, '')}`
+}
 
 export interface ImageUploaderProps {
   value?: string
   onChange?(value: string): void
+  directory?: string
   disabledInput?: boolean
   disabledMarkdown?: boolean
 }
 
 export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
   const loading = useLoading()
-  const uploading = useLoading()
-  const uploadInProgress = useRef(false)
-  const uploadProgress = useRef(0)
   const token = useRef<AliYunOSSUpToken | null>(null)
+  const uploader = useUploader()
   const fetchToken = async () => {
     loading.promise(getOSSUpToken()).then((resultToken) => {
       token.value = resultToken
+      uploader.init(resultToken)
     })
   }
 
-  // 如果上传时 Token 过期，则拉取最新 Token
+  // token null | expiration > refetch token
   const beforeUpload = async (file: File) => {
-    const isDied = moment(token.value?.Expiration).isBefore(moment())
-    if (isDied) {
+    if (!token.value || isExpirationToken(token.value)) {
       await fetchToken()
     }
     return file
   }
 
   // 上传文件
-  const uploadFile = async (file: File) => {
-    // 大于限定尺寸，不上传
-    if (file?.size! > UPLOAD_FILE_SIZE_LIMIT) {
-      notification.error({
-        message: '上传失败',
-        description: '文件不合法！',
-      })
-      return false
-    }
-
-    // 如果图片小于 8K，则输出 base64，否则上传
-    if (file.size <= 1000 * 8) {
-      const reader = new FileReader()
-      reader.onload = (event) => {
-        const imgBase64 = (event as any).target.result
-        props.onChange?.(imgBase64)
-      }
-      reader.readAsDataURL(file)
-      return false
-    }
-
-    const ossStore = new OSS({
-      region: ALIYUN_OSS_REGION,
-      bucket: ALIYUN_OSS_BUCKET,
-      accessKeyId: token.value?.AccessKeyId!,
-      accessKeySecret: token.value?.AccessKeySecret!,
-      stsToken: token.value?.SecurityToken!,
-      secure: true,
-    })
-
-    uploadInProgress.value = true
-    uploadProgress.value = 0
+  const uploadFile = (file: File) => {
     notification.info({
       message: '开始上传',
       description: '文件开始上传',
     })
 
-    try {
-      console.log('[uploadFile] 开始上传')
-      const result = await uploading.promise(
-        ossStore.multipartUpload(`thumbnail/${file.name.replace(/ /gi, '')}`, file, {
-          progress(progress) {
-            console.info('上传有一个新进度', progress)
-            uploadInProgress.value = true
-            uploadProgress.value = progress * 100
-          },
+    uploader
+      .upload(file, getFileName(file, props.directory))
+      .then(({ url }) => {
+        props.onChange?.(url)
+        notification.success({
+          message: '上传成功',
+          description: url,
         })
-      )
-      const imageUrl = `${STATIC_URL}/${result.name}`
-      props.onChange?.(imageUrl)
-      console.info('[uploadFile] 上传完成', imageUrl)
-      notification.success({
-        message: '上传成功',
-        description: imageUrl,
       })
-    } catch (error) {
-      console.warn('[uploadFile] 上传失败', error)
-      notification.error({
-        message: '上传失败',
-        description: String(error),
+      .catch((error) => {
+        notification.error({
+          message: '上传失败',
+          description:
+            error.code === UploadErrorCode.Failure ? String(error.error) : error.code,
+        })
       })
-    } finally {
-      uploadInProgress.value = false
-    }
-  }
-
-  const handleFileRemove = () => {
-    props.onChange?.('')
-  }
-
-  const getMarkdown = (url: string) => {
-    return `![](${url})`
   }
 
   onMounted(() => {
@@ -141,7 +91,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
         showUploadList={false}
         disabled={loading.state.value}
         beforeUpload={beforeUpload}
-        onRemove={handleFileRemove}
+        onRemove={() => props.onChange?.('')}
         customRequest={(options) => {
           if (options.file) {
             uploadFile(options.file as File)
@@ -152,9 +102,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
           <img className={styles.image} src={props.value} alt={props.value} />
         ) : (
           <div className={styles.tigger}>
-            {uploading.state.value ? <LoadingOutlined /> : <PlusOutlined />}
+            {uploader?.uploading.state.value ? <LoadingOutlined /> : <PlusOutlined />}
             <p className={styles.uploadText}>
-              {uploading.state.value ? 'Uploading' : 'Upload'}
+              {uploader?.uploading.state.value ? 'UPLOADING...' : 'UPLOAD'}
             </p>
           </div>
         )}
@@ -175,12 +125,12 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
             placeholder="Markdown image"
             prefix={<FileMarkdownOutlined />}
             readOnly={true}
-            value={getMarkdown(props.value)}
+            value={imageURLToMarkdown(props.value)}
           />
           <Tooltip title="Copy Markdown">
             <Button
               icon={<CopyOutlined />}
-              onClick={() => copy(getMarkdown(props.value!))}
+              onClick={() => copy(imageURLToMarkdown(props.value!))}
             />
           </Tooltip>
         </Input.Group>

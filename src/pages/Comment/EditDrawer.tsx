@@ -28,10 +28,10 @@ import { getComment } from '@/store/comment'
 import { getArticle } from '@/store/article'
 import { Comment, commentStates, COMMENT_GUESTBOOK_ID } from '@/constants/comment'
 import { Article } from '@/constants/article'
-import { stringToYMD } from '@/transformers/date'
-import { getGravatar } from '@/transformers/gravatar'
-import { getBlogGuestbookPath, getBlogArticleUrl } from '@/transformers/url'
-import { parseBrowser, parseOS } from '@/transformers/ua'
+import { stringToYMD } from '@/transforms/date'
+import { getGravatar } from '@/transforms/gravatar'
+import { getBlogGuestbookUrl, getBlogArticleUrl } from '@/transforms/url'
+import { parseBrowser, parseOS } from '@/transforms/ua'
 
 export interface EditDrawerProps {
   loading: boolean
@@ -195,7 +195,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
               icon={<LinkOutlined />}
               href={
                 props.comment.value?.post_id === COMMENT_GUESTBOOK_ID
-                  ? getBlogGuestbookPath()
+                  ? getBlogGuestbookUrl()
                   : getBlogArticleUrl(props.comment.value?.post_id!)
               }
             >

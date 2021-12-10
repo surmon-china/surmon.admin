@@ -1,10 +1,28 @@
 import React from 'react'
+import moment from 'moment'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
-import { Spin, Button, Form, Select, Input, Divider, Space, Typography } from 'antd'
-import { ReloadOutlined, CheckCircleOutlined, TagOutlined } from '@ant-design/icons'
+import {
+  Modal,
+  Spin,
+  Button,
+  Form,
+  Select,
+  Input,
+  Divider,
+  Space,
+  Typography,
+} from 'antd'
+import {
+  ReloadOutlined,
+  CheckCircleOutlined,
+  TagOutlined,
+  FileImageOutlined,
+  CloudUploadOutlined,
+} from '@ant-design/icons'
 import { FormInstance } from 'antd/lib/form'
-import { UniversalEditor } from '@/components/common/UniversalEditor'
+import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor'
+import { MultipleUploader } from '@/components/common/ImageUploader'
 import { getTags } from '@/store/tag'
 import { Tag } from '@/constants/tag'
 import { BaseFormModel } from './'
@@ -74,78 +92,123 @@ export interface MainFormProps {
   editorCacheID?: string
 }
 export const MainForm: React.FC<MainFormProps> = (props) => {
+  const isVisibleUploaderModal = useRef(false)
+
   return (
-    <Form
-      scrollToFirstError={true}
-      colon={false}
-      labelCol={{ span: 2 }}
-      wrapperCol={{ span: 22 }}
-      form={props.form}
-    >
-      <Form.Item
-        label="标题"
-        name="title"
-        wrapperCol={{ span: 10 }}
-        required={true}
-        rules={[
-          {
-            required: true,
-            message: '请输入标题',
-          },
-        ]}
+    <>
+      <Form
+        scrollToFirstError={true}
+        colon={false}
+        labelCol={{ span: 2 }}
+        wrapperCol={{ span: 22 }}
+        form={props.form}
       >
-        <Input placeholder="文章标题" />
-      </Form.Item>
-      <Form.Item
-        label="描述"
-        name="description"
-        required={true}
-        rules={[
-          {
-            required: true,
-            message: '请输入标题',
-          },
-        ]}
-      >
-        <Input.TextArea rows={4} placeholder="文章描述" />
-      </Form.Item>
-      <Form.Item
-        label="关键词"
-        name="keywords"
-        required={true}
-        rules={[
-          {
-            message: '至少应该有一个关键词',
-            validator(_, value: string[]) {
-              return Boolean(value?.length) ? Promise.resolve() : Promise.reject()
+        <Form.Item
+          label="标题"
+          name="title"
+          wrapperCol={{ span: 10 }}
+          required={true}
+          rules={[
+            {
+              required: true,
+              message: '请输入标题',
             },
-          },
-        ]}
+          ]}
+        >
+          <Input placeholder="文章标题" />
+        </Form.Item>
+        <Form.Item
+          label="描述"
+          name="description"
+          required={true}
+          rules={[
+            {
+              required: true,
+              message: '请输入标题',
+            },
+          ]}
+        >
+          <Input.TextArea rows={4} placeholder="文章描述" />
+        </Form.Item>
+        <Form.Item
+          label="关键词"
+          name="keywords"
+          required={true}
+          rules={[
+            {
+              message: '至少应该有一个关键词',
+              validator(_, value: string[]) {
+                return Boolean(value?.length) ? Promise.resolve() : Promise.reject()
+              },
+            },
+          ]}
+        >
+          <Select placeholder="输入关键词后回车" mode="tags" />
+        </Form.Item>
+        <Form.Item label="标签" name="tag">
+          <TagSelect />
+        </Form.Item>
+        <br />
+        <Form.Item
+          label="内容"
+          name="content"
+          required={true}
+          rules={[
+            {
+              required: true,
+              message: '请输入文章内容',
+            },
+          ]}
+        >
+          <UniversalEditor
+            formStatus={true}
+            minRows={28}
+            cacheID={props.editorCacheID}
+            placeholder="输入文章内容..."
+            renderToolbarExtra={(language) => {
+              if (language === UEditorLanguage.Markdown) {
+                return (
+                  <Button
+                    size="small"
+                    icon={<CloudUploadOutlined />}
+                    onClick={() => {
+                      isVisibleUploaderModal.value = true
+                    }}
+                  />
+                )
+              }
+            }}
+          />
+        </Form.Item>
+      </Form>
+      <Modal
+        centered={true}
+        closable={false}
+        visible={isVisibleUploaderModal.value}
+        bodyStyle={{
+          maxHeight: '80vh',
+          overflowY: 'auto',
+        }}
+        title={
+          <Space>
+            <FileImageOutlined />
+            图片上传器
+          </Space>
+        }
+        footer={
+          <Button
+            block={true}
+            type="link"
+            onClick={() => {
+              isVisibleUploaderModal.value = false
+            }}
+          >
+            OK
+          </Button>
+        }
       >
-        <Select placeholder="输入关键词后回车" mode="tags" />
-      </Form.Item>
-      <Form.Item label="标签" name="tag">
-        <TagSelect />
-      </Form.Item>
-      <br />
-      <Form.Item
-        label="内容"
-        name="content"
-        required={true}
-        rules={[
-          {
-            required: true,
-            message: '请输入文章内容',
-          },
-        ]}
-      >
-        <UniversalEditor
-          formStatus={true}
-          minRows={28}
-          cacheID={props.editorCacheID}
-          placeholder="输入文章内容..."
-        />
-      </Form.Item>
-    </Form>
+        <MultipleUploader directory={`nodepress/${moment().format('YYYY-MM-DD')}`} />
+      </Modal>
+    </>
   )
 }

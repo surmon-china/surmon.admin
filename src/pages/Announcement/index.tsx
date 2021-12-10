@@ -46,7 +46,7 @@ import { ResponsePaginationData } from '@/constants/request'
 import { PublishState, ps } from '@/constants/publish'
 import { useLoading } from 'veact-use'
 import { scrollTo } from '@/services/scroller'
-import { stringToYMD } from '@/transformers/date'
+import { stringToYMD } from '@/transforms/date'
 import { EditModal } from './EditModal'
 import styles from './style.module.less'
 

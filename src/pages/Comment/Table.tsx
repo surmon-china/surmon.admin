@@ -10,10 +10,10 @@ import {
 } from '@ant-design/icons'
 import { Pagination } from '@/constants/request'
 import { Comment as CommentType, CommentState, cs } from '@/constants/comment'
-import { parseBrowser, parseOS } from '@/transformers/ua'
-import { stringToYMD } from '@/transformers/date'
-import { getGravatar } from '@/transformers/gravatar'
-import { getBlogArticleUrl } from '@/transformers/url'
+import { parseBrowser, parseOS } from '@/transforms/ua'
+import { stringToYMD } from '@/transforms/date'
+import { getGravatar } from '@/transforms/gravatar'
+import { getBlogArticleUrl } from '@/transforms/url'
 
 import styles from './style.module.less'
 

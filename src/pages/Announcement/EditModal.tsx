@@ -9,7 +9,7 @@ import { Form, Select, Modal, Space, Divider, Typography } from 'antd'
 import { UniversalEditor } from '@/components/common/UniversalEditor'
 import { Announcement } from '@/constants/announcement'
 import { ps } from '@/constants/publish'
-import { stringToYMD } from '@/transformers/date'
+import { stringToYMD } from '@/transforms/date'
 import { STATE_IDS } from './index'
 
 const formLayout = {

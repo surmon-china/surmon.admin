@@ -128,7 +128,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
                 <Spin spinning={props.loading}>
                   <Form scrollToFirstError={true} form={thumbFormModel}>
                     <Form.Item noStyle={true} name="thumb">
-                      <ImageUploader />
+                      <ImageUploader directory="thumbnail" />
                     </Form.Item>
                   </Form>
                 </Spin>

@@ -19,9 +19,9 @@ import {
 import { ReloadOutlined, HeartOutlined, EditOutlined } from '@ant-design/icons'
 import { cs } from '@/constants/comment'
 import { CommentTree } from '@/store/comment'
-import { getGravatar } from '@/transformers/gravatar'
-import { stringToYMD } from '@/transformers/date'
-import { parseBrowser, parseOS } from '@/transformers/ua'
+import { getGravatar } from '@/transforms/gravatar'
+import { stringToYMD } from '@/transforms/date'
+import { parseBrowser, parseOS } from '@/transforms/ua'
 
 interface CommentTreeListProps {
   comments: Array<CommentTree>
