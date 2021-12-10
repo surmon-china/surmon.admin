@@ -5,7 +5,8 @@
 
 import React from 'react'
 import { useRef, useComputed, onMounted } from 'veact'
-import { ConfigProvider, Layout } from 'antd'
+import { ConfigProvider, Layout, Space, Typography } from 'antd'
+import { CodeOutlined } from '@ant-design/icons'
 import zhCN from 'antd/lib/locale/zh_CN'
 
 import * as CONFIG from '@/config'
@@ -55,7 +56,19 @@ export const AppLayout: React.FC = (props) => {
           <Layout.Content className={styles.appContent}>
             <AppContent>{props?.children}</AppContent>
           </Layout.Content>
-          <Layout.Footer className={styles.appFooter}>☮️ ❤️‍🔥 ✌️</Layout.Footer>
+          <Layout.Footer className={styles.appFooter}>
+            <Space size="small">
+              <CodeOutlined />
+              Powered by
+              <Typography.Link target="_blank" href="https://github.com/facebook/react">
+                React
+              </Typography.Link>
+              &
+              <Typography.Link target="_blank" href="https://github.com/veactjs/veact">
+                Veact
+              </Typography.Link>
+            </Space>
+          </Layout.Footer>
         </Layout>
       </Layout>
     </ConfigProvider>

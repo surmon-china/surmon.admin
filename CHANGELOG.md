@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.2.4 (2021-12-10)
+
+- Improve footer link
+
 ### v1.2.3 (2021-12-10)
 
 - Add `MultipleImageUploader` component
