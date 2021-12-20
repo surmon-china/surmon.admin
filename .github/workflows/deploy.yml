@@ -56,10 +56,5 @@ jobs:
           command_timeout: 8m
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
-          password: ${{ secrets.PASSWORD }}
-          script: |
-            cd /usr/local/wwwroot/veact-admin/
-            echo "[deploy] pulling source code..."
-            git fetch --all && git reset --hard origin/release && git pull
-            git checkout release
-            echo "[deploy] done"
+          key: ${{ secrets.KEY }}
+          script: sh ${{ secrets.WWW_PATH }}/veact-admin/scripts/deploy.sh

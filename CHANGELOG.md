@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.2.5 (2021-12-20)
+
+- Improve Sider slogan text style
+- Upgrade Actions CI config
+
 ### v1.2.4 (2021-12-10)
 
 - Improve footer link
