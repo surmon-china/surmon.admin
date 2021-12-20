@@ -57,4 +57,9 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
-          script: sh ${{ secrets.WWW_PATH }}/veact-admin/scripts/deploy.sh
+          script: |
+            cd ${{ secrets.WWW_PATH }}/veact-admin/
+            echo "[deploy] pulling source code..."
+            git fetch --all && git reset --hard origin/release && git pull
+            git checkout release
+            echo "[deploy] done"
