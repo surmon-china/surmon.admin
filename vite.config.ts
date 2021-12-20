@@ -28,6 +28,12 @@ const config: UserConfig = {
         manualChunks(id) {
           if (id.includes('node_modules/monaco-editor')) {
             return 'monaco-editor'
+          } else if (
+            ['lodash', 'marked', 'antd', '@ant-design', 'moment', 'highlight.js'].some(
+              (exp) => id.includes(`/node_modules/${exp}`)
+            )
+          ) {
+            return 'basic'
           } else if (id.includes('node_modules')) {
             return 'vendor'
           }

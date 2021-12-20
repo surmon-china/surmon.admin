@@ -47,115 +47,60 @@ export const Analytics: React.FC = () => {
   }
 
   const instanceGA = async (access_token: string): Promise<void> => {
-    const gapi = (window as any).gapi
-    gapi.analytics.ready(() => {
-      // 服务端授权立即生效，无需事件处理
-      gapi.analytics.auth.authorize({
-        serverAuth: { access_token },
-      })
-
-      const viewSelector = new gapi.analytics.ViewSelector({
-        container: GOOGLE_CHART_VIEW_SELECTOR_ID,
-      })
-      viewSelector.execute()
-
-      const timeline = new gapi.analytics.googleCharts.DataChart({
-        reportType: 'ga',
-        query: {
-          dimensions: 'ga:hour',
-          metrics: 'ga:sessions',
-          'start-date': 'today',
-          'end-date': 'today',
-        },
-        chart: {
-          type: 'LINE',
-          container: GOOGLE_CHART_TIMELINE_ID,
-          options: {
-            colors: GOOGLE_CHART_COLORS,
-            width: '100%',
-            chartArea: {
-              left: '25',
-              right: '25',
-            },
-            focusTarget: 'category',
-            dataOpacity: 0.6,
-            pointSize: 14,
-            vAxis: {
-              gridlines: {
-                color: '#454545',
-              },
-              baselineColor: '#454545',
-              textStyle: {
-                color: '#fff',
-              },
-            },
-            hAxis: {
-              textStyle: {
-                color: '#fff',
-              },
-            },
-            backgroundColor: {
-              fillOpacity: GOOGLE_CHART_BG_OPACITY,
-            },
-            tooltip: {
-              textStyle: {
-                fontSize: 13,
-              },
-            },
-            legend: {
-              textStyle: {
-                color: '#fff',
-              },
-            },
-          },
-        },
-      })
-
-      const getPieChart = (dimensions: string, container: string, title: string) =>
-        new gapi.analytics.googleCharts.DataChart({
+    return new Promise((resolve) => {
+      const gapi = (window as any).gapi
+      gapi.analytics.ready(() => {
+        // 服务端授权立即生效，无需事件处理
+        gapi.analytics.auth.authorize({
+          serverAuth: { access_token },
+        })
+  
+        const viewSelector = new gapi.analytics.ViewSelector({
+          container: GOOGLE_CHART_VIEW_SELECTOR_ID,
+        })
+        viewSelector.execute()
+  
+        const timeline = new gapi.analytics.googleCharts.DataChart({
+          reportType: 'ga',
           query: {
-            dimensions,
+            dimensions: 'ga:hour',
             metrics: 'ga:sessions',
             'start-date': 'today',
             'end-date': 'today',
-            'max-results': 15,
-            sort: '-ga:sessions',
           },
           chart: {
-            container,
-            type: 'PIE',
+            type: 'LINE',
+            container: GOOGLE_CHART_TIMELINE_ID,
             options: {
-              title,
-              width: '100%',
-              pieHole: 0.5,
               colors: GOOGLE_CHART_COLORS,
+              width: '100%',
               chartArea: {
                 left: '25',
+                right: '25',
               },
-              annotations: {
-                stem: {
-                  color: 'transparent',
-                  length: 120,
+              focusTarget: 'category',
+              dataOpacity: 0.6,
+              pointSize: 14,
+              vAxis: {
+                gridlines: {
+                  color: '#454545',
                 },
+                baselineColor: '#454545',
                 textStyle: {
-                  color: '#9E9E9E',
-                  fontSize: 18,
+                  color: '#fff',
+                },
+              },
+              hAxis: {
+                textStyle: {
+                  color: '#fff',
                 },
               },
               backgroundColor: {
                 fillOpacity: GOOGLE_CHART_BG_OPACITY,
               },
-              titleTextStyle: {
-                color: '#fff',
-              },
-              pieSliceBorderColor: 'transparent',
-              pieSliceTextStyle: {
-                color: '#fff',
-              },
               tooltip: {
-                showColorCode: true,
                 textStyle: {
-                  fontSize: 12,
+                  fontSize: 13,
                 },
               },
               legend: {
@@ -166,33 +111,93 @@ export const Analytics: React.FC = () => {
             },
           },
         })
-
-      const countryChart = getPieChart(
-        'ga:country',
-        GOOGLE_CHART_ID_MAP.COUNTRY,
-        '国家地区'
-      )
-      const cityChart = getPieChart('ga:city', GOOGLE_CHART_ID_MAP.CITY, '城市')
-      const browserChart = getPieChart(
-        'ga:browser',
-        GOOGLE_CHART_ID_MAP.BROWSER,
-        '浏览器'
-      )
-      const osChart = getPieChart(
-        'ga:operatingSystem',
-        GOOGLE_CHART_ID_MAP.OS,
-        '操作系统'
-      )
-
-      viewSelector.on('change', (ids: any) => {
-        const newIds = {
-          query: { ids },
+  
+        const getPieChart = (dimensions: string, container: string, title: string) => {
+          return new gapi.analytics.googleCharts.DataChart({
+            query: {
+              dimensions,
+              metrics: 'ga:sessions',
+              'start-date': 'today',
+              'end-date': 'today',
+              'max-results': 15,
+              sort: '-ga:sessions',
+            },
+            chart: {
+              container,
+              type: 'PIE',
+              options: {
+                title,
+                width: '100%',
+                pieHole: 0.5,
+                colors: GOOGLE_CHART_COLORS,
+                chartArea: {
+                  left: '25',
+                },
+                annotations: {
+                  stem: {
+                    color: 'transparent',
+                    length: 120,
+                  },
+                  textStyle: {
+                    color: '#9E9E9E',
+                    fontSize: 18,
+                  },
+                },
+                backgroundColor: {
+                  fillOpacity: GOOGLE_CHART_BG_OPACITY,
+                },
+                titleTextStyle: {
+                  color: '#fff',
+                },
+                pieSliceBorderColor: 'transparent',
+                pieSliceTextStyle: {
+                  color: '#fff',
+                },
+                tooltip: {
+                  showColorCode: true,
+                  textStyle: {
+                    fontSize: 12,
+                  },
+                },
+                legend: {
+                  textStyle: {
+                    color: '#fff',
+                  },
+                },
+              },
+            },
+          })
         }
-        timeline.set(newIds).execute()
-        countryChart.set(newIds).execute()
-        cityChart.set(newIds).execute()
-        browserChart.set(newIds).execute()
-        osChart.set(newIds).execute()
+
+        const countryChart = getPieChart(
+          'ga:country',
+          GOOGLE_CHART_ID_MAP.COUNTRY,
+          '国家地区'
+        )
+        const cityChart = getPieChart('ga:city', GOOGLE_CHART_ID_MAP.CITY, '城市')
+        const browserChart = getPieChart(
+          'ga:browser',
+          GOOGLE_CHART_ID_MAP.BROWSER,
+          '浏览器'
+        )
+        const osChart = getPieChart(
+          'ga:operatingSystem',
+          GOOGLE_CHART_ID_MAP.OS,
+          '操作系统'
+        )
+  
+        viewSelector.on('change', (ids: any) => {
+          const newIds = {
+            query: { ids },
+          }
+          timeline.set(newIds).execute()
+          countryChart.set(newIds).execute()
+          cityChart.set(newIds).execute()
+          browserChart.set(newIds).execute()
+          osChart.set(newIds).execute()
+        })
+
+        resolve()
       })
     })
   }
