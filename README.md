@@ -14,7 +14,7 @@
 
 **适用于 [surmon.me](https://github.com/surmon-china/surmon.me) 博客的管理员后台应用，使用 [`React`](https://github.com/facebook/react) 和 [`Veact`](https://github.com/veactjs/veact) 进行开发。**
 
-> **👁 在线预览：[Online Demo site](https://github.surmon.me/veact-admin/)**
+> **👁 在线预览：[Online DEMO site](https://github.surmon.me/veact-admin/)**
 
 > **📝 更新记录：[CHANGELOG.md](https://github.com/surmon-china/veact-admin/blob/main/CHANGELOG.md#changelog)**
 
