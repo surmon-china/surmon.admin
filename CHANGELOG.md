@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.2.9 (2021-12-21)
+
+- Fix `antd` bundle error
+- Improve bundle chunk
+
 ### v1.2.5 (2021-12-20)
 
 - Improve Sider slogan text style

@@ -54,12 +54,12 @@ export const Analytics: React.FC = () => {
         gapi.analytics.auth.authorize({
           serverAuth: { access_token },
         })
-  
+
         const viewSelector = new gapi.analytics.ViewSelector({
           container: GOOGLE_CHART_VIEW_SELECTOR_ID,
         })
         viewSelector.execute()
-  
+
         const timeline = new gapi.analytics.googleCharts.DataChart({
           reportType: 'ga',
           query: {
@@ -111,7 +111,7 @@ export const Analytics: React.FC = () => {
             },
           },
         })
-  
+
         const getPieChart = (dimensions: string, container: string, title: string) => {
           return new gapi.analytics.googleCharts.DataChart({
             query: {
@@ -185,7 +185,7 @@ export const Analytics: React.FC = () => {
           GOOGLE_CHART_ID_MAP.OS,
           '操作系统'
         )
-  
+
         viewSelector.on('change', (ids: any) => {
           const newIds = {
             query: { ids },

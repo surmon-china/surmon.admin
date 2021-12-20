@@ -1,6 +1,5 @@
 import React from 'react'
-import { Button, Form, Select, Input, Divider, Space } from 'antd'
-import { FormInstance } from 'antd/lib/form'
+import { Button, Form, Select, Input, Divider, Space, FormInstance } from 'antd'
 import { CheckOutlined } from '@ant-design/icons'
 import { publishStates } from '@/constants/publish'
 import { articleOrigins } from '@/constants/article/origin'

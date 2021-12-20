@@ -4,7 +4,7 @@
  */
 
 import { arrayToTree } from 'performant-array-to-tree'
-import { DataNode } from 'antd/lib/tree'
+import { TreeDataNode } from 'antd'
 
 import http from '@/services/http'
 import { Category } from '@/constants/category'
@@ -38,7 +38,7 @@ export function getAntdTreeByTree(
   tree: Array<CategoryTree>,
   currentCategoryId?: string
 ) {
-  const toAntdTree = (_tree: Array<CategoryTree>): DataNode[] => {
+  const toAntdTree = (_tree: Array<CategoryTree>): TreeDataNode[] => {
     return _tree.map((category) => ({
       data: category,
       title: category.name,

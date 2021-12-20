@@ -6,7 +6,6 @@
 import React from 'react'
 import { Ref, useWatch, onMounted } from 'veact'
 import { Card, Row, Col, Form, message, Spin } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
 import { APP_LAYOUT_GUTTER_SIZE } from '@/config'
 import { ImageUploader } from '@/components/common/ImageUploader'
 import { FormDataExtend } from '@/components/common/FormDataExtend'
@@ -54,11 +53,11 @@ export interface ArticleEditorProps {
   onSubmit(article: Article): any
 }
 export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
-  const [mainForm] = useForm<BaseFormModel>()
-  const [categoryFormModel] = useForm<CategoryFormModel>()
-  const [thumbFormModel] = useForm<ThumbFormModel>()
-  const [extendFormModel] = useForm<ExtendFormModel>()
-  const [stateFormModel] = useForm<StateFormModel>()
+  const [mainForm] = Form.useForm<BaseFormModel>()
+  const [categoryFormModel] = Form.useForm<CategoryFormModel>()
+  const [thumbFormModel] = Form.useForm<ThumbFormModel>()
+  const [extendFormModel] = Form.useForm<ExtendFormModel>()
+  const [stateFormModel] = Form.useForm<StateFormModel>()
 
   const setFormsValue = (formValue: Article) => {
     mainForm.setFieldsValue(formValue)

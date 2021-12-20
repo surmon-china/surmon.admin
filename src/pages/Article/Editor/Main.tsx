@@ -12,6 +12,7 @@ import {
   Divider,
   Space,
   Typography,
+  FormInstance,
 } from 'antd'
 import {
   ReloadOutlined,
@@ -20,7 +21,6 @@ import {
   FileImageOutlined,
   CloudUploadOutlined,
 } from '@ant-design/icons'
-import { FormInstance } from 'antd/lib/form'
 import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor'
 import { MultipleUploader } from '@/components/common/ImageUploader'
 import { getTags } from '@/store/tag'

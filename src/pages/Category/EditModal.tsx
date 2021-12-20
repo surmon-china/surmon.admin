@@ -1,7 +1,6 @@
 import React from 'react'
 import { Ref, useWatch } from 'veact'
-import { Form, Input, Modal, TreeSelect, Typography, Divider } from 'antd'
-import { DataNode } from 'antd/lib/tree'
+import { Form, Input, Modal, TreeSelect, Typography, Divider, TreeDataNode } from 'antd'
 import { FormDataExtend } from '@/components/common/FormDataExtend'
 import { Category as CategoryType } from '@/constants/category'
 import { stringToYMD } from '@/transforms/date'
@@ -17,7 +16,7 @@ export interface EditModalProps {
   loading: boolean
   visible: Ref<boolean>
   category: Ref<CategoryType | null>
-  tree: DataNode[]
+  tree: TreeDataNode[]
   categories: CategoryType[]
   onSubmit(category: CategoryType): void
   onCancel(): void

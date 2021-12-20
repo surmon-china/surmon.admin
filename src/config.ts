@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { SizeType } from 'antd/lib/config-provider/SizeContext'
+import type { SizeType } from 'antd/lib/config-provider/SizeContext'
 
 export const APP_TITLE = 'Surmon.me'
 export const BLOG_HOST = '//surmon.me'

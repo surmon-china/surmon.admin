@@ -29,8 +29,8 @@ const config: UserConfig = {
           if (id.includes('node_modules/monaco-editor')) {
             return 'monaco-editor'
           } else if (
-            ['lodash', 'marked', 'antd', '@ant-design', 'moment', 'highlight.js'].some(
-              (exp) => id.includes(`/node_modules/${exp}`)
+            ['axios', 'lodash', 'moment', 'marked', 'highlight.js'].some((exp) =>
+              id.includes(`/node_modules/${exp}`)
             )
           ) {
             return 'basic'
