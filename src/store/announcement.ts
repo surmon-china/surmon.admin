@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import http from '@/services/http'
+import nodepress from '@/services/nodepress'
 import { Announcement } from '@/constants/announcement'
 import { PublishState } from '@/constants/publish'
 import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request'
@@ -19,7 +19,7 @@ export interface GetAnnouncementsParams extends GeneralGetPageParams {
 }
 /** 获取公告列表 */
 export function getAnnouncements(params: GetAnnouncementsParams = {}) {
-  return http
+  return nodepress
     .get<ResponsePaginationData<Announcement>>(ANNOUNCEMENT_API_PATH, {
       params,
     })
@@ -28,28 +28,28 @@ export function getAnnouncements(params: GetAnnouncementsParams = {}) {
 
 /** 添加公告 */
 export function createAnnouncement(announcement: Announcement): Promise<any> {
-  return http
+  return nodepress
     .post<Announcement>(ANNOUNCEMENT_API_PATH, announcement)
     .then((response) => response.result)
 }
 
 /** 更新公告 */
 export function putAnnouncement(announcement: Announcement): Promise<any> {
-  return http
+  return nodepress
     .put<Announcement>(`${ANNOUNCEMENT_API_PATH}/${announcement._id}`, announcement)
     .then((response) => response.result)
 }
 
 /** 删除公告 */
 export function deleteAnnouncement(id: string) {
-  return http
+  return nodepress
     .delete<Announcement>(`${ANNOUNCEMENT_API_PATH}/${id}`)
     .then((response) => response.result)
 }
 
 /** 批量删除公告 */
 export function deleteAnnouncements(ids: Array<string>) {
-  return http
+  return nodepress
     .delete<any>(ANNOUNCEMENT_API_PATH, { data: { announcement_ids: ids } })
     .then((response) => response.result)
 }

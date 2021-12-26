@@ -74,7 +74,7 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
         wrapperCol={{ span: props.wrapperSpan }}
       >
         <Form.Item label={<HeartOutlined />}>
-          {data.value?.meta.likes || '-'} 次
+          {data.value?.meta?.likes || '-'} 次
         </Form.Item>
         <Form.Item name="title" label="站点标题" required={true}>
           <Input placeholder="站点标题" />
@@ -121,9 +121,6 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
           ]}
         >
           <Input suffix={<MailOutlined />} placeholder="example@xxx.me" />
-        </Form.Item>
-        <Form.Item name="site_icp" label="ICP备案号">
-          <Input placeholder="沪 ICP 备000000号" />
         </Form.Item>
         <Form.Item
           name={['blacklist', 'ips']}

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.3.0 (2021-12-26)
+
+- Add `slug` field for Article
+- Add Disqus pages
+
 ### v1.2.9 (2021-12-21)
 
 - Fix `antd` bundle error

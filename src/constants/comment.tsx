@@ -10,7 +10,7 @@ import {
   CheckOutlined,
   StopOutlined,
 } from '@ant-design/icons'
-import { DataExtends } from './general'
+import { GeneralExtend } from './general'
 
 /** 留言板 */
 export const COMMENT_GUESTBOOK_ID = 0
@@ -26,16 +26,15 @@ export interface Comment {
   agent: string
   state: CommentState
   likes: number
-  is_top: boolean
   author: {
-    email: string
     name: string
+    email?: string
     site?: string
   }
   ip_location?: any
-  extends: Array<DataExtends>
   update_at?: string
   create_at?: string
+  extends: Array<GeneralExtend>
 }
 
 /** 评论状态 */

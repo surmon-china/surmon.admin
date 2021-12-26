@@ -9,29 +9,29 @@ import {
   StopOutlined,
 } from '@ant-design/icons'
 import { Pagination } from '@/constants/request'
-import { Comment as CommentType, CommentState, cs } from '@/constants/comment'
+import { Comment, CommentState, cs, COMMENT_GUESTBOOK_ID } from '@/constants/comment'
 import { parseBrowser, parseOS } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
-import { getGravatar } from '@/transforms/gravatar'
-import { getBlogArticleUrl } from '@/transforms/url'
+import { autoCommentAvatar } from '@/transforms/avatar'
+import { getBlogGuestbookUrl, getBlogArticleUrl } from '@/transforms/url'
 
 import styles from './style.module.less'
 
 export interface CommentListTableProps {
   loading: boolean
-  data: Array<CommentType>
+  data: Array<Comment>
   pagination: Pagination
   selectedIds: Array<string>
   onPostId(id: number): any
   onSelecte(ids: Array<any>): any
   onPagination(page: number, pageSize?: number): any
-  onDetail(comment: CommentType, index: number): any
-  onDelete(comment: CommentType, index: number): any
-  onUpdateState(comment: CommentType, state: CommentState): any
+  onDetail(comment: Comment, index: number): any
+  onDelete(comment: Comment, index: number): any
+  onUpdateState(comment: Comment, state: CommentState): any
 }
 export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
   return (
-    <Table<CommentType>
+    <Table<Comment>
       rowKey="_id"
       loading={props.loading}
       dataSource={props.data}
@@ -102,15 +102,19 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   <Avatar
                     shape="square"
                     size="small"
-                    src={getGravatar(comment.author.email)}
+                    src={autoCommentAvatar(comment)}
                   />
                 </span>
                 <span>名字：{comment.author.name}</span>
                 <span>
                   邮箱：
-                  <Typography.Text copyable={true}>
-                    {comment.author.email || '-'}
-                  </Typography.Text>
+                  {!comment.author.email ? (
+                    '-'
+                  ) : (
+                    <Typography.Text copyable={true}>
+                      {comment.author.email}
+                    </Typography.Text>
+                  )}
                 </span>
                 <span>
                   网址：
@@ -273,7 +277,11 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 type="link"
                 target="_blank"
                 icon={<LinkOutlined />}
-                href={getBlogArticleUrl(comment.post_id)}
+                href={
+                  comment.post_id === COMMENT_GUESTBOOK_ID
+                    ? getBlogGuestbookUrl()
+                    : getBlogArticleUrl(comment.post_id)
+                }
               >
                 宿主页面
               </Button>

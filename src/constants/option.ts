@@ -11,7 +11,6 @@ export interface Option {
   keywords: Array<string>
   site_url: string
   site_email: string
-  site_icp: string
   blacklist: {
     ips: Array<string>
     mails: Array<string>

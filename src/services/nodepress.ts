@@ -52,14 +52,14 @@ export interface HTTPResult<T = any> {
   result: T
 }
 
-const http = axios.create({
+const nodepress = axios.create({
   baseURL: API_URL,
   // adapter: WORKAROUND for outside
   adapter: (window as any).__axiosAdapter || undefined,
 })
 
 // request
-http.interceptors.request.use((config) => {
+nodepress.interceptors.request.use((config) => {
   loading.start()
   if (token.isTokenValid()) {
     config.headers = config.headers || {}
@@ -75,9 +75,17 @@ http.interceptors.request.use((config) => {
 })
 
 // response
-http.interceptors.response.use(
+nodepress.interceptors.response.use(
   (response) => {
-    if (response.data.status === HTTPStatus.Success) {
+    if (!response.headers['content-type'].includes('json')) {
+      loading.complete()
+      notification.success({
+        message: '数据请求成功',
+        description: response.statusText,
+        duration: 2,
+      })
+      return response
+    } else if (response.data.status === HTTPStatus.Success) {
       loading.complete()
       notification.success({
         message: '数据请求成功',
@@ -124,31 +132,31 @@ http.interceptors.response.use(
 )
 
 const service = {
-  $: http,
+  $: nodepress,
   request: <T = unknown>(
     ...args: Parameters<AxiosInstance['request']>
-  ): Promise<HTTPResult<T>> => http.request(...args),
+  ): Promise<HTTPResult<T>> => nodepress.request(...args),
   get: <T = unknown>(
     ...args: Parameters<AxiosInstance['get']>
-  ): Promise<HTTPResult<T>> => http.get(...args),
+  ): Promise<HTTPResult<T>> => nodepress.get(...args),
   delete: <T = unknown>(
     ...args: Parameters<AxiosInstance['delete']>
-  ): Promise<HTTPResult<T>> => http.delete(...args),
+  ): Promise<HTTPResult<T>> => nodepress.delete(...args),
   head: <T = unknown>(
     ...args: Parameters<AxiosInstance['head']>
-  ): Promise<HTTPResult<T>> => http.head(...args),
+  ): Promise<HTTPResult<T>> => nodepress.head(...args),
   options: <T = unknown>(
     ...args: Parameters<AxiosInstance['options']>
-  ): Promise<HTTPResult<T>> => http.options(...args),
+  ): Promise<HTTPResult<T>> => nodepress.options(...args),
   post: <T = unknown>(
     ...args: Parameters<AxiosInstance['post']>
-  ): Promise<HTTPResult<T>> => http.post(...args),
+  ): Promise<HTTPResult<T>> => nodepress.post(...args),
   put: <T = unknown>(
     ...args: Parameters<AxiosInstance['put']>
-  ): Promise<HTTPResult<T>> => http.put(...args),
+  ): Promise<HTTPResult<T>> => nodepress.put(...args),
   patch: <T = unknown>(
     ...args: Parameters<AxiosInstance['patch']>
-  ): Promise<HTTPResult<T>> => http.patch(...args),
+  ): Promise<HTTPResult<T>> => nodepress.patch(...args),
 }
 
 export default service

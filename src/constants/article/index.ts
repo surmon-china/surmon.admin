@@ -3,10 +3,10 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { DataExtends } from '../general'
+import { GeneralExtend } from '../general'
 import { PublishState } from '../publish'
-import { Tag } from '../tag'
 import { Category } from '../category'
+import { Tag } from '../tag'
 import { ArticleOrigin } from './origin'
 import { ArticlePublic } from './public'
 
@@ -16,23 +16,25 @@ export type ArticleId = string | number
 export interface Article {
   id?: number
   _id?: ArticleId
+  slug: string | null
   title: string
-  description: string
   content?: string
+  description: string
   keywords: string[]
+  thumb?: string
+  tag: Array<Tag>
+  category: Array<Category>
+  origin: ArticleOrigin
+  public: ArticlePublic
+  state: PublishState
+  disabled_comment?: boolean
+  password?: string
   meta?: {
     likes: number
     views: number
     comments: number
   }
-  origin: ArticleOrigin
-  public: ArticlePublic
-  state: PublishState
   update_at?: string
   create_at?: string
-  tag: Array<Tag>
-  category: Array<Category>
-  password?: string
-  thumb?: string
-  extends: Array<DataExtends>
+  extends: Array<GeneralExtend>
 }

@@ -19,7 +19,7 @@ import {
 import { ReloadOutlined, HeartOutlined, EditOutlined } from '@ant-design/icons'
 import { cs } from '@/constants/comment'
 import { CommentTree } from '@/store/comment'
-import { getGravatar } from '@/transforms/gravatar'
+import { autoCommentAvatar } from '@/transforms/avatar'
 import { stringToYMD } from '@/transforms/date'
 import { parseBrowser, parseOS } from '@/transforms/ua'
 
@@ -69,7 +69,7 @@ const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
             <Avatar
               shape="square"
               size="large"
-              src={getGravatar(comment.author.email!)}
+              src={autoCommentAvatar(comment)}
               alt={comment.author.name}
             />
           }

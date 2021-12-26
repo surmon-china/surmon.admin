@@ -6,7 +6,7 @@
 export interface Auth {
   name: string
   slogan: string
-  gravatar?: string
+  avatar?: string
   password?: string
   new_password?: string
 }

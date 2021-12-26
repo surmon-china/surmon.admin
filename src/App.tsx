@@ -29,6 +29,9 @@ import { AnnouncementPage } from '@/pages/Announcement'
 import { CategoryPage } from '@/pages/Category'
 import { TagPage } from '@/pages/Tag'
 import { CommentPage } from '@/pages/Comment'
+import { DisqusThreadsPage } from '@/pages/Dsiqus/Thread'
+import { DisqusPostsPage } from '@/pages/Dsiqus/Post'
+import { DisqusSynchronizePage } from '@/pages/Dsiqus/Synchronize'
 import { ArticleList } from '@/pages/Article/List'
 import { ArticleEdit } from '@/pages/Article/Edit'
 import { ArticleCreate } from '@/pages/Article/Create'
@@ -87,6 +90,33 @@ export const App: React.FC = () => {
             <Route path={rc(RouteKey.Tag).path} element={<TagPage />} />
             <Route path={rc(RouteKey.Comment).path} element={<CommentPage />} />
             <Route path={rc(RouteKey.Profile).path} element={<ProfilePage />} />
+            <Route
+              path={`${rc(RouteKey.Disqus).path}/*`}
+              element={
+                <Routes>
+                  <Route
+                    index={true}
+                    element={<Navigate to={rc(RouteKey.DisqusPost).subPath!} replace />}
+                  />
+                  <Route
+                    path={rc(RouteKey.DisqusPost).subPath}
+                    element={<DisqusPostsPage />}
+                  />
+                  <Route
+                    path={rc(RouteKey.DisqusThread).subPath}
+                    element={<DisqusThreadsPage />}
+                  />
+                  <Route
+                    path={rc(RouteKey.DisqusSync).subPath}
+                    element={<DisqusSynchronizePage />}
+                  />
+                  <Route
+                    path="*"
+                    element={<Navigate to={rc(RouteKey.DisqusPost).path} replace />}
+                  />
+                </Routes>
+              }
+            />
             <Route
               path={`${rc(RouteKey.Article).path}/*`}
               element={

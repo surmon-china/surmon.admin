@@ -5,7 +5,7 @@
 
 import React, { useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Modal, Button, Space, Badge } from 'antd'
+import { Modal, Button, Space, Badge, message } from 'antd'
 import {
   DeleteOutlined,
   CommentOutlined,
@@ -143,6 +143,7 @@ export const ArticleEdit: React.FC = () => {
               danger={true}
               icon={<DeleteOutlined />}
               disabled={fetching.state.value}
+              onClick={() => message.warn('双击执行删除操作')}
               onDoubleClick={handleDelete}
             >
               删除文章
@@ -169,7 +170,7 @@ export const ArticleEdit: React.FC = () => {
                 size="small"
                 icon={<RocketOutlined />}
                 target="_blank"
-                href={getBlogArticleUrl(article.value?.id!)}
+                href={getBlogArticleUrl(article.value?.id!, article.value?.slug)}
               />
             </Button.Group>
           </Space>

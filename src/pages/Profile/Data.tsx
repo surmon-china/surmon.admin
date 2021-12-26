@@ -6,7 +6,6 @@ import {
   CloudDownloadOutlined,
   SyncOutlined,
 } from '@ant-design/icons'
-
 import { updateDatabaseBackup, updateArchiveCache } from '@/store/system'
 
 export interface DataFormProps {
@@ -21,19 +20,12 @@ enum LoadingKey {
 
 export const DataForm: React.FC<DataFormProps> = (props) => {
   const loading = useLoadings(LoadingKey.Databse, LoadingKey.Archive)
-  const updateDatebaseBackup = () => {
-    return loading.promise(LoadingKey.Databse, updateDatabaseBackup()).then()
-  }
-
-  const updateArchive = () => {
-    return loading.promise(LoadingKey.Archive, updateArchiveCache()).then()
-  }
 
   const handleUpdateDatabaseBackup = () => {
     Modal.confirm({
       centered: true,
       title: '更新备份会导致强制覆盖旧的数据库备份，确定要继续吗？',
-      onOk: updateDatebaseBackup,
+      onOk: () => loading.promise(LoadingKey.Databse, updateDatabaseBackup()),
     })
   }
 
@@ -41,7 +33,7 @@ export const DataForm: React.FC<DataFormProps> = (props) => {
     Modal.confirm({
       centered: true,
       title: '将会更新全站的所有全量数据缓存，确定要继续吗？',
-      onOk: updateArchive,
+      onOk: () => loading.promise(LoadingKey.Archive, updateArchiveCache()),
     })
   }
 

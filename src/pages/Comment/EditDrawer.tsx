@@ -29,7 +29,7 @@ import { getArticle } from '@/store/article'
 import { Comment, commentStates, COMMENT_GUESTBOOK_ID } from '@/constants/comment'
 import { Article } from '@/constants/article'
 import { stringToYMD } from '@/transforms/date'
-import { getGravatar } from '@/transforms/gravatar'
+import { autoCommentAvatar } from '@/transforms/avatar'
 import { getBlogGuestbookUrl, getBlogArticleUrl } from '@/transforms/url'
 import { parseBrowser, parseOS } from '@/transforms/ua'
 
@@ -110,15 +110,11 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
           <Form.Item label="最后修改于">
             {stringToYMD(props.comment.value?.update_at!)}
           </Form.Item>
-          <Form.Item name="is_top" label="置顶评论" valuePropName="checked">
-            <Switch disabled={true} />
-          </Form.Item>
-
           <Form.Item label="用户头像">
             <Avatar
               shape="square"
               size="large"
-              src={getGravatar(props.comment.value?.author.email!)}
+              src={props.comment.value ? autoCommentAvatar(props.comment.value) : ''}
             />
           </Form.Item>
           <Form.Item
@@ -132,14 +128,13 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             name={['author', 'email']}
             label="用户邮箱"
             rules={[
-              { required: true, message: '必填' },
               {
                 message: '请输入正确的邮箱',
                 type: 'email',
               },
             ]}
           >
-            <Input prefix={<MailOutlined />} type="email" />
+            <Input prefix={<MailOutlined />} placeholder="email" type="email" />
           </Form.Item>
           <Form.Item
             name={['author', 'site']}
@@ -196,7 +191,10 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
               href={
                 props.comment.value?.post_id === COMMENT_GUESTBOOK_ID
                   ? getBlogGuestbookUrl()
-                  : getBlogArticleUrl(props.comment.value?.post_id!)
+                  : getBlogArticleUrl(
+                      commentArticle.value?.id!,
+                      commentArticle.value?.slug
+                    )
               }
             >
               {props.comment.value?.post_id === COMMENT_GUESTBOOK_ID

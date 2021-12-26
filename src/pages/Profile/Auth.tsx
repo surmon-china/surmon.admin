@@ -84,7 +84,7 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
         wrapperCol={{ span: props.wrapperSpan }}
       >
         <Form.Item
-          name="gravatar"
+          name="avatar"
           label="个人头像"
           required={true}
           wrapperCol={{ span: 6 }}

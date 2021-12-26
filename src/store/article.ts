@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import http from '@/services/http'
+import nodepress from '@/services/nodepress'
 import { PublishState } from '@/constants/publish'
 import { SortType } from '@/constants/sort'
 import { ArticleId, Article } from '@/constants/article'
@@ -25,7 +25,7 @@ export interface GetArticleParams extends GeneralGetPageParams {
 }
 /** 获取文章列表 */
 export function getArticles(params: GetArticleParams = {}) {
-  return http
+  return nodepress
     .get<ResponsePaginationData<Article>>(ARTICLE_API_PATH, {
       params,
     })
@@ -34,35 +34,35 @@ export function getArticles(params: GetArticleParams = {}) {
 
 /** 获取文章详情 */
 export function getArticle(articleId: ArticleId) {
-  return http
+  return nodepress
     .get<Article>(`${ARTICLE_API_PATH}/${articleId}`)
     .then((response) => response.result)
 }
 
 /** 创建文章 */
 export function createArticle(article: Article) {
-  return http
+  return nodepress
     .post<Article>(ARTICLE_API_PATH, article)
     .then((response) => response.result)
 }
 
 /** 修改文章 */
 export function putArticle(article: Article) {
-  return http
+  return nodepress
     .put<Article>(`${ARTICLE_API_PATH}/${article._id}`, article)
     .then((response) => response.result)
 }
 
 /** 批量修改文章状态 */
 export function patchArticlesState(articleIds: ArticleId[], state: PublishState) {
-  return http
+  return nodepress
     .patch(ARTICLE_API_PATH, { article_ids: articleIds, state })
     .then((response) => response.result)
 }
 
 /** 批量删除文章 */
 export function deleteArticles(articleIds: ArticleId[]) {
-  return http
+  return nodepress
     .delete(ARTICLE_API_PATH, { data: { article_ids: articleIds } })
     .then((response) => response.result)
 }

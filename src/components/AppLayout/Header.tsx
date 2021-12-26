@@ -84,8 +84,8 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
                 shape="square"
                 size="small"
                 icon={<UserOutlined />}
-                className={styles.gravatar}
-                src={admin.data.gravatar}
+                className={styles.avatar}
+                src={admin.data.avatar}
               />
             </div>
           </Dropdown>

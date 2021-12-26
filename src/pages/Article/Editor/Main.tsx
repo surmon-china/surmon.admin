@@ -25,6 +25,7 @@ import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalE
 import { MultipleUploader } from '@/components/common/ImageUploader'
 import { getTags } from '@/store/tag'
 import { Tag } from '@/constants/tag'
+import { BLOG_ARTICLE_URL_PREFIX } from '@/transforms/url'
 import { BaseFormModel } from './'
 
 interface TagSelectProps {
@@ -104,10 +105,26 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
         form={props.form}
       >
         <Form.Item
+          label="别名"
+          name="slug"
+          wrapperCol={{ span: 12 }}
+          rules={[
+            {
+              pattern: /^[a-zA-Z0-9-_]+$/,
+              message: '仅支持 英文、数字、_、-',
+            },
+          ]}
+        >
+          <Input
+            addonBefore={BLOG_ARTICLE_URL_PREFIX}
+            placeholder="article-title"
+            allowClear={true}
+          />
+        </Form.Item>
+        <Form.Item
           label="标题"
           name="title"
-          wrapperCol={{ span: 10 }}
-          required={true}
+          wrapperCol={{ span: 12 }}
           rules={[
             {
               required: true,

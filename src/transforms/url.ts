@@ -10,8 +10,9 @@ export const getResourceUrl = (uri: string) => {
   return uri.startsWith('/') ? path + uri.substr(1, uri.length) : path + uri
 }
 
-export const getBlogArticleUrl = (articleID: number) => {
-  return `${BLOG_HOST}/article/${articleID}`
+export const BLOG_ARTICLE_URL_PREFIX = `${BLOG_HOST}/article/`
+export const getBlogArticleUrl = (articleID: number, articleSlug?: string | null) => {
+  return `${BLOG_ARTICLE_URL_PREFIX}${articleSlug || articleID}`
 }
 
 export const getBlogTagUrl = (tagSlug: string) => {

@@ -5,7 +5,7 @@
 
 import { Base64 } from 'js-base64'
 import { Auth } from '@/constants/auth'
-import http from '@/services/http'
+import nodepress from '@/services/nodepress'
 
 export const AUTH_API_PATH = {
   AUTH: '/auth',
@@ -16,12 +16,12 @@ export const AUTH_API_PATH = {
 }
 /** 获取管理员信息 */
 export function getAdminInfo() {
-  return http.get<Auth>(AUTH_API_PATH.ADMIN).then((response) => response.result)
+  return nodepress.get<Auth>(AUTH_API_PATH.ADMIN).then((response) => response.result)
 }
 
 /** 更新管理员信息（包括平台密码） */
 export function putAuth(auth: Auth) {
-  return http
+  return nodepress
     .put<Auth>(AUTH_API_PATH.ADMIN, {
       ...auth,
       password: auth.password ? Base64.encode(auth.password) : '',
@@ -32,7 +32,9 @@ export function putAuth(auth: Auth) {
 
 /** 检查 Token 有效性 */
 export function checkTokenValidity() {
-  return http.post<void>(AUTH_API_PATH.CHECK_TOKEN).then((response) => response.result)
+  return nodepress
+    .post<void>(AUTH_API_PATH.CHECK_TOKEN)
+    .then((response) => response.result)
 }
 
 export interface TokenResult {
@@ -42,7 +44,7 @@ export interface TokenResult {
 
 /** 登录 */
 export function authLogin(password: string) {
-  return http
+  return nodepress
     .post<TokenResult>(AUTH_API_PATH.LOGIN, {
       password: Base64.encode(password),
     })
@@ -51,7 +53,7 @@ export function authLogin(password: string) {
 
 /** 续约 Token */
 export function renewalToken() {
-  return http
+  return nodepress
     .post<TokenResult>(AUTH_API_PATH.RENEWAL_TOKEN)
     .then((response) => response.result)
 }

@@ -21,7 +21,7 @@ import { StateForm } from './State'
 import styles from './style.module.less'
 
 export type BaseFormModel = Partial<
-  Pick<Article, 'tag' | 'title' | 'content' | 'keywords' | 'description'>
+  Pick<Article, 'slug' | 'tag' | 'title' | 'content' | 'keywords' | 'description'>
 >
 export type CategoryFormModel = Pick<Article, 'category'>
 export type ThumbFormModel = Pick<Article, 'thumb'>
@@ -29,6 +29,7 @@ export type ExtendFormModel = Pick<Article, 'extends'>
 export type StateFormModel = Pick<Article, 'state' | 'origin' | 'public' | 'password'>
 
 const DEFAULT_ARTICLE: Article = Object.freeze({
+  slug: null,
   title: '',
   description: '',
   keywords: [],
@@ -37,6 +38,7 @@ const DEFAULT_ARTICLE: Article = Object.freeze({
   origin: ArticleOrigin.Original,
   state: PublishState.Published,
   public: ArticlePublic.Public,
+  disabled_comment: false,
   password: '',
   tag: [],
   category: [],
@@ -77,6 +79,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
         ...(await extendFormModel.validateFields()),
         ...(await stateFormModel.validateFields()),
       }
+      data.slug = data.slug || null
       props.onSubmit?.(data as Article)
     } catch (error) {
       console.warn('Article 提交错误：', error)

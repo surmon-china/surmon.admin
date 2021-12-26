@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { DataExtends } from './general'
+import { GeneralExtend } from './general'
 
 /** 分类 */
 export interface Category {
@@ -17,5 +17,5 @@ export interface Category {
   update_at: string
   create_at: string
   children?: Array<Category>
-  extends: Array<DataExtends>
+  extends: Array<GeneralExtend>
 }

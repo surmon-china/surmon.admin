@@ -4,8 +4,7 @@
  */
 
 /** 通用的数据扩展 */
-export interface DataExtends {
-  _id: string
+export interface GeneralExtend {
   name: string
   value: string
 }

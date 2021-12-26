@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import http from '@/services/http'
+import nodepress from '@/services/nodepress'
 import { Option } from '@/constants/option'
 
 export const OPTION_API_PATH = '/option'
@@ -20,38 +20,40 @@ export interface Statistics {
 }
 /** 获取全站统计信息 */
 export function getStatistics() {
-  return http
+  return nodepress
     .get<Statistics>(EXPANSION_API_PATH.STATISTIC)
     .then((response) => response.result)
 }
 
 /** 获取 GA Token */
 export function getGAToken(): Promise<string> {
-  return http
+  return nodepress
     .get<any>(EXPANSION_API_PATH.GOOGLE_TOKEN)
     .then(({ result: credentials }) => credentials.access_token as string)
 }
 
 /** 更新 Archive 缓存 */
 export function updateArchiveCache() {
-  return http.patch<void>(ARCHIVE_API_PATH).then((response) => response.result)
+  return nodepress.patch<void>(ARCHIVE_API_PATH).then((response) => response.result)
 }
 
 /** 更新数据库备份 */
 export function updateDatabaseBackup() {
-  return http
+  return nodepress
     .patch(EXPANSION_API_PATH.DATA_BASE_BACKUP)
     .then((response) => response.result)
 }
 
 /** 获取系统配置 */
 export function getOption() {
-  return http.get<Option>(OPTION_API_PATH).then((response) => response.result)
+  return nodepress.get<Option>(OPTION_API_PATH).then((response) => response.result)
 }
 
 /** 更新系统配置 */
 export function putOption(option: Option) {
-  return http.put<Option>(OPTION_API_PATH, option).then((response) => response.result)
+  return nodepress
+    .put<Option>(OPTION_API_PATH, option)
+    .then((response) => response.result)
 }
 
 export interface AliYunOSSUpToken {
@@ -63,7 +65,7 @@ export interface AliYunOSSUpToken {
 
 /** 获取 AliYun OSS 上传 Token */
 export function getOSSUpToken() {
-  return http
+  return nodepress
     .get<AliYunOSSUpToken>(EXPANSION_API_PATH.UP_TOKEN)
     .then((response) => response.result)
 }

@@ -10,9 +10,7 @@ export interface GeneralGetParams {
 
 /** 通用翻页请求参数 */
 export interface GeneralGetPageParams extends GeneralGetParams {
-  /** 目标页 */
   page?: number
-  /** 一页多少数据 */
   per_page?: number
 }
 

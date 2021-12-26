@@ -36,11 +36,11 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
       <Spin spinning={admin.loading.value} size="small">
         <div className={styles.userInfo}>
           <img
-            src={admin.data.gravatar}
+            src={admin.data.avatar}
             alt={admin.data.name}
             draggable={false}
             className={classnames(
-              styles.gravatar,
+              styles.avatar,
               props.isSiderCollapsed && styles.collapsed
             )}
           />
@@ -75,13 +75,6 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
         <Menu.Item key={rc(RouteKey.Tag).path} icon={rc(RouteKey.Tag).icon}>
           {rc(RouteKey.Tag).name}
         </Menu.Item>
-        <Menu.Item
-          key={rc(RouteKey.Comment).path}
-          icon={rc(RouteKey.Comment).icon}
-          title={rc(RouteKey.Comment).name}
-        >
-          {rc(RouteKey.Comment).name}
-        </Menu.Item>
         <Menu.SubMenu
           key={rc(RouteKey.Article).path}
           icon={rc(RouteKey.Article).icon}
@@ -92,6 +85,28 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
           </Menu.Item>
           <Menu.Item key={rc(RouteKey.ArticlePost).path}>
             {rc(RouteKey.ArticlePost).name}
+          </Menu.Item>
+        </Menu.SubMenu>
+        <Menu.Item
+          key={rc(RouteKey.Comment).path}
+          icon={rc(RouteKey.Comment).icon}
+          title={rc(RouteKey.Comment).name}
+        >
+          {rc(RouteKey.Comment).name}
+        </Menu.Item>
+        <Menu.SubMenu
+          key={rc(RouteKey.Disqus).path}
+          icon={rc(RouteKey.Disqus).icon}
+          title={rc(RouteKey.Disqus).name}
+        >
+          <Menu.Item key={rc(RouteKey.DisqusPost).path}>
+            {rc(RouteKey.DisqusPost).name}
+          </Menu.Item>
+          <Menu.Item key={rc(RouteKey.DisqusThread).path}>
+            {rc(RouteKey.DisqusThread).name}
+          </Menu.Item>
+          <Menu.Item key={rc(RouteKey.DisqusSync).path}>
+            {rc(RouteKey.DisqusSync).name}
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.Item key={rc(RouteKey.Profile).path} icon={rc(RouteKey.Profile).icon}>

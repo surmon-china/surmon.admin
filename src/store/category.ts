@@ -6,7 +6,7 @@
 import { arrayToTree } from 'performant-array-to-tree'
 import { TreeDataNode } from 'antd'
 
-import http from '@/services/http'
+import nodepress from '@/services/nodepress'
 import { Category } from '@/constants/category'
 import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request'
 
@@ -18,7 +18,7 @@ export interface CategoryTree extends Category {
 
 /** 获取分类列表 */
 export function getCategories(params: GeneralGetPageParams = {}) {
-  return http
+  return nodepress
     .get<ResponsePaginationData<Category>>(CATEGORY_API_PATH, {
       params,
     })
@@ -53,26 +53,26 @@ export function getAntdTreeByTree(
 
 /** 创建分类 */
 export function createCategory(category: Category) {
-  return http.post(CATEGORY_API_PATH, category).then((response) => response.result)
+  return nodepress.post(CATEGORY_API_PATH, category).then((response) => response.result)
 }
 
 /** 修改分类 */
 export function putCategory(category: Category) {
-  return http
+  return nodepress
     .put(`${CATEGORY_API_PATH}/${category._id}`, category)
     .then((response) => response.result)
 }
 
 /** 删除分类 */
 export function deleteCategory(categoryId: string) {
-  return http
+  return nodepress
     .delete(`${CATEGORY_API_PATH}/${categoryId}`)
     .then((response) => response.result)
 }
 
 /** 批量删除分类 */
 export function deleteCategories(categoriesIds: string[]) {
-  return http
+  return nodepress
     .delete(CATEGORY_API_PATH, { data: { categorie_ids: categoriesIds } })
     .then((response) => response.result)
 }

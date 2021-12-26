@@ -4,10 +4,10 @@
  */
 
 import { arrayToTree } from 'performant-array-to-tree'
-import http from '@/services/http'
 import { SortType } from '@/constants/sort'
 import { Comment, CommentState } from '@/constants/comment'
 import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request'
+import nodepress from '@/services/nodepress'
 
 export const COMMENT_API_PATH = '/comment'
 export interface CommentTree extends Comment {
@@ -23,7 +23,7 @@ export interface GetCommentsParams extends GeneralGetPageParams {
 }
 /** 获取评论列表 */
 export function getComments(params: GetCommentsParams = {}) {
-  return http
+  return nodepress
     .get<ResponsePaginationData<Comment>>(COMMENT_API_PATH, { params })
     .then((response) => ({
       ...response.result,
@@ -41,14 +41,14 @@ export function getComments(params: GetCommentsParams = {}) {
 
 /** 获取评论详情 */
 export function getComment(commentId: number) {
-  return http
+  return nodepress
     .get<Comment>(`${COMMENT_API_PATH}/${commentId}`)
     .then((response) => response.result)
 }
 
 /** 更新评论 */
 export function putComment(comment: Comment): Promise<any> {
-  return http
+  return nodepress
     .put<Comment>(`${COMMENT_API_PATH}/${comment._id}`, comment)
     .then((response) => response.result)
 }
@@ -59,7 +59,7 @@ export function updateCommentsState(
   postIds: Array<number>,
   state: CommentState
 ) {
-  return http
+  return nodepress
     .patch(COMMENT_API_PATH, {
       comment_ids: commentIds,
       post_ids: postIds,
@@ -70,7 +70,7 @@ export function updateCommentsState(
 
 /** 批量删除评论 */
 export function deleteComments(commentIds: Array<string>, postIds: Array<number>) {
-  return http
+  return nodepress
     .delete(COMMENT_API_PATH, { data: { comment_ids: commentIds, post_ids: postIds } })
     .then((response) => response.result)
 }

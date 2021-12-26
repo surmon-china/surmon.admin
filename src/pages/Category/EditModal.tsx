@@ -88,7 +88,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
         <Form.Item
           name="slug"
           label="分类别名"
-          extra="“别名” 是在 URL 中使用的别称，建议小写，字母、数字、连字符（-）"
+          extra="“别名” 是在 URL 中使用的别称，仅支持小写字母、数字、连字符（-）"
           rules={[{ required: true, message: '请输入内容' }]}
         >
           <Input placeholder="分类别名" />
