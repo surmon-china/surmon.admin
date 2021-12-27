@@ -190,11 +190,16 @@ export const DisqusThreadsPage: React.FC = () => {
             },
           },
           {
-            title: 'ID',
+            title: 'ID / Author',
             key: 'id',
-            render: (_, item) => {
-              return <Typography.Text copyable={true}>{item.id}</Typography.Text>
-            },
+            render: (_, item) => (
+              <Space direction="vertical">
+                <Typography.Text copyable={true}>{item.id}</Typography.Text>
+                <Typography.Text copyable={true} type="secondary">
+                  {item.author}
+                </Typography.Text>
+              </Space>
+            ),
           },
           {
             title: 'Identifiers',
