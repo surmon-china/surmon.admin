@@ -123,22 +123,22 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
           <Input suffix={<MailOutlined />} placeholder="example@xxx.me" />
         </Form.Item>
         <Form.Item
-          name={['blacklist', 'ips']}
-          label="黑名单 IP"
+          name={['blocklist', 'ips']}
+          label="Blocklist IP"
           extra="这些 IP 来源的评论将被拒绝"
         >
           <Select placeholder="回车以输入多个 IP 地址" mode="tags" />
         </Form.Item>
         <Form.Item
-          name={['blacklist', 'mails']}
-          label="黑名单 邮箱"
+          name={['blocklist', 'mails']}
+          label="Blocklist 邮箱"
           extra="这些邮箱来源的评论将被拒绝"
         >
           <Select placeholder="回车以输入多个邮箱" mode="tags" />
         </Form.Item>
         <Form.Item
-          name={['blacklist', 'keywords']}
-          label="黑名单 关键字"
+          name={['blocklist', 'keywords']}
+          label="Blocklist 关键字"
           extra="包含这些关键字的的评论将被拒绝"
         >
           <Select placeholder="回车以输入多个关键字" mode="tags" />
@@ -148,7 +148,6 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
           label="AD CONFIG"
           rules={[
             {
-              required: true,
               message: '请输入合法的 JSON 数据',
               validator(_, value) {
                 try {

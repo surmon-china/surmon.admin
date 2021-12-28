@@ -94,6 +94,7 @@ nodepress.interceptors.response.use(
       })
       return Promise.resolve(response.data)
     } else {
+      loading.fail()
       notification.error({
         message: response.data.message,
         description: response.data.error,

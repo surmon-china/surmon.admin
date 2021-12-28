@@ -6,8 +6,7 @@
 import type { SizeType } from 'antd/lib/config-provider/SizeContext'
 
 export const APP_TITLE = 'Surmon.me'
-export const BLOG_HOST = '//surmon.me'
-export const BLOG_SITE = `https:${BLOG_HOST}`
+export const BLOG_URL = `https://surmon.me`
 export const STATIC_URL = 'https://static.surmon.me'
 export const GRAVATAR_API = `${STATIC_URL}/avatar`
 export const ALIYUN_OSS_REGION = 'oss-cn-hangzhou'

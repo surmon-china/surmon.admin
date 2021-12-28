@@ -4,8 +4,9 @@
   "result": {
     "name": "Admin",
     "slogan": "veact admin system",
-    "gravatar": "/veact-admin/images/profile/logo-smooth.png",
-    "_id": "589e015d5af07d59124234cc",
-    "__v": 0
+    "email": "i@surmon.me",
+    "avatar_type": 2,
+    "avatar": "/veact-admin/images/profile/logo-smooth.png",
+    "_id": "589e015d5af07d59124234cc"
   }
 }

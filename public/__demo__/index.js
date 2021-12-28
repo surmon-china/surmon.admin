@@ -58,6 +58,9 @@ window.__axiosAdapter = (config) => {
     '/comment': {
       get: () => ensureJSON('comment'),
     },
+    '/disqus/config': {
+      get: () => ensureJSON('disqus/config'),
+    },
     '/option': {
       get: () => ensureJSON('option'),
     },
@@ -81,16 +84,22 @@ window.__axiosAdapter = (config) => {
       return resolve({
         status: 200,
         statusText: 'OK',
+        headers: {
+          'content-type': 'application/json',
+        },
         data: await target(),
       })
     } else {
       return resolve({
-        status: 500,
+        status: 400,
         statusText: 'ERROR',
+        headers: {
+          'content-type': 'application/json',
+        },
         data: {
           status: 'error',
           message: '操作失败',
-          error: 'Demo 站点不支持数据操作',
+          error: 'Demo 站点不支持此数据操作',
           result: null,
         },
       })

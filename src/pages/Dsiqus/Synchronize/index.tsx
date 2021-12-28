@@ -34,8 +34,8 @@ export const DisqusSynchronizePage: React.FC = () => {
 
   return (
     <Space
-      size={APP_LAYOUT_SPACE_SIZE}
       direction="vertical"
+      size={APP_LAYOUT_SPACE_SIZE}
       className={styles.synchornize}
     >
       <Card title="Synchronize NodePress to Disqus" bordered={false}>

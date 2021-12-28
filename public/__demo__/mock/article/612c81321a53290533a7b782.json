@@ -7,6 +7,7 @@
     "state": 1,
     "public": 1,
     "origin": 1,
+    "disabled_comment": false,
     "tag": ["59133c0065ff1d6828a70696", "58d47e7fd1c6e87b0b82c667"],
     "category": ["589e0ad54a4ad562430953d2"],
     "_id": "612c81321a53290533a7b782",

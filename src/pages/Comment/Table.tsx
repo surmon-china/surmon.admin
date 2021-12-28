@@ -4,7 +4,8 @@ import {
   DeleteOutlined,
   LinkOutlined,
   EditOutlined,
-  HeartOutlined,
+  LikeOutlined,
+  DislikeOutlined,
   CheckOutlined,
   StopOutlined,
 } from '@ant-design/icons'
@@ -13,7 +14,7 @@ import { Comment, CommentState, cs, COMMENT_GUESTBOOK_ID } from '@/constants/com
 import { parseBrowser, parseOS } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
 import { autoCommentAvatar } from '@/transforms/avatar'
-import { getBlogGuestbookUrl, getBlogArticleUrl } from '@/transforms/url'
+import { getBlogURLByPostID } from '@/transforms/url'
 
 import styles from './style.module.less'
 
@@ -184,10 +185,16 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
             return (
               <Space direction="vertical">
                 <Tag
-                  icon={<HeartOutlined />}
-                  color={comment.likes > 0 ? 'magenta' : undefined}
+                  icon={<LikeOutlined />}
+                  color={comment.likes > 0 ? 'red' : undefined}
                 >
                   {comment.likes} 个赞
+                </Tag>
+                <Tag
+                  icon={<DislikeOutlined />}
+                  color={comment.dislikes > 0 ? 'gold' : undefined}
+                >
+                  {comment.dislikes} 个踩
                 </Tag>
                 <Tag icon={state.icon} color={state.color}>
                   {state.name}
@@ -277,11 +284,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 type="link"
                 target="_blank"
                 icon={<LinkOutlined />}
-                href={
-                  comment.post_id === COMMENT_GUESTBOOK_ID
-                    ? getBlogGuestbookUrl()
-                    : getBlogArticleUrl(comment.post_id)
-                }
+                href={getBlogURLByPostID(comment.post_id)}
               >
                 宿主页面
               </Button>

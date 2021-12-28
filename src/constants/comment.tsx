@@ -26,6 +26,7 @@ export interface Comment {
   agent: string
   state: CommentState
   likes: number
+  dislikes: number
   author: {
     name: string
     email?: string

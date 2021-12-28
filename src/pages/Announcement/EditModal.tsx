@@ -8,7 +8,7 @@ import { Ref, useWatch } from 'veact'
 import { Form, Select, Modal, Space, Divider, Typography } from 'antd'
 import { UniversalEditor } from '@/components/common/UniversalEditor'
 import { Announcement } from '@/constants/announcement'
-import { ps } from '@/constants/publish'
+import { PublishState, ps } from '@/constants/publish'
 import { stringToYMD } from '@/transforms/date'
 import { STATE_IDS } from './index'
 
@@ -71,6 +71,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
         <Form.Item
           label="发布状态"
           name="state"
+          initialValue={PublishState.Published}
           rules={[{ required: true, message: '请选择状态' }]}
         >
           <Select

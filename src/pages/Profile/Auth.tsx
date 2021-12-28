@@ -2,16 +2,17 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { onMounted } from 'veact'
 import { useLoading } from 'veact-use'
-import { Form, Input, Button, Spin, Divider, notification } from 'antd'
-import { CheckOutlined } from '@ant-design/icons'
+import { Form, Input, Button, Spin, Divider, notification, Select, Avatar } from 'antd'
+import { CheckOutlined, MailOutlined } from '@ant-design/icons'
 
 import { RouteKey, rc } from '@/routes'
 import { ImageUploader } from '@/components/common/ImageUploader'
-import { Auth } from '@/constants/auth'
+import { Auth, AvatarType } from '@/constants/auth'
+import { getGravatar } from '@/transforms/avatar'
 import { scrollTo } from '@/services/scroller'
 import { removeToken } from '@/services/token'
-import { putAuth } from '@/store/auth'
 import { useAdminState } from '@/state/admin'
+import { putAuth } from '@/store/auth'
 import styles from './style.module.less'
 
 export interface BaseFormProps {
@@ -84,13 +85,52 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
         wrapperCol={{ span: props.wrapperSpan }}
       >
         <Form.Item
-          name="avatar"
+          name="avatar_type"
           label="个人头像"
           required={true}
           wrapperCol={{ span: 6 }}
-          rules={[{ required: true, message: '请上传图片' }]}
+          rules={[{ required: true }]}
         >
-          <ImageUploader disabledMarkdown={true} />
+          <Select
+            options={[
+              {
+                label: 'Gravatar',
+                value: AvatarType.Gravatar,
+              },
+              {
+                label: '自定义',
+                value: AvatarType.URL,
+              },
+            ]}
+          />
+        </Form.Item>
+        <Form.Item noStyle={true} shouldUpdate={true}>
+          {(formValues) => {
+            const avatarType = formValues.getFieldValue('avatar_type')
+            if (avatarType === AvatarType.Gravatar) {
+              return (
+                <Form.Item label="Gravatar" wrapperCol={{ span: 6 }}>
+                  <Avatar
+                    shape="square"
+                    style={{ width: '100%' }}
+                    src={getGravatar(formValues.getFieldValue('email'))}
+                  />
+                </Form.Item>
+              )
+            }
+
+            return (
+              <Form.Item
+                name="avatar"
+                label="头像地址"
+                required={true}
+                wrapperCol={{ span: 6 }}
+                rules={[{ required: true, message: '请上传图片' }]}
+              >
+                <ImageUploader disabledMarkdown={true} />
+              </Form.Item>
+            )
+          }}
         </Form.Item>
         <Form.Item
           name="name"
@@ -107,6 +147,23 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
           rules={[{ required: true, message: '请输入签名' }]}
         >
           <Input placeholder="个人签名" />
+        </Form.Item>
+        <Form.Item
+          name="email"
+          label="个人邮箱"
+          required={true}
+          rules={[
+            {
+              message: '请输入',
+              required: true,
+            },
+            {
+              message: '请输入正确的邮箱地址',
+              type: 'email',
+            },
+          ]}
+        >
+          <Input suffix={<MailOutlined />} placeholder="example@xxx.me" />
         </Form.Item>
         <Divider />
         <Form.Item

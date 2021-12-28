@@ -13,7 +13,7 @@
     "site_icp": "",
     "ping_sites": ["http://ping.baidu.com/ping/RPC2"],
     "__v": 124,
-    "blacklist": {
+    "blocklist": {
       "ips": [
         "115.220.179.189",
         "113.88.157.115",

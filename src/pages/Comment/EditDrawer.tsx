@@ -6,7 +6,6 @@ import {
   Input,
   InputNumber,
   Avatar,
-  Switch,
   Button,
   Divider,
   Select,
@@ -20,6 +19,8 @@ import {
   MailOutlined,
   SendOutlined,
   LinkOutlined,
+  LikeOutlined,
+  DislikeOutlined,
 } from '@ant-design/icons'
 import { UniversalEditor } from '@/components/common/UniversalEditor'
 import { FormDataExtend } from '@/components/common/FormDataExtend'
@@ -30,7 +31,7 @@ import { Comment, commentStates, COMMENT_GUESTBOOK_ID } from '@/constants/commen
 import { Article } from '@/constants/article'
 import { stringToYMD } from '@/transforms/date'
 import { autoCommentAvatar } from '@/transforms/avatar'
-import { getBlogGuestbookUrl, getBlogArticleUrl } from '@/transforms/url'
+import { getBlogURLByPostID } from '@/transforms/url'
 import { parseBrowser, parseOS } from '@/transforms/ua'
 
 export interface EditDrawerProps {
@@ -178,24 +179,24 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
           </Form.Item>
           <Form.Item
             name="likes"
-            label="被喜欢"
+            label="被赞"
             rules={[{ required: true, message: '必填' }]}
           >
-            <InputNumber placeholder="多少" />
+            <InputNumber addonBefore={<LikeOutlined />} placeholder="多少" />
           </Form.Item>
-          <Form.Item label="宿主文章">
+          <Form.Item
+            name="dislikes"
+            label="被踩"
+            rules={[{ required: true, message: '必填' }]}
+          >
+            <InputNumber addonBefore={<DislikeOutlined />} placeholder="多少" />
+          </Form.Item>
+          <Form.Item label="宿主页面">
             <Button
               type="link"
               target="_blank"
               icon={<LinkOutlined />}
-              href={
-                props.comment.value?.post_id === COMMENT_GUESTBOOK_ID
-                  ? getBlogGuestbookUrl()
-                  : getBlogArticleUrl(
-                      commentArticle.value?.id!,
-                      commentArticle.value?.slug
-                    )
-              }
+              href={getBlogURLByPostID(props.comment.value?.post_id!)}
             >
               {props.comment.value?.post_id === COMMENT_GUESTBOOK_ID
                 ? '留言板'
