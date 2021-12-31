@@ -1,0 +1,10 @@
+{
+  "status": "success",
+  "message": "Get Disqus config succeed",
+  "result": {
+    "admin": "surmon",
+    "forum": "surmon",
+    "publicKey": "DISQUS.publicKey",
+    "authorizeURL": "authorizeURL"
+  }
+}

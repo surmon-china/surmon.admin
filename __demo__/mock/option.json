@@ -2,18 +2,17 @@
   "status": "success",
   "message": "获取设置成功",
   "result": {
-    "keywords": ["Surmon", "前端技术开发", "JavaScript"],
+    "keywords": ["Surmon", "JavaScript"],
     "ad_config": "",
     "_id": "589e01b75af07d59124234cd",
-    "title": "Surmon.me",
-    "sub_title": "来苏之望",
-    "description": "凡心所向，素履所往；生如逆旅，一苇以航",
+    "title": "Blog name",
+    "sub_title": "sub title",
+    "description": "site description",
     "site_url": "https://surmon.me",
-    "site_email": "surmon@foxmail.com",
+    "site_email": "i@example.com",
     "site_icp": "",
-    "ping_sites": ["http://ping.baidu.com/ping/RPC2"],
     "__v": 124,
-    "blacklist": {
+    "blocklist": {
       "ips": [
         "115.220.179.189",
         "113.88.157.115",
@@ -25,9 +24,9 @@
       ],
       "mails": [
         "test@gmail.cmo",
-        "ciscolai666@gmail.com",
-        "172632763254@qq.com",
-        "swwerwe@163.com",
+        "example@gmail.com",
+        "spam@qq.com",
+        "ham@163.com",
         "1@qq.com",
         "q@qq.com",
         "e@qq.com",
@@ -35,7 +34,7 @@
       ],
       "keywords": ["asd", "sss", "阿什顿发", "dsds", "asasas", "sdf", "test", "阿萨德"]
     },
-    "meta": { "likes": 590 },
+    "meta": { "likes": 600 },
     "update_at": "2019-01-23T17:44:13.425Z"
   }
 }
