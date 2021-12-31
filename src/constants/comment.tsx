@@ -29,10 +29,18 @@ export interface Comment {
   dislikes: number
   author: {
     name: string
-    email?: string
     site?: string
+    email?: string
+    email_hash: string | null
   }
-  ip_location?: any
+  ip_location?: Partial<{
+    country: string
+    country_code: string
+    region: string
+    region_code: string
+    city: string
+    zip: string
+  }>
   update_at?: string
   create_at?: string
   extends: Array<GeneralExtend>

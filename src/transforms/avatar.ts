@@ -3,13 +3,14 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import * as gravatar from 'gravatar'
 import { Comment } from '@/constants/comment'
-import { GRAVATAR_API } from '@/config'
+import { GRAVATAR_API, isDev } from '@/config'
 
-export const getGravatar = (email: string): string => {
-  const gravatar_url = gravatar.url(email, { protocol: 'https' })
-  return gravatar_url.replace('https://s.gravatar.com/avatar', GRAVATAR_API)
+export const getGravatar = (emailhash: string) => {
+  // https://en.gravatar.com/site/implement/images/
+  return isDev
+    ? `https://www.gravatar.com/avatar/${emailhash}`
+    : `${GRAVATAR_API}/${emailhash}`
 }
 
 export const getDisqusAvatar = (username: string) => {
@@ -18,8 +19,8 @@ export const getDisqusAvatar = (username: string) => {
 }
 
 export const autoCommentAvatar = (comment: Comment) => {
-  if (comment.author.email) {
-    return getGravatar(comment.author.email)
+  if (comment.author.email_hash) {
+    return getGravatar(comment.author.email_hash)
   }
 
   const disqusUsername = comment.extends?.find(

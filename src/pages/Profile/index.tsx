@@ -38,7 +38,7 @@ const TabsConfig = [
   },
   {
     key: TabKey.Auth,
-    name: '个人资料',
+    name: '站长资料',
     icon: <UserOutlined />,
     element: <AuthForm labelSpan={FORM_LABEL_SPAN} wrapperSpan={FORM_WRAPPER_SPAN} />,
   },

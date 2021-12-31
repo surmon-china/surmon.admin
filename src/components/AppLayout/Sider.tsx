@@ -6,9 +6,7 @@ import { GithubOutlined } from '@ant-design/icons'
 
 import { GITHUB_REPO_URL, GITHUB_REPO_NAME } from '@/config'
 import { getResourceUrl } from '@/transforms/url'
-import { getGravatar } from '@/transforms/avatar'
 import { RouteKey, routeMap, rc } from '@/routes'
-import { AvatarType } from '@/constants/auth'
 import { useAdminState } from '@/state/admin'
 
 import styles from './style.module.less'
@@ -38,11 +36,7 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
       <Spin spinning={admin.loading.value} size="small">
         <div className={styles.userInfo}>
           <img
-            src={
-              admin.data.avatar_type === AvatarType.Gravatar
-                ? getGravatar(admin.data.email)
-                : admin.data.avatar
-            }
+            src={admin.data.avatar}
             alt={admin.data.name}
             draggable={false}
             className={classnames(

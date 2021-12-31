@@ -11,8 +11,6 @@ import {
 
 import { RouteKey, rc } from '@/routes'
 import { removeToken } from '@/services/token'
-import { AvatarType } from '@/constants/auth'
-import { getGravatar } from '@/transforms/avatar'
 import { useAdminState } from '@/state/admin'
 
 import styles from './style.module.less'
@@ -87,11 +85,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
                 size="small"
                 icon={<UserOutlined />}
                 className={styles.avatar}
-                src={
-                  admin.data.avatar_type === AvatarType.Gravatar
-                    ? getGravatar(admin.data.email)
-                    : admin.data.avatar
-                }
+                src={admin.data.avatar}
               />
             </div>
           </Dropdown>

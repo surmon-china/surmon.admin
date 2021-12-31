@@ -102,7 +102,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   头像：
                   <Avatar
                     shape="square"
-                    size="small"
+                    size="default"
                     src={autoCommentAvatar(comment)}
                   />
                 </span>
@@ -145,13 +145,23 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
               <Space direction="vertical">
                 <span>
                   IP：
-                  <Typography.Text copyable={true}>{comment.ip || '-'}</Typography.Text>
+                  {!comment.ip ? (
+                    '-'
+                  ) : (
+                    <Typography.Text copyable={true}>{comment.ip}</Typography.Text>
+                  )}
                 </span>
                 <span>
                   位置：
-                  {comment.ip_location?.country || '-'}
-                  <span> - </span>
-                  {comment.ip_location?.city || '-'}
+                  {!comment.ip_location
+                    ? '-'
+                    : [
+                        comment.ip_location.country,
+                        comment.ip_location.region,
+                        comment.ip_location.city,
+                      ]
+                        .filter(Boolean)
+                        .join(' · ')}
                 </span>
                 <span>
                   终端：

@@ -7,8 +7,7 @@ import { CheckOutlined, MailOutlined } from '@ant-design/icons'
 
 import { RouteKey, rc } from '@/routes'
 import { ImageUploader } from '@/components/common/ImageUploader'
-import { Auth, AvatarType } from '@/constants/auth'
-import { getGravatar } from '@/transforms/avatar'
+import { Auth } from '@/constants/auth'
 import { scrollTo } from '@/services/scroller'
 import { removeToken } from '@/services/token'
 import { useAdminState } from '@/state/admin'
@@ -48,6 +47,7 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
 
   const handleSubmit = () => {
     form.validateFields().then((newAdminAuth) => {
+      Reflect.deleteProperty(newAdminAuth, 'rel_new_password')
       updateAdminAuth({
         ...adminAuth.data,
         ...newAdminAuth,
@@ -85,52 +85,13 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
         wrapperCol={{ span: props.wrapperSpan }}
       >
         <Form.Item
-          name="avatar_type"
-          label="个人头像"
+          name="avatar"
+          label="头像"
           required={true}
           wrapperCol={{ span: 6 }}
-          rules={[{ required: true }]}
+          rules={[{ required: true, message: '请上传图片' }]}
         >
-          <Select
-            options={[
-              {
-                label: 'Gravatar',
-                value: AvatarType.Gravatar,
-              },
-              {
-                label: '自定义',
-                value: AvatarType.URL,
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item noStyle={true} shouldUpdate={true}>
-          {(formValues) => {
-            const avatarType = formValues.getFieldValue('avatar_type')
-            if (avatarType === AvatarType.Gravatar) {
-              return (
-                <Form.Item label="Gravatar" wrapperCol={{ span: 6 }}>
-                  <Avatar
-                    shape="square"
-                    style={{ width: '100%' }}
-                    src={getGravatar(formValues.getFieldValue('email'))}
-                  />
-                </Form.Item>
-              )
-            }
-
-            return (
-              <Form.Item
-                name="avatar"
-                label="头像地址"
-                required={true}
-                wrapperCol={{ span: 6 }}
-                rules={[{ required: true, message: '请上传图片' }]}
-              >
-                <ImageUploader disabledMarkdown={true} />
-              </Form.Item>
-            )
-          }}
+          <ImageUploader disabledMarkdown={true} />
         </Form.Item>
         <Form.Item
           name="name"
@@ -142,28 +103,11 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
         </Form.Item>
         <Form.Item
           name="slogan"
-          label="个人签名"
+          label="签名"
           required={true}
           rules={[{ required: true, message: '请输入签名' }]}
         >
-          <Input placeholder="个人签名" />
-        </Form.Item>
-        <Form.Item
-          name="email"
-          label="个人邮箱"
-          required={true}
-          rules={[
-            {
-              message: '请输入',
-              required: true,
-            },
-            {
-              message: '请输入正确的邮箱地址',
-              type: 'email',
-            },
-          ]}
-        >
-          <Input suffix={<MailOutlined />} placeholder="example@xxx.me" />
+          <Input placeholder="签名" />
         </Form.Item>
         <Divider />
         <Form.Item
@@ -171,7 +115,7 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
           label="旧密码"
           rules={[
             {
-              message: '确认新旧密码一致且有效',
+              message: '确保新旧密码不一致，且有效',
               validator: validatePassword,
             },
           ]}
@@ -183,7 +127,7 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
           label="新密码"
           rules={[
             {
-              message: '确认新旧密码一致且有效',
+              message: '确保新旧密码不一致，且有效',
               validator: validatePassword,
             },
           ]}
@@ -195,7 +139,7 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
           label="确认新密码"
           rules={[
             {
-              message: '确认新旧密码一致且有效',
+              message: '确保新旧密码不一致，且有效',
               validator: validatePassword,
             },
           ]}

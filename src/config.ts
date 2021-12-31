@@ -24,6 +24,7 @@ export const APP_COLOR_PRIMARY = '#177ddc'
 
 export const VITE_ENV = import.meta.env
 export const ENV = import.meta.env.MODE
+export const isDev = ENV === 'development'
 export const BASE_PATH = import.meta.env.BASE_URL as string
 export const API_URL = import.meta.env.VITE_API_URL as string
 export const ENABLED_AD = Boolean(import.meta.env.VITE_ENABLE_AD)

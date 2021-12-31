@@ -164,9 +164,13 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             />
           </Form.Item>
           <Form.Item label="IP / 地址">
-            <Typography.Text copyable={true}>
-              {props.comment.value?.ip || '-'}
-            </Typography.Text>
+            {props.comment.value?.ip ? (
+              <Typography.Text copyable={true}>
+                {props.comment.value.ip}
+              </Typography.Text>
+            ) : (
+              '-'
+            )}
             <Divider type="vertical" />
             {props.comment.value?.ip_location?.country || '-'}
             <span> - </span>

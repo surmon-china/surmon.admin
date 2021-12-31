@@ -10,7 +10,7 @@ export interface Option {
   description: string
   keywords: Array<string>
   site_url: string
-  site_email?: string
+  site_email: string
   blocklist: {
     ips: Array<string>
     mails: Array<string>
