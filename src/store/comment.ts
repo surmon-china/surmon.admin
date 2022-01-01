@@ -74,3 +74,9 @@ export function deleteComments(commentIds: Array<string>, postIds: Array<number>
     .delete(COMMENT_API_PATH, { data: { comment_ids: commentIds, post_ids: postIds } })
     .then((response) => response.result)
 }
+
+export function reviseCommentIPLocation(commentID: string) {
+  return nodepress
+    .put(`${COMMENT_API_PATH}/${commentID}/ip_location`)
+    .then((response) => response.result)
+}

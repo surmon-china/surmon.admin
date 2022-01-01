@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.3.2 (2022-01-01)
+
+- Add Comment `reviseCommentIPLocation`
+
 ### v1.3.0 (2021-12-26)
 
 - Add `slug` field for Article

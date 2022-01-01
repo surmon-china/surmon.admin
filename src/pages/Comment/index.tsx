@@ -19,12 +19,13 @@ import {
   useComputed,
 } from 'veact'
 import { useLoading } from 'veact-use'
-import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd'
+import { Button, Card, Input, Select, Divider, Modal, Space, message } from 'antd'
 import {
   DeleteOutlined,
   StopOutlined,
   RocketOutlined,
   EditOutlined,
+  GlobalOutlined,
   CheckOutlined,
   ReloadOutlined,
 } from '@ant-design/icons'
@@ -35,6 +36,7 @@ import {
   GetCommentsParams,
   deleteComments,
   putComment,
+  reviseCommentIPLocation,
   updateCommentsState,
 } from '@/store/comment'
 import {
@@ -190,6 +192,57 @@ export const CommentPage: React.FC = () => {
       })
   }
 
+  const ipLocationTask = useShallowReactive({
+    done: [] as string[],
+    fail: [] as string[],
+    todo: [] as string[],
+    running: false,
+  })
+
+  const doIPLocationTask = () => {
+    const doRevise = async (commentID: string) => {
+      try {
+        await reviseCommentIPLocation(commentID)
+        ipLocationTask.done.push(commentID)
+      } catch (error) {
+        ipLocationTask.fail.push(commentID)
+      } finally {
+        ipLocationTask.todo = ipLocationTask.todo
+          .slice()
+          .filter((id) => id !== commentID)
+      }
+    }
+
+    if (ipLocationTask.todo.length) {
+      ipLocationTask.running = true
+      doRevise(ipLocationTask.todo[0]).then(() => {
+        // 延时 3 秒
+        window.setTimeout(() => doIPLocationTask(), 3000)
+      })
+    } else {
+      ipLocationTask.running = false
+      const messages = [
+        '任务结束',
+        `done: ${ipLocationTask.done.length}`,
+        `fail: ${ipLocationTask.fail.length}`,
+      ]
+      message.info(messages.join('，'))
+    }
+  }
+
+  const handleReviseComemntsIPLocation = () => {
+    const todoCommentIDs = comment.data
+      .filter((c) => Boolean(c.ip) && !c.ip_location?.region_code)
+      .map((c) => c._id!)
+    if (todoCommentIDs.length) {
+      ipLocationTask.todo.push(...todoCommentIDs)
+      doIPLocationTask()
+      message.info(`开始任务，共 ${todoCommentIDs.length} 条数据`)
+    } else {
+      message.info('没有需要修正的数据')
+    }
+  }
+
   useWatch(filterParams, () => fetchData())
 
   onMounted(() => {
@@ -202,15 +255,45 @@ export const CommentPage: React.FC = () => {
       bordered={false}
       className={styles.comment}
       extra={
-        <Button
-          type="primary"
-          size="small"
-          target="_blank"
-          icon={<RocketOutlined />}
-          href={getBlogGuestbookUrl()}
-        >
-          去留言板
-        </Button>
+        <Space>
+          <Button.Group>
+            {ipLocationTask.running && (
+              <Button
+                size="small"
+                onClick={() => {
+                  Modal.info({
+                    title: '任务详情',
+                    content: JSON.stringify(ipLocationTask, null, 2),
+                  })
+                }}
+              >
+                TODO: {ipLocationTask.todo.length}
+                <Divider type="vertical" />
+                DONE: {ipLocationTask.done.length}
+                <Divider type="vertical" />
+                FAIL: {ipLocationTask.fail.length}
+              </Button>
+            )}
+            <Button
+              size="small"
+              icon={<GlobalOutlined />}
+              disabled={ipLocationTask.running}
+              loading={ipLocationTask.running}
+              onClick={() => handleReviseComemntsIPLocation()}
+            >
+              修正本页数据 IP location
+            </Button>
+          </Button.Group>
+          <Button
+            type="primary"
+            size="small"
+            target="_blank"
+            icon={<RocketOutlined />}
+            href={getBlogGuestbookUrl()}
+          >
+            去留言板
+          </Button>
+        </Space>
       }
     >
       <Space align="center" className={styles.toolbar}>
