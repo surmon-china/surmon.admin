@@ -172,9 +172,17 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
               '-'
             )}
             <Divider type="vertical" />
-            {props.comment.value?.ip_location?.country || '-'}
-            <span> - </span>
-            {props.comment.value?.ip_location?.city || '-'}
+            {!props.comment.value?.ip_location ? (
+              '-'
+            ) : (
+              <span>
+                {props.comment.value.ip_location.country || '-'}
+                <span> · </span>
+                {props.comment.value.ip_location.region || '-'}
+                <span> · </span>
+                {props.comment.value.ip_location.city || '-'}
+              </span>
+            )}
           </Form.Item>
           <Form.Item label="终端">
             {parseBrowser(props.comment.value?.agent!)}

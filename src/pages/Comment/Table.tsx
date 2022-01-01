@@ -156,8 +156,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   {!comment.ip_location
                     ? '-'
                     : [
-                        comment.ip_location.country,
-                        comment.ip_location.region,
+                        comment.ip_location.country_code || comment.ip_location.country,
                         comment.ip_location.city,
                       ]
                         .filter(Boolean)
