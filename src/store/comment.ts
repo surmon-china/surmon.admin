@@ -4,9 +4,9 @@
  */
 
 import { arrayToTree } from 'performant-array-to-tree'
-import { SortType } from '@/constants/sort'
+import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/request'
 import { Comment, CommentState } from '@/constants/comment'
-import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request'
+import { SortType } from '@/constants/sort'
 import nodepress from '@/services/nodepress'
 
 export const COMMENT_API_PATH = '/comment'
@@ -15,7 +15,7 @@ export interface CommentTree extends Comment {
 }
 
 /** 获取评论参数 */
-export interface GetCommentsParams extends GeneralGetPageParams {
+export interface GetCommentsParams extends GeneralPaginateQueryParams {
   keyword?: string
   post_id?: number
   state?: CommentState

@@ -12,10 +12,8 @@ export const getResourceUrl = (uri: string) => {
 }
 
 export const BLOG_ARTICLE_URL_PREFIX = `${BLOG_URL}/article/`
-export const getBlogArticleUrl = (articleID: number, articleSlug?: string | null) => {
+export const getBlogArticleUrl = (articleID: number) => {
   return `${BLOG_ARTICLE_URL_PREFIX}${articleID}`
-  // disabled slug
-  // return `${BLOG_ARTICLE_URL_PREFIX}${articleSlug || articleID}`
 }
 
 export const getBlogTagUrl = (tagSlug: string) => {

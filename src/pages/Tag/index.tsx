@@ -240,7 +240,7 @@ export const TagPage: React.FC = () => {
               title: '文章',
               width: 80,
               align: 'right',
-              dataIndex: 'count',
+              dataIndex: 'articles_count',
             },
             {
               title: '操作',

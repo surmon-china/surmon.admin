@@ -29,7 +29,7 @@ const articleOriginMap = new Map(
     },
     {
       id: ArticleOrigin.Hybrid,
-      name: '混合',
+      name: '衍生',
       icon: <PullRequestOutlined />,
       color: 'orange',
     },

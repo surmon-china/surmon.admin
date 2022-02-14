@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRef, onMounted } from 'veact'
-import { Form, Input, Button, Select, Spin } from 'antd'
+import { Form, Input, Button, Select, Spin, Card, Space, Statistic } from 'antd'
 import {
   MailOutlined,
   LinkOutlined,
@@ -73,8 +73,19 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
         labelCol={{ span: props.labelSpan }}
         wrapperCol={{ span: props.wrapperSpan }}
       >
-        <Form.Item label={<HeartOutlined />}>
-          {data.value?.meta?.likes || '-'} 次
+        <Form.Item label=" ">
+          <Card size="small">
+            <Statistic
+              value={data.value?.meta.likes}
+              suffix="次"
+              title={
+                <Space size="small">
+                  站点累计被喜欢
+                  <HeartOutlined />
+                </Space>
+              }
+            />
+          </Card>
         </Form.Item>
         <Form.Item name="title" label="站点标题" required={true}>
           <Input placeholder="站点标题" />

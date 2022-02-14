@@ -10,7 +10,7 @@ import {
   StopOutlined,
 } from '@ant-design/icons'
 import { Pagination } from '@/constants/request'
-import { Comment, CommentState, cs, COMMENT_GUESTBOOK_ID } from '@/constants/comment'
+import { Comment, CommentState, cs } from '@/constants/comment'
 import { parseBrowser, parseOS } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
 import { autoCommentAvatar } from '@/transforms/avatar'

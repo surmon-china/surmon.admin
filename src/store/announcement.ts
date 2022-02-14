@@ -6,12 +6,12 @@
 import nodepress from '@/services/nodepress'
 import { Announcement } from '@/constants/announcement'
 import { PublishState } from '@/constants/publish'
-import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request'
+import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/request'
 
 export const ANNOUNCEMENT_API_PATH = '/announcement'
 
 /** 获取公告参数 */
-export interface GetAnnouncementsParams extends GeneralGetPageParams {
+export interface GetAnnouncementsParams extends GeneralPaginateQueryParams {
   /** 搜索关键词 */
   keyword?: string
   /** 发布状态 */
@@ -20,9 +20,7 @@ export interface GetAnnouncementsParams extends GeneralGetPageParams {
 /** 获取公告列表 */
 export function getAnnouncements(params: GetAnnouncementsParams = {}) {
   return nodepress
-    .get<ResponsePaginationData<Announcement>>(ANNOUNCEMENT_API_PATH, {
-      params,
-    })
+    .get<ResponsePaginationData<Announcement>>(ANNOUNCEMENT_API_PATH, { params })
     .then((response) => response.result)
 }
 

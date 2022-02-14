@@ -3,7 +3,6 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import _ from 'lodash'
 import classnames from 'classnames'
 import React from 'react'
 import { useShallowReactive, onMounted, useRef, useWatch } from 'veact'
@@ -38,18 +37,6 @@ import { scrollTo } from '@/services/scroller'
 import { stringToYMD } from '@/transforms/date'
 
 import styles from './style.module.less'
-
-const StateIcon = (props: { state: boolean }) => {
-  return props.state ? (
-    <Typography.Text type="success">
-      <CheckCircleOutlined />
-    </Typography.Text>
-  ) : (
-    <Typography.Text type="danger">
-      <CloseCircleOutlined />
-    </Typography.Text>
-  )
-}
 
 // https://disqus.com/api/docs/posts/list/
 const SELECT_ALL_VALUE = 'ALL'

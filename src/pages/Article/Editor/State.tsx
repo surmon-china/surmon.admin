@@ -1,9 +1,9 @@
 import React from 'react'
-import { Button, Form, Select, Input, Divider, Space, Radio, FormInstance } from 'antd'
+import { Button, Form, Select, Divider, Space, Radio, FormInstance } from 'antd'
 import { CheckOutlined, StopOutlined, CheckCircleOutlined } from '@ant-design/icons'
 import { publishStates } from '@/constants/publish'
 import { articleOrigins } from '@/constants/article/origin'
-import { articlePublics, ArticlePublic } from '@/constants/article/public'
+import { articlePublics } from '@/constants/article/public'
 import { StateFormModel } from '.'
 
 const requiredRule = {
@@ -72,16 +72,6 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
             }
           })}
         />
-      </Form.Item>
-      <Form.Item noStyle={true} shouldUpdate={true}>
-        {(values: FormInstance<StateFormModel>) => (
-          <Form.Item name="password" label="文章密码">
-            <Input.Password
-              placeholder="输入文章密码"
-              disabled={values.getFieldValue('public') !== ArticlePublic.Password}
-            />
-          </Form.Item>
-        )}
       </Form.Item>
       <Form.Item
         required={true}

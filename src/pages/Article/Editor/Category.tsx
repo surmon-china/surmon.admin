@@ -52,7 +52,10 @@ const CategorySelect: React.FC<CategorySelectProps> = (props) => {
               const ids = Array.isArray(data) ? data : data.checked
               props.onChange?.(ids as string[])
             }}
-            treeData={getAntdTreeByTree(categories.value)}
+            treeData={getAntdTreeByTree({
+              tree: categories.value,
+              valuer: (c) => c._id,
+            })}
             titleRender={(nodeData) => {
               const category: CategoryTree = (nodeData as any).data
               return (

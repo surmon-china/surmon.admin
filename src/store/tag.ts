@@ -5,12 +5,12 @@
 
 import nodepress from '@/services/nodepress'
 import { Tag } from '@/constants/tag'
-import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request'
+import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/request'
 
 export const TAG_API_PATH = '/tag'
 
 /** 获取标签参数 */
-export interface GetTagParams extends GeneralGetPageParams {
+export interface GetTagParams extends GeneralPaginateQueryParams {
   /** 搜索关键词 */
   keyword?: string
 }
@@ -18,9 +18,7 @@ export interface GetTagParams extends GeneralGetPageParams {
 /** 获取标签列表 */
 export function getTags(params: GetTagParams = {}) {
   return nodepress
-    .get<ResponsePaginationData<Tag>>(TAG_API_PATH, {
-      params,
-    })
+    .get<ResponsePaginationData<Tag>>(TAG_API_PATH, { params })
     .then((response) => response.result)
 }
 

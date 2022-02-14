@@ -45,9 +45,7 @@ export interface TokenResult {
 /** 登录 */
 export function authLogin(password: string) {
   return nodepress
-    .post<TokenResult>(AUTH_API_PATH.LOGIN, {
-      password: Base64.encode(password),
-    })
+    .post<TokenResult>(AUTH_API_PATH.LOGIN, { password: Base64.encode(password) })
     .then((response) => response.result)
 }
 

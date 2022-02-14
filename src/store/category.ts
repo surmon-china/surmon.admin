@@ -8,7 +8,7 @@ import { TreeDataNode } from 'antd'
 
 import nodepress from '@/services/nodepress'
 import { Category } from '@/constants/category'
-import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request'
+import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/request'
 
 export const CATEGORY_API_PATH = '/category'
 
@@ -17,11 +17,9 @@ export interface CategoryTree extends Category {
 }
 
 /** 获取分类列表 */
-export function getCategories(params: GeneralGetPageParams = {}) {
+export function getCategories(params: GeneralPaginateQueryParams = {}) {
   return nodepress
-    .get<ResponsePaginationData<Category>>(CATEGORY_API_PATH, {
-      params,
-    })
+    .get<ResponsePaginationData<Category>>(CATEGORY_API_PATH, { params })
     .then((response) => ({
       ...response.result,
       tree: arrayToTree(response.result.data, {
@@ -34,17 +32,22 @@ export function getCategories(params: GeneralGetPageParams = {}) {
 }
 
 /** 获取符合 Antd 的分类树 */
-export function getAntdTreeByTree(
-  tree: Array<CategoryTree>,
-  currentCategoryId?: string
-) {
+export function getAntdTreeByTree({
+  tree,
+  valuer,
+  disabledWhen,
+}: {
+  tree: Array<CategoryTree>
+  valuer(category: Category): any
+  disabledWhen?(category: Category): boolean
+}) {
   const toAntdTree = (_tree: Array<CategoryTree>): TreeDataNode[] => {
     return _tree.map((category) => ({
       data: category,
       title: category.name,
-      key: category._id!,
-      value: category._id!,
-      disabled: Boolean(currentCategoryId && currentCategoryId === category._id),
+      key: valuer(category),
+      value: valuer(category),
+      disabled: disabledWhen?.(category) ?? false,
       children: toAntdTree(category.children || []),
     }))
   }

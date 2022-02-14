@@ -27,8 +27,7 @@ export interface Article {
   origin: ArticleOrigin
   public: ArticlePublic
   state: PublishState
-  disabled_comment?: boolean
-  password?: string
+  disabled_comment: boolean
   meta?: {
     likes: number
     views: number

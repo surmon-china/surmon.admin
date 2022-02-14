@@ -14,7 +14,7 @@ import {
   PlusOutlined,
   ReloadOutlined,
 } from '@ant-design/icons'
-import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request'
+import { ResponsePaginationData } from '@/constants/request'
 import { Category as CategoryType } from '@/constants/category'
 import { getBlogCategoryUrl } from '@/transforms/url'
 import {
@@ -35,11 +35,7 @@ export const CategoryPage: React.FC = () => {
   const loaded = useRef(false)
   const categories = useShallowReactive<
     ResponsePaginationData<CategoryType> & { tree: Array<CategoryTree> }
-  >({
-    tree: [],
-    data: [],
-    pagination: undefined,
-  })
+  >({ tree: [], data: [], pagination: void 0 })
 
   // 弹窗
   const activeEditDataId = useRef<string | null>(null)
@@ -48,6 +44,7 @@ export const CategoryPage: React.FC = () => {
     const id = activeEditDataId.value
     return id !== null ? categories.data.find((c) => c._id === id)! : null
   })
+
   const closeModal = () => {
     isVisibleModal.value = false
   }
@@ -61,18 +58,11 @@ export const CategoryPage: React.FC = () => {
     isVisibleModal.value = true
   }
 
-  const fetchData = (params?: GeneralGetPageParams) => {
-    return loading.promise(getCategories(params)).then((result) => {
+  const fetchData = () => {
+    return loading.promise(getCategories({ per_page: 50 })).then((result) => {
       categories.data = result.data
       categories.tree = result.tree
       categories.pagination = result.pagination
-    })
-  }
-
-  const refreshData = () => {
-    fetchData({
-      page: categories.pagination?.current_page,
-      per_page: categories.pagination?.per_page,
     })
   }
 
@@ -83,7 +73,7 @@ export const CategoryPage: React.FC = () => {
       centered: true,
       onOk: () => {
         return deleteCategory(category._id!).then(() => {
-          refreshData()
+          fetchData()
         })
       },
     })
@@ -100,12 +90,12 @@ export const CategoryPage: React.FC = () => {
         )
         .then(() => {
           closeModal()
-          refreshData()
+          fetchData()
         })
     } else {
       submitting.promise(createCategory(category)).then(() => {
         closeModal()
-        refreshData()
+        fetchData()
       })
     }
   }
@@ -140,7 +130,7 @@ export const CategoryPage: React.FC = () => {
           <Button
             icon={<ReloadOutlined />}
             loading={loading.state.value}
-            onClick={() => refreshData()}
+            onClick={() => fetchData()}
           >
             刷新
           </Button>
@@ -158,7 +148,10 @@ export const CategoryPage: React.FC = () => {
             showLine={true}
             showIcon={false}
             selectable={false}
-            treeData={getAntdTreeByTree(categories.tree)}
+            treeData={getAntdTreeByTree({
+              tree: categories.tree,
+              valuer: (c) => c._id,
+            })}
             titleRender={(nodeData) => {
               const category: CategoryTree = (nodeData as any).data
               return (
@@ -172,7 +165,7 @@ export const CategoryPage: React.FC = () => {
                       </Typography.Text>
                       <Divider type="vertical" />
                       <Typography.Text type="secondary">
-                        {category.count} 篇
+                        {category.articles_count} 篇
                       </Typography.Text>
                     </Space>
                     <div>
@@ -220,7 +213,19 @@ export const CategoryPage: React.FC = () => {
       <EditModal
         title={activeEditData.value ? '编辑分类' : '新分类'}
         loading={submitting.state.value}
-        tree={getAntdTreeByTree(categories.tree, activeEditData.value?._id)}
+        tree={getAntdTreeByTree({
+          tree: categories.tree,
+          valuer: (c) => c._id,
+          disabledWhen: (c) => {
+            if (c._id === activeEditData.value?._id) {
+              return true
+            }
+            if (c.pid === activeEditData.value?._id) {
+              return true
+            }
+            return false
+          },
+        })}
         categories={categories.data}
         visible={isVisibleModal}
         category={activeEditData}

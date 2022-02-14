@@ -26,7 +26,7 @@ export type BaseFormModel = Partial<
 export type CategoryFormModel = Pick<Article, 'category'>
 export type ThumbFormModel = Pick<Article, 'thumb'>
 export type ExtendFormModel = Pick<Article, 'extends'>
-export type StateFormModel = Pick<Article, 'state' | 'origin' | 'public' | 'password'>
+export type StateFormModel = Pick<Article, 'state' | 'origin' | 'public'>
 
 const DEFAULT_ARTICLE: Article = Object.freeze({
   slug: null,
@@ -39,7 +39,6 @@ const DEFAULT_ARTICLE: Article = Object.freeze({
   state: PublishState.Published,
   public: ArticlePublic.Public,
   disabled_comment: false,
-  password: '',
   tag: [],
   category: [],
   extends: [],

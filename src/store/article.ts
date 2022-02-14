@@ -9,26 +9,24 @@ import { SortType } from '@/constants/sort'
 import { ArticleId, Article } from '@/constants/article'
 import { ArticleOrigin } from '@/constants/article/origin'
 import { ArticlePublic } from '@/constants/article/public'
-import { ResponsePaginationData, GeneralGetPageParams } from '@/constants/request'
+import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/request'
 
 export const ARTICLE_API_PATH = '/article'
 
 /** 获取文章参数 */
-export interface GetArticleParams extends GeneralGetPageParams {
-  keyword?: string
-  tag?: string
-  category?: string
+export interface GetArticleParams extends GeneralPaginateQueryParams {
   sort?: SortType
   state?: PublishState
   public?: ArticlePublic
   origin?: ArticleOrigin
+  keyword?: string
+  tag_slug?: string
+  category_slug?: string
 }
 /** 获取文章列表 */
 export function getArticles(params: GetArticleParams = {}) {
   return nodepress
-    .get<ResponsePaginationData<Article>>(ARTICLE_API_PATH, {
-      params,
-    })
+    .get<ResponsePaginationData<Article>>(ARTICLE_API_PATH, { params })
     .then((response) => response.result)
 }
 

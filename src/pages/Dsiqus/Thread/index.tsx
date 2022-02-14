@@ -3,7 +3,6 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import _ from 'lodash'
 import classnames from 'classnames'
 import React from 'react'
 import { useShallowReactive, onMounted, useRef, useWatch } from 'veact'

@@ -44,8 +44,8 @@ import styles from './style.module.less'
 const SELECT_ALL_VALUE = 'ALL'
 const DEFAULT_FILTER_PARAMS = Object.freeze({
   sort: SortType.Desc,
-  tag: SELECT_ALL_VALUE,
-  category: SELECT_ALL_VALUE,
+  tag_slug: SELECT_ALL_VALUE,
+  category_slug: SELECT_ALL_VALUE,
   public: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | ArticlePublic,
   origin: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | ArticleOrigin,
   state: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | PublishState,
@@ -253,28 +253,28 @@ export const ArticleList: React.FC = () => {
               })}
             />
             <Select
-              className={styles.select}
+              className={styles.tagSelect}
               loading={loadingTag.state.value}
-              value={filterParams.tag}
-              onChange={(tag) => {
-                filterParams.tag = tag
+              value={filterParams.tag_slug}
+              onChange={(slug) => {
+                filterParams.tag_slug = slug
               }}
               options={[
                 { label: '全部标签', value: SELECT_ALL_VALUE },
                 ...tags.value.map((tag) => ({
-                  value: tag._id!,
-                  label: tag.name,
+                  value: tag.slug,
+                  label: `${tag.name} (${tag.articles_count})`,
                 })),
               ]}
             />
             <TreeSelect
               placeholder="选择父分类"
               treeDefaultExpandAll={true}
-              className={styles.categoriesTree}
+              className={styles.categoriesSelect}
               loading={loadingCategory.state.value}
-              value={filterParams.category}
-              onChange={(category) => {
-                filterParams.category = category
+              value={filterParams.category_slug}
+              onChange={(slug) => {
+                filterParams.category_slug = slug
               }}
               treeData={[
                 {
@@ -282,7 +282,10 @@ export const ArticleList: React.FC = () => {
                   key: SELECT_ALL_VALUE,
                   value: SELECT_ALL_VALUE,
                 },
-                ...getAntdTreeByTree(categoriesTree.value),
+                ...getAntdTreeByTree({
+                  tree: categoriesTree.value,
+                  valuer: (c) => c.slug,
+                }),
               ]}
             />
           </Space>
