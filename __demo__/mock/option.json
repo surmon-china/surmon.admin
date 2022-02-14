@@ -2,16 +2,15 @@
   "status": "success",
   "message": "获取设置成功",
   "result": {
-    "keywords": ["Surmon", "JavaScript"],
+    "keywords": ["Veact", "JavaScript"],
     "ad_config": "",
     "_id": "589e01b75af07d59124234cd",
     "title": "Blog name",
     "sub_title": "sub title",
     "description": "site description",
     "site_url": "https://surmon.me",
-    "site_email": "i@example.com",
+    "site_email": "admin@example.com",
     "site_icp": "",
-    "__v": 124,
     "blocklist": {
       "ips": [
         "115.220.179.189",

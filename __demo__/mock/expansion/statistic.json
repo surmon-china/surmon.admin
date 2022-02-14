@@ -1,5 +1,12 @@
 {
   "status": "success",
-  "message": "获取统计概览成功",
-  "result": { "tags": 28, "views": 1680, "articles": 150, "comments": 1869 }
+  "message": "Get statistic succeed",
+  "result": {
+    "tags": 29,
+    "articles": 161,
+    "comments": 2060,
+    "totalViews": 574127,
+    "totalLikes": 4896,
+    "todayViews": 17
+  }
 }
