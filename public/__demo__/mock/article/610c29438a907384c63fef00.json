@@ -2,7 +2,6 @@
   "status": "success",
   "message": "获取文章详情成功",
   "result": {
-    "password": "",
     "keywords": ["每日一记", "上海天气"],
     "state": 0,
     "public": 1,
