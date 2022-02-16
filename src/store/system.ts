@@ -25,6 +25,18 @@ export function getStatistics() {
     .then((response) => response.result)
 }
 
+export interface ArticleCalendarItem {
+  day: string
+  count: number
+}
+/** 获取文章创作日历信息 */
+export function getArticleCalendar() {
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  return nodepress
+    .get<Array<ArticleCalendarItem>>('/article/calendar', { params: { timezone } })
+    .then((response) => response.result)
+}
+
 /** 获取 GA Token */
 export function getGAToken(): Promise<string> {
   return nodepress

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.3.5 (2022-02-16)
+
+- Add articles calendar in Dashboard
+
 ### v1.3.2 (2022-01-01)
 
 - Add Comment `reviseCommentIPLocation`
