@@ -67,6 +67,9 @@ window.__axiosAdapter = (config) => {
     '/article': {
       get: () => ensureJSON('article/list'),
     },
+    '/article/calendar': {
+      get: () => ensureJSON('article/calendar'),
+    },
     '/article/612c81321a53290533a7b782': {
       get: () => ensureJSON('article/612c81321a53290533a7b782'),
     },
