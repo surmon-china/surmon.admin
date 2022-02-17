@@ -26,7 +26,7 @@ export function getStatistics() {
 }
 
 export interface ArticleCalendarItem {
-  day: string
+  date: string
   count: number
 }
 /** 获取文章创作日历信息 */

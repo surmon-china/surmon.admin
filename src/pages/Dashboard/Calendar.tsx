@@ -51,7 +51,7 @@ export const Calendar: React.FC = () => {
   }, [])
 
   const months = useComputed(() => {
-    const firstArticelDate = articleCalendar.value[0]?.day
+    const firstArticelDate = articleCalendar.value[0]?.date
     if (!firstArticelDate) {
       return []
     }
@@ -88,13 +88,13 @@ export const Calendar: React.FC = () => {
     calendarElement.current?.removeEventListener('wheel', handleCalendarScroll as any)
   })
 
-  const renderDay = (day: string) => {
-    const count = articleCalendar.value.find((ac) => ac.day === day)?.count || 0
+  const renderDay = (date: string) => {
+    const count = articleCalendar.value.find((ac) => ac.date === date)?.count || 0
     const title = !count ? (
-      day
+      date
     ) : (
       <span>
-        {day}
+        {date}
         <Divider type="vertical" />
         <strong>{count}</strong>
       </span>
