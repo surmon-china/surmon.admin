@@ -4,6 +4,7 @@ import { CheckOutlined, StopOutlined, CheckCircleOutlined } from '@ant-design/ic
 import { publishStates } from '@/constants/publish'
 import { articleOrigins } from '@/constants/article/origin'
 import { articlePublics } from '@/constants/article/public'
+import { articleLanguages } from '@/constants/article/language'
 import { StateFormModel } from '.'
 
 const requiredRule = {
@@ -61,6 +62,22 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
         <Select
           placeholder="文章公开类型"
           options={articlePublics.map((state) => {
+            return {
+              value: state.id,
+              label: (
+                <Space>
+                  {state.icon}
+                  {state.name}
+                </Space>
+              ),
+            }
+          })}
+        />
+      </Form.Item>
+      <Form.Item required={true} name="lang" label="内容语言" rules={[requiredRule]}>
+        <Select
+          placeholder="文章语言"
+          options={articleLanguages.map((state) => {
             return {
               value: state.id,
               label: (

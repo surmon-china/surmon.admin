@@ -15,6 +15,7 @@ import {
   useReactive,
   useWatch,
 } from 'veact'
+import { useLoading } from 'veact-use'
 import { Button, Card, Input, Select, Divider, Modal, Space, TreeSelect } from 'antd'
 import {
   EditOutlined,
@@ -32,7 +33,7 @@ import { Tag } from '@/constants/tag'
 import { ArticleId, Article } from '@/constants/article'
 import { ArticleOrigin, articleOrigins } from '@/constants/article/origin'
 import { ArticlePublic, articlePublics } from '@/constants/article/public'
-import { useLoading } from 'veact-use'
+import { ArticleLanguage, articleLanguages } from '@/constants/article/language'
 import { scrollTo } from '@/services/scroller'
 import { getTags } from '@/store/tag'
 import { getArticles, GetArticleParams, patchArticlesState } from '@/store/article'
@@ -46,6 +47,7 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
   sort: SortType.Desc,
   tag_slug: SELECT_ALL_VALUE,
   category_slug: SELECT_ALL_VALUE,
+  lang: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | ArticleLanguage,
   public: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | ArticlePublic,
   origin: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | ArticleOrigin,
   state: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | PublishState,
@@ -221,6 +223,28 @@ export const ArticleList: React.FC = () => {
               options={[
                 { label: '全部来源', value: SELECT_ALL_VALUE },
                 ...articleOrigins.map((state) => {
+                  return {
+                    value: state.id,
+                    label: (
+                      <Space>
+                        {state.icon}
+                        {state.name}
+                      </Space>
+                    ),
+                  }
+                }),
+              ]}
+            />
+            <Select
+              className={styles.select}
+              loading={loading.state.value}
+              value={filterParams.lang}
+              onChange={(state) => {
+                filterParams.lang = state
+              }}
+              options={[
+                { label: '全部语言', value: SELECT_ALL_VALUE },
+                ...articleLanguages.map((state) => {
                   return {
                     value: state.id,
                     label: (

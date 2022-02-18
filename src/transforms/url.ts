@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { COMMENT_GUESTBOOK_ID } from '@/constants/comment'
+import { COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
 import { BLOG_URL, BASE_PATH, STATIC_URL } from '@/config'
 
 export const getResourceUrl = (uri: string) => {
@@ -33,7 +33,7 @@ export const getStaticFileUrl = (filePath: string) => {
 }
 
 export const getBlogURLByPostID = (postID: number) => {
-  return postID === COMMENT_GUESTBOOK_ID
+  return postID === COMMENT_GUESTBOOK_POST_ID
     ? getBlogGuestbookUrl()
     : getBlogArticleUrl(postID)
 }

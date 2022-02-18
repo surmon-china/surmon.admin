@@ -13,6 +13,7 @@ import { Article } from '@/constants/article'
 import { PublishState } from '@/constants/publish'
 import { ArticleOrigin } from '@/constants/article/origin'
 import { ArticlePublic } from '@/constants/article/public'
+import { ArticleLanguage } from '@/constants/article/language'
 import { scrollTo } from '@/services/scroller'
 import { MainForm } from './Main'
 import { CategoryForm } from './Category'
@@ -38,6 +39,7 @@ const DEFAULT_ARTICLE: Article = Object.freeze({
   origin: ArticleOrigin.Original,
   state: PublishState.Published,
   public: ArticlePublic.Public,
+  lang: ArticleLanguage.Chinese,
   disabled_comment: false,
   tag: [],
   category: [],

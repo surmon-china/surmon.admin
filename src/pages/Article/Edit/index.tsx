@@ -170,7 +170,7 @@ export const ArticleEdit: React.FC = () => {
                 size="small"
                 icon={<RocketOutlined />}
                 target="_blank"
-                href={getBlogArticleUrl(article.value?.id!, article.value?.slug)}
+                href={getBlogArticleUrl(article.value?.id!)}
               />
             </Button.Group>
           </Space>

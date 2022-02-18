@@ -43,7 +43,7 @@ import {
   Comment as CommentType,
   CommentState,
   commentStates,
-  COMMENT_GUESTBOOK_ID,
+  COMMENT_GUESTBOOK_POST_ID,
   cs,
 } from '@/constants/comment'
 import { ResponsePaginationData } from '@/constants/request'
@@ -311,7 +311,7 @@ export const CommentPage: React.FC = () => {
                 label: '全部评论',
               },
               {
-                value: COMMENT_GUESTBOOK_ID,
+                value: COMMENT_GUESTBOOK_POST_ID,
                 label: '留言评论',
               },
             ]}

@@ -27,7 +27,7 @@ import { FormDataExtend } from '@/components/common/FormDataExtend'
 import { useLoading } from 'veact-use'
 import { getComment } from '@/store/comment'
 import { getArticle } from '@/store/article'
-import { Comment, commentStates, COMMENT_GUESTBOOK_ID } from '@/constants/comment'
+import { Comment, commentStates, COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
 import { Article } from '@/constants/article'
 import { stringToYMD } from '@/transforms/date'
 import { autoCommentAvatar } from '@/transforms/avatar'
@@ -73,7 +73,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
         if (!!targetComment.pid) {
           fetchParentComment(targetComment.pid!)
         }
-        if (targetComment.post_id !== COMMENT_GUESTBOOK_ID) {
+        if (targetComment.post_id !== COMMENT_GUESTBOOK_POST_ID) {
           fetchArticle(targetComment.post_id)
         }
       }
@@ -210,7 +210,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
               icon={<LinkOutlined />}
               href={getBlogURLByPostID(props.comment.value?.post_id!)}
             >
-              {props.comment.value?.post_id === COMMENT_GUESTBOOK_ID
+              {props.comment.value?.post_id === COMMENT_GUESTBOOK_POST_ID
                 ? '留言板'
                 : commentArticle.value?.title}
               <Divider type="vertical" />#{props.comment.value?.id}

@@ -13,7 +13,7 @@ import {
 import { GeneralExtend } from './general'
 
 /** 留言板 */
-export const COMMENT_GUESTBOOK_ID = 0
+export const COMMENT_GUESTBOOK_POST_ID = 0
 
 /** 单个评论 */
 export interface Comment {

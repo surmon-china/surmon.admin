@@ -225,7 +225,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 type="link"
                 target="_blank"
                 icon={<LinkOutlined />}
-                href={getBlogArticleUrl(article.id!, article.slug)}
+                href={getBlogArticleUrl(article.id!)}
               >
                 宿主页面
               </Button>
