@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { GeneralExtend } from './general'
+import { GeneralKeyValue } from './general'
 
 /** 标签数据 */
 export interface Tag {
@@ -14,6 +14,6 @@ export interface Tag {
   description: string
   update_at: string
   create_at: string
-  extends: Array<GeneralExtend>
+  extends: Array<GeneralKeyValue>
   articles_count?: number
 }

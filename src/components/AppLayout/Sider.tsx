@@ -2,15 +2,14 @@ import React from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import classnames from 'classnames'
 import { Menu, Spin } from 'antd'
-import { GithubOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 
 import { GITHUB_REPO_URL, GITHUB_REPO_NAME } from '@/config'
 import { getResourceUrl } from '@/transforms/url'
-import { RouteKey, routeMap, rc } from '@/routes'
+import { RouteKey, rc } from '@/routes'
 import { useAdminState } from '@/state/admin'
 
 import styles from './style.module.less'
-
 export interface AppSiderProps {
   isSiderCollapsed: boolean
 }
@@ -24,10 +23,7 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
       <Link to={rc(RouteKey.Dashboard).path} className={styles.logo}>
         <img
           alt="logo"
-          className={classnames(
-            styles.image,
-            props.isSiderCollapsed && styles.collapsed
-          )}
+          className={classnames(styles.image, props.isSiderCollapsed && styles.collapsed)}
           src={getResourceUrl(
             props.isSiderCollapsed ? `/images/logo.mini.svg` : `/images/logo.svg`
           )}
@@ -39,10 +35,7 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
             src={admin.data.avatar}
             alt={admin.data.name}
             draggable={false}
-            className={classnames(
-              styles.avatar,
-              props.isSiderCollapsed && styles.collapsed
-            )}
+            className={classnames(styles.avatar, props.isSiderCollapsed && styles.collapsed)}
           />
           {!props.isSiderCollapsed && (
             <>
@@ -58,15 +51,12 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
         className={styles.menus}
         onClick={(event) => navigate(event.key)}
         selectedKeys={[location.pathname]}
-        defaultOpenKeys={Array.from(routeMap.values()).map((route) => route.path)}
+        defaultOpenKeys={[rc(RouteKey.Article).path]}
       >
         <Menu.Item key={rc(RouteKey.Dashboard).path} icon={rc(RouteKey.Dashboard).icon}>
           {rc(RouteKey.Dashboard).name}
         </Menu.Item>
-        <Menu.Item
-          key={rc(RouteKey.Announcement).path}
-          icon={rc(RouteKey.Announcement).icon}
-        >
+        <Menu.Item key={rc(RouteKey.Announcement).path} icon={rc(RouteKey.Announcement).icon}>
           {rc(RouteKey.Announcement).name}
         </Menu.Item>
         <Menu.Item key={rc(RouteKey.Category).path} icon={rc(RouteKey.Category).icon}>
@@ -80,12 +70,8 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
           icon={rc(RouteKey.Article).icon}
           title={rc(RouteKey.Article).name}
         >
-          <Menu.Item key={rc(RouteKey.ArticleList).path}>
-            {rc(RouteKey.ArticleList).name}
-          </Menu.Item>
-          <Menu.Item key={rc(RouteKey.ArticlePost).path}>
-            {rc(RouteKey.ArticlePost).name}
-          </Menu.Item>
+          <Menu.Item key={rc(RouteKey.ArticleList).path}>{rc(RouteKey.ArticleList).name}</Menu.Item>
+          <Menu.Item key={rc(RouteKey.ArticlePost).path}>{rc(RouteKey.ArticlePost).name}</Menu.Item>
         </Menu.SubMenu>
         <Menu.Item
           key={rc(RouteKey.Comment).path}
@@ -99,16 +85,19 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
           icon={rc(RouteKey.Disqus).icon}
           title={rc(RouteKey.Disqus).name}
         >
-          <Menu.Item key={rc(RouteKey.DisqusPost).path}>
-            {rc(RouteKey.DisqusPost).name}
-          </Menu.Item>
+          <Menu.Item key={rc(RouteKey.DisqusPost).path}>{rc(RouteKey.DisqusPost).name}</Menu.Item>
           <Menu.Item key={rc(RouteKey.DisqusThread).path}>
             {rc(RouteKey.DisqusThread).name}
           </Menu.Item>
-          <Menu.Item key={rc(RouteKey.DisqusSync).path}>
-            {rc(RouteKey.DisqusSync).name}
-          </Menu.Item>
+          <Menu.Item key={rc(RouteKey.DisqusSync).path}>{rc(RouteKey.DisqusSync).name}</Menu.Item>
         </Menu.SubMenu>
+        <Menu.Item
+          key={rc(RouteKey.Feedback).path}
+          icon={rc(RouteKey.Feedback).icon}
+          title={rc(RouteKey.Feedback).name}
+        >
+          {rc(RouteKey.Feedback).name}
+        </Menu.Item>
         <Menu.Item key={rc(RouteKey.Profile).path} icon={rc(RouteKey.Profile).icon}>
           {rc(RouteKey.Profile).name}
         </Menu.Item>
@@ -116,7 +105,7 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
       <Menu className={styles.footerLink} mode="vertical" selectedKeys={[]}>
         <Menu.Item
           key="github"
-          icon={<GithubOutlined />}
+          icon={<Icon.GithubOutlined />}
           onClick={() => window.open(GITHUB_REPO_URL)}
         >
           {GITHUB_REPO_NAME}

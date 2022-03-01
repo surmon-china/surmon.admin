@@ -29,16 +29,12 @@ export function createTag(tag: Tag) {
 
 /** 修改标签 */
 export function putTag(tag: Tag) {
-  return nodepress
-    .put(`${TAG_API_PATH}/${tag._id}`, tag)
-    .then((response) => response.result)
+  return nodepress.put(`${TAG_API_PATH}/${tag._id}`, tag).then((response) => response.result)
 }
 
 /** 删除标签 */
 export function deleteTag(tagId: string) {
-  return nodepress
-    .delete(`${TAG_API_PATH}/${tagId}`)
-    .then((response) => response.result)
+  return nodepress.delete(`${TAG_API_PATH}/${tagId}`).then((response) => response.result)
 }
 
 /** 批量删除标签 */

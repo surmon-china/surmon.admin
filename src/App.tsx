@@ -4,14 +4,7 @@
  */
 
 import React from 'react'
-import {
-  BrowserRouter,
-  HashRouter,
-  Route,
-  Routes,
-  Navigate,
-  Outlet,
-} from 'react-router-dom'
+import { BrowserRouter, HashRouter, Route, Routes, Navigate, Outlet } from 'react-router-dom'
 import { onMounted, useReactivity } from 'veact'
 import LoadingBar from 'react-top-loading-bar'
 import 'moment/locale/zh-cn'
@@ -29,6 +22,7 @@ import { AnnouncementPage } from '@/pages/Announcement'
 import { CategoryPage } from '@/pages/Category'
 import { TagPage } from '@/pages/Tag'
 import { CommentPage } from '@/pages/Comment'
+import { FeedbackPage } from '@/pages/Feedback'
 import { DisqusThreadsPage } from '@/pages/Dsiqus/Thread'
 import { DisqusPostsPage } from '@/pages/Dsiqus/Post'
 import { DisqusSynchronizePage } from '@/pages/Dsiqus/Synchronize'
@@ -77,18 +71,13 @@ export const App: React.FC = () => {
               </AppAuth>
             }
           >
-            <Route
-              index={true}
-              element={<Navigate to={rc(RouteKey.Dashboard).path} replace />}
-            />
+            <Route index={true} element={<Navigate to={rc(RouteKey.Dashboard).path} replace />} />
             <Route path={rc(RouteKey.Dashboard).path} element={<DashboardPage />} />
-            <Route
-              path={rc(RouteKey.Announcement).path}
-              element={<AnnouncementPage />}
-            />
+            <Route path={rc(RouteKey.Announcement).path} element={<AnnouncementPage />} />
             <Route path={rc(RouteKey.Category).path} element={<CategoryPage />} />
             <Route path={rc(RouteKey.Tag).path} element={<TagPage />} />
             <Route path={rc(RouteKey.Comment).path} element={<CommentPage />} />
+            <Route path={rc(RouteKey.Feedback).path} element={<FeedbackPage />} />
             <Route path={rc(RouteKey.Profile).path} element={<ProfilePage />} />
             <Route
               path={`${rc(RouteKey.Disqus).path}/*`}
@@ -98,14 +87,8 @@ export const App: React.FC = () => {
                     index={true}
                     element={<Navigate to={rc(RouteKey.DisqusPost).subPath!} replace />}
                   />
-                  <Route
-                    path={rc(RouteKey.DisqusPost).subPath}
-                    element={<DisqusPostsPage />}
-                  />
-                  <Route
-                    path={rc(RouteKey.DisqusThread).subPath}
-                    element={<DisqusThreadsPage />}
-                  />
+                  <Route path={rc(RouteKey.DisqusPost).subPath} element={<DisqusPostsPage />} />
+                  <Route path={rc(RouteKey.DisqusThread).subPath} element={<DisqusThreadsPage />} />
                   <Route
                     path={rc(RouteKey.DisqusSync).subPath}
                     element={<DisqusSynchronizePage />}
@@ -123,22 +106,11 @@ export const App: React.FC = () => {
                 <Routes>
                   <Route
                     index={true}
-                    element={
-                      <Navigate to={rc(RouteKey.ArticleList).subPath!} replace />
-                    }
+                    element={<Navigate to={rc(RouteKey.ArticleList).subPath!} replace />}
                   />
-                  <Route
-                    path={rc(RouteKey.ArticleList).subPath}
-                    element={<ArticleList />}
-                  />
-                  <Route
-                    path={rc(RouteKey.ArticlePost).subPath}
-                    element={<ArticleCreate />}
-                  />
-                  <Route
-                    path={rc(RouteKey.ArticleEdit).subPath}
-                    element={<ArticleEdit />}
-                  />
+                  <Route path={rc(RouteKey.ArticleList).subPath} element={<ArticleList />} />
+                  <Route path={rc(RouteKey.ArticlePost).subPath} element={<ArticleCreate />} />
+                  <Route path={rc(RouteKey.ArticleEdit).subPath} element={<ArticleEdit />} />
                   <Route
                     path="*"
                     element={<Navigate to={rc(RouteKey.ArticleList).path} replace />}

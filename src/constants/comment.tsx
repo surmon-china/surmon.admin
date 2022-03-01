@@ -4,23 +4,17 @@
  */
 
 import React from 'react'
-import {
-  DeleteOutlined,
-  EditOutlined,
-  CheckOutlined,
-  StopOutlined,
-} from '@ant-design/icons'
-import { GeneralExtend } from './general'
+import * as Icon from '@ant-design/icons'
+import { GeneralKeyValue, IPLocation } from './general'
 
 /** 留言板 */
 export const COMMENT_GUESTBOOK_POST_ID = 0
 
 /** 单个评论 */
 export interface Comment {
-  ip?: number
-  id?: number
-  _id?: string
-  pid?: number
+  id: number
+  _id: string
+  pid: number
   post_id: number
   content: string
   agent: string
@@ -33,17 +27,11 @@ export interface Comment {
     email?: string
     email_hash: string | null
   }
-  ip_location?: Partial<{
-    country: string
-    country_code: string
-    region: string
-    region_code: string
-    city: string
-    zip: string
-  }>
+  ip: string | null
+  ip_location: IPLocation | null
   update_at?: string
   create_at?: string
-  extends: Array<GeneralExtend>
+  extends: Array<GeneralKeyValue>
 }
 
 /** 评论状态 */
@@ -59,25 +47,25 @@ const commentStateMap = new Map(
     {
       id: CommentState.Auditing,
       name: '待审核',
-      icon: <EditOutlined />,
+      icon: <Icon.EditOutlined />,
       color: 'blue',
     },
     {
       id: CommentState.Published,
       name: '已发布',
-      icon: <CheckOutlined />,
+      icon: <Icon.CheckOutlined />,
       color: 'green',
     },
     {
       id: CommentState.Spam,
       name: '垃圾评论',
-      icon: <StopOutlined />,
+      icon: <Icon.StopOutlined />,
       color: 'red',
     },
     {
       id: CommentState.Deleted,
       name: '回收站',
-      icon: <DeleteOutlined />,
+      icon: <Icon.DeleteOutlined />,
       color: 'orange',
     },
   ].map((item) => [item.id, item])

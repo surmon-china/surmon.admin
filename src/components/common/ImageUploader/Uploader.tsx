@@ -7,13 +7,7 @@ import React from 'react'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import { Upload, notification, Input, Space, Button, Tooltip } from 'antd'
-import {
-  PlusOutlined,
-  LoadingOutlined,
-  LinkOutlined,
-  FileMarkdownOutlined,
-  CopyOutlined,
-} from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 import { getOSSUpToken, AliYunOSSUpToken } from '@/store/system'
 import { useUploader, UploadErrorCode, isExpirationToken } from '@/services/uploader'
 import { copy } from '@/services/clipboard'
@@ -71,8 +65,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
       .catch((error) => {
         notification.error({
           message: '上传失败',
-          description:
-            error.code === UploadErrorCode.Failure ? String(error.error) : error.code,
+          description: error.code === UploadErrorCode.Failure ? String(error.error) : error.code,
         })
       })
   }
@@ -102,7 +95,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
           <img className={styles.image} src={props.value} alt={props.value} />
         ) : (
           <div className={styles.tigger}>
-            {uploader?.uploading.state.value ? <LoadingOutlined /> : <PlusOutlined />}
+            {uploader?.uploading.state.value ? <Icon.LoadingOutlined /> : <Icon.PlusOutlined />}
             <p className={styles.uploadText}>
               {uploader?.uploading.state.value ? 'UPLOADING...' : 'UPLOAD'}
             </p>
@@ -113,7 +106,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
         <Input
           allowClear={true}
           placeholder="可以直接输入地址"
-          prefix={<LinkOutlined />}
+          prefix={<Icon.LinkOutlined />}
           value={props.value}
           onChange={(event) => props.onChange?.(event.target.value)}
         />
@@ -123,13 +116,13 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
           <Input
             style={{ width: 'calc(100% - 32px - 1px)' }}
             placeholder="Markdown image"
-            prefix={<FileMarkdownOutlined />}
+            prefix={<Icon.FileMarkdownOutlined />}
             readOnly={true}
             value={imageURLToMarkdown(props.value)}
           />
           <Tooltip title="Copy Markdown">
             <Button
-              icon={<CopyOutlined />}
+              icon={<Icon.CopyOutlined />}
               onClick={() => copy(imageURLToMarkdown(props.value!))}
             />
           </Tooltip>

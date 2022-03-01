@@ -7,32 +7,11 @@ import classnames from 'classnames'
 import React from 'react'
 import { useShallowReactive, onMounted, useRef, useWatch } from 'veact'
 import { useLoading } from 'veact-use'
-import {
-  Button,
-  Card,
-  Table,
-  Select,
-  Input,
-  Space,
-  Divider,
-  Typography,
-  Avatar,
-} from 'antd'
-import {
-  DashboardOutlined,
-  ReloadOutlined,
-  LikeOutlined,
-  DislikeOutlined,
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-} from '@ant-design/icons'
-import {
-  getConfig,
-  getPosts,
-  PostState,
-  OrderType,
-  GeneralDisqusParams,
-} from '@/store/disqus'
+import { Button, Card, Table, Select, Input, Space, Divider, Typography, Avatar } from 'antd'
+import * as Icon from '@ant-design/icons'
+import { Placeholder } from '@/components/common/Placeholder'
+import { UniversalText } from '@/components/common/UniversalText'
+import { getConfig, getPosts, PostState, OrderType, GeneralDisqusParams } from '@/store/disqus'
 import { scrollTo } from '@/services/scroller'
 import { stringToYMD } from '@/transforms/date'
 
@@ -110,7 +89,7 @@ export const DisqusPostsPage: React.FC = () => {
           type="primary"
           size="small"
           target="_blank"
-          icon={<DashboardOutlined />}
+          icon={<Icon.DashboardOutlined />}
           href={`https://${config.value?.forum}.disqus.com/admin/moderate/all/`}
         >
           Disqus Moderate
@@ -186,7 +165,7 @@ export const DisqusPostsPage: React.FC = () => {
           }}
         />
         <Button
-          icon={<ReloadOutlined />}
+          icon={<Icon.ReloadOutlined />}
           loading={loading.state.value}
           onClick={() => resetFetch()}
         >
@@ -206,17 +185,9 @@ export const DisqusPostsPage: React.FC = () => {
             width: 160,
             render: (_, item) => (
               <Space direction="vertical">
-                <Typography.Text copyable={true} type="secondary">
-                  {item.id}
-                </Typography.Text>
-                {item.parent ? (
-                  <Typography.Text copyable={true} type="secondary">
-                    {item.parent}
-                  </Typography.Text>
-                ) : (
-                  '-'
-                )}
-                <Typography.Text copyable={true}>{item.thread}</Typography.Text>
+                <UniversalText text={item.id} copyable={true} type="secondary" />
+                <UniversalText text={item.parent} copyable={true} type="secondary" />
+                <UniversalText text={item.thread} copyable={true} />
               </Space>
             ),
           },
@@ -238,13 +209,13 @@ export const DisqusPostsPage: React.FC = () => {
                   <Avatar size={38} shape="square" src={item.author.avatar.cache} />
                   <Space direction="vertical" size="small">
                     <span>{item.author.name}</span>
-                    {item.author.url ? (
-                      <Typography.Link href={item.author.url} target="_blank">
-                        homepage
-                      </Typography.Link>
-                    ) : (
-                      '-'
-                    )}
+                    <Placeholder data={item.author.url}>
+                      {(url) => (
+                        <Typography.Link href={url} target="_blank">
+                          homepage
+                        </Typography.Link>
+                      )}
+                    </Placeholder>
                   </Space>
                 </Space>
               )
@@ -265,7 +236,7 @@ export const DisqusPostsPage: React.FC = () => {
             key: 'likes',
             render: (_, item) => (
               <Space size="small">
-                <LikeOutlined />
+                <Icon.LikeOutlined />
                 {item.likes}
               </Space>
             ),
@@ -275,7 +246,7 @@ export const DisqusPostsPage: React.FC = () => {
             key: 'dislikes',
             render: (_, item) => (
               <Space size="small">
-                <DislikeOutlined />
+                <Icon.DislikeOutlined />
                 {item.dislikes}
               </Space>
             ),
@@ -291,19 +262,19 @@ export const DisqusPostsPage: React.FC = () => {
                     value: item.isApproved,
                     label: 'Approved',
                     state: 'success',
-                    icon: <CheckCircleOutlined />,
+                    icon: <Icon.CheckCircleOutlined />,
                   },
                   {
                     value: item.isDeleted,
                     label: 'Deleted',
                     state: 'danger',
-                    icon: <CloseCircleOutlined />,
+                    icon: <Icon.CloseCircleOutlined />,
                   },
                   {
                     value: item.isSpam,
                     label: 'SPAM',
                     state: 'danger',
-                    icon: <CloseCircleOutlined />,
+                    icon: <Icon.CloseCircleOutlined />,
                   },
                 ]
                   .filter((i) => i.value)

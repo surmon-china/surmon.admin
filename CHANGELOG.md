@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.4.0 (2022-03-01)
+
+- Add feedback module
+- New components `Placeholder` `UniversalText` `IPLocation` `SortSelect`
+- Improve antd icons
+- Rename `Extend` to `KeyValue`
+
 ### v1.3.5 (2022-02-16)
 
 - Add articles calendar in Dashboard

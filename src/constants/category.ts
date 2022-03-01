@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { GeneralExtend } from './general'
+import { GeneralKeyValue } from './general'
 
 /** 分类 */
 export interface Category {
@@ -16,6 +16,6 @@ export interface Category {
   update_at: string
   create_at: string
   children?: Array<Category>
-  extends: Array<GeneralExtend>
+  extends: Array<GeneralKeyValue>
   articles_count?: number
 }

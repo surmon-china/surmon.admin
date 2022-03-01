@@ -1,11 +1,7 @@
 import React from 'react'
 import { useLoadings } from 'veact-use'
 import { Button, Row, Col, Divider, Modal } from 'antd'
-import {
-  CloudUploadOutlined,
-  CloudDownloadOutlined,
-  SyncOutlined,
-} from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 import { updateDatabaseBackup, updateArchiveCache } from '@/store/system'
 
 export interface DataFormProps {
@@ -42,20 +38,20 @@ export const DataForm: React.FC<DataFormProps> = (props) => {
       <Col span={props.wrapperSpan} offset={props.labelSpan}>
         <Button.Group>
           <Button
-            icon={<CloudUploadOutlined />}
+            icon={<Icon.CloudUploadOutlined />}
             type="primary"
             loading={loading.isLoading(LoadingKey.Databse)}
             onClick={handleUpdateDatabaseBackup}
           >
             立即更新数据库备份
           </Button>
-          <Button icon={<CloudDownloadOutlined />} type="primary" disabled={true}>
+          <Button icon={<Icon.CloudDownloadOutlined />} type="primary" disabled={true}>
             从备份文件恢复数据库（暂不支持）
           </Button>
         </Button.Group>
         <Divider />
         <Button
-          icon={<SyncOutlined />}
+          icon={<Icon.SyncOutlined />}
           type="primary"
           loading={loading.isLoading(LoadingKey.Archive)}
           onClick={handleUpdateArchive}

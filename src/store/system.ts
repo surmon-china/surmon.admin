@@ -20,9 +20,7 @@ export interface Statistics {
 }
 /** 获取全站统计信息 */
 export function getStatistics() {
-  return nodepress
-    .get<Statistics>(EXPANSION_API_PATH.STATISTIC)
-    .then((response) => response.result)
+  return nodepress.get<Statistics>(EXPANSION_API_PATH.STATISTIC).then((response) => response.result)
 }
 
 export interface ArticleCalendarItem {
@@ -51,9 +49,7 @@ export function updateArchiveCache() {
 
 /** 更新数据库备份 */
 export function updateDatabaseBackup() {
-  return nodepress
-    .patch(EXPANSION_API_PATH.DATA_BASE_BACKUP)
-    .then((response) => response.result)
+  return nodepress.patch(EXPANSION_API_PATH.DATA_BASE_BACKUP).then((response) => response.result)
 }
 
 /** 获取系统配置 */
@@ -63,9 +59,7 @@ export function getOption() {
 
 /** 更新系统配置 */
 export function putOption(option: Option) {
-  return nodepress
-    .put<Option>(OPTION_API_PATH, option)
-    .then((response) => response.result)
+  return nodepress.put<Option>(OPTION_API_PATH, option).then((response) => response.result)
 }
 
 export interface AliYunOSSUpToken {

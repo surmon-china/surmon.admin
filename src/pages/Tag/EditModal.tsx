@@ -2,7 +2,7 @@ import React from 'react'
 import { Ref, useWatch } from 'veact'
 import { Form, Input, Modal, Divider, Typography } from 'antd'
 
-import { FormDataExtend } from '@/components/common/FormDataExtend'
+import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
 import { Tag as TagType } from '@/constants/tag'
 import { stringToYMD } from '@/transforms/date'
 
@@ -98,7 +98,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
           extra="可以为当前标签增加自定义扩展属性，如：icon、background"
           shouldUpdate={true}
         >
-          <FormDataExtend fieldName="extends" />
+          <FormDataKeyValue fieldName="extends" />
         </Form.Item>
       </Form>
     </Modal>

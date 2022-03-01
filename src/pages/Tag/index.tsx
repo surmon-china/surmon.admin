@@ -5,27 +5,13 @@
 
 import React from 'react'
 import { useShallowReactive, useRef, onMounted, useReactive, useComputed } from 'veact'
-import { Table, Button, Card, Input, Divider, Spin, Modal, Space } from 'antd'
-import {
-  DeleteOutlined,
-  EditOutlined,
-  LinkOutlined,
-  PlusOutlined,
-  ReloadOutlined,
-} from '@ant-design/icons'
-
-import { DropdownMenu } from '@/components/common/DropdownMenu'
-import {
-  getTags,
-  GetTagParams,
-  deleteTag,
-  deleteTags,
-  putTag,
-  createTag,
-} from '@/store/tag'
-import { Tag } from '@/constants/tag'
-import { ResponsePaginationData } from '@/constants/request'
 import { useLoading } from 'veact-use'
+import { Table, Button, Card, Input, Divider, Spin, Modal, Space } from 'antd'
+import * as Icon from '@ant-design/icons'
+import { DropdownMenu } from '@/components/common/DropdownMenu'
+import { getTags, GetTagParams, deleteTag, deleteTags, putTag, createTag } from '@/store/tag'
+import { ResponsePaginationData } from '@/constants/request'
+import { Tag } from '@/constants/tag'
 import { scrollTo } from '@/services/scroller'
 import { getBlogTagUrl } from '@/transforms/url'
 import { EditModal } from './EditModal'
@@ -152,12 +138,7 @@ export const TagPage: React.FC = () => {
       bordered={false}
       className={styles.tag}
       extra={
-        <Button
-          type="primary"
-          size="small"
-          icon={<PlusOutlined />}
-          onClick={createNewData}
-        >
+        <Button type="primary" size="small" icon={<Icon.PlusOutlined />} onClick={createNewData}>
           创建新标签
         </Button>
       }
@@ -175,7 +156,7 @@ export const TagPage: React.FC = () => {
             }}
           />
           <Button
-            icon={<ReloadOutlined />}
+            icon={<Icon.ReloadOutlined />}
             loading={loading.state.value}
             onClick={resetParamsAndRefresh}
           >
@@ -188,7 +169,7 @@ export const TagPage: React.FC = () => {
             options={[
               {
                 label: '批量删除',
-                icon: <DeleteOutlined />,
+                icon: <Icon.DeleteOutlined />,
                 onClick: handleDeleteList,
               },
             ]}
@@ -252,7 +233,7 @@ export const TagPage: React.FC = () => {
                   <Button
                     size="small"
                     type="text"
-                    icon={<EditOutlined />}
+                    icon={<Icon.EditOutlined />}
                     onClick={() => editData(index)}
                   >
                     编辑
@@ -261,7 +242,7 @@ export const TagPage: React.FC = () => {
                     size="small"
                     type="text"
                     danger={true}
-                    icon={<DeleteOutlined />}
+                    icon={<Icon.DeleteOutlined />}
                     onClick={() => handleDelete(tag)}
                   >
                     删除
@@ -270,7 +251,7 @@ export const TagPage: React.FC = () => {
                     size="small"
                     type="link"
                     target="_blank"
-                    icon={<LinkOutlined />}
+                    icon={<Icon.LinkOutlined />}
                     href={getBlogTagUrl(tag.slug)}
                   >
                     查看

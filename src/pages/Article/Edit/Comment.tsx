@@ -4,28 +4,20 @@
  */
 
 import React from 'react'
-import {
-  Spin,
-  Row,
-  Button,
-  Comment,
-  Divider,
-  Avatar,
-  Drawer,
-  Empty,
-  Tag,
-  Typography,
-} from 'antd'
-import { ReloadOutlined, HeartOutlined, EditOutlined } from '@ant-design/icons'
+import { Spin, Row, Button, Comment, Divider, Drawer, Empty, Tag, Typography } from 'antd'
+import * as Icon from '@ant-design/icons'
+import { IPLocation } from '@/components/common/IPLocation'
+import { UniversalText } from '@/components/common/UniversalText'
+import { CommentAvatar } from '@/pages/Comment/Avatar'
 import { cs } from '@/constants/comment'
 import { CommentTree } from '@/store/comment'
-import { autoCommentAvatar } from '@/transforms/avatar'
 import { stringToYMD } from '@/transforms/date'
 import { parseBrowser, parseOS } from '@/transforms/ua'
 
 interface CommentTreeListProps {
   comments: Array<CommentTree>
 }
+
 const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
   return (
     <>
@@ -35,13 +27,13 @@ const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
           datetime={stringToYMD(comment.create_at!)}
           actions={[
             <Typography.Text key="time" type={comment.likes ? 'danger' : 'secondary'}>
-              <HeartOutlined />
+              <Icon.HeartOutlined />
               &nbsp;
               {comment.likes} 喜欢
             </Typography.Text>,
             <span key="browser">{parseBrowser(comment.agent!)}</span>,
             <span key="os">{parseOS(comment.agent!)}</span>,
-            <span key="ip">{comment.ip || '-'}</span>,
+            <UniversalText key="ip" text={comment.ip} copyable={true} type="secondary" />,
           ]}
           author={
             <div>
@@ -58,21 +50,14 @@ const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
                 comment.author.name
               )}
               <Divider type="vertical" />
-              {comment.ip_location?.country || '-'} · {comment.ip_location?.city || '-'}
+              <IPLocation key="ip-location" data={comment.ip_location} />
               <Divider type="vertical" />
               <Tag color={cs(comment.state).color} icon={cs(comment.state).icon}>
                 {cs(comment.state).name}
               </Tag>
             </div>
           }
-          avatar={
-            <Avatar
-              shape="square"
-              size="large"
-              src={autoCommentAvatar(comment)}
-              alt={comment.author.name}
-            />
-          }
+          avatar={<CommentAvatar size="large" comment={comment} />}
           content={<Typography.Paragraph>{comment.content}</Typography.Paragraph>}
         >
           <Divider />
@@ -92,6 +77,7 @@ export interface ArticleCommentProps {
   onRefresh(): void
   onManage(): void
 }
+
 export const ArticleComment: React.FC<ArticleCommentProps> = (props) => {
   const { visible, loading, count, comments } = props
   return (
@@ -105,29 +91,20 @@ export const ArticleComment: React.FC<ArticleCommentProps> = (props) => {
           <Button
             size="small"
             type="dashed"
-            icon={<ReloadOutlined />}
+            icon={<Icon.ReloadOutlined />}
             loading={loading}
             onClick={props.onRefresh}
           >
             刷新评论
           </Button>
-          <Button
-            size="small"
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={props.onManage}
-          >
+          <Button size="small" type="primary" icon={<Icon.EditOutlined />} onClick={props.onManage}>
             管理评论
           </Button>
         </Row>
       }
     >
       <Spin spinning={loading}>
-        {!count ? (
-          <Empty description="无数据" />
-        ) : (
-          <CommentTreeList comments={comments} />
-        )}
+        {!count ? <Empty description="无数据" /> : <CommentTreeList comments={comments} />}
       </Spin>
     </Drawer>
   )

@@ -1,20 +1,15 @@
 import React from 'react'
-import { Table, Button, Typography, Popover, Avatar, Tag, Space } from 'antd'
-import {
-  DeleteOutlined,
-  LinkOutlined,
-  EditOutlined,
-  LikeOutlined,
-  DislikeOutlined,
-  CheckOutlined,
-  StopOutlined,
-} from '@ant-design/icons'
+import { Table, Button, Typography, Popover, Tag, Space } from 'antd'
+import * as Icon from '@ant-design/icons'
+import { UniversalText } from '@/components/common/UniversalText'
+import { Placeholder } from '@/components/common/Placeholder'
+import { IPLocation } from '@/components/common/IPLocation'
 import { Pagination } from '@/constants/request'
 import { Comment, CommentState, cs } from '@/constants/comment'
 import { parseBrowser, parseOS } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
-import { autoCommentAvatar } from '@/transforms/avatar'
 import { getBlogURLByPostID } from '@/transforms/url'
+import { CommentAvatar } from './Avatar'
 
 import styles from './style.module.less'
 
@@ -30,6 +25,7 @@ export interface CommentListTableProps {
   onDelete(comment: Comment, index: number): any
   onUpdateState(comment: Comment, state: CommentState): any
 }
+
 export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
   return (
     <Table<Comment>
@@ -58,9 +54,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
           title: 'PID',
           width: 40,
           dataIndex: 'pid',
-          render(_, comment) {
-            return comment.pid || '-'
-          },
+          render: (_, comment) => <UniversalText text={comment.pid} />,
         },
         {
           title: 'POST_ID',
@@ -68,19 +62,14 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
           dataIndex: 'post_id',
           render(_, comment) {
             return (
-              <Button
-                size="small"
-                type="ghost"
-                onClick={() => props.onPostId(comment.post_id)}
-              >
-                {comment.post_id || '留言板'}
+              <Button size="small" type="ghost" onClick={() => props.onPostId(comment.post_id)}>
+                {comment.post_id}
               </Button>
             )
           },
         },
         {
           title: '评论内容',
-          width: 300,
           dataIndex: 'content',
           render: (_, comment) => (
             <Typography.Paragraph
@@ -93,77 +82,51 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
         },
         {
           title: '个人信息',
-          width: 240,
+          width: 280,
           dataIndex: 'author',
           render(_, comment) {
             return (
               <Space direction="vertical">
-                <span>
-                  头像：
-                  <Avatar
-                    shape="square"
-                    size="default"
-                    src={autoCommentAvatar(comment)}
-                  />
-                </span>
-                <span>名字：{comment.author.name}</span>
-                <span>
-                  邮箱：
-                  {!comment.author.email ? (
-                    '-'
-                  ) : (
-                    <Typography.Text copyable={true}>
-                      {comment.author.email}
-                    </Typography.Text>
-                  )}
-                </span>
-                <span>
-                  网址：
-                  {comment.author.site ? (
-                    <Typography.Link
-                      underline={true}
-                      target="_blank"
-                      rel="noreferrer"
-                      href={comment.author.site}
-                    >
-                      点击打开
-                    </Typography.Link>
-                  ) : (
-                    '-'
-                  )}
-                </span>
+                <Space>
+                  <CommentAvatar comment={comment} />
+                  <UniversalText text={comment.author.name} />
+                </Space>
+                <UniversalText
+                  placeholder="Left blank"
+                  prefix={<Icon.MailOutlined />}
+                  text={comment.author.email}
+                  copyable={true}
+                />
+                <Space size="small">
+                  <Icon.LinkOutlined />
+                  <Placeholder data={comment.author.site} placeholder="Left blank">
+                    {(site) => (
+                      <Popover placement="top" content={site}>
+                        <Typography.Link target="_blank" rel="noreferrer" href={site}>
+                          点击打开
+                        </Typography.Link>
+                      </Popover>
+                    )}
+                  </Placeholder>
+                </Space>
               </Space>
             )
           },
         },
         {
           title: '发布于',
-          width: 230,
+          width: 210,
           dataIndex: 'agent',
           render(_, comment) {
             return (
               <Space direction="vertical">
-                <span>
-                  IP：
-                  {!comment.ip ? (
-                    '-'
-                  ) : (
-                    <Typography.Text copyable={true}>{comment.ip}</Typography.Text>
-                  )}
-                </span>
-                <span>
-                  位置：
-                  {!comment.ip_location
-                    ? '-'
-                    : [
-                        comment.ip_location.country_code || comment.ip_location.country,
-                        comment.ip_location.city,
-                      ]
-                        .filter(Boolean)
-                        .join(' · ')}
-                </span>
-                <span>
-                  终端：
+                <UniversalText prefix={<Icon.GlobalOutlined />} text={comment.ip} copyable={true} />
+                <Space size="small">
+                  <Icon.CompassOutlined />
+                  <IPLocation data={comment.ip_location} />
+                </Space>
+                <Space size="small">
+                  <Icon.DesktopOutlined />
                   <Popover
                     title="终端信息"
                     placement="right"
@@ -176,11 +139,11 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   >
                     {parseBrowser(comment.agent)}
                   </Popover>
-                </span>
-                <span>
-                  时间：
-                  {stringToYMD(comment.create_at!)}
-                </span>
+                </Space>
+                <UniversalText
+                  prefix={<Icon.ClockCircleOutlined />}
+                  text={stringToYMD(comment.create_at!)}
+                />
               </Space>
             )
           },
@@ -193,14 +156,11 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
             const state = cs(comment.state)
             return (
               <Space direction="vertical">
-                <Tag
-                  icon={<LikeOutlined />}
-                  color={comment.likes > 0 ? 'red' : undefined}
-                >
+                <Tag icon={<Icon.LikeOutlined />} color={comment.likes > 0 ? 'red' : undefined}>
                   {comment.likes} 个赞
                 </Tag>
                 <Tag
-                  icon={<DislikeOutlined />}
+                  icon={<Icon.DislikeOutlined />}
                   color={comment.dislikes > 0 ? 'gold' : undefined}
                 >
                   {comment.dislikes} 个踩
@@ -208,6 +168,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 <Tag icon={state.icon} color={state.color}>
                   {state.name}
                 </Tag>
+                <Tag icon={<Icon.LineHeightOutlined />}>{comment.content.length} 字</Tag>
               </Space>
             )
           },
@@ -222,7 +183,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 size="small"
                 type="text"
                 block={true}
-                icon={<EditOutlined />}
+                icon={<Icon.EditOutlined />}
                 onClick={() => props.onDetail(comment, index)}
               >
                 评论详情
@@ -232,7 +193,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   size="small"
                   type="text"
                   block={true}
-                  icon={<CheckOutlined />}
+                  icon={<Icon.CheckOutlined />}
                   onClick={() => props.onUpdateState(comment, CommentState.Published)}
                 >
                   <Typography.Text type="success">审核通过</Typography.Text>
@@ -244,7 +205,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   type="text"
                   block={true}
                   danger={true}
-                  icon={<StopOutlined />}
+                  icon={<Icon.StopOutlined />}
                   onClick={() => props.onUpdateState(comment, CommentState.Spam)}
                 >
                   标为垃圾
@@ -257,20 +218,19 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   type="text"
                   block={true}
                   danger={true}
-                  icon={<DeleteOutlined />}
+                  icon={<Icon.DeleteOutlined />}
                   onClick={() => props.onUpdateState(comment, CommentState.Deleted)}
                 >
                   移回收站
                 </Button>
               )}
-              {(comment.state === CommentState.Deleted ||
-                comment.state === CommentState.Spam) && (
+              {(comment.state === CommentState.Deleted || comment.state === CommentState.Spam) && (
                 <>
                   <Button
                     size="small"
                     type="text"
                     block={true}
-                    icon={<EditOutlined />}
+                    icon={<Icon.EditOutlined />}
                     onClick={() => props.onUpdateState(comment, CommentState.Auditing)}
                   >
                     <Typography.Text type="warning">退为草稿</Typography.Text>
@@ -280,7 +240,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                     type="text"
                     danger={true}
                     block={true}
-                    icon={<DeleteOutlined />}
+                    icon={<Icon.DeleteOutlined />}
                     onClick={() => props.onDelete(comment, index)}
                   >
                     彻底删除
@@ -292,7 +252,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 block={true}
                 type="link"
                 target="_blank"
-                icon={<LinkOutlined />}
+                icon={<Icon.LinkOutlined />}
                 href={getBlogURLByPostID(comment.post_id)}
               >
                 宿主页面

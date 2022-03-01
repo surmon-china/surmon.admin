@@ -20,17 +20,9 @@ import {
 } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Input, Select, Divider, Modal, Space, message } from 'antd'
-import {
-  DeleteOutlined,
-  StopOutlined,
-  RocketOutlined,
-  EditOutlined,
-  GlobalOutlined,
-  CheckOutlined,
-  ReloadOutlined,
-} from '@ant-design/icons'
-
+import * as Icon from '@ant-design/icons'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
+import { SortSelect } from '@/components/common/SortSelect'
 import {
   getComments,
   GetCommentsParams,
@@ -47,11 +39,11 @@ import {
   cs,
 } from '@/constants/comment'
 import { ResponsePaginationData } from '@/constants/request'
-import { sortTypes, SortType } from '@/constants/sort'
+import { SortTypeWithHot } from '@/constants/sort'
 import { scrollTo } from '@/services/scroller'
 import { getBlogGuestbookUrl } from '@/transforms/url'
-import { EditDrawer } from './EditDrawer'
 import { CommentListTable } from './Table'
+import { EditDrawer } from './EditDrawer'
 
 import styles from './style.module.less'
 
@@ -60,7 +52,7 @@ const SELECT_ALL_VALUE = 'ALL'
 const DEFAULT_FILTER_PARAMS = Object.freeze({
   postId: LIST_ALL_VALUE as number | typeof LIST_ALL_VALUE,
   state: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | CommentState,
-  sort: SortType.Desc,
+  sort: SortTypeWithHot.Desc,
 })
 
 export const CommentPage: React.FC = () => {
@@ -207,9 +199,7 @@ export const CommentPage: React.FC = () => {
       } catch (error) {
         ipLocationTask.fail.push(commentID)
       } finally {
-        ipLocationTask.todo = ipLocationTask.todo
-          .slice()
-          .filter((id) => id !== commentID)
+        ipLocationTask.todo = ipLocationTask.todo.slice().filter((id) => id !== commentID)
       }
     }
 
@@ -276,7 +266,7 @@ export const CommentPage: React.FC = () => {
             )}
             <Button
               size="small"
-              icon={<GlobalOutlined />}
+              icon={<Icon.GlobalOutlined />}
               disabled={ipLocationTask.running}
               loading={ipLocationTask.running}
               onClick={() => handleReviseComemntsIPLocation()}
@@ -288,7 +278,7 @@ export const CommentPage: React.FC = () => {
             type="primary"
             size="small"
             target="_blank"
-            icon={<RocketOutlined />}
+            icon={<Icon.RocketOutlined />}
             href={getBlogGuestbookUrl()}
           >
             去留言板
@@ -354,24 +344,14 @@ export const CommentPage: React.FC = () => {
               }),
             ]}
           />
-          <Select
+          <SortSelect
             className={styles.select}
+            withHot={true}
             loading={loading.state.value}
             value={filterParams.sort}
             onChange={(sort) => {
               filterParams.sort = sort
             }}
-            options={sortTypes.map((sort) => {
-              return {
-                value: sort.id,
-                label: (
-                  <Space>
-                    {sort.icon}
-                    {sort.name}
-                  </Space>
-                ),
-              }
-            })}
           />
           <Input.Search
             className={styles.search}
@@ -384,7 +364,7 @@ export const CommentPage: React.FC = () => {
             }}
           />
           <Button
-            icon={<ReloadOutlined />}
+            icon={<Icon.ReloadOutlined />}
             loading={loading.state.value}
             onClick={() => resetParamsAndRefresh()}
           >
@@ -397,31 +377,27 @@ export const CommentPage: React.FC = () => {
             options={[
               {
                 label: '退为草稿',
-                icon: <EditOutlined />,
-                onClick: () =>
-                  handleStateChange(selectComments.value, CommentState.Auditing),
+                icon: <Icon.EditOutlined />,
+                onClick: () => handleStateChange(selectComments.value, CommentState.Auditing),
               },
               {
                 label: '审核通过',
-                icon: <CheckOutlined />,
-                onClick: () =>
-                  handleStateChange(selectComments.value, CommentState.Published),
+                icon: <Icon.CheckOutlined />,
+                onClick: () => handleStateChange(selectComments.value, CommentState.Published),
               },
               {
                 label: '标为垃圾',
-                icon: <StopOutlined />,
-                onClick: () =>
-                  handleStateChange(selectComments.value, CommentState.Spam),
+                icon: <Icon.StopOutlined />,
+                onClick: () => handleStateChange(selectComments.value, CommentState.Spam),
               },
               {
                 label: '移回收站',
-                icon: <DeleteOutlined />,
-                onClick: () =>
-                  handleStateChange(selectComments.value, CommentState.Deleted),
+                icon: <Icon.DeleteOutlined />,
+                onClick: () => handleStateChange(selectComments.value, CommentState.Deleted),
               },
               {
                 label: '彻底删除',
-                icon: <DeleteOutlined />,
+                icon: <Icon.DeleteOutlined />,
                 onClick: () => handleDelete(selectComments.value),
               },
             ]}

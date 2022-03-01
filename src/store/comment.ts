@@ -6,7 +6,7 @@
 import { arrayToTree } from 'performant-array-to-tree'
 import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/request'
 import { Comment, CommentState } from '@/constants/comment'
-import { SortType } from '@/constants/sort'
+import { SortTypeWithHot } from '@/constants/sort'
 import nodepress from '@/services/nodepress'
 
 export const COMMENT_API_PATH = '/comment'
@@ -19,7 +19,7 @@ export interface GetCommentsParams extends GeneralPaginateQueryParams {
   keyword?: string
   post_id?: number
   state?: CommentState
-  sort?: SortType
+  sort?: SortTypeWithHot
 }
 /** 获取评论列表 */
 export function getComments(params: GetCommentsParams = {}) {
@@ -40,9 +40,9 @@ export function getComments(params: GetCommentsParams = {}) {
 }
 
 /** 获取评论详情 */
-export function getComment(commentId: number) {
+export function getComment(commentID: string) {
   return nodepress
-    .get<Comment>(`${COMMENT_API_PATH}/${commentId}`)
+    .get<Comment>(`${COMMENT_API_PATH}/${commentID}`)
     .then((response) => response.result)
 }
 

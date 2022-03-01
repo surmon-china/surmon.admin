@@ -1,11 +1,11 @@
 import React from 'react'
 import { Ref, useWatch, useRef } from 'veact'
+import { useLoading } from 'veact-use'
 import {
   Form,
   Typography,
   Input,
   InputNumber,
-  Avatar,
   Button,
   Divider,
   Select,
@@ -13,26 +13,18 @@ import {
   Space,
   Spin,
 } from 'antd'
-import {
-  UserOutlined,
-  CheckOutlined,
-  MailOutlined,
-  SendOutlined,
-  LinkOutlined,
-  LikeOutlined,
-  DislikeOutlined,
-} from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
+import { UniversalText } from '@/components/common/UniversalText'
 import { UniversalEditor } from '@/components/common/UniversalEditor'
-import { FormDataExtend } from '@/components/common/FormDataExtend'
-import { useLoading } from 'veact-use'
-import { getComment } from '@/store/comment'
+import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
+import { IPLocation } from '@/components/common/IPLocation'
 import { getArticle } from '@/store/article'
-import { Comment, commentStates, COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
 import { Article } from '@/constants/article'
+import { Comment, commentStates, COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
 import { stringToYMD } from '@/transforms/date'
-import { autoCommentAvatar } from '@/transforms/avatar'
 import { getBlogURLByPostID } from '@/transforms/url'
 import { parseBrowser, parseOS } from '@/transforms/ua'
+import { CommentAvatar } from './Avatar'
 
 export interface EditDrawerProps {
   loading: boolean
@@ -45,17 +37,10 @@ export interface EditDrawerProps {
 export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
   const [form] = Form.useForm<Comment>()
   const loadingComment = useLoading()
-  const parentComment = useRef<Comment | null>(null)
   const commentArticle = useRef<Article | null>(null)
   const handleSubmit = () => {
     form.validateFields().then((formValue) => {
       props.onSubmit(formValue)
-    })
-  }
-
-  const fetchParentComment = (pid: number) => {
-    loadingComment.promise(getComment(pid)).then((result) => {
-      parentComment.value = result
     })
   }
 
@@ -70,9 +55,6 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
       const targetComment = props.comment.value
       form.setFieldsValue(targetComment || {})
       if (targetComment) {
-        if (!!targetComment.pid) {
-          fetchParentComment(targetComment.pid!)
-        }
         if (targetComment.post_id !== COMMENT_GUESTBOOK_POST_ID) {
           fetchArticle(targetComment.post_id)
         }
@@ -101,29 +83,19 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
           <Form.Item label="ID">
             <Typography.Text copyable={true}>{props.comment.value?.id}</Typography.Text>
             <Divider type="vertical" />
-            <Typography.Text copyable={true}>
-              {props.comment.value?._id}
-            </Typography.Text>
+            <Typography.Text copyable={true}>{props.comment.value?._id}</Typography.Text>
           </Form.Item>
-          <Form.Item label="发布于">
-            {stringToYMD(props.comment.value?.create_at!)}
-          </Form.Item>
-          <Form.Item label="最后修改于">
-            {stringToYMD(props.comment.value?.update_at!)}
-          </Form.Item>
+          <Form.Item label="发布于">{stringToYMD(props.comment.value?.create_at!)}</Form.Item>
+          <Form.Item label="最后修改于">{stringToYMD(props.comment.value?.update_at!)}</Form.Item>
           <Form.Item label="用户头像">
-            <Avatar
-              shape="square"
-              size="large"
-              src={props.comment.value ? autoCommentAvatar(props.comment.value) : ''}
-            />
+            <CommentAvatar size="large" comment={props.comment.value!} />
           </Form.Item>
           <Form.Item
             name={['author', 'name']}
             label="用户昵称"
             rules={[{ required: true, message: '必填' }]}
           >
-            <Input prefix={<UserOutlined />} />
+            <Input prefix={<Icon.UserOutlined />} />
           </Form.Item>
           <Form.Item
             name={['author', 'email']}
@@ -135,7 +107,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
               },
             ]}
           >
-            <Input prefix={<MailOutlined />} placeholder="email" type="email" />
+            <Input prefix={<Icon.MailOutlined />} placeholder="email" type="email" />
           </Form.Item>
           <Form.Item
             name={['author', 'site']}
@@ -148,11 +120,11 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             ]}
           >
             <Input
-              prefix={<LinkOutlined />}
+              prefix={<Icon.LinkOutlined />}
               type="url"
               placeholder="URL"
               suffix={
-                <SendOutlined
+                <Icon.SendOutlined
                   onClick={() => {
                     const url = props.comment.value?.author.site
                     if (url) {
@@ -163,72 +135,43 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
               }
             />
           </Form.Item>
-          <Form.Item label="IP / 地址">
-            {props.comment.value?.ip ? (
-              <Typography.Text copyable={true}>
-                {props.comment.value.ip}
-              </Typography.Text>
-            ) : (
-              '-'
-            )}
-            <Divider type="vertical" />
-            {!props.comment.value?.ip_location ? (
-              '-'
-            ) : (
-              <span>
-                {props.comment.value.ip_location.country || '-'}
-                <span> · </span>
-                {props.comment.value.ip_location.region || '-'}
-                <span> · </span>
-                {props.comment.value.ip_location.city || '-'}
-              </span>
-            )}
+          <Form.Item label="IP 地址">
+            <UniversalText text={props.comment.value?.ip} copyable={true} />
+          </Form.Item>
+          <Form.Item label="IP 地理位置">
+            <IPLocation data={props.comment.value?.ip_location} fullname={true} />
           </Form.Item>
           <Form.Item label="终端">
             {parseBrowser(props.comment.value?.agent!)}
             <Divider type="vertical" />
             {parseOS(props.comment.value?.agent!)}
           </Form.Item>
-          <Form.Item
-            name="likes"
-            label="被赞"
-            rules={[{ required: true, message: '必填' }]}
-          >
-            <InputNumber addonBefore={<LikeOutlined />} placeholder="多少" />
+          <Form.Item name="likes" label="被赞" rules={[{ required: true, message: '必填' }]}>
+            <InputNumber addonBefore={<Icon.LikeOutlined />} placeholder="多少" />
           </Form.Item>
-          <Form.Item
-            name="dislikes"
-            label="被踩"
-            rules={[{ required: true, message: '必填' }]}
-          >
-            <InputNumber addonBefore={<DislikeOutlined />} placeholder="多少" />
+          <Form.Item name="dislikes" label="被踩" rules={[{ required: true, message: '必填' }]}>
+            <InputNumber addonBefore={<Icon.DislikeOutlined />} placeholder="多少" />
           </Form.Item>
           <Form.Item label="宿主页面">
             <Button
               type="link"
               target="_blank"
-              icon={<LinkOutlined />}
+              icon={<Icon.LinkOutlined />}
               href={getBlogURLByPostID(props.comment.value?.post_id!)}
             >
               {props.comment.value?.post_id === COMMENT_GUESTBOOK_POST_ID
                 ? '留言板'
                 : commentArticle.value?.title}
-              <Divider type="vertical" />#{props.comment.value?.id}
+              <Divider type="vertical" />
+              <span>#{props.comment.value?.id}</span>
             </Button>
           </Form.Item>
           {Boolean(props.comment.value?.pid) && (
             <Form.Item label="父级评论">
-              <p>#{props.comment.value?.pid}</p>
-              <Typography.Paragraph>
-                <blockquote>{parentComment.value?.content}</blockquote>
-              </Typography.Paragraph>
+              <Typography.Text strong>#{props.comment.value?.pid}</Typography.Text>
             </Form.Item>
           )}
-          <Form.Item
-            name="state"
-            label="状态"
-            rules={[{ required: true, message: '请选择状态' }]}
-          >
+          <Form.Item name="state" label="状态" rules={[{ required: true, message: '请选择状态' }]}>
             <Select
               placeholder="选择状态"
               options={commentStates.map((state) => {
@@ -261,11 +204,11 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             extra="可以为当前评论增加自定义扩展属性"
             shouldUpdate={true}
           >
-            <FormDataExtend fieldName="extends" />
+            <FormDataKeyValue fieldName="extends" />
           </Form.Item>
           <Form.Item label=" ">
             <Button
-              icon={<CheckOutlined />}
+              icon={<Icon.CheckOutlined />}
               type="primary"
               loading={props.loading}
               onClick={handleSubmit}

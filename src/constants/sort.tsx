@@ -4,40 +4,40 @@
  */
 
 import React from 'react'
-import {
-  SortAscendingOutlined,
-  SortDescendingOutlined,
-  FireOutlined,
-} from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 
-/** 数据排序状态 */
-export enum SortType {
-  Asc = 1, // 升序
-  Desc = -1, // 降序
-  Hot = 2, // 最热
+const ASC = 1 // 升序
+const DESC = -1 // 降序
+
+export enum SortTypeBase {
+  Asc = ASC,
+  Desc = DESC,
+}
+
+export enum SortTypeWithHot {
+  Asc = ASC,
+  Desc = DESC,
+  Hot = 2,
 }
 
 const sortTypeMap = new Map(
   [
     {
-      id: SortType.Desc,
+      id: SortTypeWithHot.Desc,
       name: '最新',
-      icon: <SortDescendingOutlined />,
+      icon: <Icon.SortDescendingOutlined />,
     },
     {
-      id: SortType.Asc,
+      id: SortTypeWithHot.Asc,
       name: '最早',
-      icon: <SortAscendingOutlined />,
+      icon: <Icon.SortAscendingOutlined />,
     },
     {
-      id: SortType.Hot,
+      id: SortTypeWithHot.Hot,
       name: '最热',
-      icon: <FireOutlined />,
+      icon: <Icon.FireOutlined />,
     },
   ].map((item) => [item.id, item])
 )
 
-export const st = (state: SortType) => {
-  return sortTypeMap.get(state)!
-}
-export const sortTypes = Array.from<ReturnType<typeof st>>(sortTypeMap.values())
+export const st = (state: number) => sortTypeMap.get(state)!

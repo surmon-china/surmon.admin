@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { GlobalOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 
 /** 文章语言 */
 export enum ArticleLanguage {
@@ -17,13 +17,13 @@ const articleLanguageMap = new Map(
     {
       id: ArticleLanguage.Chinese,
       name: '中文',
-      icon: <GlobalOutlined />,
+      icon: <Icon.GlobalOutlined />,
       color: '#ee1c25',
     },
     {
       id: ArticleLanguage.English,
       name: 'English',
-      icon: <GlobalOutlined />,
+      icon: <Icon.GlobalOutlined />,
       color: '#002164',
     },
   ].map((item) => [item.id, item])
@@ -32,6 +32,4 @@ const articleLanguageMap = new Map(
 export const al = (language: ArticleLanguage) => {
   return articleLanguageMap.get(language)!
 }
-export const articleLanguages = Array.from<ReturnType<typeof al>>(
-  articleLanguageMap.values()
-)
+export const articleLanguages = Array.from<ReturnType<typeof al>>(articleLanguageMap.values())

@@ -6,7 +6,7 @@
 import React from 'react'
 import { useRef, useComputed, onMounted } from 'veact'
 import { ConfigProvider, Layout, Space, Typography } from 'antd'
-import { CodeOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 import zhCN from 'antd/lib/locale/zh_CN'
 
 import * as CONFIG from '@/config'
@@ -48,17 +48,14 @@ export const AppLayout: React.FC = (props) => {
             style={{ width: `calc(100% - ${siderWidth.value}px)` }}
             className={styles.appHeader}
           >
-            <AppHeader
-              isSiderCollapsed={isSiderCollapsed.value}
-              onToggleSider={toggleSider}
-            />
+            <AppHeader isSiderCollapsed={isSiderCollapsed.value} onToggleSider={toggleSider} />
           </Layout.Header>
           <Layout.Content className={styles.appContent}>
             <AppContent>{props?.children}</AppContent>
           </Layout.Content>
           <Layout.Footer className={styles.appFooter}>
             <Space size="small">
-              <CodeOutlined />
+              <Icon.CodeOutlined />
               Powered by
               <Typography.Link target="_blank" href="https://github.com/facebook/react">
                 React

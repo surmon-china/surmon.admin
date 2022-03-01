@@ -1,12 +1,11 @@
 import React from 'react'
-import { Card, Divider, Button, Spin, Result } from 'antd'
-import { StockOutlined, MehOutlined } from '@ant-design/icons'
-import classnames from 'classnames'
 import { useRef, onMounted } from 'veact'
-
+import { useLoading } from 'veact-use'
+import classnames from 'classnames'
+import { Card, Divider, Button, Spin, Result } from 'antd'
+import * as Icon from '@ant-design/icons'
 import { APP_COLOR_PRIMARY } from '@/config'
 import { getGAToken } from '@/store/system'
-import { useLoading } from 'veact-use'
 import storage from '@/services/storage'
 import styles from './style.module.less'
 
@@ -169,22 +168,10 @@ export const Analytics: React.FC = () => {
           })
         }
 
-        const countryChart = getPieChart(
-          'ga:country',
-          GOOGLE_CHART_ID_MAP.COUNTRY,
-          '国家地区'
-        )
+        const countryChart = getPieChart('ga:country', GOOGLE_CHART_ID_MAP.COUNTRY, '国家地区')
         const cityChart = getPieChart('ga:city', GOOGLE_CHART_ID_MAP.CITY, '城市')
-        const browserChart = getPieChart(
-          'ga:browser',
-          GOOGLE_CHART_ID_MAP.BROWSER,
-          '浏览器'
-        )
-        const osChart = getPieChart(
-          'ga:operatingSystem',
-          GOOGLE_CHART_ID_MAP.OS,
-          '操作系统'
-        )
+        const browserChart = getPieChart('ga:browser', GOOGLE_CHART_ID_MAP.BROWSER, '浏览器')
+        const osChart = getPieChart('ga:operatingSystem', GOOGLE_CHART_ID_MAP.OS, '操作系统')
 
         viewSelector.on('change', (ids: any) => {
           const newIds = {
@@ -238,7 +225,7 @@ export const Analytics: React.FC = () => {
             disabled={loading.state.value}
             onClick={handleToggleShow}
           >
-            <StockOutlined />
+            <Icon.StockOutlined />
           </Button>
           <div
             id={GOOGLE_CHART_VIEW_SELECTOR_ID}
@@ -278,7 +265,7 @@ export const Analytics: React.FC = () => {
       {isDisabled.value ? (
         <Result
           title="GA DISABLED"
-          icon={<MehOutlined />}
+          icon={<Icon.MehOutlined />}
           extra={<Button onClick={handleEnable}>ENABLE</Button>}
         />
       ) : (
@@ -288,18 +275,12 @@ export const Analytics: React.FC = () => {
               id={GOOGLE_CHART_ID_MAP.COUNTRY}
               className={classnames(styles.chart, styles.country)}
             />
-            <div
-              id={GOOGLE_CHART_ID_MAP.CITY}
-              className={classnames(styles.chart, styles.city)}
-            />
+            <div id={GOOGLE_CHART_ID_MAP.CITY} className={classnames(styles.chart, styles.city)} />
             <div
               id={GOOGLE_CHART_ID_MAP.BROWSER}
               className={classnames(styles.chart, styles.browser)}
             />
-            <div
-              id={GOOGLE_CHART_ID_MAP.OS}
-              className={classnames(styles.chart, styles.os)}
-            />
+            <div id={GOOGLE_CHART_ID_MAP.OS} className={classnames(styles.chart, styles.os)} />
           </div>
           <Divider />
           <div id={GOOGLE_CHART_TIMELINE_ID} className={styles.timeline}></div>

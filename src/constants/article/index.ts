@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { GeneralExtend } from '../general'
+import { GeneralKeyValue } from '../general'
 import { PublishState } from '../publish'
 import { Category } from '../category'
 import { Tag } from '../tag'
@@ -37,5 +37,5 @@ export interface Article {
   }
   update_at?: string
   create_at?: string
-  extends: Array<GeneralExtend>
+  extends: Array<GeneralKeyValue>
 }

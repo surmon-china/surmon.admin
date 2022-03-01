@@ -1,0 +1,32 @@
+@import '@/styles/init.less';
+
+.postIdInput {
+  padding: 10px;
+  input[type='number'] {
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none !important;
+      margin: 0;
+    }
+  }
+}
+
+.comment {
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+
+    .select {
+      width: 120px;
+    }
+    .search {
+      width: 260px;
+    }
+  }
+}
+
+.content {
+  overflow-wrap: anywhere;
+  margin-bottom: 0 !important;
+}

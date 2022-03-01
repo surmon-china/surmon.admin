@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Form, Select, Divider, Space, Radio, FormInstance } from 'antd'
-import { CheckOutlined, StopOutlined, CheckCircleOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 import { publishStates } from '@/constants/publish'
 import { articleOrigins } from '@/constants/article/origin'
 import { articlePublics } from '@/constants/article/public'
@@ -90,19 +90,14 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
           })}
         />
       </Form.Item>
-      <Form.Item
-        required={true}
-        name="disabled_comment"
-        label="文章评论"
-        rules={[requiredRule]}
-      >
+      <Form.Item required={true} name="disabled_comment" label="文章评论" rules={[requiredRule]}>
         <Radio.Group size="small">
           <Radio.Button value={false}>
-            <CheckCircleOutlined />
+            <Icon.CheckCircleOutlined />
             &nbsp;允许评论
           </Radio.Button>
           <Radio.Button value={true}>
-            <StopOutlined />
+            <Icon.StopOutlined />
             &nbsp;禁止
           </Radio.Button>
         </Radio.Group>
@@ -111,7 +106,7 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
       <Button
         type="primary"
         block={true}
-        icon={<CheckOutlined />}
+        icon={<Icon.CheckOutlined />}
         loading={props.submitting}
         onClick={props.onSubmit}
       >

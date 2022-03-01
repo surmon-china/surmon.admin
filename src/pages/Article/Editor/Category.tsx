@@ -1,17 +1,8 @@
 import React from 'react'
 import { useRef, onMounted } from 'veact'
-import {
-  Spin,
-  Button,
-  Form,
-  Tree,
-  Typography,
-  Divider,
-  Space,
-  FormInstance,
-} from 'antd'
-import { ReloadOutlined } from '@ant-design/icons'
 import { useLoading } from 'veact-use'
+import { Spin, Button, Form, Tree, Typography, Divider, Space, FormInstance } from 'antd'
+import * as Icon from '@ant-design/icons'
 import { getCategories, CategoryTree, getAntdTreeByTree } from '@/store/category'
 import { CategoryFormModel } from '.'
 
@@ -73,7 +64,7 @@ const CategorySelect: React.FC<CategorySelectProps> = (props) => {
       <Button
         size="small"
         type="dashed"
-        icon={<ReloadOutlined />}
+        icon={<Icon.ReloadOutlined />}
         loading={categoriesLoading.state.value}
         onClick={fetchCategories}
       >

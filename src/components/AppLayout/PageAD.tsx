@@ -1,7 +1,7 @@
 import React from 'react'
 import { onMounted, useRef } from 'veact'
 import { Button } from 'antd'
-import { CloseOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 import { ENABLED_AD } from '@/config'
 
 import styles from './style.module.less'
@@ -27,13 +27,8 @@ export const PageHeaderAD: React.FC = () => {
             data-ad-client="ca-pub-4710915636313788"
             data-ad-slot="5883149084"
           ></ins>
-          <Button
-            className={styles.closeButton}
-            size="middle"
-            type="text"
-            onClick={closeAD}
-          >
-            <CloseOutlined />
+          <Button className={styles.closeButton} size="middle" type="text" onClick={closeAD}>
+            <Icon.CloseOutlined />
           </Button>
         </div>
       </div>

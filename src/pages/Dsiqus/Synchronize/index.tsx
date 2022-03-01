@@ -6,17 +6,8 @@
 import React from 'react'
 import { useLoading } from 'veact-use'
 import { Card, Steps, Space, Result, Button, Upload, Modal } from 'antd'
-import {
-  CloudDownloadOutlined,
-  CloudSyncOutlined,
-  CloudUploadOutlined,
-  DownloadOutlined,
-  UploadOutlined,
-} from '@ant-design/icons'
-import {
-  downloadNodePressXMLToDisqus,
-  importDisqusXMLToNodePress,
-} from '@/store/disqus'
+import * as Icon from '@ant-design/icons'
+import { downloadNodePressXMLToDisqus, importDisqusXMLToNodePress } from '@/store/disqus'
 import { APP_LAYOUT_SPACE_SIZE } from '@/config'
 
 import styles from './style.module.less'
@@ -33,35 +24,31 @@ export const DisqusSynchronizePage: React.FC = () => {
   }
 
   return (
-    <Space
-      direction="vertical"
-      size={APP_LAYOUT_SPACE_SIZE}
-      className={styles.synchornize}
-    >
+    <Space direction="vertical" size={APP_LAYOUT_SPACE_SIZE} className={styles.synchornize}>
       <Card title="Synchronize NodePress to Disqus" bordered={false}>
         <Steps>
           <Steps.Step
             status="process"
             title="Export"
             subTitle="Export XML form NodePress database"
-            icon={<CloudDownloadOutlined />}
+            icon={<Icon.CloudDownloadOutlined />}
           />
           <Steps.Step
             status="process"
             title="Import"
             subTitle="Upload XML to Disqus"
-            icon={<CloudUploadOutlined />}
+            icon={<Icon.CloudUploadOutlined />}
           />
         </Steps>
         <Result
-          icon={<CloudSyncOutlined />}
+          icon={<Icon.CloudSyncOutlined />}
           title="NodePress To Disqus"
           extra={
             <Button.Group>
               <Button
                 size="large"
                 type="primary"
-                icon={<DownloadOutlined />}
+                icon={<Icon.DownloadOutlined />}
                 onClick={() => downloadNodePressXMLToDisqus()}
               >
                 Download XML
@@ -69,7 +56,7 @@ export const DisqusSynchronizePage: React.FC = () => {
               <Button
                 size="large"
                 type="primary"
-                icon={<UploadOutlined />}
+                icon={<Icon.UploadOutlined />}
                 target="_blank"
                 href="https://import.disqus.com/"
               >
@@ -85,24 +72,24 @@ export const DisqusSynchronizePage: React.FC = () => {
             status="process"
             title="Export"
             subTitle="Export XML form Disqus admin"
-            icon={<CloudDownloadOutlined />}
+            icon={<Icon.CloudDownloadOutlined />}
           />
           <Steps.Step
             status="process"
             title="Import"
             subTitle="Upload XML to NodePress"
-            icon={<CloudUploadOutlined />}
+            icon={<Icon.CloudUploadOutlined />}
           />
         </Steps>
         <Result
-          icon={<CloudSyncOutlined />}
+          icon={<Icon.CloudSyncOutlined />}
           title="Disqus To NodePress"
           extra={
             <Button.Group>
               <Button
                 size="large"
                 type="primary"
-                icon={<DownloadOutlined />}
+                icon={<Icon.DownloadOutlined />}
                 target="_blank"
                 href="https://help.disqus.com/en/articles/1717164-comments-export"
               >
@@ -122,7 +109,7 @@ export const DisqusSynchronizePage: React.FC = () => {
                   type="primary"
                   loading={uploading.state.value}
                   disabled={uploading.state.value}
-                  icon={<UploadOutlined />}
+                  icon={<Icon.UploadOutlined />}
                 >
                   Upload XML to NodePress
                 </Button>

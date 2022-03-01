@@ -1,18 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Table, Button, Typography, Card, Tag, Space } from 'antd'
-import {
-  DeleteOutlined,
-  EyeOutlined,
-  EditOutlined,
-  CommentOutlined,
-  CheckOutlined,
-  HeartOutlined,
-  FolderOpenOutlined,
-  TagOutlined,
-  RollbackOutlined,
-  LinkOutlined,
-} from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 import { RouteKey, rc } from '@/routes'
 import { Pagination } from '@/constants/request'
 import { Article } from '@/constants/article'
@@ -104,13 +93,13 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
               <Space direction="vertical">
                 {article.category.map((category) => (
                   <Space size="small" key={category._id}>
-                    <FolderOpenOutlined />
+                    <Icon.FolderOpenOutlined />
                     {category.name}
                   </Space>
                 ))}
                 <Space size="small" wrap={true}>
                   {article.tag.map((tag) => (
-                    <Tag icon={<TagOutlined />} key={tag._id}>
+                    <Tag icon={<Icon.TagOutlined />} key={tag._id}>
                       {tag.name}
                     </Tag>
                   ))}
@@ -127,15 +116,15 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
             return (
               <Space direction="vertical">
                 <Space size="small">
-                  <EyeOutlined />
+                  <Icon.EyeOutlined />
                   浏览 {article.meta?.views} 次
                 </Space>
                 <Space size="small">
-                  <HeartOutlined />
+                  <Icon.HeartOutlined />
                   喜欢 {article.meta?.likes} 次
                 </Space>
                 <Space size="small">
-                  <CommentOutlined />
+                  <Icon.CommentOutlined />
                   评论 {article.meta?.comments} 条
                 </Space>
               </Space>
@@ -181,7 +170,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           render: (_, article) => (
             <Space direction="vertical">
               <Link to={rc(RouteKey.ArticleEdit).pather!(article._id!)}>
-                <Button size="small" type="text" block={true} icon={<EditOutlined />}>
+                <Button size="small" type="text" block={true} icon={<Icon.EditOutlined />}>
                   文章详情
                 </Button>
               </Link>
@@ -190,7 +179,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                   size="small"
                   type="text"
                   block={true}
-                  icon={<CheckOutlined />}
+                  icon={<Icon.CheckOutlined />}
                   onClick={() => props.onUpdateState(article, PublishState.Published)}
                 >
                   <Typography.Text type="success">直接发布</Typography.Text>
@@ -202,7 +191,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                   type="text"
                   block={true}
                   danger={true}
-                  icon={<DeleteOutlined />}
+                  icon={<Icon.DeleteOutlined />}
                   onClick={() => props.onUpdateState(article, PublishState.Recycle)}
                 >
                   移回收站
@@ -213,7 +202,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                   size="small"
                   type="text"
                   block={true}
-                  icon={<RollbackOutlined />}
+                  icon={<Icon.RollbackOutlined />}
                   onClick={() => props.onUpdateState(article, PublishState.Draft)}
                 >
                   <Typography.Text type="warning">退至草稿</Typography.Text>
@@ -224,7 +213,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 block={true}
                 type="link"
                 target="_blank"
-                icon={<LinkOutlined />}
+                icon={<Icon.LinkOutlined />}
                 href={getBlogArticleUrl(article.id!)}
               >
                 宿主页面

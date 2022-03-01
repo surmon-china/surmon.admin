@@ -8,7 +8,7 @@ import { Ref, useWatch, onMounted } from 'veact'
 import { Card, Row, Col, Form, message, Spin } from 'antd'
 import { APP_LAYOUT_GUTTER_SIZE } from '@/config'
 import { ImageUploader } from '@/components/common/ImageUploader'
-import { FormDataExtend } from '@/components/common/FormDataExtend'
+import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
 import { Article } from '@/constants/article'
 import { PublishState } from '@/constants/publish'
 import { ArticleOrigin } from '@/constants/article/origin'
@@ -142,7 +142,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
                 <Spin spinning={props.loading}>
                   <Form scrollToFirstError={true} form={extendFormModel}>
                     <Form.Item noStyle={true} shouldUpdate={true}>
-                      <FormDataExtend fieldName="extends" />
+                      <FormDataKeyValue fieldName="extends" />
                     </Form.Item>
                   </Form>
                 </Spin>

@@ -5,14 +5,14 @@
 
 import React from 'react'
 import { Button, Input, Form, Space } from 'antd'
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 
 import styles from './style.module.less'
 
-export interface FormDataExtendProps {
+export interface FormDataKeyValueProps {
   fieldName: string
 }
-export const FormDataExtend: React.FC<FormDataExtendProps> = (props) => {
+export const FormDataKeyValue: React.FC<FormDataKeyValueProps> = (props) => {
   return (
     <Form.List name={props.fieldName}>
       {(extendsData, { add, remove }) => (
@@ -38,20 +38,15 @@ export const FormDataExtend: React.FC<FormDataExtendProps> = (props) => {
                 <Input placeholder="Value" />
               </Form.Item>
               <Button
-                icon={<DeleteOutlined />}
+                icon={<Icon.DeleteOutlined />}
                 danger={true}
                 type="dashed"
                 onClick={() => remove(extend.name)}
               />
             </Space>
           ))}
-          <Button
-            type="dashed"
-            block={true}
-            icon={<PlusOutlined />}
-            onClick={() => add()}
-          >
-            增加扩展
+          <Button type="dashed" block={true} icon={<Icon.PlusOutlined />} onClick={() => add()}>
+            增加数据
           </Button>
         </div>
       )}

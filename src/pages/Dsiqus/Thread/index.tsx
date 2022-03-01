@@ -3,35 +3,13 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import classnames from 'classnames'
 import React from 'react'
 import { useShallowReactive, onMounted, useRef, useWatch } from 'veact'
 import { useLoading } from 'veact-use'
-import {
-  Button,
-  Card,
-  Table,
-  Select,
-  Tag,
-  Space,
-  Switch,
-  Divider,
-  Typography,
-} from 'antd'
-import {
-  DashboardOutlined,
-  ReloadOutlined,
-  LikeOutlined,
-  DislikeOutlined,
-  CommentOutlined,
-} from '@ant-design/icons'
-import {
-  getConfig,
-  getThreads,
-  ThreadState,
-  OrderType,
-  GeneralDisqusParams,
-} from '@/store/disqus'
+import classnames from 'classnames'
+import { Button, Card, Table, Select, Tag, Space, Switch, Divider, Typography } from 'antd'
+import * as Icon from '@ant-design/icons'
+import { getConfig, getThreads, ThreadState, OrderType, GeneralDisqusParams } from '@/store/disqus'
 import { stringToYMD } from '@/transforms/date'
 import { scrollTo } from '@/services/scroller'
 
@@ -105,7 +83,7 @@ export const DisqusThreadsPage: React.FC = () => {
           type="primary"
           size="small"
           target="_blank"
-          icon={<DashboardOutlined />}
+          icon={<Icon.DashboardOutlined />}
           href={`https://${config.value?.forum}.disqus.com/admin/discussions/`}
         >
           Disqus Discussions
@@ -154,7 +132,7 @@ export const DisqusThreadsPage: React.FC = () => {
           ]}
         />
         <Button
-          icon={<ReloadOutlined />}
+          icon={<Icon.ReloadOutlined />}
           loading={loading.state.value}
           onClick={() => resetFetch()}
         >
@@ -216,7 +194,7 @@ export const DisqusThreadsPage: React.FC = () => {
             dataIndex: 'posts',
             render: (_, item) => (
               <Space size="small">
-                <CommentOutlined />
+                <Icon.CommentOutlined />
                 {item.posts}
               </Space>
             ),
@@ -226,7 +204,7 @@ export const DisqusThreadsPage: React.FC = () => {
             key: 'likes',
             render: (_, item) => (
               <Space size="small">
-                <LikeOutlined />
+                <Icon.LikeOutlined />
                 {item.likes}
               </Space>
             ),
@@ -236,7 +214,7 @@ export const DisqusThreadsPage: React.FC = () => {
             key: 'dislikes',
             render: (_, item) => (
               <Space size="small">
-                <DislikeOutlined />
+                <Icon.DislikeOutlined />
                 {item.dislikes}
               </Space>
             ),

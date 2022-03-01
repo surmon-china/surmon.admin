@@ -1,13 +1,9 @@
 import React from 'react'
 import { useRef, onMounted } from 'veact'
 import { Form, Input, Button, Select, Spin, Card, Space, Statistic } from 'antd'
-import {
-  MailOutlined,
-  LinkOutlined,
-  CheckOutlined,
-  HeartOutlined,
-} from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor'
+import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
 import { Option } from '@/constants/option'
 import { useLoading } from 'veact-use'
 import { scrollTo } from '@/services/scroller'
@@ -81,7 +77,7 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
               title={
                 <Space size="small">
                   站点累计被喜欢
-                  <HeartOutlined />
+                  <Icon.HeartOutlined />
                 </Space>
               }
             />
@@ -114,7 +110,7 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
             },
           ]}
         >
-          <Input suffix={<LinkOutlined />} placeholder="https://example.me" />
+          <Input suffix={<Icon.LinkOutlined />} placeholder="https://example.me" />
         </Form.Item>
         <Form.Item
           name="site_email"
@@ -131,7 +127,21 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
             },
           ]}
         >
-          <Input suffix={<MailOutlined />} placeholder="example@xxx.me" />
+          <Input suffix={<Icon.MailOutlined />} placeholder="example@xxx.me" />
+        </Form.Item>
+        <Form.Item name="statement" label="站点声明">
+          <UniversalEditor
+            minRows={10}
+            maxRows={30}
+            eid="app-statement"
+            defaultLanguage={UEditorLanguage.Markdown}
+            disabledMinimap={true}
+            disabledCacheDraft={true}
+            placeholder="输入 Markdown 内容作为站点声明"
+          />
+        </Form.Item>
+        <Form.Item label="友情链接" extra="Name 为名称，Value 为链接地址" shouldUpdate={true}>
+          <FormDataKeyValue fieldName="friend_links" />
         </Form.Item>
         <Form.Item
           name={['blocklist', 'ips']}
@@ -174,15 +184,15 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
           <UniversalEditor
             minRows={22}
             maxRows={30}
-            cacheID="APP_AD_CONFIG"
+            eid="app-ad-config"
             defaultLanguage={UEditorLanguage.JSON}
             disabledCacheDraft={true}
-            placeholder="站点描述"
+            placeholder="站点广告配置，JSON 格式"
           />
         </Form.Item>
         <Form.Item label=" ">
           <Button
-            icon={<CheckOutlined />}
+            icon={<Icon.CheckOutlined />}
             type="primary"
             loading={submitting.state.value}
             onClick={handleSubmit}

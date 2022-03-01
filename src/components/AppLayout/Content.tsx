@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation, matchPath } from 'react-router-dom'
 import { Breadcrumb, BackTop, Typography } from 'antd'
-import { CaretUpOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 import { scrollTo } from '@/services/scroller'
 import { routeMap } from '@/routes'
 import { PageHeaderAD } from './PageAD'
@@ -30,14 +30,9 @@ export const AppContent: React.FC = (props) => {
       </div>
       <PageHeaderAD />
       <div className={styles.pageContent}>{props?.children}</div>
-      <BackTop
-        className={styles.backTop}
-        onClick={() => {
-          scrollTo(document.body)
-        }}
-      >
+      <BackTop className={styles.backTop} onClick={() => scrollTo(document.body)}>
         <div className={styles.tigger}>
-          <CaretUpOutlined />
+          <Icon.CaretUpOutlined />
         </div>
       </BackTop>
     </div>

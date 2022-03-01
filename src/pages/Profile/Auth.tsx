@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import { Form, Input, Button, Spin, Divider, notification } from 'antd'
-import { CheckOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 
 import { RouteKey, rc } from '@/routes'
 import { ImageUploader } from '@/components/common/ImageUploader'
@@ -148,7 +148,7 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
         </Form.Item>
         <Form.Item label=" ">
           <Button
-            icon={<CheckOutlined />}
+            icon={<Icon.CheckOutlined />}
             type="primary"
             loading={submitting.state.value}
             onClick={handleSubmit}

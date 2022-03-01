@@ -8,7 +8,7 @@ import React from 'react'
 import { useRef, onMounted, useReactive } from 'veact'
 import { useLoading } from 'veact-use'
 import { Modal, message, Tooltip, Spin, Button, Upload, Result, Card } from 'antd'
-import { UploadOutlined, CopyOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 import { getOSSUpToken, AliYunOSSUpToken } from '@/store/system'
 import { isExpirationToken } from '@/services/uploader'
 import { copy } from '@/services/clipboard'
@@ -80,9 +80,7 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
           type="dashed"
           className={styles.copyButton}
           onClick={() => {
-            copy(
-              files.map((file) => imageURLToMarkdown(getStaticFileUrl(file))).join(`\n`)
-            )
+            copy(files.map((file) => imageURLToMarkdown(getStaticFileUrl(file))).join(`\n`))
             message.info(`${files.length} 个地址 复制成功`)
           }}
         >
@@ -101,7 +99,7 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
           showDownloadIcon: true,
           downloadIcon: (
             <Tooltip title="Copy Markdown">
-              <CopyOutlined />
+              <Icon.CopyOutlined />
             </Tooltip>
           ),
         }}
@@ -118,10 +116,7 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
             modalRender() {
               return (
                 <Card title={file.response}>
-                  <img
-                    style={{ width: '100%' }}
-                    src={getStaticFileUrl(file.response)}
-                  />
+                  <img style={{ width: '100%' }} src={getStaticFileUrl(file.response)} />
                 </Card>
               )
             },
@@ -148,7 +143,7 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
       >
         <br />
         <p className="ant-upload-drag-icon">
-          <UploadOutlined />
+          <Icon.UploadOutlined />
         </p>
         <p className="ant-upload-text">文件拖到这里或点击上传</p>
         <br />

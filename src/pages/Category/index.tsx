@@ -7,13 +7,8 @@ import React from 'react'
 import { useShallowReactive, useRef, onMounted, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Divider, Modal, Space, Spin, Tree, Typography } from 'antd'
-import {
-  DeleteOutlined,
-  EditOutlined,
-  LinkOutlined,
-  PlusOutlined,
-  ReloadOutlined,
-} from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
+import { UniversalText } from '@/components/common/UniversalText'
 import { ResponsePaginationData } from '@/constants/request'
 import { Category as CategoryType } from '@/constants/category'
 import { getBlogCategoryUrl } from '@/transforms/url'
@@ -115,12 +110,7 @@ export const CategoryPage: React.FC = () => {
       bordered={false}
       className={styles.category}
       extra={
-        <Button
-          type="primary"
-          size="small"
-          icon={<PlusOutlined />}
-          onClick={createNewData}
-        >
+        <Button type="primary" size="small" icon={<Icon.PlusOutlined />} onClick={createNewData}>
           创建新分类
         </Button>
       }
@@ -128,7 +118,7 @@ export const CategoryPage: React.FC = () => {
       <Space className={styles.toolbar}>
         <Space>
           <Button
-            icon={<ReloadOutlined />}
+            icon={<Icon.ReloadOutlined />}
             loading={loading.state.value}
             onClick={() => fetchData()}
           >
@@ -160,25 +150,21 @@ export const CategoryPage: React.FC = () => {
                     <Space className={styles.title}>
                       <Typography.Text strong={true}>{category.name}</Typography.Text>
                       <Divider type="vertical" />
-                      <Typography.Text type="secondary">
-                        {category.slug}
-                      </Typography.Text>
+                      <Typography.Text type="secondary">{category.slug}</Typography.Text>
                       <Divider type="vertical" />
                       <Typography.Text type="secondary">
                         {category.articles_count} 篇
                       </Typography.Text>
                     </Space>
                     <div>
-                      <Typography.Text type="secondary">
-                        {category.description || '-'}
-                      </Typography.Text>
+                      <UniversalText type="secondary" text={category.description} />
                     </div>
                   </div>
                   <div className={styles.actions}>
                     <Button
                       size="small"
                       type="text"
-                      icon={<EditOutlined />}
+                      icon={<Icon.EditOutlined />}
                       onClick={() => editData(category._id!)}
                     >
                       编辑
@@ -188,7 +174,7 @@ export const CategoryPage: React.FC = () => {
                       size="small"
                       type="text"
                       danger={true}
-                      icon={<DeleteOutlined />}
+                      icon={<Icon.DeleteOutlined />}
                       onClick={() => handleDelete(category)}
                     >
                       删除
@@ -196,7 +182,7 @@ export const CategoryPage: React.FC = () => {
                     <Divider type="vertical" />
                     <Button
                       size="small"
-                      icon={<LinkOutlined />}
+                      icon={<Icon.LinkOutlined />}
                       type="link"
                       target="_blank"
                       href={getBlogCategoryUrl(category.slug)}

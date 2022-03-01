@@ -13,25 +13,8 @@ import {
   useWatch,
   useComputed,
 } from 'veact'
-import {
-  Table,
-  Button,
-  Card,
-  Input,
-  Tag,
-  Select,
-  Divider,
-  Spin,
-  Modal,
-  Space,
-} from 'antd'
-import {
-  DeleteOutlined,
-  EditOutlined,
-  PlusOutlined,
-  ReloadOutlined,
-} from '@ant-design/icons'
-
+import { Table, Button, Card, Input, Tag, Select, Divider, Spin, Modal, Space } from 'antd'
+import * as Icon from '@ant-design/icons'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
 import {
   getAnnouncements,
@@ -187,12 +170,7 @@ export const AnnouncementPage: React.FC = () => {
       bordered={false}
       className={styles.announcement}
       extra={
-        <Button
-          type="primary"
-          size="small"
-          icon={<PlusOutlined />}
-          onClick={createNewData}
-        >
+        <Button type="primary" size="small" icon={<Icon.PlusOutlined />} onClick={createNewData}>
           发布新公告
         </Button>
       }
@@ -233,7 +211,7 @@ export const AnnouncementPage: React.FC = () => {
             }}
           />
           <Button
-            icon={<ReloadOutlined />}
+            icon={<Icon.ReloadOutlined />}
             loading={loading.state.value}
             onClick={() => resetParamsAndRefresh()}
           >
@@ -246,7 +224,7 @@ export const AnnouncementPage: React.FC = () => {
             options={[
               {
                 label: '批量删除',
-                icon: <DeleteOutlined />,
+                icon: <Icon.DeleteOutlined />,
                 onClick: handleDeleteList,
               },
             ]}
@@ -312,7 +290,7 @@ export const AnnouncementPage: React.FC = () => {
                   <Button
                     size="small"
                     type="text"
-                    icon={<EditOutlined />}
+                    icon={<Icon.EditOutlined />}
                     onClick={() => editData(index)}
                   >
                     编辑
@@ -321,7 +299,7 @@ export const AnnouncementPage: React.FC = () => {
                     size="small"
                     type="text"
                     danger={true}
-                    icon={<DeleteOutlined />}
+                    icon={<Icon.DeleteOutlined />}
                     onClick={() => handleDelete(ann._id!)}
                   >
                     删除

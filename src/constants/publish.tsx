@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { CheckOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 
 /** 数据发布状态 */
 export enum PublishState {
@@ -18,19 +18,19 @@ const publishStateMap = new Map(
     {
       id: PublishState.Draft,
       name: '草稿',
-      icon: <EditOutlined />,
+      icon: <Icon.EditOutlined />,
       color: 'orange',
     },
     {
       id: PublishState.Published,
       name: '已发布',
-      icon: <CheckOutlined />,
+      icon: <Icon.CheckOutlined />,
       color: 'green',
     },
     {
       id: PublishState.Recycle,
       name: '回收站',
-      icon: <DeleteOutlined />,
+      icon: <Icon.DeleteOutlined />,
       color: 'red',
     },
   ].map((item) => [item.id, item])

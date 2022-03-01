@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { LockOutlined, UnlockOutlined, StopOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 
 /** 文章公开状态 */
 export enum ArticlePublic {
@@ -18,27 +18,23 @@ const articlePublicMap = new Map(
     {
       id: ArticlePublic.Public,
       name: '公开',
-      icon: <UnlockOutlined />,
+      icon: <Icon.UnlockOutlined />,
       color: 'green',
     },
     {
       id: ArticlePublic.Secret,
       name: '私密',
-      icon: <LockOutlined />,
+      icon: <Icon.LockOutlined />,
       color: 'red',
     },
     {
       id: ArticlePublic.Reserve,
       name: '保留',
-      icon: <StopOutlined />,
+      icon: <Icon.StopOutlined />,
       color: 'orange',
     },
   ].map((item) => [item.id, item])
 )
 
-export const ap = (state: ArticlePublic) => {
-  return articlePublicMap.get(state)!
-}
-export const articlePublics = Array.from<ReturnType<typeof ap>>(
-  articlePublicMap.values()
-)
+export const ap = (state: ArticlePublic) => articlePublicMap.get(state)!
+export const articlePublics = Array.from<ReturnType<typeof ap>>(articlePublicMap.values())

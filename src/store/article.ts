@@ -5,7 +5,7 @@
 
 import nodepress from '@/services/nodepress'
 import { PublishState } from '@/constants/publish'
-import { SortType } from '@/constants/sort'
+import { SortTypeWithHot } from '@/constants/sort'
 import { ArticleId, Article } from '@/constants/article'
 import { ArticleOrigin } from '@/constants/article/origin'
 import { ArticlePublic } from '@/constants/article/public'
@@ -15,7 +15,7 @@ export const ARTICLE_API_PATH = '/article'
 
 /** 获取文章参数 */
 export interface GetArticleParams extends GeneralPaginateQueryParams {
-  sort?: SortType
+  sort?: SortTypeWithHot
   state?: PublishState
   public?: ArticlePublic
   origin?: ArticleOrigin
@@ -31,17 +31,15 @@ export function getArticles(params: GetArticleParams = {}) {
 }
 
 /** 获取文章详情 */
-export function getArticle(articleId: ArticleId) {
+export function getArticle(articleID: ArticleId) {
   return nodepress
-    .get<Article>(`${ARTICLE_API_PATH}/${articleId}`)
+    .get<Article>(`${ARTICLE_API_PATH}/${articleID}`)
     .then((response) => response.result)
 }
 
 /** 创建文章 */
 export function createArticle(article: Article) {
-  return nodepress
-    .post<Article>(ARTICLE_API_PATH, article)
-    .then((response) => response.result)
+  return nodepress.post<Article>(ARTICLE_API_PATH, article).then((response) => response.result)
 }
 
 /** 修改文章 */

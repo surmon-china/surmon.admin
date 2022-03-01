@@ -1,5 +1,5 @@
 /**
- * @file Markdown 解释器
+ * @file Markdown
  * @author Surmon <https://github.com/surmon-china>
  */
 

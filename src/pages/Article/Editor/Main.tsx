@@ -14,13 +14,7 @@ import {
   Typography,
   FormInstance,
 } from 'antd'
-import {
-  ReloadOutlined,
-  CheckCircleOutlined,
-  TagOutlined,
-  FileImageOutlined,
-  CloudUploadOutlined,
-} from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor'
 import { MultipleUploader } from '@/components/common/ImageUploader'
 import { getTags } from '@/store/tag'
@@ -65,7 +59,7 @@ const TagSelect: React.FC<TagSelectProps> = (props) => {
                 size="small"
                 key={tag._id!}
                 type={isChecked ? 'primary' : 'default'}
-                icon={isChecked ? <CheckCircleOutlined /> : <TagOutlined />}
+                icon={isChecked ? <Icon.CheckCircleOutlined /> : <Icon.TagOutlined />}
                 onClick={() => handleClick(tag, !isChecked)}
               >
                 {tag.name}
@@ -77,7 +71,7 @@ const TagSelect: React.FC<TagSelectProps> = (props) => {
         <Button
           size="small"
           type="dashed"
-          icon={<ReloadOutlined />}
+          icon={<Icon.ReloadOutlined />}
           loading={tagsLoading.state.value}
           onClick={fetchTags}
         >
@@ -180,14 +174,14 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
           <UniversalEditor
             formStatus={true}
             minRows={28}
-            cacheID={props.editorCacheID}
+            eid={props.editorCacheID}
             placeholder="输入文章内容..."
             renderToolbarExtra={(language) => {
               if (language === UEditorLanguage.Markdown) {
                 return (
                   <Button
                     size="small"
-                    icon={<CloudUploadOutlined />}
+                    icon={<Icon.CloudUploadOutlined />}
                     onClick={() => {
                       isVisibleUploaderModal.value = true
                     }}
@@ -208,7 +202,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
         }}
         title={
           <Space>
-            <FileImageOutlined />
+            <Icon.FileImageOutlined />
             图片上传器
           </Space>
         }

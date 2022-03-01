@@ -5,20 +5,14 @@
 
 import React, { useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Modal, Button, Space, Badge, message } from 'antd'
-import {
-  DeleteOutlined,
-  CommentOutlined,
-  RocketOutlined,
-  HeartOutlined,
-  EyeOutlined,
-} from '@ant-design/icons'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
+import { Modal, Button, Space, Badge, message } from 'antd'
+import * as Icon from '@ant-design/icons'
 import { RouteKey, rc } from '@/routes'
 import { getUEditorCache } from '@/components/common/UniversalEditor'
 import { Article } from '@/constants/article'
-import { SortType } from '@/constants/sort'
+import { SortTypeWithHot } from '@/constants/sort'
 import { scrollTo } from '@/services/scroller'
 import { getArticle, putArticle, deleteArticles } from '@/store/article'
 import { getComments, CommentTree } from '@/store/comment'
@@ -32,10 +26,7 @@ export const ArticleEdit: React.FC = () => {
   const fetching = useLoading()
   const submitting = useLoading()
   const article = useRef<Article | null>(null)
-  const articleCacheID = useMemo(
-    () => rc(RouteKey.ArticleEdit).pather!(articleID),
-    [articleID]
-  )
+  const articleCacheID = useMemo(() => rc(RouteKey.ArticleEdit).pather!(articleID), [articleID])
 
   // Modal
   const isVisibleCommentModal = useRef<boolean>(false)
@@ -52,7 +43,7 @@ export const ArticleEdit: React.FC = () => {
   const comments = useRef<Array<CommentTree>>([])
   const fetchComments = (articleId: number) => {
     commentLoading
-      .promise(getComments({ per_page: 50, sort: SortType.Asc, post_id: articleId }))
+      .promise(getComments({ per_page: 50, sort: SortTypeWithHot.Asc, post_id: articleId }))
       .then((result) => {
         commentCount.value = result.pagination?.total!
         comments.value = result.tree
@@ -141,7 +132,7 @@ export const ArticleEdit: React.FC = () => {
               type="dashed"
               size="small"
               danger={true}
-              icon={<DeleteOutlined />}
+              icon={<Icon.DeleteOutlined />}
               disabled={fetching.state.value}
               onClick={() => message.warn('双击执行删除操作')}
               onDoubleClick={handleDelete}
@@ -152,7 +143,7 @@ export const ArticleEdit: React.FC = () => {
               <Button
                 type="ghost"
                 size="small"
-                icon={<CommentOutlined />}
+                icon={<Icon.CommentOutlined />}
                 disabled={fetching.state.value}
                 onClick={openCommentModal}
               >
@@ -160,15 +151,15 @@ export const ArticleEdit: React.FC = () => {
               </Button>
             </Badge>
             <Button.Group>
-              <Button size="small" icon={<HeartOutlined />} disabled={true}>
+              <Button size="small" icon={<Icon.HeartOutlined />} disabled={true}>
                 {article.value?.meta?.likes} 喜欢
               </Button>
-              <Button size="small" icon={<EyeOutlined />} disabled={true}>
+              <Button size="small" icon={<Icon.EyeOutlined />} disabled={true}>
                 {article.value?.meta?.views} 阅读
               </Button>
               <Button
                 size="small"
-                icon={<RocketOutlined />}
+                icon={<Icon.RocketOutlined />}
                 target="_blank"
                 href={getBlogArticleUrl(article.value?.id!)}
               />

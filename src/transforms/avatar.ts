@@ -1,16 +1,14 @@
 /**
- * @file Avatar 地址获取器
+ * @file Avatar
  * @author Surmon <https://github.com/surmon-china>
  */
 
 import { Comment } from '@/constants/comment'
-import { GRAVATAR_API, isDev } from '@/config'
+import { getDisqusUserName } from './disqus'
 
 export const getGravatar = (emailhash: string) => {
   // https://en.gravatar.com/site/implement/images/
-  return isDev
-    ? `https://www.gravatar.com/avatar/${emailhash}`
-    : `${GRAVATAR_API}/${emailhash}`
+  return `https://www.gravatar.com/avatar/${emailhash}`
 }
 
 export const getDisqusAvatar = (username: string) => {
@@ -23,9 +21,7 @@ export const autoCommentAvatar = (comment: Comment) => {
     return getGravatar(comment.author.email_hash)
   }
 
-  const disqusUsername = comment.extends?.find(
-    (e) => e.name === 'disqus-author-username'
-  )?.value
+  const disqusUsername = getDisqusUserName(comment.extends)
   if (disqusUsername) {
     return getDisqusAvatar(disqusUsername)
   }

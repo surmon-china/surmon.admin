@@ -1,13 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Menu, Dropdown, Avatar, Button, Modal, Spin } from 'antd'
-import {
-  LogoutOutlined,
-  SettingOutlined,
-  UserOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-} from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 
 import { RouteKey, rc } from '@/routes'
 import { removeToken } from '@/services/token'
@@ -46,7 +40,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
           type="link"
           onClick={props.onToggleSider}
           icon={React.createElement(
-            props.isSiderCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+            props.isSiderCollapsed ? Icon.MenuUnfoldOutlined : Icon.MenuFoldOutlined,
             {
               className: 'trigger',
             }
@@ -60,19 +54,14 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
             overlay={
               <Menu>
                 <Menu.Item
-                  icon={<SettingOutlined />}
+                  icon={<Icon.SettingOutlined />}
                   key="profile"
                   onClick={redriectToProfileRoute}
                 >
                   系统设置
                 </Menu.Item>
                 <Menu.Divider />
-                <Menu.Item
-                  icon={<LogoutOutlined />}
-                  onClick={logout}
-                  key="logout"
-                  danger
-                >
+                <Menu.Item icon={<Icon.LogoutOutlined />} onClick={logout} key="logout" danger>
                   退出登录
                 </Menu.Item>
               </Menu>
@@ -83,7 +72,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
               <Avatar
                 shape="square"
                 size="small"
-                icon={<UserOutlined />}
+                icon={<Icon.UserOutlined />}
                 className={styles.avatar}
                 src={admin.data.avatar}
               />

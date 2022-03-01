@@ -5,10 +5,10 @@
 
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
-import { useReactive } from 'veact'
 import { SwitchTransition, CSSTransition } from 'react-transition-group'
+import { useReactive } from 'veact'
+import { Spin } from 'antd'
+import * as Icon from '@ant-design/icons'
 import tokenService from '@/services/token'
 import { useLoading } from 'veact-use'
 import { authLogin } from '@/store/auth'
@@ -62,7 +62,7 @@ export const HelloPage: React.FC = () => {
 
   return (
     <div className={styles.helloPage}>
-      <Spin spinning={loading.state.value} indicator={<LoadingOutlined />}>
+      <Spin spinning={loading.state.value} indicator={<Icon.LoadingOutlined />}>
         <SwitchTransition mode="out-in">
           <CSSTransition
             classNames="fade-fast"
@@ -85,11 +85,7 @@ export const HelloPage: React.FC = () => {
                 onKeyDownCapture={handleInputKeyDown}
               />
             ) : (
-              <div
-                className={styles.title}
-                onClick={toEditMode}
-                onTouchEnd={toEditMode}
-              >
+              <div className={styles.title} onClick={toEditMode} onTouchEnd={toEditMode}>
                 🤘
               </div>
             )}

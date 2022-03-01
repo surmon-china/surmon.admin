@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { EditOutlined, CopyOutlined, PullRequestOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 
 /** 文章来源 */
 export enum ArticleOrigin {
@@ -18,27 +18,23 @@ const articleOriginMap = new Map(
     {
       id: ArticleOrigin.Original,
       name: '原创',
-      icon: <EditOutlined />,
+      icon: <Icon.EditOutlined />,
       color: 'green',
     },
     {
       id: ArticleOrigin.Reprint,
       name: '转载',
-      icon: <CopyOutlined />,
+      icon: <Icon.CopyOutlined />,
       color: 'red',
     },
     {
       id: ArticleOrigin.Hybrid,
       name: '衍生',
-      icon: <PullRequestOutlined />,
+      icon: <Icon.PullRequestOutlined />,
       color: 'orange',
     },
   ].map((item) => [item.id, item])
 )
 
-export const ao = (state: ArticleOrigin) => {
-  return articleOriginMap.get(state)!
-}
-export const articleOrigins = Array.from<ReturnType<typeof ao>>(
-  articleOriginMap.values()
-)
+export const ao = (state: ArticleOrigin) => articleOriginMap.get(state)!
+export const articleOrigins = Array.from<ReturnType<typeof ao>>(articleOriginMap.values())

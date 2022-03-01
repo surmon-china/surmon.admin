@@ -9,14 +9,7 @@ import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { useWatch, useReactivity } from 'veact'
 import { CSSTransition } from 'react-transition-group'
 import { Button, Select, Space, Typography, Spin } from 'antd'
-import {
-  FullscreenOutlined,
-  DownloadOutlined,
-  EyeOutlined,
-  LoadingOutlined,
-  EyeInvisibleOutlined,
-  FullscreenExitOutlined,
-} from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 import { general as _general } from '@/state/general'
 import { saveFile } from '@/services/file'
 import storage from '@/services/storage'
@@ -61,7 +54,7 @@ export interface UniversalEditorProps {
   minRows?: number
   maxRows?: number
   // 编辑区域唯一 ID，默认为 window.location.pathname
-  cacheID?: string | false
+  eid?: string
   /** 初始化使用语言 */
   defaultLanguage?: UEditorLanguage
   /** 是否禁用顶部工具栏 */
@@ -79,7 +72,7 @@ export interface UniversalEditorProps {
 export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
   const placeholder = props.placeholder || '请输入内容...'
   const propValue = props.value || ''
-  const cacheID = props.cacheID || window.location.pathname
+  const editorID = props.eid || window.location.pathname
   const general = useReactivity(() => _general)
   const containerRef = useRef<HTMLDivElement>(null)
   const ueditor = useRef<editor.IStandaloneCodeEditor>()
@@ -91,7 +84,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
   const handleSaveContent = () => {
     const time = timestampToYMD(Date.now())
     const fileExt = fileExtMap.get(language)
-    const fileName = `${cacheID}-${time}.${fileExt}`
+    const fileName = `${editorID}-${time}.${fileExt}`
     saveFile(propValue, fileName)
   }
 
@@ -225,7 +218,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
     const modelDisposer = ueditor.current.onDidChangeModelContent(() => {
       const newValue = ueditor.current!.getValue()
       if (!props.disabledCacheDraft) {
-        setUEditorCache(cacheID, newValue)
+        setUEditorCache(editorID, newValue)
       }
       if (newValue !== props.value) {
         props.onChange?.(newValue)
@@ -257,7 +250,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
             <Button
               size="small"
               disabled={props.disbaled}
-              icon={<DownloadOutlined />}
+              icon={<Icon.DownloadOutlined />}
               onClick={handleSaveContent}
             />
           </Space>
@@ -267,7 +260,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
               <Button
                 size="small"
                 disabled={props.disbaled}
-                icon={isPreview ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                icon={isPreview ? <Icon.EyeInvisibleOutlined /> : <Icon.EyeOutlined />}
                 onClick={() => setPreview(!isPreview)}
               />
             )}
@@ -293,9 +286,9 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
               disabled={props.disbaled}
               icon={
                 general.state.fullscreen ? (
-                  <FullscreenExitOutlined />
+                  <Icon.FullscreenExitOutlined />
                 ) : (
-                  <FullscreenOutlined />
+                  <Icon.FullscreenOutlined />
                 )
               }
               onClick={() => general.setFullscreen(!general.state.fullscreen)}
@@ -305,7 +298,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
       )}
       <Spin
         spinning={Boolean(props.loading)}
-        indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+        indicator={<Icon.LoadingOutlined style={{ fontSize: 24 }} spin />}
       >
         <div className={styles.container}>
           <div
@@ -314,12 +307,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
             className={classnames(styles.editor, !props.value && styles.placeholder)}
             placeholder={placeholder}
           ></div>
-          <CSSTransition
-            in={isPreview}
-            timeout={200}
-            unmountOnExit={true}
-            classNames="fade-fast"
-          >
+          <CSSTransition in={isPreview} timeout={200} unmountOnExit={true} classNames="fade-fast">
             <div className={classnames(styles.preview)}>
               <div
                 className={styles.markdown}

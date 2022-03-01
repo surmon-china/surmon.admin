@@ -17,17 +17,12 @@ import {
 } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Input, Select, Divider, Modal, Space, TreeSelect } from 'antd'
-import {
-  EditOutlined,
-  DeleteOutlined,
-  RollbackOutlined,
-  CheckOutlined,
-  ReloadOutlined,
-} from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 import { RouteKey, rc } from '@/routes'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
+import { SortSelect } from '@/components/common/SortSelect'
 import { ResponsePaginationData } from '@/constants/request'
-import { sortTypes, SortType } from '@/constants/sort'
+import { SortTypeWithHot } from '@/constants/sort'
 import { publishStates, PublishState, ps } from '@/constants/publish'
 import { Tag } from '@/constants/tag'
 import { ArticleId, Article } from '@/constants/article'
@@ -44,7 +39,7 @@ import styles from './style.module.less'
 
 const SELECT_ALL_VALUE = 'ALL'
 const DEFAULT_FILTER_PARAMS = Object.freeze({
-  sort: SortType.Desc,
+  sort: SortTypeWithHot.Desc,
   tag_slug: SELECT_ALL_VALUE,
   category_slug: SELECT_ALL_VALUE,
   lang: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | ArticleLanguage,
@@ -132,9 +127,7 @@ export const ArticleList: React.FC = () => {
 
   const handleStateChange = (articleIds: Array<ArticleId>, state: PublishState) => {
     Modal.confirm({
-      title: `确定要将 ${articleIds.length} 个文章更新为「 ${
-        ps(state).name
-      } 」状态吗？`,
+      title: `确定要将 ${articleIds.length} 个文章更新为「 ${ps(state).name} 」状态吗？`,
       content: '操作不可撤销',
       centered: true,
       onOk() {
@@ -160,7 +153,7 @@ export const ArticleList: React.FC = () => {
       className={styles.articleList}
       extra={
         <Link to={rc(RouteKey.ArticlePost).path}>
-          <Button type="primary" size="small" icon={<EditOutlined />}>
+          <Button type="primary" size="small" icon={<Icon.EditOutlined />}>
             新撰文章
           </Button>
         </Link>
@@ -257,24 +250,14 @@ export const ArticleList: React.FC = () => {
                 }),
               ]}
             />
-            <Select
+            <SortSelect
               className={styles.select}
               loading={loading.state.value}
+              withHot={true}
               value={filterParams.sort}
               onChange={(sort) => {
                 filterParams.sort = sort
               }}
-              options={sortTypes.map((sort) => {
-                return {
-                  value: sort.id,
-                  label: (
-                    <Space>
-                      {sort.icon}
-                      {sort.name}
-                    </Space>
-                  ),
-                }
-              })}
             />
             <Select
               className={styles.tagSelect}
@@ -325,7 +308,7 @@ export const ArticleList: React.FC = () => {
               }}
             />
             <Button
-              icon={<ReloadOutlined />}
+              icon={<Icon.ReloadOutlined />}
               loading={loading.state.value}
               onClick={resetParamsAndRefresh}
             >
@@ -339,20 +322,18 @@ export const ArticleList: React.FC = () => {
             options={[
               {
                 label: '退为草稿',
-                icon: <RollbackOutlined />,
+                icon: <Icon.RollbackOutlined />,
                 onClick: () => handleStateChange(selectedIds.value, PublishState.Draft),
               },
               {
                 label: '直接发布',
-                icon: <CheckOutlined />,
-                onClick: () =>
-                  handleStateChange(selectedIds.value, PublishState.Published),
+                icon: <Icon.CheckOutlined />,
+                onClick: () => handleStateChange(selectedIds.value, PublishState.Published),
               },
               {
                 label: '移回收站',
-                icon: <DeleteOutlined />,
-                onClick: () =>
-                  handleStateChange(selectedIds.value, PublishState.Recycle),
+                icon: <Icon.DeleteOutlined />,
+                onClick: () => handleStateChange(selectedIds.value, PublishState.Recycle),
               },
             ]}
           >

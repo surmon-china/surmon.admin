@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { Card, Tabs, Typography, Space } from 'antd'
-import { SettingOutlined, UserOutlined, DatabaseOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 
 import { BaseForm } from './Base'
 import { DataForm } from './Data'
@@ -33,19 +33,19 @@ const TabsConfig = [
   {
     key: TabKey.Base,
     name: '基本设置',
-    icon: <SettingOutlined />,
+    icon: <Icon.SettingOutlined />,
     element: <BaseForm labelSpan={FORM_LABEL_SPAN} wrapperSpan={FORM_WRAPPER_SPAN} />,
   },
   {
     key: TabKey.Auth,
     name: '站长资料',
-    icon: <UserOutlined />,
+    icon: <Icon.UserOutlined />,
     element: <AuthForm labelSpan={FORM_LABEL_SPAN} wrapperSpan={FORM_WRAPPER_SPAN} />,
   },
   {
     key: TabKey.Data,
     name: '数据安全',
-    icon: <DatabaseOutlined />,
+    icon: <Icon.DatabaseOutlined />,
     element: <DataForm labelSpan={FORM_LABEL_SPAN} wrapperSpan={FORM_WRAPPER_SPAN} />,
   },
 ]
@@ -53,11 +53,7 @@ const TabsConfig = [
 export const ProfilePage: React.FC = () => {
   return (
     <Card title="系统设置" bordered={false} className={styles.profile}>
-      <Tabs
-        defaultActiveKey={TabKey.Base}
-        tabPosition="left"
-        destroyInactiveTabPane={true}
-      >
+      <Tabs defaultActiveKey={TabKey.Base} tabPosition="left" destroyInactiveTabPane={true}>
         {TabsConfig.map((tabConfig) => (
           <Tabs.TabPane
             key={tabConfig.key}

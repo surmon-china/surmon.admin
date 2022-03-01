@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { Button, Dropdown, Menu } from 'antd'
-import { DownOutlined } from '@ant-design/icons'
+import * as Icon from '@ant-design/icons'
 
 export interface ButtonMenuProps {
   className?: string
@@ -34,7 +34,7 @@ export const DropdownMenu: React.FC<ButtonMenuProps> = (props) => {
       }
     >
       <Button disabled={props.disabled}>
-        {props.children} <DownOutlined />
+        {props.children} <Icon.DownOutlined />
       </Button>
     </Dropdown>
   )
