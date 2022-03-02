@@ -206,11 +206,11 @@ export const FeedbackPage: React.FC = () => {
             }}
             options={[
               { value: ALL_VALUE, label: '所有评分' },
-              { value: 1, label: '1 Hate' },
-              { value: 2, label: '2 Dislike' },
-              { value: 3, label: '3 Neutral' },
-              { value: 4, label: '4 Like' },
-              { value: 5, label: '5 Love' },
+              { value: 1, label: '1 分' },
+              { value: 2, label: '2 分' },
+              { value: 3, label: '3 分' },
+              { value: 4, label: '4 分' },
+              { value: 5, label: '5 分' },
             ]}
           />
           <Select
