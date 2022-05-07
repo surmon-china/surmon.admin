@@ -15,7 +15,7 @@
     "title": "今日日记",
     "description": "今天发生的一些事情",
     "content": "\n今天上海的天气非常好，万里无云。\n\n此处省略一万字...\n",
-    "thumb": "/images/profile/article-thumb.jpg",
+    "thumb": "/veact-admin/images/profile/article-thumb.jpg",
     "extends": [],
     "meta": { "likes": 51, "views": 11672, "comments": 39 },
     "update_at": "2019-07-24T15:53:33.133Z",
