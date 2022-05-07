@@ -5,7 +5,7 @@
     "name": "Admin",
     "slogan": "veact admin system",
     "email": "admin@example.com",
-    "avatar": "/images/profile/logo-smooth.png",
+    "avatar": "/veact-admin/images/profile/logo-smooth.png",
     "_id": "589e015d5af07d59124234cc"
   }
 }
