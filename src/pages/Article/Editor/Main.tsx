@@ -15,7 +15,7 @@ import {
   FormInstance,
 } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor'
+import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor/lazy'
 import { MultipleUploader } from '@/components/common/ImageUploader'
 import { getTags } from '@/store/tag'
 import { Tag } from '@/constants/tag'

@@ -4,13 +4,11 @@
  */
 
 import React from 'react'
-import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import { Upload, notification, Input, Space, Button, Tooltip } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { getOSSUpToken, AliYunOSSUpToken } from '@/store/system'
-import { useUploader, UploadErrorCode, isExpirationToken } from '@/services/uploader'
 import { copy } from '@/services/clipboard'
+import { useUploader, UploadErrorCode } from '@/services/uploader'
 import { imageURLToMarkdown } from '@/transforms/markdown'
 import styles from './style.module.less'
 
@@ -29,24 +27,7 @@ export interface ImageUploaderProps {
 
 export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
   const loading = useLoading()
-  const token = useRef<AliYunOSSUpToken | null>(null)
   const uploader = useUploader()
-  const fetchToken = async () => {
-    loading.promise(getOSSUpToken()).then((resultToken) => {
-      token.value = resultToken
-      uploader.init(resultToken)
-    })
-  }
-
-  // token null | expiration > refetch token
-  const beforeUpload = async (file: File) => {
-    if (!token.value || isExpirationToken(token.value)) {
-      await fetchToken()
-    }
-    return file
-  }
-
-  // 上传文件
   const uploadFile = (file: File) => {
     notification.info({
       message: '开始上传',
@@ -55,11 +36,11 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
 
     uploader
       .upload(file, getFileName(file, props.directory))
-      .then(({ url }) => {
-        props.onChange?.(url)
+      .then((result) => {
+        props.onChange?.(result.url)
         notification.success({
           message: '上传成功',
-          description: url,
+          description: result.key,
         })
       })
       .catch((error) => {
@@ -70,10 +51,6 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
       })
   }
 
-  onMounted(() => {
-    fetchToken()
-  })
-
   return (
     <Space direction="vertical" className={styles.imageUploader}>
       <Upload
@@ -83,7 +60,6 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
         maxCount={1}
         showUploadList={false}
         disabled={loading.state.value}
-        beforeUpload={beforeUpload}
         onRemove={() => props.onChange?.('')}
         customRequest={(options) => {
           if (options.file) {

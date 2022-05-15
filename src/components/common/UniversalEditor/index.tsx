@@ -3,7 +3,6 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { debounce } from 'lodash'
 import classnames from 'classnames'
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { useWatch, useReactivity } from 'veact'
@@ -12,17 +11,15 @@ import { Button, Select, Space, Typography, Spin } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { general as _general } from '@/state/general'
 import { saveFile } from '@/services/file'
-import storage from '@/services/storage'
 import { timestampToYMD } from '@/transforms/date'
 import { markdownToHTML } from '@/transforms/markdown'
 import { editor, KeyMod, KeyCode } from './monaco'
+import { UEditorLanguage, setUEditorCache } from './shared'
 
 import styles from './style.module.less'
 
-export enum UEditorLanguage {
-  Markdown = 'markdown',
-  JSON = 'json',
-}
+export * from './shared'
+
 const fileExtMap = new Map([
   [UEditorLanguage.Markdown, 'md'],
   [UEditorLanguage.JSON, 'json'],
@@ -32,18 +29,6 @@ const TOOLBAR_HEIGHT = 48
 const SINGLE_LINE_HEIGHT = 24
 const MIN_ROWS = 34
 const MAX_ROWS = 40
-
-const getEditorCacheStorageKey = (id: string) => {
-  return `ueditor-${id}`
-}
-
-const setUEditorCache = debounce((id: string, content: string) => {
-  return storage.set(getEditorCacheStorageKey(id), content)
-}, 666)
-
-export const getUEditorCache = (id: string) => {
-  return storage.get(getEditorCacheStorageKey(id))
-}
 
 export interface UniversalEditorProps {
   value?: string
@@ -69,6 +54,7 @@ export interface UniversalEditorProps {
   formStatus?: boolean
   style?: React.CSSProperties
 }
+
 export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
   const placeholder = props.placeholder || '请输入内容...'
   const propValue = props.value || ''

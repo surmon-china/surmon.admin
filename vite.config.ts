@@ -26,13 +26,14 @@ const config: UserConfig = {
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules/monaco-editor')) {
+          const incs = (ds: string[]) => ds.some((d) => id.includes(`node_modules/${d}`))
+          if (incs(['monaco-editor/esm/vs/basic-languages'])) {
+            return 'monaco-editor-languages'
+          } else if (incs(['monaco-editor'])) {
             return 'monaco-editor'
-          } else if (
-            ['axios', 'lodash', 'moment', 'marked', 'highlight.js'].some((exp) =>
-              id.includes(`/node_modules/${exp}`)
-            )
-          ) {
+          } else if (incs(['@ant-design', 'ant'])) {
+            return 'antd'
+          } else if (incs(['axios', 'lodash', 'marked', 'moment', 'highlight.js'])) {
             return 'basic'
           } else if (id.includes('node_modules')) {
             return 'vendor'

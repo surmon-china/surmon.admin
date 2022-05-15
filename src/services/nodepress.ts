@@ -134,30 +134,22 @@ nodepress.interceptors.response.use(
 
 const service = {
   $: nodepress,
-  request: <T = unknown>(
-    ...args: Parameters<AxiosInstance['request']>
-  ): Promise<HTTPResult<T>> => nodepress.request(...args),
-  get: <T = unknown>(
-    ...args: Parameters<AxiosInstance['get']>
-  ): Promise<HTTPResult<T>> => nodepress.get(...args),
-  delete: <T = unknown>(
-    ...args: Parameters<AxiosInstance['delete']>
-  ): Promise<HTTPResult<T>> => nodepress.delete(...args),
-  head: <T = unknown>(
-    ...args: Parameters<AxiosInstance['head']>
-  ): Promise<HTTPResult<T>> => nodepress.head(...args),
-  options: <T = unknown>(
-    ...args: Parameters<AxiosInstance['options']>
-  ): Promise<HTTPResult<T>> => nodepress.options(...args),
-  post: <T = unknown>(
-    ...args: Parameters<AxiosInstance['post']>
-  ): Promise<HTTPResult<T>> => nodepress.post(...args),
-  put: <T = unknown>(
-    ...args: Parameters<AxiosInstance['put']>
-  ): Promise<HTTPResult<T>> => nodepress.put(...args),
-  patch: <T = unknown>(
-    ...args: Parameters<AxiosInstance['patch']>
-  ): Promise<HTTPResult<T>> => nodepress.patch(...args),
+  request: <T = unknown>(...args: Parameters<AxiosInstance['request']>): Promise<HTTPResult<T>> =>
+    nodepress.request(...args),
+  get: <T = unknown>(...args: Parameters<AxiosInstance['get']>): Promise<HTTPResult<T>> =>
+    nodepress.get(...args),
+  delete: <T = unknown>(...args: Parameters<AxiosInstance['delete']>): Promise<HTTPResult<T>> =>
+    nodepress.delete(...args),
+  head: <T = unknown>(...args: Parameters<AxiosInstance['head']>): Promise<HTTPResult<T>> =>
+    nodepress.head(...args),
+  options: <T = unknown>(...args: Parameters<AxiosInstance['options']>): Promise<HTTPResult<T>> =>
+    nodepress.options(...args),
+  post: <T = unknown>(...args: Parameters<AxiosInstance['post']>): Promise<HTTPResult<T>> =>
+    nodepress.post(...args),
+  put: <T = unknown>(...args: Parameters<AxiosInstance['put']>): Promise<HTTPResult<T>> =>
+    nodepress.put(...args),
+  patch: <T = unknown>(...args: Parameters<AxiosInstance['patch']>): Promise<HTTPResult<T>> =>
+    nodepress.patch(...args),
 }
 
 export default service

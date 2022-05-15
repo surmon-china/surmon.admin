@@ -6,7 +6,7 @@
 import React from 'react'
 import { Ref, useWatch } from 'veact'
 import { Form, Select, Modal, Space, Divider, Typography } from 'antd'
-import { UniversalEditor } from '@/components/common/UniversalEditor'
+import { UniversalEditor } from '@/components/common/UniversalEditor/lazy'
 import { Announcement } from '@/constants/announcement'
 import { PublishState, ps } from '@/constants/publish'
 import { stringToYMD } from '@/transforms/date'
@@ -52,17 +52,11 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
         {props.announcement.value && (
           <>
             <Form.Item label="ID">
-              <Typography.Text copyable={true}>
-                {props.announcement.value?.id}
-              </Typography.Text>
+              <Typography.Text copyable={true}>{props.announcement.value?.id}</Typography.Text>
               <Divider type="vertical" />
-              <Typography.Text copyable={true}>
-                {props.announcement.value?._id}
-              </Typography.Text>
+              <Typography.Text copyable={true}>{props.announcement.value?._id}</Typography.Text>
             </Form.Item>
-            <Form.Item label="发布于">
-              {stringToYMD(props.announcement.value?.create_at)}
-            </Form.Item>
+            <Form.Item label="发布于">{stringToYMD(props.announcement.value?.create_at)}</Form.Item>
             <Form.Item label="最后修改于">
               {stringToYMD(props.announcement.value?.update_at)}
             </Form.Item>

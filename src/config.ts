@@ -7,11 +7,8 @@ import type { SizeType } from 'antd/lib/config-provider/SizeContext'
 
 export const APP_TITLE = 'Surmon.me'
 export const BLOG_URL = `https://surmon.me`
-export const STATIC_URL = 'https://static.surmon.me'
-export const ALIYUN_OSS_REGION = 'oss-cn-hangzhou'
-export const ALIYUN_OSS_BUCKET = 'surmon-static'
-export const GITHUB_REPO_NAME = 'veact-admin'
 export const GITHUB_REPO_URL = 'https://github.com/surmon-china/veact-admin'
+export const GITHUB_REPO_NAME = 'veact-admin'
 
 export const APP_AUTH_HEADER_KEY = 'Authorization'
 export const APP_SIDER_WIDTH = 180

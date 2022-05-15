@@ -12,12 +12,7 @@ import { SwitchTransition, CSSTransition } from 'react-transition-group'
 
 import { RouteKey, rc } from '@/routes'
 import { renewalToken, checkTokenValidity } from '@/store/auth'
-import {
-  getTokenCountdown,
-  setToken,
-  removeToken,
-  isTokenValid,
-} from '@/services/token'
+import { getTokenCountdown, setToken, removeToken, isTokenValid } from '@/services/token'
 
 import styles from './style.module.less'
 

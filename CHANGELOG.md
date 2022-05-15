@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.5.0 (2022-05-15)
+
+- Remove `ali-oss` & upload to NodePress
+- Improve `lazy(UniversalEditor)`
+
 ### v1.4.0 (2022-03-01)
 
 - Add feedback module

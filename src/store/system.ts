@@ -9,7 +9,7 @@ import { Option } from '@/constants/option'
 export const OPTION_API_PATH = '/option'
 export const ARCHIVE_API_PATH = '/archive'
 export const EXPANSION_API_PATH = {
-  UP_TOKEN: '/expansion/uptoken',
+  UPLOAD: '/expansion/upload',
   STATISTIC: '/expansion/statistic',
   GOOGLE_TOKEN: '/expansion/google-token',
   DATA_BASE_BACKUP: '/expansion/database-backup',
@@ -62,16 +62,25 @@ export function putOption(option: Option) {
   return nodepress.put<Option>(OPTION_API_PATH, option).then((response) => response.result)
 }
 
-export interface AliYunOSSUpToken {
-  AccessKeyId: string
-  AccessKeySecret: string
-  SecurityToken: string
-  Expiration: string
-}
-
-/** 获取 AliYun OSS 上传 Token */
-export function getOSSUpToken() {
+/** 上传静态文件 */
+export async function uploadStaticToNodePress(options: {
+  file: File
+  name: string
+  onProgress?: (progress: number) => void
+}) {
+  const param = new FormData()
+  param.append('file', options.file)
+  param.append('name', options.name)
   return nodepress
-    .get<AliYunOSSUpToken>(EXPANSION_API_PATH.UP_TOKEN)
+    .post<{
+      url: string
+      key: string
+      size: number
+    }>(EXPANSION_API_PATH.UPLOAD, param, {
+      onUploadProgress: ({ loaded, total }) => {
+        const progress = (loaded / total) * 100
+        options.onProgress?.(progress)
+      },
+    })
     .then((response) => response.result)
 }

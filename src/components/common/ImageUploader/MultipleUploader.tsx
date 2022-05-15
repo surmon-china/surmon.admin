@@ -3,18 +3,13 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import OSS from 'ali-oss'
 import React from 'react'
-import { useRef, onMounted, useReactive } from 'veact'
-import { useLoading } from 'veact-use'
-import { Modal, message, Tooltip, Spin, Button, Upload, Result, Card } from 'antd'
+import { useReactive } from 'veact'
+import { Modal, message, Tooltip, Button, Upload, Card } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { getOSSUpToken, AliYunOSSUpToken } from '@/store/system'
-import { isExpirationToken } from '@/services/uploader'
 import { copy } from '@/services/clipboard'
-import { getStaticFileUrl } from '@/transforms/url'
+import { useUploader } from '@/services/uploader'
 import { imageURLToMarkdown } from '@/transforms/markdown'
-import { ALIYUN_OSS_REGION, ALIYUN_OSS_BUCKET } from '@/config'
 import { getFileName } from './Uploader'
 import styles from './style.module.less'
 
@@ -22,66 +17,19 @@ export interface MultipleUploaderProps {
   directory?: string
 }
 export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
-  const loading = useLoading()
-  const files = useReactive<Array<string>>([])
-  const token = useRef<AliYunOSSUpToken | null>(null)
-  const client = useRef<OSS | null>(null)
-  const fetchTokenAndInit = async () => {
-    const resultToken = await loading.promise(getOSSUpToken())
-    token.value = resultToken
-    client.value = new OSS({
-      region: ALIYUN_OSS_REGION,
-      bucket: ALIYUN_OSS_BUCKET,
-      accessKeyId: resultToken.AccessKeyId,
-      accessKeySecret: resultToken.AccessKeySecret,
-      stsToken: resultToken.SecurityToken,
-      secure: true,
-    })
-  }
-
-  const beforeUpload = async (file: File) => {
-    if (!token.value || isExpirationToken(token.value)) {
-      await fetchTokenAndInit()
-    }
-    return file
-  }
-
-  onMounted(() => {
-    fetchTokenAndInit()
-  })
-
-  if (loading.state.value) {
-    return (
-      <Spin tip="OSS client initing...">
-        <Card style={{ minHeight: 200 }} />
-      </Spin>
-    )
-  }
-
-  if (!client.value) {
-    return (
-      <Result
-        status="warning"
-        subTitle="OSS 初始化失败"
-        extra={[
-          <Button key="refresh" onClick={fetchTokenAndInit}>
-            刷新重试
-          </Button>,
-        ]}
-      />
-    )
-  }
+  const uploader = useUploader()
+  const fileUrls = useReactive<Array<string>>([])
 
   return (
     <div className={styles.multipleImageUploader}>
-      {!files.length ? null : (
+      {!fileUrls.length ? null : (
         <Button
           block={true}
           type="dashed"
           className={styles.copyButton}
           onClick={() => {
-            copy(files.map((file) => imageURLToMarkdown(getStaticFileUrl(file))).join(`\n`))
-            message.info(`${files.length} 个地址 复制成功`)
+            copy(fileUrls.map(imageURLToMarkdown).join(`\n`))
+            message.info(`${fileUrls.length} 个地址 复制成功`)
           }}
         >
           复制所有图片的 Markdown 地址
@@ -92,7 +40,6 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
         name="file"
         listType="picture"
         multiple={true}
-        beforeUpload={beforeUpload}
         showUploadList={{
           showRemoveIcon: false,
           showPreviewIcon: true,
@@ -104,7 +51,7 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
           ),
         }}
         onDownload={(file) => {
-          copy(imageURLToMarkdown(getStaticFileUrl(file.response)))
+          copy(imageURLToMarkdown(file.response.url))
           message.info('复制成功')
         }}
         onPreview={(file) => {
@@ -113,27 +60,23 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
             closable: true,
             maskClosable: true,
             width: '50vw',
-            modalRender() {
-              return (
-                <Card title={file.response}>
-                  <img style={{ width: '100%' }} src={getStaticFileUrl(file.response)} />
-                </Card>
-              )
-            },
+            modalRender: () => (
+              <Card title={file.response.key}>
+                <img style={{ width: '100%' }} src={file.response.url} />
+              </Card>
+            ),
           })
         }}
         customRequest={(options) => {
           if (options.file) {
             const file = options.file as File
-            client
-              .value!.multipartUpload(getFileName(file, props.directory), file, {
-                progress(percent) {
-                  options.onProgress?.({ percent } as any)
-                },
+            uploader
+              .upload(file, getFileName(file, props.directory), {
+                onProgress: (percent) => options.onProgress?.({ percent }),
               })
               .then((result) => {
-                files.push(result.name)
-                options.onSuccess?.(result.name, result.res as any)
+                fileUrls.push(result.url)
+                options.onSuccess?.(result)
               })
               .catch((error) => {
                 options.onError?.(error)

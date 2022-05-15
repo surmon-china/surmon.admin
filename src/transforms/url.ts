@@ -4,7 +4,7 @@
  */
 
 import { COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
-import { BLOG_URL, BASE_PATH, STATIC_URL } from '@/config'
+import { BLOG_URL, BASE_PATH } from '@/config'
 
 export const getResourceUrl = (uri: string) => {
   const path = BASE_PATH.endsWith('/') ? BASE_PATH : `${BASE_PATH}/`
@@ -28,12 +28,6 @@ export const getBlogGuestbookUrl = () => {
   return `${BLOG_URL}/guestbook`
 }
 
-export const getStaticFileUrl = (filePath: string) => {
-  return `${STATIC_URL}/${filePath}`
-}
-
 export const getBlogURLByPostID = (postID: number) => {
-  return postID === COMMENT_GUESTBOOK_POST_ID
-    ? getBlogGuestbookUrl()
-    : getBlogArticleUrl(postID)
+  return postID === COMMENT_GUESTBOOK_POST_ID ? getBlogGuestbookUrl() : getBlogArticleUrl(postID)
 }

@@ -15,7 +15,7 @@ import {
 } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { UniversalText } from '@/components/common/UniversalText'
-import { UniversalEditor } from '@/components/common/UniversalEditor'
+import { UniversalEditor } from '@/components/common/UniversalEditor/lazy'
 import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
 import { IPLocation } from '@/components/common/IPLocation'
 import { getArticle } from '@/store/article'

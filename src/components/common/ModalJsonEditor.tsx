@@ -1,12 +1,8 @@
 import React from 'react'
 import { Modal } from 'antd'
-import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor'
+import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor/lazy'
 
-export function openJSONEditor<T = any>(
-  title: string,
-  initVaue: T,
-  callback: (data: T) => any
-) {
+export function openJSONEditor<T = any>(title: string, initVaue: T, callback: (data: T) => any) {
   let data: any = JSON.stringify(initVaue, null, 2)
   return Modal.confirm({
     width: '60vw',
