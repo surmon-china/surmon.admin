@@ -27,9 +27,7 @@ const config: UserConfig = {
       output: {
         manualChunks(id) {
           const incs = (ds: string[]) => ds.some((d) => id.includes(`node_modules/${d}`))
-          if (incs(['monaco-editor/esm/vs/basic-languages'])) {
-            return 'monaco-editor-languages'
-          } else if (incs(['monaco-editor'])) {
+          if (incs(['monaco-editor'])) {
             return 'monaco-editor'
           } else if (incs(['@ant-design', 'ant'])) {
             return 'antd'
