@@ -60,7 +60,7 @@ export const DisqusSynchronizePage: React.FC = () => {
                 target="_blank"
                 href="https://import.disqus.com/"
               >
-                Upload to Desqus
+                Upload to Disqus
               </Button>
             </Button.Group>
           }
@@ -93,7 +93,7 @@ export const DisqusSynchronizePage: React.FC = () => {
                 target="_blank"
                 href="https://help.disqus.com/en/articles/1717164-comments-export"
               >
-                Export XML from Desqus
+                Export XML from Disqus
               </Button>
               <Upload
                 name="file"
