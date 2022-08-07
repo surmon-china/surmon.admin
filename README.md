@@ -55,4 +55,4 @@ yarn serve
 
 - `any PR open` → `CI:Build test`
 - `new tag v*` → `CI:Create Release`
-- `release create` → `CI:Deploy` → `CI:Bundler` → `CI:Execute server script`
+- `release create` → `CI:Deploy` → `release branch & demo branch`
