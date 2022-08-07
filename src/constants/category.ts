@@ -9,7 +9,7 @@ import { GeneralKeyValue } from './general'
 export interface Category {
   id?: number
   _id?: string
-  pid?: string
+  pid?: string | null
   name: string
   slug: string
   description: string

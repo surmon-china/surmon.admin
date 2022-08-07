@@ -1,7 +1,8 @@
+import classnames from 'classnames'
 import React from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import classnames from 'classnames'
-import { Menu, Spin } from 'antd'
+import { useComputed } from 'veact'
+import { Menu, Spin, MenuProps } from 'antd'
 import * as Icon from '@ant-design/icons'
 
 import { GITHUB_REPO_URL, GITHUB_REPO_NAME } from '@/config'
@@ -17,6 +18,80 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
   const navigate = useNavigate()
   const location = useLocation()
   const admin = useAdminState()
+
+  const mainMenuItems = useComputed<NonNullable<MenuProps['items']>>(() => {
+    return [
+      {
+        key: rc(RouteKey.Dashboard).path,
+        icon: rc(RouteKey.Dashboard).icon,
+        label: rc(RouteKey.Dashboard).name,
+      },
+      {
+        key: rc(RouteKey.Announcement).path,
+        icon: rc(RouteKey.Announcement).icon,
+        label: rc(RouteKey.Announcement).name,
+      },
+      {
+        key: rc(RouteKey.Category).path,
+        icon: rc(RouteKey.Category).icon,
+        label: rc(RouteKey.Category).name,
+      },
+      {
+        key: rc(RouteKey.Tag).path,
+        icon: rc(RouteKey.Tag).icon,
+        label: rc(RouteKey.Tag).name,
+      },
+      {
+        key: rc(RouteKey.Article).path,
+        icon: rc(RouteKey.Article).icon,
+        label: rc(RouteKey.Article).name,
+        children: [
+          {
+            key: rc(RouteKey.ArticleList).path,
+            label: rc(RouteKey.ArticleList).name,
+          },
+          {
+            key: rc(RouteKey.ArticlePost).path,
+            label: rc(RouteKey.ArticlePost).name,
+          },
+        ],
+      },
+      {
+        key: rc(RouteKey.Comment).path,
+        icon: rc(RouteKey.Comment).icon,
+        label: rc(RouteKey.Comment).name,
+      },
+      {
+        key: rc(RouteKey.Disqus).path,
+        icon: rc(RouteKey.Disqus).icon,
+        label: rc(RouteKey.Disqus).name,
+        children: [
+          {
+            key: rc(RouteKey.DisqusPost).path,
+            label: rc(RouteKey.DisqusPost).name,
+          },
+          {
+            key: rc(RouteKey.DisqusThread).path,
+            label: rc(RouteKey.DisqusThread).name,
+          },
+          {
+            key: rc(RouteKey.DisqusSync).path,
+            label: rc(RouteKey.DisqusSync).name,
+          },
+        ],
+      },
+      {
+        key: rc(RouteKey.Feedback).path,
+        icon: rc(RouteKey.Feedback).icon,
+        label: rc(RouteKey.Feedback).name,
+      },
+      {
+        key: rc(RouteKey.Profile).path,
+        icon: rc(RouteKey.Profile).icon,
+        label: rc(RouteKey.Profile).name,
+      },
+    ]
+  })
 
   return (
     <div className={styles.siderMenu}>
@@ -52,65 +127,21 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
         onClick={(event) => navigate(event.key)}
         selectedKeys={[location.pathname]}
         defaultOpenKeys={[rc(RouteKey.Article).path]}
-      >
-        <Menu.Item key={rc(RouteKey.Dashboard).path} icon={rc(RouteKey.Dashboard).icon}>
-          {rc(RouteKey.Dashboard).name}
-        </Menu.Item>
-        <Menu.Item key={rc(RouteKey.Announcement).path} icon={rc(RouteKey.Announcement).icon}>
-          {rc(RouteKey.Announcement).name}
-        </Menu.Item>
-        <Menu.Item key={rc(RouteKey.Category).path} icon={rc(RouteKey.Category).icon}>
-          {rc(RouteKey.Category).name}
-        </Menu.Item>
-        <Menu.Item key={rc(RouteKey.Tag).path} icon={rc(RouteKey.Tag).icon}>
-          {rc(RouteKey.Tag).name}
-        </Menu.Item>
-        <Menu.SubMenu
-          key={rc(RouteKey.Article).path}
-          icon={rc(RouteKey.Article).icon}
-          title={rc(RouteKey.Article).name}
-        >
-          <Menu.Item key={rc(RouteKey.ArticleList).path}>{rc(RouteKey.ArticleList).name}</Menu.Item>
-          <Menu.Item key={rc(RouteKey.ArticlePost).path}>{rc(RouteKey.ArticlePost).name}</Menu.Item>
-        </Menu.SubMenu>
-        <Menu.Item
-          key={rc(RouteKey.Comment).path}
-          icon={rc(RouteKey.Comment).icon}
-          title={rc(RouteKey.Comment).name}
-        >
-          {rc(RouteKey.Comment).name}
-        </Menu.Item>
-        <Menu.SubMenu
-          key={rc(RouteKey.Disqus).path}
-          icon={rc(RouteKey.Disqus).icon}
-          title={rc(RouteKey.Disqus).name}
-        >
-          <Menu.Item key={rc(RouteKey.DisqusPost).path}>{rc(RouteKey.DisqusPost).name}</Menu.Item>
-          <Menu.Item key={rc(RouteKey.DisqusThread).path}>
-            {rc(RouteKey.DisqusThread).name}
-          </Menu.Item>
-          <Menu.Item key={rc(RouteKey.DisqusSync).path}>{rc(RouteKey.DisqusSync).name}</Menu.Item>
-        </Menu.SubMenu>
-        <Menu.Item
-          key={rc(RouteKey.Feedback).path}
-          icon={rc(RouteKey.Feedback).icon}
-          title={rc(RouteKey.Feedback).name}
-        >
-          {rc(RouteKey.Feedback).name}
-        </Menu.Item>
-        <Menu.Item key={rc(RouteKey.Profile).path} icon={rc(RouteKey.Profile).icon}>
-          {rc(RouteKey.Profile).name}
-        </Menu.Item>
-      </Menu>
-      <Menu className={styles.footerLink} mode="vertical" selectedKeys={[]}>
-        <Menu.Item
-          key="github"
-          icon={<Icon.GithubOutlined />}
-          onClick={() => window.open(GITHUB_REPO_URL)}
-        >
-          {GITHUB_REPO_NAME}
-        </Menu.Item>
-      </Menu>
+        items={mainMenuItems.value}
+      />
+      <Menu
+        className={styles.footerLink}
+        mode="vertical"
+        selectedKeys={[]}
+        items={[
+          {
+            key: 'github',
+            icon: <Icon.GithubOutlined />,
+            label: GITHUB_REPO_NAME,
+            onClick: () => window.open(GITHUB_REPO_URL),
+          },
+        ]}
+      />
     </div>
   )
 }

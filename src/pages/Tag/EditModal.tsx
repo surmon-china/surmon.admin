@@ -62,12 +62,8 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
               <Divider type="vertical" />
               <Typography.Text copyable={true}>{props.tag.value?._id}</Typography.Text>
             </Form.Item>
-            <Form.Item label="发布于">
-              {stringToYMD(props.tag.value?.create_at)}
-            </Form.Item>
-            <Form.Item label="最后修改于">
-              {stringToYMD(props.tag.value?.update_at)}
-            </Form.Item>
+            <Form.Item label="发布于">{stringToYMD(props.tag.value?.create_at)}</Form.Item>
+            <Form.Item label="最后修改于">{stringToYMD(props.tag.value?.update_at)}</Form.Item>
           </>
         )}
         <Form.Item

@@ -6,9 +6,7 @@
 
 import { GeneralKeyValue } from '@/constants/general'
 
-export const getKeyValueObject = (
-  kvs: GeneralKeyValue[]
-): { [key: string]: string } => {
+export const getKeyValueObject = (kvs: GeneralKeyValue[]): { [key: string]: string } => {
   return kvs.length ? kvs.reduce((v, c) => ({ ...v, [c.name]: c.value }), {}) : {}
 }
 

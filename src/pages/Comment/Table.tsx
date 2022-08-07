@@ -120,7 +120,11 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
           render(_, comment) {
             return (
               <Space direction="vertical">
-                <UniversalText prefix={<Icon.GlobalOutlined />} text={comment.ip} copyable={true} />
+                <UniversalText
+                  prefix={<Icon.GlobalOutlined />}
+                  text={comment.ip}
+                  copyable={true}
+                />
                 <Space size="small">
                   <Icon.CompassOutlined />
                   <IPLocation data={comment.ip_location} />
@@ -224,7 +228,8 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   移回收站
                 </Button>
               )}
-              {(comment.state === CommentState.Deleted || comment.state === CommentState.Spam) && (
+              {(comment.state === CommentState.Deleted ||
+                comment.state === CommentState.Spam) && (
                 <>
                   <Button
                     size="small"

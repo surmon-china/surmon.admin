@@ -112,13 +112,21 @@ export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
                         <UniversalText prefix="用户：" text={feedback.user_name} />
                       </Typography.Paragraph>
                       <Typography.Paragraph>
-                        <UniversalText prefix="邮箱：" text={feedback.user_email} copyable={true} />
+                        <UniversalText
+                          prefix="邮箱："
+                          text={feedback.user_email}
+                          copyable={true}
+                        />
                       </Typography.Paragraph>
                       <Typography.Paragraph>
                         <UniversalText prefix="来源：" text={feedback.origin} copyable={true} />
                       </Typography.Paragraph>
                       <Typography.Paragraph>
-                        <UniversalText prefix="IP：" text={feedback.ip || void 0} copyable={true} />
+                        <UniversalText
+                          prefix="IP："
+                          text={feedback.ip || void 0}
+                          copyable={true}
+                        />
                       </Typography.Paragraph>
                       <Typography.Paragraph>
                         位置： <IPLocation data={feedback.ip_location} />

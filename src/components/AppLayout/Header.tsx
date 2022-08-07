@@ -52,19 +52,27 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
           <Dropdown
             placement="bottomRight"
             overlay={
-              <Menu>
-                <Menu.Item
-                  icon={<Icon.SettingOutlined />}
-                  key="profile"
-                  onClick={redriectToProfileRoute}
-                >
-                  系统设置
-                </Menu.Item>
-                <Menu.Divider />
-                <Menu.Item icon={<Icon.LogoutOutlined />} onClick={logout} key="logout" danger>
-                  退出登录
-                </Menu.Item>
-              </Menu>
+              <Menu
+                items={[
+                  {
+                    key: 'profile',
+                    icon: <Icon.SettingOutlined />,
+                    onClick: redriectToProfileRoute,
+                    label: '系统设置',
+                  },
+                  {
+                    key: 'divider',
+                    type: 'divider',
+                  },
+                  {
+                    key: 'logout',
+                    icon: <Icon.LogoutOutlined />,
+                    onClick: logout,
+                    danger: true,
+                    label: '退出登录',
+                  },
+                ]}
+              />
             }
           >
             <div className={styles.content}>

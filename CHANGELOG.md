@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.6.0 (2022-08-08)
+
+- Upgrade deps
+- Upgrade Vite to v3
+- Upgrade Antd to v4.22
+- Fix article page table.state key error
+- Fix article page EditModal.Form warn
+
 ### v1.5.0 (2022-05-15)
 
 - Remove `ali-oss` & upload to NodePress

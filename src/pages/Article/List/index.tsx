@@ -37,15 +37,16 @@ import { ArticleListTable } from './Table'
 
 import styles from './style.module.less'
 
+type SelectAllType = typeof SELECT_ALL_VALUE
 const SELECT_ALL_VALUE = 'ALL'
 const DEFAULT_FILTER_PARAMS = Object.freeze({
   sort: SortTypeWithHot.Desc,
-  tag_slug: SELECT_ALL_VALUE,
-  category_slug: SELECT_ALL_VALUE,
-  lang: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | ArticleLanguage,
-  public: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | ArticlePublic,
-  origin: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | ArticleOrigin,
-  state: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | PublishState,
+  tag_slug: SELECT_ALL_VALUE as SelectAllType | string,
+  category_slug: SELECT_ALL_VALUE as SelectAllType | string,
+  lang: SELECT_ALL_VALUE as SelectAllType | ArticleLanguage,
+  public: SELECT_ALL_VALUE as SelectAllType | ArticlePublic,
+  origin: SELECT_ALL_VALUE as SelectAllType | ArticleOrigin,
+  state: SELECT_ALL_VALUE as SelectAllType | PublishState,
 })
 
 export const ArticleList: React.FC = () => {

@@ -14,11 +14,7 @@ import styles from './style.module.less'
 
 export const DashboardPage: React.FC = () => {
   return (
-    <Space
-      direction="vertical"
-      size={APP_LAYOUT_SPACE_SIZE}
-      className={styles.dashboard}
-    >
+    <Space direction="vertical" size={APP_LAYOUT_SPACE_SIZE} className={styles.dashboard}>
       <StatisticsComponent />
       <Calendar />
       <Analytics />

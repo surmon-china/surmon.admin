@@ -20,7 +20,9 @@ export interface Statistics {
 }
 /** 获取全站统计信息 */
 export function getStatistics() {
-  return nodepress.get<Statistics>(EXPANSION_API_PATH.STATISTIC).then((response) => response.result)
+  return nodepress
+    .get<Statistics>(EXPANSION_API_PATH.STATISTIC)
+    .then((response) => response.result)
 }
 
 export interface ArticleCalendarItem {

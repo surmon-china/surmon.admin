@@ -17,24 +17,12 @@ export const FormDataKeyValue: React.FC<FormDataKeyValueProps> = (props) => {
     <Form.List name={props.fieldName}>
       {(extendsData, { add, remove }) => (
         <div>
-          {extendsData.map((extend, index) => (
-            <Space size="middle" key={index} className={styles.inputGroup}>
-              <Form.Item
-                {...extend}
-                noStyle={true}
-                name={[extend.name, 'name']}
-                fieldKey={[extend.fieldKey, 'name']}
-                required={true}
-              >
+          {extendsData.map((extend) => (
+            <Space size="middle" key={extend.name} className={styles.inputGroup}>
+              <Form.Item noStyle={true} required={true} name={[extend.name, 'name']}>
                 <Input placeholder="Name" />
               </Form.Item>
-              <Form.Item
-                {...extend}
-                noStyle={true}
-                name={[extend.name, 'value']}
-                fieldKey={[extend.fieldKey, 'value']}
-                required={true}
-              >
+              <Form.Item noStyle={true} required={true} name={[extend.name, 'value']}>
                 <Input placeholder="Value" />
               </Form.Item>
               <Button

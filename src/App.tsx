@@ -88,7 +88,10 @@ export const App: React.FC = () => {
                     element={<Navigate to={rc(RouteKey.DisqusPost).subPath!} replace />}
                   />
                   <Route path={rc(RouteKey.DisqusPost).subPath} element={<DisqusPostsPage />} />
-                  <Route path={rc(RouteKey.DisqusThread).subPath} element={<DisqusThreadsPage />} />
+                  <Route
+                    path={rc(RouteKey.DisqusThread).subPath}
+                    element={<DisqusThreadsPage />}
+                  />
                   <Route
                     path={rc(RouteKey.DisqusSync).subPath}
                     element={<DisqusSynchronizePage />}

@@ -5,7 +5,17 @@ import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
 import { Category as CategoryType } from '@/constants/category'
 import { stringToYMD } from '@/transforms/date'
 
-const CATEGORY_NULL_VALUE = null as any
+const CATEGORY_NULL_VALUE = 'null'
+const DEFAULT_CATEGORY: Partial<CategoryType> = {
+  pid: CATEGORY_NULL_VALUE,
+  extends: [
+    {
+      name: 'icon',
+      value: 'icon-category',
+    },
+  ],
+}
+
 const formLayout = {
   labelCol: { span: 5 },
   wrapperCol: { span: 18 },
@@ -25,24 +35,27 @@ export interface EditModalProps {
 export const EditModal: React.FC<EditModalProps> = (props) => {
   const [form] = Form.useForm<CategoryType>()
   const handleSubmit = () => {
-    form.validateFields().then(props.onSubmit)
+    form.validateFields().then((formValue) => {
+      props.onSubmit({
+        ...formValue,
+        pid: formValue.pid === CATEGORY_NULL_VALUE ? null : formValue.pid,
+      })
+    })
   }
 
   useWatch(props.visible, (visible) => {
     if (!visible) {
       form.resetFields()
     } else {
-      form.setFieldsValue(
-        props.category.value || {
-          pid: CATEGORY_NULL_VALUE,
-          extends: [
-            {
-              name: 'icon',
-              value: 'icon-category',
-            },
-          ],
-        }
-      )
+      const propCategory = props.category.value
+      if (propCategory) {
+        form.setFieldsValue({
+          ...propCategory,
+          pid: propCategory.pid ?? CATEGORY_NULL_VALUE,
+        })
+      } else {
+        form.setFieldsValue({ ...DEFAULT_CATEGORY })
+      }
     }
   })
 
@@ -61,19 +74,13 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
         {props.category.value && (
           <>
             <Form.Item label="ID">
-              <Typography.Text copyable={true}>
-                {props.category.value?.id}
-              </Typography.Text>
+              <Typography.Text copyable={true}>{props.category.value.id}</Typography.Text>
               <Divider type="vertical" />
-              <Typography.Text copyable={true}>
-                {props.category.value?._id}
-              </Typography.Text>
+              <Typography.Text copyable={true}>{props.category.value._id}</Typography.Text>
             </Form.Item>
-            <Form.Item label="发布于">
-              {stringToYMD(props.category.value?.create_at)}
-            </Form.Item>
+            <Form.Item label="发布于">{stringToYMD(props.category.value.create_at)}</Form.Item>
             <Form.Item label="最后修改于">
-              {stringToYMD(props.category.value?.update_at)}
+              {stringToYMD(props.category.value.update_at)}
             </Form.Item>
           </>
         )}

@@ -171,7 +171,11 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
               <Typography.Text strong>#{props.comment.value?.pid}</Typography.Text>
             </Form.Item>
           )}
-          <Form.Item name="state" label="状态" rules={[{ required: true, message: '请选择状态' }]}>
+          <Form.Item
+            name="state"
+            label="状态"
+            rules={[{ required: true, message: '请选择状态' }]}
+          >
             <Select
               placeholder="选择状态"
               options={commentStates.map((state) => {

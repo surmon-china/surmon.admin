@@ -275,7 +275,10 @@ export const Analytics: React.FC = () => {
               id={GOOGLE_CHART_ID_MAP.COUNTRY}
               className={classnames(styles.chart, styles.country)}
             />
-            <div id={GOOGLE_CHART_ID_MAP.CITY} className={classnames(styles.chart, styles.city)} />
+            <div
+              id={GOOGLE_CHART_ID_MAP.CITY}
+              className={classnames(styles.chart, styles.city)}
+            />
             <div
               id={GOOGLE_CHART_ID_MAP.BROWSER}
               className={classnames(styles.chart, styles.browser)}

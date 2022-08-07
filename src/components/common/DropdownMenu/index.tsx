@@ -24,13 +24,15 @@ export const DropdownMenu: React.FC<ButtonMenuProps> = (props) => {
       className={props.className}
       disabled={props.disabled}
       overlay={
-        <Menu onClick={props.onClick}>
-          {props.options.map((option, index) => (
-            <Menu.Item key={index} icon={option.icon} onClick={option.onClick}>
-              {option.label}
-            </Menu.Item>
-          ))}
-        </Menu>
+        <Menu
+          onClick={props.onClick}
+          items={props.options.map((option, index) => ({
+            key: index,
+            icon: option.icon,
+            onClick: option.onClick,
+            label: option.label,
+          }))}
+        />
       }
     >
       <Button disabled={props.disabled}>

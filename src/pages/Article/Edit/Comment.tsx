@@ -97,7 +97,12 @@ export const ArticleComment: React.FC<ArticleCommentProps> = (props) => {
           >
             刷新评论
           </Button>
-          <Button size="small" type="primary" icon={<Icon.EditOutlined />} onClick={props.onManage}>
+          <Button
+            size="small"
+            type="primary"
+            icon={<Icon.EditOutlined />}
+            onClick={props.onManage}
+          >
             管理评论
           </Button>
         </Row>

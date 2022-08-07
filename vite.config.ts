@@ -1,12 +1,12 @@
 import path from 'path'
+import viteReact from '@vitejs/plugin-react'
 import { defineConfig, UserConfig } from 'vite'
-import reactRefresh from '@vitejs/plugin-react-refresh'
 import { proxyConfiger } from './vite.config.proxy'
 import { demoConfiger } from './vite.config.demo'
 
 // https://vitejs.dev/config/
 const config: UserConfig = {
-  plugins: [reactRefresh()],
+  plugins: [viteReact()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),

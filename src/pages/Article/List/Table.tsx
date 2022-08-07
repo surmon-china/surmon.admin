@@ -23,7 +23,7 @@ export interface ArticleListTableProps {
 export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
   return (
     <Table<Article>
-      rowKey="_id"
+      rowKey={(aticle) => aticle._id!}
       loading={props.loading}
       dataSource={props.data}
       rowSelection={{
@@ -149,14 +149,11 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           width: 120,
           dataIndex: 'state',
           render: (_, article) => {
-            const _state = ps(article.state)
-            const _public = ap(article.public)
-            const _origin = ao(article.origin)
             return (
               <Space direction="vertical">
-                {[_state, _public, _origin].map((s) => (
-                  <Tag icon={s.icon} color={s.color} key={s.id}>
-                    {s.name}
+                {[ps(article.state), ap(article.public), ao(article.origin)].map((state) => (
+                  <Tag icon={state.icon} color={state.color} key={state.id + state.name}>
+                    {state.name}
                   </Tag>
                 ))}
               </Space>

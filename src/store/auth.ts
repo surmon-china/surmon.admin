@@ -14,6 +14,7 @@ export const AUTH_API_PATH = {
   RENEWAL_TOKEN: '/auth/renewal',
   ADMIN: '/auth/admin',
 }
+
 /** 获取管理员信息 */
 export function getAdminInfo() {
   return nodepress.get<Auth>(AUTH_API_PATH.ADMIN).then((response) => response.result)
@@ -32,9 +33,7 @@ export function putAuth(auth: Auth) {
 
 /** 检查 Token 有效性 */
 export function checkTokenValidity() {
-  return nodepress
-    .post<void>(AUTH_API_PATH.CHECK_TOKEN)
-    .then((response) => response.result)
+  return nodepress.post<void>(AUTH_API_PATH.CHECK_TOKEN).then((response) => response.result)
 }
 
 export interface TokenResult {

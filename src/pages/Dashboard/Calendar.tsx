@@ -122,11 +122,7 @@ export const Calendar: React.FC = () => {
   }
 
   return (
-    <Card
-      bordered={false}
-      className={styles.calendarCard}
-      loading={loading.state.value}
-    >
+    <Card bordered={false} className={styles.calendarCard} loading={loading.state.value}>
       <div className={styles.calendar} ref={calendarElement}>
         {months.value.map((month, index) => (
           <div className={styles.month} key={index}>
