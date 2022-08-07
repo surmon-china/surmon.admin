@@ -29,8 +29,6 @@ const config: UserConfig = {
           const incs = (ds: string[]) => ds.some((d) => id.includes(`node_modules/${d}`))
           if (incs(['monaco-editor'])) {
             return 'monaco-editor'
-          } else if (incs(['@ant-design', 'ant'])) {
-            return 'antd'
           } else if (incs(['axios', 'lodash', 'marked', 'moment', 'highlight.js'])) {
             return 'basic'
           } else if (id.includes('node_modules')) {
