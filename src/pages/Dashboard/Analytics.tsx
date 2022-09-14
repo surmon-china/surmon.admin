@@ -1,12 +1,12 @@
+import moment from 'moment'
 import React from 'react'
-import { useRef, onMounted } from 'veact'
-import { useLoading } from 'veact-use'
 import classnames from 'classnames'
-import { Card, Divider, Button, Spin, Result } from 'antd'
+import { useRef, useShallowRef, onMounted, useComputed } from 'veact'
+import { useLoading } from 'veact-use'
+import { Card, Divider, Button, Spin, Space, DatePicker } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { APP_COLOR_PRIMARY } from '@/config'
 import { getGAToken } from '@/store/system'
-import storage from '@/services/storage'
 import styles from './style.module.less'
 
 // @ts-ignore
@@ -37,21 +37,31 @@ const GOOGLE_CHART_COLORS = [
 ]
 
 export const Analytics: React.FC = () => {
-  const isDisabled = useRef(Boolean(storage.get('DISABLED_GA')))
-  const isShowSelectView = useRef(false)
+  const isShowSelectView = useRef(true)
   const loading = useLoading()
+  const rerenderAnalytics = useShallowRef<any>(() => {})
+  const chartDate = useShallowRef<moment.Moment | null>(null)
+  const stringChartDate = useComputed(() => {
+    if (chartDate.value) {
+      const formated = chartDate.value.format('YYYY-MM-DD')
+      const today = moment().format('YYYY-MM-DD')
+      return formated === today ? 'today' : formated
+    } else {
+      return 'today'
+    }
+  })
 
   const handleToggleShow = () => {
     isShowSelectView.value = !isShowSelectView.value
   }
 
-  const instanceGA = async (access_token: string): Promise<void> => {
-    return new Promise((resolve) => {
+  const initAnalytics = async (accessToken: string, date: string) => {
+    return new Promise<(query: any) => void>((resolve) => {
       const gapi = (window as any).gapi
       gapi.analytics.ready(() => {
         // 服务端授权立即生效，无需事件处理
         gapi.analytics.auth.authorize({
-          serverAuth: { access_token },
+          serverAuth: { access_token: accessToken },
         })
 
         const viewSelector = new gapi.analytics.ViewSelector({
@@ -64,8 +74,8 @@ export const Analytics: React.FC = () => {
           query: {
             dimensions: 'ga:hour',
             metrics: 'ga:sessions',
-            'start-date': 'today',
-            'end-date': 'today',
+            'start-date': date,
+            'end-date': date,
           },
           chart: {
             type: 'LINE',
@@ -116,8 +126,8 @@ export const Analytics: React.FC = () => {
             query: {
               dimensions,
               metrics: 'ga:sessions',
-              'start-date': 'today',
-              'end-date': 'today',
+              'start-date': date,
+              'end-date': date,
               'max-results': 15,
               sort: '-ga:sessions',
             },
@@ -173,43 +183,33 @@ export const Analytics: React.FC = () => {
         const browserChart = getPieChart('ga:browser', GOOGLE_CHART_ID_MAP.BROWSER, '浏览器')
         const osChart = getPieChart('ga:operatingSystem', GOOGLE_CHART_ID_MAP.OS, '操作系统')
 
-        viewSelector.on('change', (ids: any) => {
-          const newIds = {
-            query: { ids },
-          }
-          timeline.set(newIds).execute()
-          countryChart.set(newIds).execute()
-          cityChart.set(newIds).execute()
-          browserChart.set(newIds).execute()
-          osChart.set(newIds).execute()
-        })
+        const renderAllCharts = (query: any) => {
+          timeline.set({ query }).execute()
+          countryChart.set({ query }).execute()
+          cityChart.set({ query }).execute()
+          browserChart.set({ query }).execute()
+          osChart.set({ query }).execute()
+        }
 
-        resolve()
+        viewSelector.on('change', (ids: any) => renderAllCharts({ ids }))
+
+        resolve(renderAllCharts)
       })
     })
   }
 
-  const initGAClient = async () => {
+  onMounted(async () => {
     loading.start()
     if (!(window as any).gapi) {
       loadScript()
     }
-    getGAToken()
-      .then(instanceGA)
-      .finally(() => {
-        loading.stop()
-      })
-  }
 
-  const handleEnable = () => {
-    isDisabled.value = false
-    initGAClient()
-  }
-
-  onMounted(() => {
-    // 由于阿里云无法访问到 googleapis 服务，所以生产环境不可用，为了使其可退化，用 localStorage 存一个特殊字段来判断吧
-    if (!isDisabled.value) {
-      initGAClient()
+    try {
+      const accessToken = await getGAToken()
+      const rerenderChart = await initAnalytics(accessToken, stringChartDate.value)
+      rerenderAnalytics.value = rerenderChart
+    } finally {
+      loading.stop()
     }
   })
 
@@ -237,58 +237,61 @@ export const Analytics: React.FC = () => {
         </div>
       }
       extra={
-        <Button.Group>
-          <Button
-            href="https://developers.google.com/analytics/devguides/reporting/embed/v1/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Doc
-          </Button>
-          <Button
-            href="https://developers.google.com/analytics/devguides/reporting/embed/v1/core-methods-reference/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            API
-          </Button>
-          <Button
-            href="https://ga-dev-tools.appspot.com/embed-api/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Example
-          </Button>
-        </Button.Group>
+        <Space>
+          <DatePicker
+            disabled={loading.state.value}
+            disabledDate={(date) => date.isAfter(moment())}
+            value={chartDate.value}
+            onChange={(date) => {
+              chartDate.value = date
+              rerenderAnalytics.value?.({
+                'start-date': stringChartDate.value,
+                'end-date': stringChartDate.value,
+              })
+            }}
+          />
+          <Button.Group>
+            <Button
+              href="https://developers.google.com/analytics/devguides/reporting/embed/v1/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Doc
+            </Button>
+            <Button
+              href="https://developers.google.com/analytics/devguides/reporting/embed/v1/core-methods-reference/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              API
+            </Button>
+            <Button
+              href="https://ga-dev-tools.appspot.com/embed-api/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Example
+            </Button>
+          </Button.Group>
+        </Space>
       }
     >
-      {isDisabled.value ? (
-        <Result
-          title="GA DISABLED"
-          icon={<Icon.MehOutlined />}
-          extra={<Button onClick={handleEnable}>ENABLE</Button>}
-        />
-      ) : (
-        <Spin spinning={loading.state.value}>
-          <div className={styles.pieCharts}>
-            <div
-              id={GOOGLE_CHART_ID_MAP.COUNTRY}
-              className={classnames(styles.chart, styles.country)}
-            />
-            <div
-              id={GOOGLE_CHART_ID_MAP.CITY}
-              className={classnames(styles.chart, styles.city)}
-            />
-            <div
-              id={GOOGLE_CHART_ID_MAP.BROWSER}
-              className={classnames(styles.chart, styles.browser)}
-            />
-            <div id={GOOGLE_CHART_ID_MAP.OS} className={classnames(styles.chart, styles.os)} />
-          </div>
-          <Divider />
-          <div id={GOOGLE_CHART_TIMELINE_ID} className={styles.timeline}></div>
-        </Spin>
-      )}
+      <Spin spinning={loading.state.value}>
+        <div className={styles.pieCharts}>
+          <div
+            id={GOOGLE_CHART_ID_MAP.COUNTRY}
+            className={classnames(styles.chart, styles.country)}
+          />
+          <div id={GOOGLE_CHART_ID_MAP.CITY} className={classnames(styles.chart, styles.city)} />
+          <div
+            id={GOOGLE_CHART_ID_MAP.BROWSER}
+            className={classnames(styles.chart, styles.browser)}
+          />
+          <div id={GOOGLE_CHART_ID_MAP.OS} className={classnames(styles.chart, styles.os)} />
+        </div>
+        <Divider />
+        <div id={GOOGLE_CHART_TIMELINE_ID} className={styles.timeline}></div>
+      </Spin>
     </Card>
   )
 }

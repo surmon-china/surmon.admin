@@ -137,7 +137,7 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
           {
             key: 'github',
             icon: <Icon.GithubOutlined />,
-            label: GITHUB_REPO_NAME,
+            label: 'source-code',
             onClick: () => window.open(GITHUB_REPO_URL),
           },
         ]}

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.7.0 (2022-09-15)
+
+- Add date picker to dashboard analytics
+
 ### v1.6.0 (2022-08-08)
 
 - Upgrade deps
