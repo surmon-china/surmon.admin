@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tag, Table, Popover, Space } from 'antd'
+import { Tag, Table, Button, Popover, Space } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { UniversalText } from '@/components/common/UniversalText'
 import { IPLocation } from '@/components/common/IPLocation'
@@ -50,7 +50,11 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
         {
           title: '目标',
           dataIndex: 'target_type',
-          render: (_, vote) => `${getVoteTargetText(vote.target_type)} #${vote.target_id}`,
+          render: (_, vote) => (
+            <Button type="link" onClick={() => props.onTargetID(vote.target_id)}>
+              {getVoteTargetText(vote.target_type)} #{vote.target_id}
+            </Button>
+          ),
         },
         {
           title: '态度',

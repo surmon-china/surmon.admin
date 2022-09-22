@@ -39,7 +39,7 @@ import styles from './style.module.less'
 
 const ALL_VALUE = 'ALL'
 const DEFAULT_FILTER_PARAMS = Object.freeze({
-  target_id: ALL_VALUE as number | typeof ALL_VALUE,
+  target_id: void 0 as number | undefined,
   target_type: ALL_VALUE as VoteTarget | typeof ALL_VALUE,
   vote_type: ALL_VALUE as VoteType | typeof ALL_VALUE,
   author_type: ALL_VALUE as VoteAuthorType | typeof ALL_VALUE,
@@ -53,12 +53,9 @@ export const VotePage: React.FC = () => {
     pagination: void 0,
   })
 
-  const filterParams = useReactive({
-    ...DEFAULT_FILTER_PARAMS,
-    target_id: DEFAULT_FILTER_PARAMS.target_id,
-  })
-  const updateTargetID = (targetId: number | string) => {
-    filterParams.target_id = Number(targetId)
+  const filterParams = useReactive({ ...DEFAULT_FILTER_PARAMS })
+  const updateTargetID = (targetId: number | void | undefined) => {
+    filterParams.target_id = Number.isFinite(targetId) ? (targetId as number) : undefined
   }
 
   // 多选
@@ -74,8 +71,8 @@ export const VotePage: React.FC = () => {
     const getParams: GetVotesParams = {
       ...params,
       sort: filterParams.sort,
+      target_id: filterParams.target_id,
       target_type: filterParams.target_type !== ALL_VALUE ? filterParams.target_type : void 0,
-      target_id: filterParams.target_id !== ALL_VALUE ? filterParams.target_id : void 0,
       vote_type: filterParams.vote_type !== ALL_VALUE ? filterParams.vote_type : void 0,
       author_type: filterParams.author_type !== ALL_VALUE ? filterParams.author_type : void 0,
     }
@@ -136,38 +133,6 @@ export const VotePage: React.FC = () => {
           <Select
             className={styles.select}
             loading={loading.state.value}
-            value={filterParams.target_id}
-            onChange={updateTargetID}
-            options={[
-              {
-                value: ALL_VALUE,
-                label: '所有表态',
-              },
-              {
-                value: 0,
-                label: '站点表态',
-              },
-            ]}
-            dropdownRender={(menu) => (
-              <div>
-                {menu}
-                <div className={styles.targetIdInput}>
-                  <Input.Search
-                    allowClear={true}
-                    size="small"
-                    type="number"
-                    className={styles.input}
-                    placeholder="Target ID"
-                    enterButton={<span>GO</span>}
-                    onSearch={updateTargetID}
-                  />
-                </div>
-              </div>
-            )}
-          />
-          <Select
-            className={styles.select}
-            loading={loading.state.value}
             value={filterParams.target_type}
             onChange={(type) => {
               filterParams.target_type = type
@@ -180,6 +145,23 @@ export const VotePage: React.FC = () => {
               })),
             ]}
           />
+          <Input.Group compact>
+            <Button onClick={() => updateTargetID(void 0)}>All</Button>
+            <Input.Search
+              className={styles.targetIdInput}
+              placeholder="目标 ID"
+              type="number"
+              min={0}
+              step={1}
+              value={filterParams.target_id}
+              onSearch={(targetInput) => {
+                const targetId = targetInput !== '' && Number(targetInput)
+                Number.isFinite(targetId)
+                  ? updateTargetID(targetId as number)
+                  : updateTargetID(void 0)
+              }}
+            />
+          </Input.Group>
           <Select
             className={styles.select}
             loading={loading.state.value}
