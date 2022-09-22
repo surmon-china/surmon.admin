@@ -58,7 +58,7 @@ export const FeedbackPage: React.FC = () => {
 
   // 多选
   const selectedIds = useRef<Array<string>>([])
-  const selectComments = useComputed(() =>
+  const selectFeedbacks = useComputed(() =>
     feedbacks.data.filter((c) => selectedIds.value.includes(c._id!))
   )
   const handleSelect = (ids: any[]) => {
@@ -118,13 +118,13 @@ export const FeedbackPage: React.FC = () => {
     })
   }
 
-  const handleDelete = (comments: Array<Feedback>) => {
+  const handleDelete = (feedbacks: Array<Feedback>) => {
     Modal.confirm({
-      title: `确定要彻底删除 ${comments.length} 个反馈吗？`,
+      title: `确定要彻底删除 ${feedbacks.length} 个反馈吗？`,
       content: '该行为是物理删除，不可恢复！',
       centered: true,
       onOk: () =>
-        deleteFeedbacks(comments.map((c) => c._id!)).then(() => {
+        deleteFeedbacks(feedbacks.map((c) => c._id!)).then(() => {
           refreshData()
         }),
     })
@@ -159,7 +159,7 @@ export const FeedbackPage: React.FC = () => {
     <Card
       title={`反馈列表（${feedbacks.pagination?.total ?? '-'}）`}
       bordered={false}
-      className={styles.comment}
+      className={styles.feedback}
     >
       <Space align="center" className={styles.toolbar}>
         <Space>
@@ -265,7 +265,7 @@ export const FeedbackPage: React.FC = () => {
               {
                 label: '彻底删除',
                 icon: <Icon.DeleteOutlined />,
-                onClick: () => handleDelete(selectComments.value),
+                onClick: () => handleDelete(selectFeedbacks.value),
               },
             ]}
           >
@@ -282,7 +282,7 @@ export const FeedbackPage: React.FC = () => {
         pagination={feedbacks.pagination!}
         onTargetID={updateTargetID}
         onDetail={(_, index) => editData(index)}
-        onDelete={(comment) => handleDelete([comment])}
+        onDelete={(feedback) => handleDelete([feedback])}
         onPagination={(page, pageSize) => fetchData({ page, per_page: pageSize })}
       />
       <EditDrawer

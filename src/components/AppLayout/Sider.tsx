@@ -81,6 +81,11 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
         ],
       },
       {
+        key: rc(RouteKey.Vote).path,
+        icon: rc(RouteKey.Vote).icon,
+        label: rc(RouteKey.Vote).name,
+      },
+      {
         key: rc(RouteKey.Feedback).path,
         icon: rc(RouteKey.Feedback).icon,
         label: rc(RouteKey.Feedback).name,

@@ -26,8 +26,8 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
 
   useWatch(props.visible, (visible) => {
     if (visible) {
-      const targetComment = props.feedback.value
-      form.setFieldsValue(targetComment || {})
+      const targetFeedback = props.feedback.value
+      form.setFieldsValue(targetFeedback || {})
     } else {
       form.resetFields()
     }

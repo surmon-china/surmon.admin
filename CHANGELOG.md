@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.8.0 (2022-09-23)
+
+- Add vote list page
+- Improve comment page icons
+- Improve feedback page names
+
 ### v1.7.0 (2022-09-15)
 
 - Add date picker to dashboard analytics

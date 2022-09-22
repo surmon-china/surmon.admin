@@ -11,6 +11,7 @@ export const PageHeaderAD: React.FC = () => {
   const closeAD = () => {
     isEnabledAD.value = false
   }
+
   onMounted(() => {
     if (isEnabledAD.value) {
       ;((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({})

@@ -126,11 +126,11 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   copyable={true}
                 />
                 <Space size="small">
-                  <Icon.CompassOutlined />
+                  <Icon.AimOutlined />
                   <IPLocation data={comment.ip_location} />
                 </Space>
                 <Space size="small">
-                  <Icon.DesktopOutlined />
+                  <Icon.CompassOutlined />
                   <Popover
                     title="终端信息"
                     placement="right"

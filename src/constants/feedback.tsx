@@ -17,12 +17,12 @@ export interface Feedback {
   content: string
   user_name?: string
   user_email?: string
-  marked: boolean
-  remark: string
   user_agent: string
-  origin: string | null
   ip: string | null
   ip_location: IPLocation | null
+  origin: string | null
+  marked: boolean
+  remark: string
   create_at?: string
   update_at?: string
 }

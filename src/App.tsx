@@ -22,6 +22,7 @@ import { AnnouncementPage } from '@/pages/Announcement'
 import { CategoryPage } from '@/pages/Category'
 import { TagPage } from '@/pages/Tag'
 import { CommentPage } from '@/pages/Comment'
+import { VotePage } from '@/pages/Vote'
 import { FeedbackPage } from '@/pages/Feedback'
 import { DisqusThreadsPage } from '@/pages/Dsiqus/Thread'
 import { DisqusPostsPage } from '@/pages/Dsiqus/Post'
@@ -77,6 +78,7 @@ export const App: React.FC = () => {
             <Route path={rc(RouteKey.Category).path} element={<CategoryPage />} />
             <Route path={rc(RouteKey.Tag).path} element={<TagPage />} />
             <Route path={rc(RouteKey.Comment).path} element={<CommentPage />} />
+            <Route path={rc(RouteKey.Vote).path} element={<VotePage />} />
             <Route path={rc(RouteKey.Feedback).path} element={<FeedbackPage />} />
             <Route path={rc(RouteKey.Profile).path} element={<ProfilePage />} />
             <Route
