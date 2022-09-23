@@ -12,7 +12,7 @@ import {
   getVoteTargetText,
   getVoteAuthorTypeText,
 } from '@/constants/vote'
-import { parseBrowser, parseOS } from '@/transforms/ua'
+import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
 
 export interface VoteListTableProps {
@@ -108,7 +108,7 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
                   placeholder="未知 IP"
                 />
                 <Space size="small">
-                  <Icon.AimOutlined />
+                  <Icon.EnvironmentOutlined />
                   <IPLocation data={vote.ip_location} />
                 </Space>
               </Space>
@@ -116,7 +116,7 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
           },
         },
         {
-          title: '终端信息',
+          title: '软件终端',
           dataIndex: 'user_agent',
           render(_, vote) {
             return (
@@ -130,7 +130,7 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
                   <UniversalText
                     prefix={<Icon.DesktopOutlined />}
                     text={parseOS(vote.user_agent!)}
-                    placeholder="未知设备"
+                    placeholder="未知系统"
                   />
                 </Space>
               </Space>
@@ -138,16 +138,21 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
           },
         },
         {
-          title: '生命周期',
+          title: '硬件时间',
           dataIndex: 'create_at',
           render(_, vote) {
             return (
               <Space direction="vertical">
-                <UniversalText prefix="最初" text={stringToYMD(vote.create_at!)} />
+                <Space size="small">
+                  <UniversalText
+                    prefix={<Icon.LaptopOutlined />}
+                    text={parseDevice(vote.user_agent!)}
+                    placeholder="未知设备"
+                  />
+                </Space>
                 <UniversalText
-                  prefix="最后"
-                  text={stringToYMD(vote.update_at!)}
-                  type="secondary"
+                  prefix={<Icon.ClockCircleOutlined />}
+                  text={stringToYMD(vote.create_at!)}
                 />
               </Space>
             )

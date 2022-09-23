@@ -12,7 +12,7 @@ import { CommentAvatar } from '@/pages/Comment/Avatar'
 import { cs } from '@/constants/comment'
 import { CommentTree } from '@/store/comment'
 import { stringToYMD } from '@/transforms/date'
-import { parseBrowser, parseOS } from '@/transforms/ua'
+import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
 
 interface CommentTreeListProps {
   comments: Array<CommentTree>
@@ -31,8 +31,15 @@ const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
               &nbsp;
               {comment.likes} 喜欢
             </Typography.Text>,
-            <span key="browser">{parseBrowser(comment.agent!)}</span>,
-            <span key="os">{parseOS(comment.agent!)}</span>,
+            <span key="browser">
+              <UniversalText text={parseBrowser(comment.agent!)} placeholder="未知浏览器" />
+            </span>,
+            <span key="os">
+              <UniversalText text={parseOS(comment.agent!)} placeholder="未知系统" />
+            </span>,
+            <span key="device">
+              <UniversalText text={parseDevice(comment.agent!)} placeholder="未知设备" />
+            </span>,
             <UniversalText key="ip" text={comment.ip} copyable={true} type="secondary" />,
           ]}
           author={

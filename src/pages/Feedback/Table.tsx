@@ -6,7 +6,7 @@ import { UniversalText } from '@/components/common/UniversalText'
 import { IPLocation } from '@/components/common/IPLocation'
 import { Pagination } from '@/constants/request'
 import { Feedback, getMarkedByBoolean } from '@/constants/feedback'
-import { parseBrowser, parseOS } from '@/transforms/ua'
+import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
 
 import styles from './style.module.less'
@@ -105,7 +105,8 @@ export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
               <Space direction="vertical">
                 <Popover
                   title="终端信息"
-                  placement="right"
+                  placement="left"
+                  style={{ width: 300 }}
                   content={
                     <div>
                       <Typography.Paragraph>
@@ -132,9 +133,17 @@ export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
                         位置： <IPLocation data={feedback.ip_location} />
                       </Typography.Paragraph>
                       <Typography.Paragraph>
-                        浏览器：{parseBrowser(feedback.user_agent)}
+                        <UniversalText
+                          prefix="浏览器："
+                          text={parseBrowser(feedback.user_agent)}
+                        />
                       </Typography.Paragraph>
-                      <div>系统：{parseOS(feedback.user_agent)}</div>
+                      <Typography.Paragraph>
+                        <UniversalText prefix="系统：" text={parseOS(feedback.user_agent)} />
+                      </Typography.Paragraph>
+                      <div>
+                        <UniversalText prefix="设备：" text={parseDevice(feedback.user_agent)} />
+                      </div>
                     </div>
                   }
                 >

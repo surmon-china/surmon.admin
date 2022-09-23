@@ -5,24 +5,17 @@
 
 import { UAParser } from 'ua-parser-js'
 
-const parser = new UAParser()
-
-export const parseBrowser = (ua: string): string => {
-  parser.setUA(ua)
-  const result = parser.getBrowser()
-  if (!result.name && !result.version) {
-    return ua
-  } else {
-    return `${result.name || 'unknow'} | ${result.version || 'unknow'}`
-  }
+export const parseBrowser = (userAgent: string) => {
+  const result = new UAParser(userAgent).getBrowser()
+  return result.name && result.version ? `${result.name} | ${result.version}` : null
 }
 
-export const parseOS = (ua: string): string => {
-  parser.setUA(ua)
-  const result = parser.getOS()
-  if (!result.name && !result.version) {
-    return ua
-  } else {
-    return `${result.name || 'unknow'} | ${result.version || 'unknow'}`
-  }
+export const parseOS = (userAgent: string) => {
+  const result = new UAParser(userAgent).getOS()
+  return result.name && result.version ? `${result.name} | ${result.version}` : null
+}
+
+export const parseDevice = (userAgent: string) => {
+  const result = new UAParser(userAgent).getDevice()
+  return result.model && result.vendor ? `${result.model} | ${result.vendor}` : null
 }

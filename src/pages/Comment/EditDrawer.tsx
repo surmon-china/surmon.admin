@@ -23,7 +23,7 @@ import { Article } from '@/constants/article'
 import { Comment, commentStates, COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
 import { stringToYMD } from '@/transforms/date'
 import { getBlogURLByPostID } from '@/transforms/url'
-import { parseBrowser, parseOS } from '@/transforms/ua'
+import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
 import { CommentAvatar } from './Avatar'
 
 export interface EditDrawerProps {
@@ -142,9 +142,17 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             <IPLocation data={props.comment.value?.ip_location} fullname={true} />
           </Form.Item>
           <Form.Item label="终端">
-            {parseBrowser(props.comment.value?.agent!)}
+            <UniversalText
+              text={parseBrowser(props.comment.value?.agent!)}
+              placeholder="未知浏览器"
+            />
             <Divider type="vertical" />
-            {parseOS(props.comment.value?.agent!)}
+            <UniversalText text={parseOS(props.comment.value?.agent!)} placeholder="未知系统" />
+            <Divider type="vertical" />
+            <UniversalText
+              text={parseDevice(props.comment.value?.agent!)}
+              placeholder="未知设备"
+            />
           </Form.Item>
           <Form.Item name="likes" label="被赞" rules={[{ required: true, message: '必填' }]}>
             <InputNumber addonBefore={<Icon.LikeOutlined />} placeholder="多少" />

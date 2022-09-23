@@ -5,8 +5,8 @@ import * as Icon from '@ant-design/icons'
 import { IPLocation } from '@/components/common/IPLocation'
 import { UniversalText } from '@/components/common/UniversalText'
 import { Feedback, getMarkedByBoolean } from '@/constants/feedback'
+import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
-import { parseBrowser, parseOS } from '@/transforms/ua'
 
 export interface EditDrawerProps {
   loading: boolean
@@ -70,9 +70,11 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
         <IPLocation data={feedback.ip_location} fullname={true} />
       </Form.Item>
       <Form.Item label="终端">
-        {parseBrowser(feedback.user_agent!)}
+        <UniversalText text={parseBrowser(feedback.user_agent!)} placeholder="未知浏览器" />
         <Divider type="vertical" />
-        {parseOS(feedback.user_agent!)}
+        <UniversalText text={parseOS(feedback.user_agent!)} placeholder="未知系统" />
+        <Divider type="vertical" />
+        <UniversalText text={parseDevice(feedback.user_agent!)} placeholder="未知设备" />
       </Form.Item>
       <Form.Item label="反馈评分">
         <Statistic

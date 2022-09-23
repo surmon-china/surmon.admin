@@ -6,7 +6,7 @@ import { Placeholder } from '@/components/common/Placeholder'
 import { IPLocation } from '@/components/common/IPLocation'
 import { Pagination } from '@/constants/request'
 import { Comment, CommentState, cs } from '@/constants/comment'
-import { parseBrowser, parseOS } from '@/transforms/ua'
+import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
 import { getBlogURLByPostID } from '@/transforms/url'
 import { CommentAvatar } from './Avatar'
@@ -126,7 +126,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   copyable={true}
                 />
                 <Space size="small">
-                  <Icon.AimOutlined />
+                  <Icon.EnvironmentOutlined />
                   <IPLocation data={comment.ip_location} />
                 </Space>
                 <Space size="small">
@@ -136,8 +136,15 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                     placement="right"
                     content={
                       <div>
-                        <p>浏览器：{parseBrowser(comment.agent)}</p>
-                        <div>系统：{parseOS(comment.agent)}</div>
+                        <Typography.Paragraph>
+                          <UniversalText prefix="浏览器" text={parseBrowser(comment.agent)} />
+                        </Typography.Paragraph>
+                        <Typography.Paragraph>
+                          <UniversalText prefix="系统" text={parseOS(comment.agent)} />
+                        </Typography.Paragraph>
+                        <div>
+                          <UniversalText prefix="设备" text={parseDevice(comment.agent)} />
+                        </div>
                       </div>
                     }
                   >
