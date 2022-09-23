@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+### v1.8.2 (2022-09-23)
+
+- Improve sider menu icons
+- Improve vote page input and render logic
+- Remove vote `site` target type
+
 ### v1.8.0 (2022-09-23)
 
 - Add vote list page

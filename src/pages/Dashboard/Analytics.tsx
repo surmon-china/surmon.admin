@@ -39,6 +39,7 @@ const GOOGLE_CHART_COLORS = [
 export const Analytics: React.FC = () => {
   const isShowSelectView = useRef(true)
   const loading = useLoading()
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const rerenderAnalytics = useShallowRef<any>(() => {})
   const chartDate = useShallowRef<moment.Moment | null>(null)
   const stringChartDate = useComputed(() => {

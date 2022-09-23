@@ -8,8 +8,7 @@ import * as Icon from '@ant-design/icons'
 import { IPLocation } from './general'
 
 export enum VoteTarget {
-  Site = 0,
-  Article = 1,
+  Post = 1,
   Comment = 2,
 }
 
@@ -40,8 +39,7 @@ export interface Vote {
 }
 
 const voteTargetMap = new Map([
-  [VoteTarget.Site, '站点'],
-  [VoteTarget.Article, '文章'],
+  [VoteTarget.Post, '页面'],
   [VoteTarget.Comment, '评论'],
 ])
 export const getVoteTargetText = (voteTarget: VoteTarget) => {

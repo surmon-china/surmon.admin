@@ -4,6 +4,7 @@ import * as Icon from '@ant-design/icons'
 import { UniversalText } from '@/components/common/UniversalText'
 import { IPLocation } from '@/components/common/IPLocation'
 import { Pagination } from '@/constants/request'
+import { COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
 import {
   Vote,
   VoteType,
@@ -52,7 +53,8 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
           dataIndex: 'target_type',
           render: (_, vote) => (
             <Button type="link" onClick={() => props.onTargetID(vote.target_id)}>
-              {getVoteTargetText(vote.target_type)} #{vote.target_id}
+              {getVoteTargetText(vote.target_type)} #
+              {vote.target_id === COMMENT_GUESTBOOK_POST_ID ? 'Guestbook' : vote.target_id}
             </Button>
           ),
         },

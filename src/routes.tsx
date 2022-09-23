@@ -58,7 +58,7 @@ export const routeMap: ReadonlyMap<RouteKey, RouteConfig> = new Map(
       id: RouteKey.Announcement,
       name: '公告管理',
       path: '/announcement',
-      icon: <Icon.BulbOutlined />,
+      icon: <Icon.SoundOutlined />,
     },
     {
       id: RouteKey.Category,
@@ -88,7 +88,7 @@ export const routeMap: ReadonlyMap<RouteKey, RouteConfig> = new Map(
       id: RouteKey.Feedback,
       name: '站点反馈',
       path: '/feedback',
-      icon: <Icon.AlertOutlined />,
+      icon: <Icon.BulbOutlined />,
     },
     {
       id: RouteKey.Disqus,

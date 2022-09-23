@@ -139,10 +139,8 @@ export const VotePage: React.FC = () => {
             }}
             options={[
               { value: ALL_VALUE, label: '所有目标' },
-              ...[VoteTarget.Site, VoteTarget.Article, VoteTarget.Comment].map((target) => ({
-                value: target,
-                label: getVoteTargetText(target),
-              })),
+              { value: VoteTarget.Post, label: getVoteTargetText(VoteTarget.Post) },
+              { value: VoteTarget.Comment, label: getVoteTargetText(VoteTarget.Comment) },
             ]}
           />
           <Input.Group compact>
@@ -155,10 +153,11 @@ export const VotePage: React.FC = () => {
               step={1}
               value={filterParams.target_id}
               onSearch={(targetInput) => {
-                const targetId = targetInput !== '' && Number(targetInput)
-                Number.isFinite(targetId)
-                  ? updateTargetID(targetId as number)
-                  : updateTargetID(void 0)
+                if (targetInput && Number.isFinite(Number(targetInput))) {
+                  updateTargetID(Number(targetInput))
+                } else {
+                  updateTargetID(void 0)
+                }
               }}
             />
           </Input.Group>
