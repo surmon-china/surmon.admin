@@ -6,7 +6,7 @@
 &nbsp;
 [![GitHub stars](https://img.shields.io/github/stars/surmon-china/veact-admin.svg?style=for-the-badge)](https://github.com/surmon-china/veact-admin/stargazers)
 &nbsp;
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/surmon-china/veact-admin/Deploy?label=deploy&style=for-the-badge)](https://github.com/surmon-china/veact-admin/actions?query=workflow:%22Deploy%22)
+[![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m793303100-3e335bd589053269e46708a0?style=for-the-badge)](https://github.surmon.me/veact-admin/)
 &nbsp;
 [![GitHub license](https://img.shields.io/github/license/surmon-china/veact-admin.svg?style=for-the-badge)](/LICENSE)
 
