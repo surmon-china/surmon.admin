@@ -46,7 +46,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
       .catch((error) => {
         notification.error({
           message: '上传失败',
-          description: error.code === UploadErrorCode.Failure ? String(error.error) : error.code,
+          description:
+            error.code === UploadErrorCode.Failure
+              ? String(error.error?.message ?? error.error)
+              : error.code,
         })
       })
   }

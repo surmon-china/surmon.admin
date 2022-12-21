@@ -5,7 +5,7 @@ import { useComputed } from 'veact'
 import { Menu, Spin, MenuProps } from 'antd'
 import * as Icon from '@ant-design/icons'
 
-import { GITHUB_REPO_URL, GITHUB_REPO_NAME } from '@/config'
+import { GITHUB_REPO_URL } from '@/config'
 import { getResourceUrl } from '@/transforms/url'
 import { RouteKey, rc } from '@/routes'
 import { useAdminState } from '@/state/admin'

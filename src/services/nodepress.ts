@@ -77,7 +77,7 @@ nodepress.interceptors.request.use((config) => {
 // response
 nodepress.interceptors.response.use(
   (response) => {
-    if (!response.headers['content-type'].includes('json')) {
+    if (!response.headers['content-type']?.includes('json')) {
       loading.complete()
       notification.success({
         message: '数据请求成功',

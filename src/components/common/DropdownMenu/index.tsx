@@ -18,7 +18,7 @@ export interface ButtonMenuProps {
   }>
 }
 
-export const DropdownMenu: React.FC<ButtonMenuProps> = (props) => {
+export const DropdownMenu: React.FC<React.PropsWithChildren<ButtonMenuProps>> = (props) => {
   return (
     <Dropdown
       className={props.className}
