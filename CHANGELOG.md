@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Update various dependencies
 - Use `pnpm` instead of `yarn` as a package management tool
-- Rename field `create_at` to `created_at`a nd `update_at` to `updated_at`
+- Rename field `create_at` to `created_at` and `update_at` to `updated_at`
 - Refactor `UniversalEditor` component
 
 ### 1.9.0 (2022-12-22)
