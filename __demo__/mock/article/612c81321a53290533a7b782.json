@@ -14,11 +14,11 @@
     "title": "JavaScript 权威指南小结",
     "description": "学习总结",
     "content": "\n《JavaScript权威指南》是2007年机械工业出版社出版的图书，作者是弗拉纳根（David Flanagan，美）。\n\n本书全面介绍了JavaScript语言的核心，以及Web浏览器中实现的遗留和标准的DOM。\n由于本书封面上是一只“爪哇犀牛”（封面上印上动物是原书出版公司O'Reilly一贯的风格），读者亲切地称其为“犀牛书”。\n\n此处省略一万字...\n",
-    "thumb": "/veact-admin/images/profile/article-thumb.jpg",
+    "thumb": "/veact-admin/images/thumbnail.jpg",
     "extends": [],
     "meta": { "likes": 51, "views": 11672, "comments": 39 },
-    "update_at": "2019-07-24T15:53:33.133Z",
-    "create_at": "2017-05-10T16:17:04.716Z",
+    "updated_at": "2019-07-24T15:53:33.133Z",
+    "created_at": "2017-05-10T16:17:04.716Z",
     "__v": 0
   }
 }
