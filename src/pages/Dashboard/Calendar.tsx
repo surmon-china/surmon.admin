@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import classnames from 'classnames'
 import React, { useMemo, useRef as useReactRef, WheelEventHandler } from 'react'
 import { useRef, useComputed, onMounted, onBeforeUnmount } from 'veact'
@@ -10,7 +10,7 @@ import styles from './style.module.less'
 
 const CALENDAR_DAY_FORMAT = 'YYYY-MM-DD'
 const CALENDAR_MONTH_FORMAT = 'YYYY/MM'
-const getMonthFullDays = (month: moment.Moment) => {
+const getMonthFullDays = (month: dayjs.Dayjs) => {
   const daysCount = month.daysInMonth()
   return Array.from({ length: daysCount }).map((d, i) => {
     return month.date(i + 1).format(CALENDAR_DAY_FORMAT)
@@ -40,13 +40,13 @@ export const Calendar: React.FC = () => {
 
   // current month | day
   const currentMonth = useMemo(() => {
-    const today = moment()
+    const today = dayjs()
     const days = Array.from({ length: today.date() }).map((_, i) => {
       return today.date(i + 1).format(CALENDAR_DAY_FORMAT)
     })
     return {
       title: today.format(CALENDAR_MONTH_FORMAT),
-      days,
+      days
     }
   }, [])
 
@@ -56,17 +56,17 @@ export const Calendar: React.FC = () => {
       return []
     }
 
-    const firstDay = moment(firstArticelDate)
-    const today = moment()
+    const firstDay = dayjs(firstArticelDate)
+    const today = dayjs()
     // prev months
-    const duration = moment.duration(firstDay.diff(today))
+    const duration = dayjs.duration(firstDay.diff(today))
     const months = Math.ceil(Math.abs(duration.as('month')))
     const monthsDays = Array.from({ length: months }).map((_, i) => {
       const month = today.clone().subtract(i + 1, 'month')
       const days = getMonthFullDays(month)
       return {
         title: month.format(CALENDAR_MONTH_FORMAT),
-        days,
+        days
       }
     })
 
@@ -103,7 +103,7 @@ export const Calendar: React.FC = () => {
     const brightnessStyle = !count
       ? {}
       : {
-          filter: `brightness(${count * 0.5})`,
+          filter: `brightness(${count * 0.5})`
         }
 
     return (

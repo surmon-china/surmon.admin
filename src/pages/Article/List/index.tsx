@@ -13,7 +13,7 @@ import {
   onMounted,
   batchedUpdates,
   useReactive,
-  useWatch,
+  useWatch
 } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Input, Select, Divider, Modal, Space, TreeSelect } from 'antd'
@@ -46,14 +46,14 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
   lang: SELECT_ALL_VALUE as SelectAllType | ArticleLanguage,
   public: SELECT_ALL_VALUE as SelectAllType | ArticlePublic,
   origin: SELECT_ALL_VALUE as SelectAllType | ArticleOrigin,
-  state: SELECT_ALL_VALUE as SelectAllType | PublishState,
+  state: SELECT_ALL_VALUE as SelectAllType | PublishState
 })
 
 export const ArticleList: React.FC = () => {
   const loading = useLoading()
   const article = useShallowReactive<ResponsePaginationData<Article>>({
     data: [],
-    pagination: undefined,
+    pagination: undefined
   })
 
   // 分类
@@ -88,7 +88,7 @@ export const ArticleList: React.FC = () => {
     const getParams: any = {
       ...params,
       ...filterParams,
-      keyword: Boolean(serarchKeyword.value) ? serarchKeyword.value : undefined,
+      keyword: Boolean(serarchKeyword.value) ? serarchKeyword.value : undefined
     }
     Object.keys(getParams).forEach((paramKey) => {
       if (getParams[paramKey] === SELECT_ALL_VALUE) {
@@ -122,7 +122,7 @@ export const ArticleList: React.FC = () => {
   const refreshData = () => {
     fetchData({
       page: article.pagination?.current_page,
-      per_page: article.pagination?.per_page,
+      per_page: article.pagination?.per_page
     })
   }
 
@@ -135,7 +135,7 @@ export const ArticleList: React.FC = () => {
         return patchArticlesState(articleIds, state).then(() => {
           refreshData()
         })
-      },
+      }
     })
   }
 
@@ -160,9 +160,9 @@ export const ArticleList: React.FC = () => {
         </Link>
       }
     >
-      <Space align="center" className={styles.toolbar}>
+      <Space className={styles.toolbar} align="center" wrap>
         <Space direction="vertical">
-          <Space>
+          <Space wrap>
             <Select
               className={styles.select}
               loading={loading.state.value}
@@ -180,9 +180,9 @@ export const ArticleList: React.FC = () => {
                         {state.icon}
                         {state.name}
                       </Space>
-                    ),
+                    )
                   }
-                }),
+                })
               ]}
             />
             <Select
@@ -202,9 +202,9 @@ export const ArticleList: React.FC = () => {
                         {state.icon}
                         {state.name}
                       </Space>
-                    ),
+                    )
                   }
-                }),
+                })
               ]}
             />
             <Select
@@ -224,9 +224,9 @@ export const ArticleList: React.FC = () => {
                         {state.icon}
                         {state.name}
                       </Space>
-                    ),
+                    )
                   }
-                }),
+                })
               ]}
             />
             <Select
@@ -246,9 +246,9 @@ export const ArticleList: React.FC = () => {
                         {state.icon}
                         {state.name}
                       </Space>
-                    ),
+                    )
                   }
-                }),
+                })
               ]}
             />
             <SortSelect
@@ -271,8 +271,8 @@ export const ArticleList: React.FC = () => {
                 { label: '全部标签', value: SELECT_ALL_VALUE },
                 ...tags.value.map((tag) => ({
                   value: tag.slug,
-                  label: `${tag.name} (${tag.articles_count})`,
-                })),
+                  label: `${tag.name} (${tag.articles_count})`
+                }))
               ]}
             />
             <TreeSelect
@@ -288,16 +288,16 @@ export const ArticleList: React.FC = () => {
                 {
                   label: '全部分类',
                   key: SELECT_ALL_VALUE,
-                  value: SELECT_ALL_VALUE,
+                  value: SELECT_ALL_VALUE
                 },
                 ...getAntdTreeByTree({
                   tree: categoriesTree.value,
-                  valuer: (c) => c.slug,
-                }),
+                  valuer: (c) => c.slug
+                })
               ]}
             />
           </Space>
-          <Space>
+          <Space wrap>
             <Input.Search
               className={styles.search}
               placeholder="输入文章标题、内容搜索"
@@ -324,18 +324,18 @@ export const ArticleList: React.FC = () => {
               {
                 label: '退为草稿',
                 icon: <Icon.RollbackOutlined />,
-                onClick: () => handleStateChange(selectedIds.value, PublishState.Draft),
+                onClick: () => handleStateChange(selectedIds.value, PublishState.Draft)
               },
               {
                 label: '直接发布',
                 icon: <Icon.CheckOutlined />,
-                onClick: () => handleStateChange(selectedIds.value, PublishState.Published),
+                onClick: () => handleStateChange(selectedIds.value, PublishState.Published)
               },
               {
                 label: '移回收站',
                 icon: <Icon.DeleteOutlined />,
-                onClick: () => handleStateChange(selectedIds.value, PublishState.Recycle),
-              },
+                onClick: () => handleStateChange(selectedIds.value, PublishState.Recycle)
+              }
             ]}
           >
             批量操作

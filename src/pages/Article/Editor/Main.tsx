@@ -1,5 +1,5 @@
 import React from 'react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import {
@@ -12,10 +12,10 @@ import {
   Divider,
   Space,
   Typography,
-  FormInstance,
+  FormInstance
 } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor/lazy'
+import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor'
 import { MultipleUploader } from '@/components/common/ImageUploader'
 import { getTags } from '@/store/tag'
 import { Tag } from '@/constants/tag'
@@ -48,7 +48,7 @@ const TagSelect: React.FC<TagSelectProps> = (props) => {
 
   return (
     <Spin spinning={tagsLoading.state.value}>
-      <Space wrap={true} size={[12, 12]}>
+      <Space wrap size={[12, 12]}>
         {!tags.value.length ? (
           <Typography.Text type="secondary">无数据</Typography.Text>
         ) : (
@@ -105,8 +105,8 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
           rules={[
             {
               pattern: /^[a-zA-Z0-9-_]+$/,
-              message: '仅支持 英文、数字、_、-',
-            },
+              message: '仅支持 英文、数字、_、-'
+            }
           ]}
         >
           <Input
@@ -122,8 +122,8 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
           rules={[
             {
               required: true,
-              message: '请输入标题',
-            },
+              message: '请输入标题'
+            }
           ]}
         >
           <Input placeholder="文章标题" />
@@ -135,8 +135,8 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
           rules={[
             {
               required: true,
-              message: '请输入标题',
-            },
+              message: '请输入标题'
+            }
           ]}
         >
           <Input.TextArea rows={4} placeholder="文章描述" />
@@ -150,8 +150,8 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
               message: '至少应该有一个关键词',
               validator(_, value: string[]) {
                 return Boolean(value?.length) ? Promise.resolve() : Promise.reject()
-              },
-            },
+              }
+            }
           ]}
         >
           <Select placeholder="输入关键词后回车" mode="tags" />
@@ -167,13 +167,13 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
           rules={[
             {
               required: true,
-              message: '请输入文章内容',
-            },
+              message: '请输入文章内容'
+            }
           ]}
         >
           <UniversalEditor
             formStatus={true}
-            minRows={28}
+            rows={28}
             eid={props.editorCacheID}
             placeholder="输入文章内容..."
             renderToolbarExtra={(language) => {
@@ -195,10 +195,10 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
       <Modal
         centered={true}
         closable={false}
-        visible={isVisibleUploaderModal.value}
+        open={isVisibleUploaderModal.value}
         bodyStyle={{
           maxHeight: '80vh',
-          overflowY: 'auto',
+          overflowY: 'auto'
         }}
         title={
           <Space>
@@ -218,7 +218,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
           </Button>
         }
       >
-        <MultipleUploader directory={`nodepress/${moment().format('YYYY-MM-DD')}`} />
+        <MultipleUploader directory={`nodepress/${dayjs().format('YYYY-MM-DD')}`} />
       </Modal>
     </>
   )

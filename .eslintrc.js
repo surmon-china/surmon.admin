@@ -1,13 +1,13 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    sourceType: 'module',
+    sourceType: 'module'
   },
   plugins: ['@typescript-eslint/eslint-plugin', 'prettier'],
   extends: [
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier',
+    'prettier'
   ],
   rules: {
     'prettier/prettier': ['error'],
@@ -16,6 +16,6 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/ban-ts-comment': 0,
     '@typescript-eslint/no-non-null-asserted-optional-chain': 0,
-    '@typescript-eslint/no-inferrable-types': 0,
-  },
+    '@typescript-eslint/no-inferrable-types': 0
+  }
 }

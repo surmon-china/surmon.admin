@@ -18,7 +18,7 @@ import {
   getCategories,
   deleteCategory,
   putCategory,
-  createCategory,
+  createCategory
 } from '@/store/category'
 import { EditModal } from './EditModal'
 
@@ -70,7 +70,7 @@ export const CategoryPage: React.FC = () => {
         return deleteCategory(category._id!).then(() => {
           fetchData()
         })
-      },
+      }
     })
   }
 
@@ -80,7 +80,7 @@ export const CategoryPage: React.FC = () => {
         .promise(
           putCategory({
             ...activeEditData.value,
-            ...category,
+            ...category
           })
         )
         .then(() => {
@@ -135,12 +135,13 @@ export const CategoryPage: React.FC = () => {
             blockNode={true}
             autoExpandParent={true}
             defaultExpandAll={true}
+            virtual={false}
             showLine={true}
             showIcon={false}
             selectable={false}
             treeData={getAntdTreeByTree({
               tree: categories.tree,
-              valuer: (c) => c._id,
+              valuer: (c) => c._id
             })}
             titleRender={(nodeData) => {
               const category: CategoryTree = (nodeData as any).data
@@ -210,7 +211,7 @@ export const CategoryPage: React.FC = () => {
               return true
             }
             return false
-          },
+          }
         })}
         categories={categories.data}
         visible={isVisibleModal}

@@ -5,13 +5,12 @@
 
 import React from 'react'
 import { BrowserRouter, HashRouter, Route, Routes, Navigate, Outlet } from 'react-router-dom'
-import { onMounted, useReactivity } from 'veact'
+import { onMounted } from 'veact'
 import LoadingBar from 'react-top-loading-bar'
-import 'moment/locale/zh-cn'
 
 import { ENV, VITE_ENV, APP_COLOR_PRIMARY, ENABLEd_HASH_ROUTER } from '@/config'
 import { RouteKey, rc } from '@/routes'
-import { loading } from '@/state/loading'
+import { useLoadingState } from '@/state/loading'
 import { AppAuth } from '@/components/AppAuth'
 import { AppLayout } from '@/components/AppLayout'
 
@@ -33,7 +32,7 @@ import { ArticleCreate } from '@/pages/Article/Create'
 import { ProfilePage } from '@/pages/Profile'
 
 // Router: WORKAROUND for outside
-const RouterComponent: React.FC = (props) => {
+const RouterComponent: React.FC<React.PropsWithChildren> = (props) => {
   return ENABLEd_HASH_ROUTER ? (
     <HashRouter>{props.children}</HashRouter>
   ) : (
@@ -42,7 +41,7 @@ const RouterComponent: React.FC = (props) => {
 }
 
 export const App: React.FC = () => {
-  const loadingState = useReactivity(() => loading.state)
+  const loadingState = useLoadingState()
 
   onMounted(() => {
     console.info(`Run! env: ${ENV}, vite env: ${JSON.stringify(VITE_ENV)}`)
@@ -55,9 +54,9 @@ export const App: React.FC = () => {
         height={3}
         waitingTime={200}
         loaderSpeed={600}
-        className={loadingState.failed ? 'red' : APP_COLOR_PRIMARY}
-        color={loadingState.failed ? 'red' : APP_COLOR_PRIMARY}
-        progress={loadingState.percent}
+        className={loadingState.state.failed ? 'red' : APP_COLOR_PRIMARY}
+        color={loadingState.state.failed ? 'red' : APP_COLOR_PRIMARY}
+        progress={loadingState.state.percent}
       />
       <RouterComponent>
         <Routes>

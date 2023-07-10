@@ -15,7 +15,7 @@ export const APP_SIDER_COLLAPSED_WIDTH = 80
 export const APP_LAYOUT_GUTTER_SIZE = 24
 export const APP_LAYOUT_SPACE_SIZE: SizeType = 'large'
 export const APP_CONTENT_SPACE_SIZE: SizeType = 'middle'
-export const APP_COLOR_PRIMARY = '#177ddc'
+export const APP_COLOR_PRIMARY = '#0088f5'
 
 export const VITE_ENV = import.meta.env
 export const ENV = import.meta.env.MODE

@@ -18,7 +18,7 @@ import styles from './style.module.less'
 
 let renewalTimer: null | number = null
 
-export const AppAuth: React.FC = (props) => {
+export const AppAuth: React.FC<React.PropsWithChildren> = (props) => {
   const navigate = useNavigate()
   const loading = useLoading()
   const isLogined = useRef(false)
@@ -64,7 +64,7 @@ export const AppAuth: React.FC = (props) => {
       console.warn('Token 被验证是无效的，跳登陆页：', error)
       notification.info({
         message: '好久不见！',
-        description: '你还好吗？',
+        description: '你还好吗？'
       })
       removeToken()
       navigate(rc(RouteKey.Hello).path)

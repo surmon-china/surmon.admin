@@ -28,7 +28,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
       dataSource={props.data}
       rowSelection={{
         selectedRowKeys: props.selectedIds,
-        onChange: props.onSelecte,
+        onChange: props.onSelecte
       }}
       pagination={{
         pageSizeOptions: ['10', '20', '50'],
@@ -36,13 +36,14 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
         pageSize: props.pagination?.per_page,
         total: props.pagination?.total,
         showSizeChanger: true,
-        onChange: props.onPagination,
+        onChange: props.onPagination
       }}
       columns={[
         {
           title: 'ID',
           width: 40,
           dataIndex: 'id',
+          responsive: ['md']
         },
         {
           title: '文章',
@@ -54,7 +55,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
               bordered={false}
               bodyStyle={{
                 minHeight: '100px',
-                backdropFilter: 'blur(2px)',
+                backdropFilter: 'blur(2px)'
               }}
               style={{
                 margin: '1rem 0',
@@ -62,7 +63,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 backgroundSize: 'cover',
                 minHeight: '100px',
                 backgroundImage: `url("${comment.thumb}")`,
-                backgroundBlendMode: 'soft-light',
+                backgroundBlendMode: 'soft-light'
               }}
             >
               <Card.Meta
@@ -82,12 +83,12 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 }
               />
             </Card>
-          ),
+          )
         },
         {
           title: '归类',
           width: 130,
-          dataIndex: 'create_at',
+          dataIndex: 'created_at',
           render(_, article) {
             return (
               <Space direction="vertical">
@@ -97,7 +98,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                     {category.name}
                   </Space>
                 ))}
-                <Space size="small" wrap={true}>
+                <Space size="small" wrap>
                   {article.tag.map((tag) => (
                     <Tag icon={<Icon.TagOutlined />} key={tag._id}>
                       {tag.name}
@@ -106,12 +107,12 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 </Space>
               </Space>
             )
-          },
+          }
         },
         {
           title: '被关注',
           width: 150,
-          dataIndex: 'create_at',
+          dataIndex: 'created_at',
           render(_, article) {
             return (
               <Space direction="vertical">
@@ -129,20 +130,20 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 </Space>
               </Space>
             )
-          },
+          }
         },
         {
           title: '更新周期',
           width: 230,
-          dataIndex: 'create_at',
+          dataIndex: 'created_at',
           render(_, article) {
             return (
               <Space direction="vertical">
-                <span>最早发布：{stringToYMD(article.create_at!)}</span>
-                <span>最后更新：{stringToYMD(article.update_at!)}</span>
+                <span>最早发布：{stringToYMD(article.created_at!)}</span>
+                <span>最后更新：{stringToYMD(article.updated_at!)}</span>
               </Space>
             )
-          },
+          }
         },
         {
           title: '状态',
@@ -158,7 +159,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 ))}
               </Space>
             )
-          },
+          }
         },
         {
           title: '操作',
@@ -216,8 +217,8 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 宿主页面
               </Button>
             </Space>
-          ),
-        },
+          )
+        }
       ]}
     />
   )

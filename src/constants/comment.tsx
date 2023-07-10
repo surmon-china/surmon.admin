@@ -29,8 +29,8 @@ export interface Comment {
   }
   ip: string | null
   ip_location: IPLocation | null
-  update_at?: string
-  create_at?: string
+  updated_at?: string
+  created_at?: string
   extends: Array<GeneralKeyValue>
 }
 
@@ -39,7 +39,7 @@ export enum CommentState {
   Auditing = 0, // 待审核
   Published = 1, // 通过正常
   Deleted = -1, // 已删除
-  Spam = -2, // 垃圾评论
+  Spam = -2 // 垃圾评论
 }
 
 const commentStateMap = new Map(
@@ -48,26 +48,26 @@ const commentStateMap = new Map(
       id: CommentState.Auditing,
       name: '待审核',
       icon: <Icon.EditOutlined />,
-      color: 'blue',
+      color: 'blue'
     },
     {
       id: CommentState.Published,
       name: '已发布',
       icon: <Icon.CheckOutlined />,
-      color: 'green',
+      color: 'green'
     },
     {
       id: CommentState.Spam,
       name: '垃圾评论',
       icon: <Icon.StopOutlined />,
-      color: 'red',
+      color: 'red'
     },
     {
       id: CommentState.Deleted,
       name: '回收站',
       icon: <Icon.DeleteOutlined />,
-      color: 'orange',
-    },
+      color: 'orange'
+    }
   ].map((item) => [item.id, item])
 )
 

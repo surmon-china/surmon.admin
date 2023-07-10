@@ -21,7 +21,7 @@ export const HelloPage: React.FC = () => {
   const loading = useLoading(false)
   const inputState = useReactive({
     value: '',
-    isEdit: false,
+    isEdit: false
   })
 
   const toEditMode = () => {

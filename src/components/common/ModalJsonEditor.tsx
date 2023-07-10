@@ -1,13 +1,13 @@
 import React from 'react'
 import { Modal } from 'antd'
-import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor/lazy'
+import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor'
 
 export function openJSONEditor<T = any>(title: string, initVaue: T, callback: (data: T) => any) {
   let data: any = JSON.stringify(initVaue, null, 2)
   return Modal.confirm({
     width: '60vw',
     style: {
-      maxHeight: '60vh',
+      maxHeight: '60vh'
     },
     title: title,
     content: (
@@ -25,6 +25,6 @@ export function openJSONEditor<T = any>(title: string, initVaue: T, callback: (d
     ),
     onOk() {
       return callback(JSON.parse(data))
-    },
+    }
   })
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Menu, Dropdown, Avatar, Button, Modal, Spin } from 'antd'
+import { Dropdown, Avatar, Button, Modal, Spin } from 'antd'
 import * as Icon from '@ant-design/icons'
 
 import { RouteKey, rc } from '@/routes'
@@ -15,7 +15,7 @@ interface AppHeaderProps {
 }
 export const AppHeader: React.FC<AppHeaderProps> = (props) => {
   const navigate = useNavigate()
-  const admin = useAdminState()
+  const adminState = useAdminState()
 
   const redriectToProfileRoute = () => {
     navigate(rc(RouteKey.Profile).path)
@@ -29,60 +29,59 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
         console.log('退出系统')
         removeToken()
         navigate(rc(RouteKey.Hello).path)
-      },
+      }
     })
   }
 
   return (
     <div className={styles.headerContent}>
-      <div className={styles.toggler}>
+      <div className={styles.left}>
         <Button
+          className={styles.siderToggler}
           type="link"
           onClick={props.onToggleSider}
           icon={React.createElement(
             props.isSiderCollapsed ? Icon.MenuUnfoldOutlined : Icon.MenuFoldOutlined,
             {
-              className: 'trigger',
+              className: 'trigger'
             }
           )}
         ></Button>
       </div>
       <div className={styles.user}>
-        <Spin spinning={admin.loading.value} size="small">
+        <Spin spinning={adminState.loading.value} size="small">
           <Dropdown
             placement="bottomRight"
-            overlay={
-              <Menu
-                items={[
-                  {
-                    key: 'profile',
-                    icon: <Icon.SettingOutlined />,
-                    onClick: redriectToProfileRoute,
-                    label: '系统设置',
-                  },
-                  {
-                    key: 'divider',
-                    type: 'divider',
-                  },
-                  {
-                    key: 'logout',
-                    icon: <Icon.LogoutOutlined />,
-                    onClick: logout,
-                    danger: true,
-                    label: '退出登录',
-                  },
-                ]}
-              />
-            }
+            menu={{
+              items: [
+                {
+                  key: 'profile',
+                  icon: <Icon.SettingOutlined />,
+                  label: '系统设置',
+                  onClick: redriectToProfileRoute
+                },
+                {
+                  key: 'divider',
+                  type: 'divider'
+                },
+                {
+                  key: 'logout',
+                  icon: <Icon.LogoutOutlined />,
+                  label: '退出登录',
+                  danger: true,
+                  onClick: logout
+                }
+              ]
+            }}
           >
             <div className={styles.content}>
-              <span>{admin.data.name}</span>
+              <span>{adminState.data.name}</span>
               <Avatar
                 shape="square"
                 size="small"
                 icon={<Icon.UserOutlined />}
                 className={styles.avatar}
-                src={admin.data.avatar}
+                src={adminState.data.avatar}
               />
             </div>
           </Dropdown>

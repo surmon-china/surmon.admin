@@ -1,8 +1,9 @@
-// init
-@import './init';
-
 // Ant design
 @import './antd';
+
+// init
+@import './mixins';
+@import './variables';
 
 // transition
 @import './transition';
@@ -21,31 +22,29 @@
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-  background: @module-bg-lighter;
+  background: @app-module-background-lighter;
 }
 *::-webkit-scrollbar-track {
   border-radius: 0;
 }
 *::-webkit-scrollbar-thumb {
   border-radius: 0;
-  background-color: rgba(@primary, 0.4);
+  background-color: rgba(@app-primary-color, 0.4);
   transition: background-color 0.2s;
   &:hover {
-    background-color: @primary;
+    background-color: @app-primary-color;
   }
 }
 
 // global
 html {
-  background-color: @body-bg;
+  background-color: @app-body-background;
 }
 
 body {
   margin: 0;
   overflow-y: scroll;
-  font-family: 'DINRegular', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Roboto',
-    'Century Gothic', BlinkMacSystemFont, 'Segoe UI', 'Microsoft yahei', '微软雅黑',
-    'Helvetica Neue', sans-serif, SimHei;
+  font-family: @app-font-family;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   &.fullscreen {

@@ -30,7 +30,7 @@ export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
       dataSource={props.data}
       rowSelection={{
         selectedRowKeys: props.selectedIds,
-        onChange: props.onSelecte,
+        onChange: props.onSelecte
       }}
       pagination={{
         pageSizeOptions: ['10', '20', '50'],
@@ -38,25 +38,25 @@ export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
         pageSize: props.pagination?.per_page,
         total: props.pagination?.total,
         showSizeChanger: true,
-        onChange: props.onPagination,
+        onChange: props.onPagination
       }}
       columns={[
         {
           title: 'ID',
           width: 40,
-          dataIndex: 'id',
+          dataIndex: 'id'
         },
         {
           title: 'TID',
           width: 40,
-          dataIndex: 'tid',
+          dataIndex: 'tid'
         },
         {
           title: '标记',
           width: 60,
           align: 'center',
           dataIndex: 'marked',
-          render: (_, feedback) => getMarkedByBoolean(feedback.marked).icon,
+          render: (_, feedback) => getMarkedByBoolean(feedback.marked).icon
         },
         {
           title: '评分',
@@ -65,7 +65,7 @@ export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
           dataIndex: 'emotion',
           render: (_, feedback) => (
             <Statistic prefix={feedback.emotion_emoji} value={feedback.emotion} />
-          ),
+          )
         },
         {
           title: '反馈内容',
@@ -77,7 +77,7 @@ export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
             >
               {feedback.content}
             </Typography.Paragraph>
-          ),
+          )
         },
         {
           title: '备注',
@@ -94,7 +94,7 @@ export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
                 </Typography.Paragraph>
               )}
             </Placeholder>
-          ),
+          )
         },
         {
           title: '发布于',
@@ -158,11 +158,11 @@ export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
 
                 <UniversalText
                   prefix={<Icon.ClockCircleOutlined />}
-                  text={stringToYMD(feedback.create_at!)}
+                  text={stringToYMD(feedback.created_at!)}
                 />
               </Space>
             )
-          },
+          }
         },
         {
           title: '操作',
@@ -190,8 +190,8 @@ export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
                 彻底删除
               </Button>
             </Space>
-          ),
-        },
+          )
+        }
       ]}
     />
   )

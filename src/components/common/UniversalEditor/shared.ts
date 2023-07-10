@@ -3,7 +3,7 @@ import storage from '@/services/storage'
 
 export enum UEditorLanguage {
   Markdown = 'markdown',
-  JSON = 'json',
+  JSON = 'json'
 }
 
 const getEditorCacheStorageKey = (id: string) => {

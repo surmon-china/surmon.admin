@@ -13,7 +13,7 @@ import {
   useWatch,
   toRaw,
   batchedUpdates,
-  useComputed,
+  useComputed
 } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd'
@@ -30,7 +30,7 @@ import {
   VoteAuthorType,
   voteTypes,
   getVoteTargetText,
-  getVoteAuthorTypeText,
+  getVoteAuthorTypeText
 } from '@/constants/vote'
 import { scrollTo } from '@/services/scroller'
 import { VoteListTable } from './Table'
@@ -43,14 +43,14 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
   target_type: ALL_VALUE as VoteTarget | typeof ALL_VALUE,
   vote_type: ALL_VALUE as VoteType | typeof ALL_VALUE,
   author_type: ALL_VALUE as VoteAuthorType | typeof ALL_VALUE,
-  sort: SortTypeBase.Desc,
+  sort: SortTypeBase.Desc
 })
 
 export const VotePage: React.FC = () => {
   const loading = useLoading()
   const votes = useShallowReactive<ResponsePaginationData<Vote>>({
     data: [],
-    pagination: void 0,
+    pagination: void 0
   })
 
   const filterParams = useReactive({ ...DEFAULT_FILTER_PARAMS })
@@ -74,7 +74,7 @@ export const VotePage: React.FC = () => {
       target_id: filterParams.target_id,
       target_type: filterParams.target_type !== ALL_VALUE ? filterParams.target_type : void 0,
       vote_type: filterParams.vote_type !== ALL_VALUE ? filterParams.vote_type : void 0,
-      author_type: filterParams.author_type !== ALL_VALUE ? filterParams.author_type : void 0,
+      author_type: filterParams.author_type !== ALL_VALUE ? filterParams.author_type : void 0
     }
 
     loading.promise(getVotes(getParams)).then((response) => {
@@ -100,7 +100,7 @@ export const VotePage: React.FC = () => {
   const refreshData = () => {
     fetchData({
       page: votes.pagination?.current_page,
-      per_page: votes.pagination?.per_page,
+      per_page: votes.pagination?.per_page
     })
   }
 
@@ -112,7 +112,7 @@ export const VotePage: React.FC = () => {
       onOk: () =>
         deleteVotes(votes.map((c) => c._id!)).then(() => {
           refreshData()
-        }),
+        })
     })
   }
 
@@ -128,8 +128,8 @@ export const VotePage: React.FC = () => {
       bordered={false}
       className={styles.vote}
     >
-      <Space align="center" className={styles.toolbar}>
-        <Space>
+      <Space className={styles.toolbar} align="center" wrap>
+        <Space wrap>
           <Select
             className={styles.select}
             loading={loading.state.value}
@@ -140,7 +140,7 @@ export const VotePage: React.FC = () => {
             options={[
               { value: ALL_VALUE, label: '所有目标' },
               { value: VoteTarget.Post, label: getVoteTargetText(VoteTarget.Post) },
-              { value: VoteTarget.Comment, label: getVoteTargetText(VoteTarget.Comment) },
+              { value: VoteTarget.Comment, label: getVoteTargetText(VoteTarget.Comment) }
             ]}
           />
           <Input.Group compact>
@@ -177,8 +177,8 @@ export const VotePage: React.FC = () => {
                     {type.icon}
                     {type.name}
                   </Space>
-                ),
-              })),
+                )
+              }))
             ]}
           />
           <Select
@@ -193,9 +193,9 @@ export const VotePage: React.FC = () => {
               ...[VoteAuthorType.Anonymous, VoteAuthorType.Guest, VoteAuthorType.Disqus].map(
                 (type) => ({
                   value: type,
-                  label: getVoteAuthorTypeText(type),
+                  label: getVoteAuthorTypeText(type)
                 })
-              ),
+              )
             ]}
           />
           <SortSelect
@@ -220,8 +220,8 @@ export const VotePage: React.FC = () => {
               {
                 label: '彻底删除',
                 icon: <Icon.DeleteOutlined />,
-                onClick: () => handleDelete(selectVotes.value),
-              },
+                onClick: () => handleDelete(selectVotes.value)
+              }
             ]}
           >
             批量操作

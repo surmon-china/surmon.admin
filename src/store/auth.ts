@@ -12,7 +12,7 @@ export const AUTH_API_PATH = {
   LOGIN: '/auth/login',
   CHECK_TOKEN: '/auth/check',
   RENEWAL_TOKEN: '/auth/renewal',
-  ADMIN: '/auth/admin',
+  ADMIN: '/auth/admin'
 }
 
 /** 获取管理员信息 */
@@ -26,7 +26,7 @@ export function putAuth(auth: Auth) {
     .put<Auth>(AUTH_API_PATH.ADMIN, {
       ...auth,
       password: auth.password ? Base64.encode(auth.password) : '',
-      new_password: auth.new_password ? Base64.encode(auth.new_password) : '',
+      new_password: auth.new_password ? Base64.encode(auth.new_password) : ''
     })
     .then((response) => response.result)
 }

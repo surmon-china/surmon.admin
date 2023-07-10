@@ -23,22 +23,24 @@ export const StatisticsComponent: React.FC = () => {
   })
 
   return (
-    <Row gutter={APP_LAYOUT_GUTTER_SIZE} className={styles.statistic}>
-      <Col span={8}>
+    <Row className={styles.statistic} gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
+      <Col xs={24} md={12} lg={8}>
         <Card bordered={false} className={styles.statisticCard}>
           <Row>
             <Col span={18}>
               <Space size="middle">
                 <Statistic
+                  valueStyle={{ fontWeight: 'bold' }}
                   loading={loading.state.value}
                   title="今日阅读"
-                  value={statistics.value.todayViews}
+                  value={statistics.value.todayViews ?? '-'}
                 />
                 <Divider type="vertical" />
                 <Statistic
+                  valueStyle={{ fontWeight: 'bold' }}
                   loading={loading.state.value}
                   title="累计文章阅读"
-                  value={statistics.value.totalViews}
+                  value={statistics.value.totalViews ?? '-'}
                 />
               </Space>
             </Col>
@@ -48,21 +50,23 @@ export const StatisticsComponent: React.FC = () => {
           </Row>
         </Card>
       </Col>
-      <Col span={8}>
+      <Col xs={24} md={12} lg={8}>
         <Card bordered={false} className={styles.statisticCard}>
           <Row>
             <Col span={18}>
               <Space size="middle">
                 <Statistic
+                  valueStyle={{ fontWeight: 'bold' }}
                   loading={loading.state.value}
                   title="累计获得喜欢"
-                  value={statistics.value.totalLikes}
+                  value={statistics.value.totalLikes ?? '-'}
                 />
                 <Divider type="vertical" />
                 <Statistic
+                  valueStyle={{ fontWeight: 'bold' }}
                   loading={loading.state.value}
                   title="平均情绪反馈"
-                  value={statistics.value.averageEmotion || '-'}
+                  value={statistics.value.averageEmotion ?? '-'}
                 />
               </Space>
             </Col>
@@ -72,27 +76,30 @@ export const StatisticsComponent: React.FC = () => {
           </Row>
         </Card>
       </Col>
-      <Col span={8}>
+      <Col xs={24} md={12} lg={8}>
         <Card bordered={false} className={styles.statisticCard}>
           <Row>
             <Col span={18}>
               <Space size="middle">
                 <Statistic
+                  valueStyle={{ fontWeight: 'bold' }}
                   loading={loading.state.value}
                   title="全站评论"
-                  value={statistics.value.comments}
+                  value={statistics.value.comments ?? '-'}
                 />
                 <Divider type="vertical" />
                 <Statistic
+                  valueStyle={{ fontWeight: 'bold' }}
                   loading={loading.state.value}
                   title="文章"
-                  value={statistics.value.articles}
+                  value={statistics.value.articles ?? '-'}
                 />
                 <Divider type="vertical" />
                 <Statistic
+                  valueStyle={{ fontWeight: 'bold' }}
                   loading={loading.state.value}
                   title="标签"
-                  value={statistics.value.tags}
+                  value={statistics.value.tags ?? '-'}
                 />
               </Space>
             </Col>

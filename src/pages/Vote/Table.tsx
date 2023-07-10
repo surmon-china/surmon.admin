@@ -10,7 +10,7 @@ import {
   VoteType,
   getVoteTypeById,
   getVoteTargetText,
-  getVoteAuthorTypeText,
+  getVoteAuthorTypeText
 } from '@/constants/vote'
 import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
@@ -32,7 +32,7 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
       dataSource={props.data}
       rowSelection={{
         selectedRowKeys: props.selectedIds,
-        onChange: props.onSelecte,
+        onChange: props.onSelecte
       }}
       pagination={{
         pageSizeOptions: ['10', '20', '50'],
@@ -40,13 +40,13 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
         pageSize: props.pagination?.per_page,
         total: props.pagination?.total,
         showSizeChanger: true,
-        onChange: props.onPagination,
+        onChange: props.onPagination
       }}
       columns={[
         {
           title: 'ID',
           width: 40,
-          dataIndex: 'id',
+          dataIndex: 'id'
         },
         {
           title: '目标',
@@ -56,7 +56,7 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
               {getVoteTargetText(vote.target_type)} #
               {vote.target_id === COMMENT_GUESTBOOK_POST_ID ? 'Guestbook' : vote.target_id}
             </Button>
-          ),
+          )
         },
         {
           title: '态度',
@@ -68,7 +68,7 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
             >
               <strong>{getVoteTypeById(vote.vote_type).name}</strong>
             </Tag>
-          ),
+          )
         },
         {
           title: '用户',
@@ -93,7 +93,7 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
                 </span>
               </Popover>
             </Space>
-          ),
+          )
         },
         {
           title: 'IP 位置',
@@ -113,7 +113,7 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
                 </Space>
               </Space>
             )
-          },
+          }
         },
         {
           title: '软件终端',
@@ -135,11 +135,11 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
                 </Space>
               </Space>
             )
-          },
+          }
         },
         {
           title: '硬件时间',
-          dataIndex: 'create_at',
+          dataIndex: 'created_at',
           render(_, vote) {
             return (
               <Space direction="vertical">
@@ -152,12 +152,12 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
                 </Space>
                 <UniversalText
                   prefix={<Icon.ClockCircleOutlined />}
-                  text={stringToYMD(vote.create_at!)}
+                  text={stringToYMD(vote.created_at!)}
                 />
               </Space>
             )
-          },
-        },
+          }
+        }
       ]}
     />
   )

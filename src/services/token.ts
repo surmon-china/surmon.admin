@@ -45,7 +45,7 @@ const token = {
   setToken,
   removeToken,
   isTokenValid,
-  getTokenCountdown,
+  getTokenCountdown
 }
 
 export default token

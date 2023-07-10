@@ -27,7 +27,7 @@ const storage = {
   set,
   remove,
   setJSON,
-  getJSON,
+  getJSON
 }
 
 export default storage

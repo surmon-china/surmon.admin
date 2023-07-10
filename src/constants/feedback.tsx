@@ -23,8 +23,8 @@ export interface Feedback {
   origin: string | null
   marked: boolean
   remark: string
-  create_at?: string
-  update_at?: string
+  created_at?: string
+  updated_at?: string
 }
 
 const markedStateMap = new Map(
@@ -33,14 +33,14 @@ const markedStateMap = new Map(
       number: 0,
       boolean: false,
       name: '未标记',
-      icon: <Icon.StarOutlined />,
+      icon: <Icon.StarOutlined />
     },
     {
       number: 1,
       boolean: true,
       name: '已标记',
-      icon: <Icon.StarFilled style={{ color: '#fadb14' }} />,
-    },
+      icon: <Icon.StarFilled style={{ color: '#fadb14' }} />
+    }
   ].map((item) => [item.number, item])
 )
 

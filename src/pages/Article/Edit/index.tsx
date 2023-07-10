@@ -3,14 +3,14 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
-import { Modal, Button, Space, Badge, message } from 'antd'
+import { Modal, Button, Space, Badge, Divider, message } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { RouteKey, rc } from '@/routes'
-import { getUEditorCache } from '@/components/common/UniversalEditor/lazy'
+import { getUEditorCache } from '@/components/common/UniversalEditor'
 import { Article } from '@/constants/article'
 import { SortTypeWithHot } from '@/constants/sort'
 import { scrollTo } from '@/services/scroller'
@@ -26,7 +26,10 @@ export const ArticleEdit: React.FC = () => {
   const fetching = useLoading()
   const submitting = useLoading()
   const article = useRef<Article | null>(null)
-  const articleCacheID = useMemo(() => rc(RouteKey.ArticleEdit).pather!(articleID), [articleID])
+  const articleCacheID = React.useMemo(
+    () => rc(RouteKey.ArticleEdit).pather!(articleID),
+    [articleID]
+  )
 
   // Modal
   const isVisibleCommentModal = useRef<boolean>(false)
@@ -67,7 +70,7 @@ export const ArticleEdit: React.FC = () => {
   const handleManageComment = () => {
     navigate({
       pathname: rc(RouteKey.Comment).path,
-      search: `post_id=${article.value?.id!}`,
+      search: `post_id=${article.value?.id!}`
     })
   }
 
@@ -78,8 +81,8 @@ export const ArticleEdit: React.FC = () => {
       onOk: fetchDeleteArticle,
       okButtonProps: {
         danger: true,
-        type: 'ghost',
-      },
+        type: 'ghost'
+      }
     })
   }
 
@@ -96,14 +99,14 @@ export const ArticleEdit: React.FC = () => {
           cancelText: '使用远程数据',
           centered: true,
           okButtonProps: {
-            danger: true,
+            danger: true
           },
           onOk() {
             article.value = { ..._article, content: localContent || '' }
           },
           onCancel() {
             article.value = _article
-          },
+          }
         })
       } else {
         article.value = _article
@@ -112,7 +115,7 @@ export const ArticleEdit: React.FC = () => {
       Modal.error({
         centered: true,
         title: '文章请求失败',
-        content: String(error.message),
+        content: String(error.message)
       })
     }
   })
@@ -127,18 +130,21 @@ export const ArticleEdit: React.FC = () => {
         submitting={submitting.state.value}
         onSubmit={fetchUpdateArticle}
         extra={
-          <Space>
-            <Button
-              type="dashed"
-              size="small"
-              danger={true}
-              icon={<Icon.DeleteOutlined />}
-              disabled={fetching.state.value}
-              onClick={() => message.warn('双击执行删除操作')}
-              onDoubleClick={handleDelete}
-            >
-              删除文章
-            </Button>
+          <Space wrap>
+            <Button.Group>
+              <Button size="small" icon={<Icon.HeartOutlined />}>
+                {article.value?.meta?.likes} 喜欢
+              </Button>
+              <Button size="small" icon={<Icon.EyeOutlined />}>
+                {article.value?.meta?.views} 阅读
+              </Button>
+              <Button
+                size="small"
+                icon={<Icon.LinkOutlined />}
+                target="_blank"
+                href={getBlogArticleUrl(article.value?.id!)}
+              />
+            </Button.Group>
             <Badge count={commentCount.value}>
               <Button
                 type="ghost"
@@ -150,20 +156,18 @@ export const ArticleEdit: React.FC = () => {
                 文章评论
               </Button>
             </Badge>
-            <Button.Group>
-              <Button size="small" icon={<Icon.HeartOutlined />} disabled={true}>
-                {article.value?.meta?.likes} 喜欢
-              </Button>
-              <Button size="small" icon={<Icon.EyeOutlined />} disabled={true}>
-                {article.value?.meta?.views} 阅读
-              </Button>
-              <Button
-                size="small"
-                icon={<Icon.RocketOutlined />}
-                target="_blank"
-                href={getBlogArticleUrl(article.value?.id!)}
-              />
-            </Button.Group>
+            <Divider type="vertical" />
+            <Button
+              type="dashed"
+              size="small"
+              danger={true}
+              icon={<Icon.DeleteOutlined />}
+              disabled={fetching.state.value}
+              onClick={() => message.warning('双击执行删除操作')}
+              onDoubleClick={handleDelete}
+            >
+              删除文章
+            </Button>
           </Space>
         }
       />

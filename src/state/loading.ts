@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { reactive, readonly } from 'veact'
+import { reactive, readonly, useReactivity } from 'veact'
 
 const _throttle = 400
 const _duration = 160
@@ -12,7 +12,7 @@ let _animationTimer: number | null = null
 const state = reactive({
   loading: false,
   failed: false,
-  percent: 0,
+  percent: 0
 })
 
 const ensureClearCompleteTimeout = () => {
@@ -41,13 +41,12 @@ const makeCompleteTimer = (callback?: () => void) => {
   }, _throttle)
 }
 
-export const loading = {
+export const loadingState = {
   state: readonly(state),
   start() {
     ensureClearCompleteTimeout()
     ensureClearAnimationTimeout()
     state.loading = true
-    // 永远只步进剩下进度的 1/2
     state.percent += (100 - state.percent) / 2
   },
   complete() {
@@ -58,5 +57,9 @@ export const loading = {
     // TODO: LoadingBar background style BUG
     // state.failed = true;
     makeCompleteTimer()
-  },
+  }
+}
+
+export const useLoadingState = () => {
+  return useReactivity(() => loadingState)
 }

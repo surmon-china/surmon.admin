@@ -10,7 +10,7 @@ import * as Icon from '@ant-design/icons'
 export enum PublishState {
   Draft = 0, // 草稿
   Published = 1, // 已发布
-  Recycle = -1, // 回收站
+  Recycle = -1 // 回收站
 }
 
 const publishStateMap = new Map(
@@ -19,20 +19,20 @@ const publishStateMap = new Map(
       id: PublishState.Draft,
       name: '草稿',
       icon: <Icon.EditOutlined />,
-      color: 'orange',
+      color: 'orange'
     },
     {
       id: PublishState.Published,
       name: '已发布',
       icon: <Icon.CheckOutlined />,
-      color: 'green',
+      color: 'green'
     },
     {
       id: PublishState.Recycle,
       name: '回收站',
       icon: <Icon.DeleteOutlined />,
-      color: 'red',
-    },
+      color: 'red'
+    }
   ].map((item) => [item.id, item])
 )
 

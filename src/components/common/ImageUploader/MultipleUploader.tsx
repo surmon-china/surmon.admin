@@ -48,7 +48,7 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
             <Tooltip title="Copy Markdown">
               <Icon.CopyOutlined />
             </Tooltip>
-          ),
+          )
         }}
         onDownload={(file) => {
           copy(imageURLToMarkdown(file.response.url))
@@ -64,7 +64,7 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
               <Card title={file.response.key}>
                 <img style={{ width: '100%' }} src={file.response.url} />
               </Card>
-            ),
+            )
           })
         }}
         customRequest={(options) => {
@@ -72,7 +72,7 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
             const file = options.file as File
             uploader
               .upload(file, getFileName(file, props.directory), {
-                onProgress: (percent) => options.onProgress?.({ percent }),
+                onProgress: (percent) => options.onProgress?.({ percent })
               })
               .then((result) => {
                 fileUrls.push(result.url)

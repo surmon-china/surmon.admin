@@ -11,7 +11,7 @@ import {
   useReactive,
   batchedUpdates,
   useWatch,
-  useComputed,
+  useComputed
 } from 'veact'
 import { Table, Button, Card, Input, Tag, Select, Divider, Spin, Modal, Space } from 'antd'
 import * as Icon from '@ant-design/icons'
@@ -22,7 +22,7 @@ import {
   deleteAnnouncement,
   deleteAnnouncements,
   putAnnouncement,
-  createAnnouncement,
+  createAnnouncement
 } from '@/store/announcement'
 import { Announcement as AnnouncementType } from '@/constants/announcement'
 import { ResponsePaginationData } from '@/constants/request'
@@ -42,7 +42,7 @@ export const AnnouncementPage: React.FC = () => {
   const submitting = useLoading()
   const announcement = useShallowReactive<ResponsePaginationData<AnnouncementType>>({
     data: [],
-    pagination: undefined,
+    pagination: undefined
   })
 
   // 多选
@@ -54,7 +54,7 @@ export const AnnouncementPage: React.FC = () => {
   // 过滤参数
   const filterParams = useReactive({
     state: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | PublishState,
-    keyword: '',
+    keyword: ''
   })
 
   // 弹窗
@@ -81,7 +81,7 @@ export const AnnouncementPage: React.FC = () => {
     const getParams: GetAnnouncementsParams = {
       ...params,
       state: filterParams.state !== SELECT_ALL_VALUE ? filterParams.state : undefined,
-      keyword: Boolean(filterParams.keyword) ? filterParams.keyword : undefined,
+      keyword: Boolean(filterParams.keyword) ? filterParams.keyword : undefined
     }
 
     loading.promise(getAnnouncements(getParams)).then((response) => {
@@ -105,7 +105,7 @@ export const AnnouncementPage: React.FC = () => {
   const refreshData = () => {
     fetchData({
       page: announcement.pagination?.current_page,
-      per_page: announcement.pagination?.per_page,
+      per_page: announcement.pagination?.per_page
     })
   }
 
@@ -117,7 +117,7 @@ export const AnnouncementPage: React.FC = () => {
       onOk: () =>
         deleteAnnouncement(id).then(() => {
           refreshData()
-        }),
+        })
     })
   }
 
@@ -130,7 +130,7 @@ export const AnnouncementPage: React.FC = () => {
       onOk: () =>
         deleteAnnouncements(ids).then(() => {
           refreshData()
-        }),
+        })
     })
   }
 
@@ -140,7 +140,7 @@ export const AnnouncementPage: React.FC = () => {
         .promise(
           putAnnouncement({
             ...activeEditData.value,
-            ...announcement,
+            ...announcement
           })
         )
         .then(() => {
@@ -175,8 +175,8 @@ export const AnnouncementPage: React.FC = () => {
         </Button>
       }
     >
-      <Space align="center" className={styles.toolbar}>
-        <Space>
+      <Space className={styles.toolbar} align="center" wrap>
+        <Space wrap>
           <Select
             className={styles.selec}
             loading={loading.state.value}
@@ -195,9 +195,9 @@ export const AnnouncementPage: React.FC = () => {
                       {target.icon}
                       {target.name}
                     </Space>
-                  ),
+                  )
                 }
-              }),
+              })
             ]}
           />
           <Input.Search
@@ -225,8 +225,8 @@ export const AnnouncementPage: React.FC = () => {
               {
                 label: '批量删除',
                 icon: <Icon.DeleteOutlined />,
-                onClick: handleDeleteList,
-              },
+                onClick: handleDeleteList
+              }
             ]}
           >
             批量操作
@@ -240,7 +240,7 @@ export const AnnouncementPage: React.FC = () => {
           dataSource={announcement.data}
           rowSelection={{
             selectedRowKeys: selectedIDs.value,
-            onChange: handleSelect,
+            onChange: handleSelect
           }}
           pagination={{
             pageSizeOptions: ['10', '20', '50'],
@@ -250,23 +250,24 @@ export const AnnouncementPage: React.FC = () => {
             showSizeChanger: true,
             onChange(page, pageSize) {
               return fetchData({ page, per_page: pageSize })
-            },
+            }
           }}
           columns={[
             {
               title: 'ID',
               width: 60,
               dataIndex: 'id',
+              responsive: ['md']
             },
             {
               title: '内容',
-              dataIndex: 'content',
+              dataIndex: 'content'
             },
             {
               title: '发布时间',
-              dataIndex: 'create_at',
+              dataIndex: 'created_at',
               width: 180,
-              render: (_, ann) => stringToYMD(ann.create_at),
+              render: (_, ann) => stringToYMD(ann.created_at)
             },
             {
               title: '状态',
@@ -279,7 +280,7 @@ export const AnnouncementPage: React.FC = () => {
                     {state.name}
                   </Tag>
                 )
-              },
+              }
             },
             {
               title: '操作',
@@ -305,8 +306,8 @@ export const AnnouncementPage: React.FC = () => {
                     删除
                   </Button>
                 </Button.Group>
-              ),
-            },
+              )
+            }
           ]}
         />
       </Spin>

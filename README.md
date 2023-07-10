@@ -34,19 +34,19 @@
 
 ```bash
 # install dependencies
-yarn
+pnpm i
 
 # serve with hot reload at localhost:4200
-yarn dev
+pnpm run dev
 
 # lint
-yarn lint
+pnpm run lint
 
 # build
-yarn build
+pnpm run build
 
 # local preview
-yarn serve
+pnpm run serve
 ```
 
 ## Actions setup

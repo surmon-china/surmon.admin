@@ -11,13 +11,13 @@ const DESC = -1 // 降序
 
 export enum SortTypeBase {
   Asc = ASC,
-  Desc = DESC,
+  Desc = DESC
 }
 
 export enum SortTypeWithHot {
   Asc = ASC,
   Desc = DESC,
-  Hot = 2,
+  Hot = 2
 }
 
 const sortTypeMap = new Map(
@@ -25,18 +25,18 @@ const sortTypeMap = new Map(
     {
       id: SortTypeWithHot.Desc,
       name: '最新',
-      icon: <Icon.SortDescendingOutlined />,
+      icon: <Icon.SortDescendingOutlined />
     },
     {
       id: SortTypeWithHot.Asc,
       name: '最早',
-      icon: <Icon.SortAscendingOutlined />,
+      icon: <Icon.SortAscendingOutlined />
     },
     {
       id: SortTypeWithHot.Hot,
       name: '最热',
-      icon: <Icon.FireOutlined />,
-    },
+      icon: <Icon.FireOutlined />
+    }
   ].map((item) => [item.id, item])
 )
 

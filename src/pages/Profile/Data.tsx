@@ -11,7 +11,7 @@ export interface DataFormProps {
 
 enum LoadingKey {
   Databse = 'databse',
-  Archive = 'archive',
+  Archive = 'archive'
 }
 
 export const DataForm: React.FC<DataFormProps> = (props) => {
@@ -21,7 +21,7 @@ export const DataForm: React.FC<DataFormProps> = (props) => {
     Modal.confirm({
       centered: true,
       title: '更新备份会导致强制覆盖旧的数据库备份，确定要继续吗？',
-      onOk: () => loading.promise(LoadingKey.Databse, updateDatabaseBackup()),
+      onOk: () => loading.promise(LoadingKey.Databse, updateDatabaseBackup())
     })
   }
 
@@ -29,7 +29,7 @@ export const DataForm: React.FC<DataFormProps> = (props) => {
     Modal.confirm({
       centered: true,
       title: '将会更新全站的所有全量数据缓存，确定要继续吗？',
-      onOk: () => loading.promise(LoadingKey.Archive, updateArchiveCache()),
+      onOk: () => loading.promise(LoadingKey.Archive, updateArchiveCache())
     })
   }
 

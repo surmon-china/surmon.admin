@@ -26,8 +26,8 @@ export function getCategories(params: GeneralPaginateQueryParams = {}) {
         id: '_id',
         parentId: 'pid',
         childrenField: 'children',
-        dataField: null,
-      }) as Array<CategoryTree>,
+        dataField: null
+      }) as Array<CategoryTree>
     }))
 }
 
@@ -35,7 +35,7 @@ export function getCategories(params: GeneralPaginateQueryParams = {}) {
 export function getAntdTreeByTree({
   tree,
   valuer,
-  disabledWhen,
+  disabledWhen
 }: {
   tree: Array<CategoryTree>
   valuer(category: Category): any
@@ -48,7 +48,7 @@ export function getAntdTreeByTree({
       key: valuer(category),
       value: valuer(category),
       disabled: disabledWhen?.(category) ?? false,
-      children: toAntdTree(category.children || []),
+      children: toAntdTree(category.children || [])
     }))
   }
   return toAntdTree(tree)

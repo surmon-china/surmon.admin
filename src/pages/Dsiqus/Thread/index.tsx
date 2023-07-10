@@ -14,7 +14,7 @@ import {
   getThreads,
   ThreadState,
   OrderType,
-  GeneralDisqusParams,
+  GeneralDisqusParams
 } from '@/store/disqus'
 import { stringToYMD } from '@/transforms/date'
 import { scrollTo } from '@/services/scroller'
@@ -28,13 +28,13 @@ export const DisqusThreadsPage: React.FC = () => {
   const loading = useLoading()
   const threads = useShallowReactive({
     cursor: null as any,
-    list: [] as any[],
+    list: [] as any[]
   })
 
   // https://disqus.com/api/docs/threads/list/
   const filterParams = useShallowReactive({
     order: OrderType.Desc,
-    include: SELECT_ALL_VALUE as any as ThreadState | typeof SELECT_ALL_VALUE,
+    include: SELECT_ALL_VALUE as any as ThreadState | typeof SELECT_ALL_VALUE
   })
 
   const fetchData = (params?: GeneralDisqusParams) => {
@@ -46,7 +46,7 @@ export const DisqusThreadsPage: React.FC = () => {
       include:
         filterParams.include !== SELECT_ALL_VALUE
           ? [filterParams.include]
-          : [...Object.values(ThreadState)],
+          : [...Object.values(ThreadState)]
     }
 
     loading.promise(getThreads(getParams)).then((response) => {
@@ -96,7 +96,7 @@ export const DisqusThreadsPage: React.FC = () => {
         </Button>
       }
     >
-      <Space>
+      <Space wrap>
         <Select
           className={classnames(styles.select)}
           loading={loading.state.value}
@@ -107,16 +107,16 @@ export const DisqusThreadsPage: React.FC = () => {
           options={[
             {
               value: SELECT_ALL_VALUE,
-              label: 'All state',
+              label: 'All state'
             },
             {
               value: ThreadState.Open,
-              label: 'Open',
+              label: 'Open'
             },
             {
               value: ThreadState.Closed,
-              label: 'Closed',
-            },
+              label: 'Closed'
+            }
           ]}
         />
         <Select
@@ -129,12 +129,12 @@ export const DisqusThreadsPage: React.FC = () => {
           options={[
             {
               value: OrderType.Desc,
-              label: 'Desc',
+              label: 'Desc'
             },
             {
               value: OrderType.Asc,
-              label: 'Asc',
-            },
+              label: 'Asc'
+            }
           ]}
         />
         <Button
@@ -170,7 +170,7 @@ export const DisqusThreadsPage: React.FC = () => {
                   </Typography.Link>
                 </Space>
               )
-            },
+            }
           },
           {
             title: 'ID / Author',
@@ -182,7 +182,7 @@ export const DisqusThreadsPage: React.FC = () => {
                   {item.author}
                 </Typography.Text>
               </Space>
-            ),
+            )
           },
           {
             title: 'Identifiers',
@@ -193,7 +193,7 @@ export const DisqusThreadsPage: React.FC = () => {
                   <Tag key={i}>{i}</Tag>
                 ))}
               </Space>
-            ),
+            )
           },
           {
             title: 'Posts',
@@ -203,7 +203,7 @@ export const DisqusThreadsPage: React.FC = () => {
                 <Icon.CommentOutlined />
                 {item.posts}
               </Space>
-            ),
+            )
           },
           {
             title: 'Likes',
@@ -213,7 +213,7 @@ export const DisqusThreadsPage: React.FC = () => {
                 <Icon.LikeOutlined />
                 {item.likes}
               </Space>
-            ),
+            )
           },
           {
             title: 'Dislikes',
@@ -223,11 +223,11 @@ export const DisqusThreadsPage: React.FC = () => {
                 <Icon.DislikeOutlined />
                 {item.dislikes}
               </Space>
-            ),
+            )
           },
           {
             title: 'Score',
-            dataIndex: 'userScore',
+            dataIndex: 'userScore'
           },
           {
             title: 'State',
@@ -239,13 +239,13 @@ export const DisqusThreadsPage: React.FC = () => {
                 checkedChildren="Open"
                 unCheckedChildren="Closed"
               />
-            ),
+            )
           },
           {
             title: 'Create at',
             dataIndex: 'createdAt',
-            render: (_, item) => stringToYMD(item.createdAt),
-          },
+            render: (_, item) => stringToYMD(item.createdAt)
+          }
         ]}
       />
       <div className={styles.loadmore}>

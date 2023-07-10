@@ -6,7 +6,7 @@
 import React from 'react'
 import { Ref, useWatch } from 'veact'
 import { Form, Select, Modal, Space, Divider, Typography } from 'antd'
-import { UniversalEditor } from '@/components/common/UniversalEditor/lazy'
+import { UniversalEditor } from '@/components/common/UniversalEditor'
 import { Announcement } from '@/constants/announcement'
 import { PublishState, ps } from '@/constants/publish'
 import { stringToYMD } from '@/transforms/date'
@@ -14,7 +14,7 @@ import { STATE_IDS } from './index'
 
 const formLayout = {
   labelCol: { span: 4 },
-  wrapperCol: { span: 19 },
+  wrapperCol: { span: 19 }
 }
 
 export interface EditModalProps {
@@ -41,7 +41,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
       width={680}
       title={props.title}
       confirmLoading={props.loading}
-      visible={props.visible.value}
+      open={props.visible.value}
       onCancel={props.onCancel}
       onOk={handleSubmit}
       centered={true}
@@ -57,10 +57,10 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
               <Typography.Text copyable={true}>{props.announcement.value?._id}</Typography.Text>
             </Form.Item>
             <Form.Item label="发布于">
-              {stringToYMD(props.announcement.value?.create_at)}
+              {stringToYMD(props.announcement.value?.created_at)}
             </Form.Item>
             <Form.Item label="最后修改于">
-              {stringToYMD(props.announcement.value?.update_at)}
+              {stringToYMD(props.announcement.value?.updated_at)}
             </Form.Item>
           </>
         )}
@@ -81,7 +81,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
                     {target.icon}
                     {target.name}
                   </Space>
-                ),
+                )
               }
             })}
           />
@@ -95,8 +95,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
             disabledMinimap={true}
             disabledToolbar={true}
             disabledCacheDraft={true}
-            minRows={10}
-            maxRows={18}
+            rows={10}
           />
         </Form.Item>
       </Form>

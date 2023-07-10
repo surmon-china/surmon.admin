@@ -5,9 +5,9 @@
  */
 
 import { notification } from 'antd'
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, Method as AxiosMethod } from 'axios'
 
-import { loading } from '@/state/loading'
+import { loadingState } from '@/state/loading'
 import { AUTH_API_PATH } from '@/store/auth'
 import { API_URL, APP_AUTH_HEADER_KEY } from '@/config'
 import { rc, RouteKey } from '@/routes'
@@ -22,12 +22,12 @@ enum HTTPCode {
   NOT_FOUND = 404,
   SERVER_ERROR = 500, // 服务器挂了
   GATEWAY_TIMEOUT = 504, // 请求超时
-  UNKNOWN_ERROR = 0, // 未知
+  UNKNOWN_ERROR = 0 // 未知
 }
 
 export enum HTTPStatus {
   Error = 'error',
-  Success = 'success',
+  Success = 'success'
 }
 
 // 请求参数
@@ -55,12 +55,12 @@ export interface HTTPResult<T = any> {
 const nodepress = axios.create({
   baseURL: API_URL,
   // adapter: WORKAROUND for outside
-  adapter: (window as any).__axiosAdapter || undefined,
+  adapter: (window as any).__axiosAdapter || undefined
 })
 
 // request
 nodepress.interceptors.request.use((config) => {
-  loading.start()
+  loadingState.start()
   if (token.isTokenValid()) {
     config.headers = config.headers || {}
     config.headers[APP_AUTH_HEADER_KEY] = `Bearer ${token.getToken()}`
@@ -68,7 +68,7 @@ nodepress.interceptors.request.use((config) => {
     notification.error({
       message: 'Token 无效',
       description: 'Token 不存在或是无效的',
-      duration: 2,
+      duration: 2
     })
   }
   return config
@@ -78,27 +78,27 @@ nodepress.interceptors.request.use((config) => {
 nodepress.interceptors.response.use(
   (response) => {
     if (!response.headers['content-type']?.includes('json')) {
-      loading.complete()
+      loadingState.complete()
       notification.success({
         message: '数据请求成功',
         description: response.statusText,
-        duration: 2,
+        duration: 2
       })
       return response
     } else if (response.data.status === HTTPStatus.Success) {
-      loading.complete()
+      loadingState.complete()
       notification.success({
         message: '数据请求成功',
         description: response.data.message,
-        duration: 2,
+        duration: 2
       })
       return Promise.resolve(response.data)
     } else {
-      loading.fail()
+      loadingState.fail()
       notification.error({
         message: response.data.message,
         description: response.data.error,
-        duration: 3,
+        duration: 3
       })
       return Promise.reject(response)
     }
@@ -114,17 +114,17 @@ nodepress.interceptors.response.use(
       request: error.request,
       response: error.response,
       code: error.code || error.response?.status || HTTPCode.BAD_REQUEST,
-      message: messageText + ': ' + errorText,
+      message: messageText + ': ' + errorText
     }
     console.debug('axios error:', errorInfo)
-    loading.fail()
+    loadingState.fail()
     notification.error({
       message: messageText,
       description: errorText,
-      duration: 3,
+      duration: 3
     })
     // 如果是 401，即：登陆失败，则删除 token 并跳转到登陆页
-    if (error.response.status === HTTPCode.UNAUTHORIZED) {
+    if (error.response?.status === HTTPCode.UNAUTHORIZED) {
       token.removeToken()
       window.location.href = rc(RouteKey.Hello).path
     }
@@ -132,24 +132,21 @@ nodepress.interceptors.response.use(
   }
 )
 
-const service = {
-  $: nodepress,
-  request: <T = unknown>(...args: Parameters<AxiosInstance['request']>): Promise<HTTPResult<T>> =>
-    nodepress.request(...args),
-  get: <T = unknown>(...args: Parameters<AxiosInstance['get']>): Promise<HTTPResult<T>> =>
-    nodepress.get(...args),
-  delete: <T = unknown>(...args: Parameters<AxiosInstance['delete']>): Promise<HTTPResult<T>> =>
-    nodepress.delete(...args),
-  head: <T = unknown>(...args: Parameters<AxiosInstance['head']>): Promise<HTTPResult<T>> =>
-    nodepress.head(...args),
-  options: <T = unknown>(...args: Parameters<AxiosInstance['options']>): Promise<HTTPResult<T>> =>
-    nodepress.options(...args),
-  post: <T = unknown>(...args: Parameters<AxiosInstance['post']>): Promise<HTTPResult<T>> =>
-    nodepress.post(...args),
-  put: <T = unknown>(...args: Parameters<AxiosInstance['put']>): Promise<HTTPResult<T>> =>
-    nodepress.put(...args),
-  patch: <T = unknown>(...args: Parameters<AxiosInstance['patch']>): Promise<HTTPResult<T>> =>
-    nodepress.patch(...args),
+type Method = Exclude<Lowercase<AxiosMethod>, 'unlink' | 'purge' | 'link'> | 'request'
+const overwrite = (method: Method) => {
+  return <T = any>(...args: Parameters<AxiosInstance[typeof method]>): Promise<HTTPResult<T>> => {
+    return (nodepress[method] as any)(...args)
+  }
 }
 
-export default service
+export default {
+  $: nodepress,
+  request: overwrite('request'),
+  head: overwrite('head'),
+  get: overwrite('get'),
+  post: overwrite('post'),
+  put: overwrite('put'),
+  patch: overwrite('patch'),
+  delete: overwrite('delete'),
+  options: overwrite('options')
+}

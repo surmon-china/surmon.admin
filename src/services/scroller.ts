@@ -11,7 +11,7 @@ export const Easing = {
   linear: [0, 0.0, 1, 1.0],
   easeIn: [0.42, 0.0, 1, 1.0],
   easeOut: [0, 0.0, 0.58, 1.0],
-  easeInOut: [0.42, 0.0, 0.58, 1.0],
+  easeInOut: [0.42, 0.0, 0.58, 1.0]
 }
 
 enum ElementEvent {
@@ -21,7 +21,7 @@ enum ElementEvent {
   DOMMouseScroll = 'DOMMouseScroll',
   mousewheel = 'mousewheel',
   keyup = 'keyup',
-  touchmove = 'touchmove',
+  touchmove = 'touchmove'
 }
 
 const _ = {
@@ -43,7 +43,7 @@ const _ = {
     events.forEach((event) => {
       element.removeEventListener(event, handler)
     })
-  },
+  }
 }
 
 export const scrollTo = (
@@ -61,7 +61,7 @@ export const scrollTo = (
     ElementEvent.DOMMouseScroll,
     ElementEvent.mousewheel,
     ElementEvent.keyup,
-    ElementEvent.touchmove,
+    ElementEvent.touchmove
   ]
 
   let abort = false

@@ -11,14 +11,14 @@ const DEFAULT_CATEGORY: Partial<CategoryType> = {
   extends: [
     {
       name: 'icon',
-      value: 'icon-category',
-    },
-  ],
+      value: 'icon-category'
+    }
+  ]
 }
 
 const formLayout = {
   labelCol: { span: 5 },
-  wrapperCol: { span: 18 },
+  wrapperCol: { span: 18 }
 }
 
 export interface EditModalProps {
@@ -38,7 +38,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
     form.validateFields().then((formValue) => {
       props.onSubmit({
         ...formValue,
-        pid: formValue.pid === CATEGORY_NULL_VALUE ? null : formValue.pid,
+        pid: formValue.pid === CATEGORY_NULL_VALUE ? null : formValue.pid
       })
     })
   }
@@ -51,7 +51,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
       if (propCategory) {
         form.setFieldsValue({
           ...propCategory,
-          pid: propCategory.pid ?? CATEGORY_NULL_VALUE,
+          pid: propCategory.pid ?? CATEGORY_NULL_VALUE
         })
       } else {
         form.setFieldsValue({ ...DEFAULT_CATEGORY })
@@ -63,7 +63,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
     <Modal
       title={props.title}
       confirmLoading={props.loading}
-      visible={props.visible.value}
+      open={props.visible.value}
       onCancel={props.onCancel}
       onOk={handleSubmit}
       centered={true}
@@ -78,9 +78,9 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
               <Divider type="vertical" />
               <Typography.Text copyable={true}>{props.category.value._id}</Typography.Text>
             </Form.Item>
-            <Form.Item label="发布于">{stringToYMD(props.category.value.create_at)}</Form.Item>
+            <Form.Item label="发布于">{stringToYMD(props.category.value.created_at)}</Form.Item>
             <Form.Item label="最后修改于">
-              {stringToYMD(props.category.value.update_at)}
+              {stringToYMD(props.category.value.updated_at)}
             </Form.Item>
           </>
         )}
@@ -119,8 +119,8 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
                 } else {
                   return Promise.reject()
                 }
-              },
-            },
+              }
+            }
           ]}
         >
           <TreeSelect
@@ -130,9 +130,9 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
               {
                 label: '无',
                 key: 'null',
-                value: CATEGORY_NULL_VALUE,
+                value: CATEGORY_NULL_VALUE
               },
-              ...props.tree,
+              ...props.tree
             ]}
           />
         </Form.Item>

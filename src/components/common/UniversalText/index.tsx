@@ -13,8 +13,8 @@ export interface UniversalTextProps {
   type?: BaseType
   className?: string
   copyable?: boolean
-  prefix?: React.ReactChild
-  suffix?: React.ReactChild
+  prefix?: React.ReactNode
+  suffix?: React.ReactNode
   placeholder?: PlaceholderProps['placeholder']
 }
 

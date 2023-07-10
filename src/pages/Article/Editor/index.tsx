@@ -43,7 +43,7 @@ const DEFAULT_ARTICLE: Article = Object.freeze({
   disabled_comment: false,
   tag: [],
   category: [],
-  extends: [],
+  extends: []
 })
 
 export interface ArticleEditorProps {
@@ -78,7 +78,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
         ...(await categoryFormModel.validateFields()),
         ...(await thumbFormModel.validateFields()),
         ...(await extendFormModel.validateFields()),
-        ...(await stateFormModel.validateFields()),
+        ...(await stateFormModel.validateFields())
       }
       data.slug = data.slug || null
       props.onSubmit?.(data as Article)
@@ -104,8 +104,8 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
 
   return (
     <div className={styles.articleeEitor}>
-      <Row gutter={APP_LAYOUT_GUTTER_SIZE}>
-        <Col span={17}>
+      <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
+        <Col xs={24} lg={17}>
           <Card
             bordered={false}
             title={props.title}
@@ -117,7 +117,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
             </Spin>
           </Card>
         </Col>
-        <Col span={7}>
+        <Col xs={24} lg={7}>
           <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
             <Col span={24}>
               <Card title="分类目录" bordered={false}>

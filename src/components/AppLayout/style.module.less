@@ -1,4 +1,5 @@
-@import '@/styles/init.less';
+@import '@/styles/mixins.less';
+@import '@/styles/variables.less';
 
 .appLayout {
   height: 100vh;
@@ -13,14 +14,15 @@
       height: 100%;
       position: relative;
       overflow: hidden;
+      user-select: none;
 
       .logo {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: @header-height;
-        border-bottom: 1px solid @module-bg;
+        height: @app-header-height;
+        border-bottom: 1px solid @app-module-background;
 
         .image {
           width: 60%;
@@ -33,49 +35,51 @@
       @userinfo-height: 188px;
       .userInfo {
         height: @userinfo-height;
-        border-bottom: 1px solid @module-bg;
+        border-bottom: 1px solid @app-module-background;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         overflow: hidden;
         user-select: none;
+        &.collapsed {
+          height: @userinfo-height - 40;
+
+          .avatar {
+            @size: 3rem;
+            width: @size;
+            height: @size;
+          }
+          .name {
+            font-size: 85%;
+          }
+        }
 
         .avatar {
           @size: 5rem;
           width: @size;
           height: @size;
           border-radius: 100%;
-          border: 4px solid @module-bg;
+          border: 4px solid @app-module-background;
           margin-bottom: 1rem;
-          background-color: @module-bg;
-          background-image: url('/images/profile/logo-smooth.png');
+          background-color: @app-module-background;
+          background-image: url('/images/nodepress.png');
           background-size: contain;
           transform: rotate(0deg);
           transition: transform 1s;
-          &.collapsed {
-            @size: 3rem;
-            width: @size;
-            height: @size;
-          }
           &:hover {
             transform: rotate(360deg);
           }
         }
-        .name {
-          font-size: @font-size-large;
-          margin-bottom: 10px;
-        }
+
         .slogan {
-          font-size: @font-size-small;
-          color: @text-secondary;
+          font-size: @app-font-size-small;
           max-width: 80%;
-          .text-truncate();
         }
       }
 
       .menus {
-        height: calc(100vh - @header-height - @header-height - @userinfo-height);
+        height: calc(100vh - @app-header-height - @app-header-height - @userinfo-height);
         overflow-y: auto;
       }
 
@@ -83,27 +87,27 @@
         position: absolute;
         bottom: 0;
         width: 100%;
-        border-top: 1px solid @module-bg;
+        border-top: 1px solid @app-module-background;
       }
     }
   }
 
   .appHeader {
     width: 100%;
-    height: @header-height;
+    height: @app-header-height;
     padding: 0;
     position: fixed;
     top: 0;
     right: 0;
     z-index: 1;
-    background-color: @module-bg;
+    background-color: @app-module-background;
 
     .headerContent {
       height: 100%;
       display: flex;
       justify-content: space-between;
 
-      .toggler {
+      .siderToggler {
         height: 100%;
         width: 60px;
         display: flex;
@@ -133,18 +137,18 @@
   .appFooter {
     text-align: center;
     user-select: none;
-    background-color: @module-bg;
+    background-color: @app-module-background;
   }
 
   .appContent {
-    margin-top: @header-height;
+    margin-top: @app-header-height;
 
     .pageContainer {
       .pageHeader {
         height: 5rem;
         padding: 0 2rem;
-        border-top: 1px solid @module-bg-lighter;
-        background-color: @module-bg;
+        border-top: 1px solid @app-module-background-lighter;
+        background-color: @app-module-background;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -169,21 +173,20 @@
     }
 
     .backTop {
-      right: 2rem;
-      bottom: 1rem;
+      right: 3rem;
+      bottom: 3rem;
 
       .tigger {
         @size: 40px;
         width: @size;
         height: @size;
         line-height: @size;
-        border-radius: @radius;
-        background-color: rgba(@primary, 75%);
-        color: @text;
-        font-size: @font-size-large;
+        border-radius: @app-border-radius;
+        background-color: rgba(@app-primary-color, 75%);
+        font-size: @app-font-size-large;
         text-align: center;
         &:hover {
-          background-color: @primary;
+          background-color: @app-primary-color;
         }
       }
     }
@@ -197,7 +200,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: @module-bg;
+      background-color: @app-module-background;
 
       .closeButton {
         margin-left: 2rem;

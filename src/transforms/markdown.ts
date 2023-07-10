@@ -4,6 +4,7 @@
  */
 
 import { marked } from 'marked'
+import { markedHighlight } from 'marked-highlight'
 import hljs from 'highlight.js/lib/core'
 import css from 'highlight.js/lib/languages/css'
 import xml from 'highlight.js/lib/languages/xml'
@@ -34,18 +35,24 @@ renderer.link = (href, title, text) => {
   return linkHtml.replace(/\s+/g, ' ').replace(/\n/g, ' ')
 }
 
+marked.use(
+  markedHighlight({
+    langPrefix: 'hljs language-',
+    highlight(code, language) {
+      return hljs.getLanguage(language)
+        ? hljs.highlight(code, { language }).value
+        : hljs.highlightAuto(code).value
+    }
+  })
+)
+
 marked.setOptions({
   renderer,
   gfm: true,
   breaks: false,
   pedantic: false,
-  smartLists: true,
-  smartypants: false,
-  highlight(code, language) {
-    return hljs.getLanguage(language)
-      ? hljs.highlight(code, { language }).value
-      : hljs.highlightAuto(code).value
-  },
+  mangle: false,
+  headerIds: false
 })
 
 export const markdownToHTML = marked

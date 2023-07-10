@@ -18,7 +18,7 @@ export const DisqusSynchronizePage: React.FC = () => {
     uploading.promise(importDisqusXMLToNodePress(file)).catch((error) => {
       Modal.error({
         title: 'Upload XML error',
-        content: String(error),
+        content: String(error)
       })
     })
   }
@@ -26,20 +26,22 @@ export const DisqusSynchronizePage: React.FC = () => {
   return (
     <Space direction="vertical" size={APP_LAYOUT_SPACE_SIZE} className={styles.synchornize}>
       <Card title="Synchronize NodePress to Disqus" bordered={false}>
-        <Steps>
-          <Steps.Step
-            status="process"
-            title="Export"
-            subTitle="Export XML form NodePress database"
-            icon={<Icon.CloudDownloadOutlined />}
-          />
-          <Steps.Step
-            status="process"
-            title="Import"
-            subTitle="Upload XML to Disqus"
-            icon={<Icon.CloudUploadOutlined />}
-          />
-        </Steps>
+        <Steps
+          items={[
+            {
+              status: 'process',
+              title: 'Export',
+              subTitle: 'Export XML form NodePress database',
+              icon: <Icon.CloudDownloadOutlined />
+            },
+            {
+              status: 'process',
+              title: 'Import',
+              subTitle: 'Upload XML to Disqus',
+              icon: <Icon.CloudUploadOutlined />
+            }
+          ]}
+        />
         <Result
           icon={<Icon.CloudSyncOutlined />}
           title="NodePress To Disqus"
@@ -67,20 +69,22 @@ export const DisqusSynchronizePage: React.FC = () => {
         />
       </Card>
       <Card title="Synchronize Disqus To NodePress" bordered={false}>
-        <Steps>
-          <Steps.Step
-            status="process"
-            title="Export"
-            subTitle="Export XML form Disqus admin"
-            icon={<Icon.CloudDownloadOutlined />}
-          />
-          <Steps.Step
-            status="process"
-            title="Import"
-            subTitle="Upload XML to NodePress"
-            icon={<Icon.CloudUploadOutlined />}
-          />
-        </Steps>
+        <Steps
+          items={[
+            {
+              status: 'process',
+              title: 'Export',
+              subTitle: 'Export XML form Disqus admin',
+              icon: <Icon.CloudDownloadOutlined />
+            },
+            {
+              status: 'process',
+              title: 'Import',
+              subTitle: 'Upload XML to NodePress',
+              icon: <Icon.CloudUploadOutlined />
+            }
+          ]}
+        ></Steps>
         <Result
           icon={<Icon.CloudSyncOutlined />}
           title="Disqus To NodePress"

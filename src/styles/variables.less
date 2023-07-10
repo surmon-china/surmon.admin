@@ -1,43 +1,60 @@
 @import 'antd/lib/style/themes/dark.less';
 
 // overwrite antd
-@primary-color: #177ddc;
+@primary-color: #0088f5;
+@border-radius-base: 4px;
+@border-radius-sm: 2px;
+@font-family:
+  'DINRegular',
+  'PingFang SC',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Roboto',
+  'Century Gothic',
+  'Segoe UI',
+  'Microsoft yahei',
+  '微软雅黑',
+  'Helvetica Neue',
+  Arial,
+  'Noto Sans',
+  sans-serif,
+  SimHei,
+  'Apple Color Emoji',
+  'Segoe UI Emoji',
+  'Segoe UI Symbol',
+  'Noto Color Emoji';
 
-// color
-@primary: @primary-color;
-@success: @success-color;
-@warning: @warning-color;
-@error: @error-color;
-@info: @info-color;
+// app
+@app-primary-color: @primary-color;
+@app-error-color: @error-color;
+@app-disabled-color: @disabled-color;
 
-@link: @link-color;
-@text: @text-color;
-@text-secondary: @text-color-secondary;
-@text-disabled: @disabled-color;
+// module
+@app-body-background: @body-background;
+@app-module-background: @component-background;
+@app-module-hover-background: @item-hover-bg;
+@app-module-background-lighter: @popover-background;
 
 // layout
-@header-height: 50px;
-@border: @border-color-base;
-@body-bg: @body-background;
-@module-bg: @component-background;
-@module-hover-bg: @item-hover-bg;
-@module-bg-lighter: @popover-background;
-@radius: @border-radius-base;
-@gap: @margin-md;
+@app-header-height: 50px;
+@app-border-color: @border-color-base;
+@app-border-radius: @border-radius-base;
+@app-gap: @margin-md;
+
+// size
+@app-font-size-base: @font-size-base; // 14px
+@app-font-size-large: @font-size-lg; // 16px
+@app-font-size-small: @font-size-sm; // 12px
+@app-font-size-h1: @heading-1-size;
+@app-font-size-h2: @heading-2-size;
+@app-font-size-h3: @heading-3-size;
+@app-font-size-h4: @heading-4-size;
+@app-font-size-h5: @heading-5-size;
+
+// global font family
+@app-font-family: @font-family;
 
 // times
 @transition-time-fast: 0.1s;
 @transition-time-normal: 0.25s;
 @transition-time-slow: 0.38s;
-
-// size
-@line-height: @line-height-base;
-
-@font-size-root: @font-size-base; // ~14px
-@font-size-large: @font-size-lg; // ~16px
-@font-size-small: @font-size-sm; // ~12px
-@font-size-h1: @heading-1-size;
-@font-size-h2: @heading-2-size;
-@font-size-h3: @heading-3-size;
-@font-size-h4: @heading-4-size;
-@font-size-h5: @heading-5-size;

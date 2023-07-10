@@ -9,7 +9,7 @@ import { StateFormModel } from '.'
 
 const requiredRule = {
   message: '必选',
-  required: true,
+  required: true
 }
 
 export interface StateFormProps {
@@ -37,7 +37,7 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
                   {state.icon}
                   {state.name}
                 </Space>
-              ),
+              )
             }
           })}
         />
@@ -53,7 +53,7 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
                   {state.icon}
                   {state.name}
                 </Space>
-              ),
+              )
             }
           })}
         />
@@ -69,7 +69,7 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
                   {state.icon}
                   {state.name}
                 </Space>
-              ),
+              )
             }
           })}
         />
@@ -85,20 +85,22 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
                   {state.icon}
                   {state.name}
                 </Space>
-              ),
+              )
             }
           })}
         />
       </Form.Item>
       <Form.Item required={true} name="disabled_comment" label="文章评论" rules={[requiredRule]}>
-        <Radio.Group size="small">
-          <Radio.Button value={false}>
-            <Icon.CheckCircleOutlined />
-            &nbsp;允许评论
+        <Radio.Group style={{ width: '100%' }}>
+          <Radio.Button value={false} style={{ width: '50%' }}>
+            <Space size="small">
+              <Icon.CheckCircleOutlined /> 允许
+            </Space>
           </Radio.Button>
-          <Radio.Button value={true}>
-            <Icon.StopOutlined />
-            &nbsp;禁止
+          <Radio.Button value={true} style={{ width: '50%' }}>
+            <Space size="small">
+              <Icon.StopOutlined /> 禁止
+            </Space>
           </Radio.Button>
         </Radio.Group>
       </Form.Item>

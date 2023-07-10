@@ -12,7 +12,7 @@ import { getResourceUrl } from '@/transforms/url'
 const DEFAULT_ADMIN_INFO: Auth = Object.freeze({
   name: 'Admin',
   slogan: 'NodePress',
-  avatar: getResourceUrl('/images/profile/logo-smooth.png'),
+  avatar: getResourceUrl('/images/nodepress.png')
 })
 
 const data = reactive({ ...DEFAULT_ADMIN_INFO })
@@ -32,7 +32,7 @@ const fetch = () => {
 export const adminState = {
   data: readonly(data),
   loading: readonly(loading.state),
-  refresh: fetch,
+  refresh: fetch
 }
 
 export const useAdminState = () => {

@@ -22,7 +22,7 @@ const SELECT_ALL_VALUE = 'ALL'
 const DEFAULT_THREAD_ID = ''
 const DEFAULT_PARAMS = Object.freeze({
   order: OrderType.Desc,
-  include: SELECT_ALL_VALUE as any as PostState | typeof SELECT_ALL_VALUE,
+  include: SELECT_ALL_VALUE as any as PostState | typeof SELECT_ALL_VALUE
 })
 
 export const DisqusPostsPage: React.FC = () => {
@@ -32,7 +32,7 @@ export const DisqusPostsPage: React.FC = () => {
   const filterParams = useShallowReactive({ ...DEFAULT_PARAMS })
   const posts = useShallowReactive({
     cursor: null as any,
-    list: [] as any[],
+    list: [] as any[]
   })
 
   const fetchData = (params?: GeneralDisqusParams) => {
@@ -45,7 +45,7 @@ export const DisqusPostsPage: React.FC = () => {
       include:
         filterParams.include !== SELECT_ALL_VALUE
           ? [filterParams.include]
-          : [...Object.values(PostState)],
+          : [...Object.values(PostState)]
     }
 
     loading.promise(getPosts(getParams)).then((response) => {
@@ -96,7 +96,7 @@ export const DisqusPostsPage: React.FC = () => {
         </Button>
       }
     >
-      <Space>
+      <Space wrap>
         <Select
           className={classnames(styles.select)}
           loading={loading.state.value}
@@ -107,32 +107,32 @@ export const DisqusPostsPage: React.FC = () => {
           options={[
             {
               value: SELECT_ALL_VALUE,
-              label: 'All state',
+              label: 'All state'
             },
             {
               value: PostState.Approved,
-              label: 'Approved',
+              label: 'Approved'
             },
             {
               value: PostState.Unapproved,
-              label: 'Unapproved',
+              label: 'Unapproved'
             },
             {
               value: PostState.Spam,
-              label: 'Spam',
+              label: 'Spam'
             },
             {
               value: PostState.Deleted,
-              label: 'Deleted',
+              label: 'Deleted'
             },
             {
               value: PostState.Flagged,
-              label: 'Flagged',
+              label: 'Flagged'
             },
             {
               value: PostState.Highlighted,
-              label: 'Highlighted',
-            },
+              label: 'Highlighted'
+            }
           ]}
         />
         <Select
@@ -145,12 +145,12 @@ export const DisqusPostsPage: React.FC = () => {
           options={[
             {
               value: OrderType.Desc,
-              label: 'Desc',
+              label: 'Desc'
             },
             {
               value: OrderType.Asc,
-              label: 'Asc',
-            },
+              label: 'Asc'
+            }
           ]}
         />
         <Input.Search
@@ -189,7 +189,7 @@ export const DisqusPostsPage: React.FC = () => {
                 <UniversalText text={item.parent} copyable={true} type="secondary" />
                 <UniversalText text={item.thread} copyable={true} />
               </Space>
-            ),
+            )
           },
           {
             title: 'Message',
@@ -197,7 +197,7 @@ export const DisqusPostsPage: React.FC = () => {
             width: 450,
             render: (_, item) => {
               return <div dangerouslySetInnerHTML={{ __html: item.message }}></div>
-            },
+            }
           },
           {
             title: 'Author',
@@ -219,7 +219,7 @@ export const DisqusPostsPage: React.FC = () => {
                   </Space>
                 </Space>
               )
-            },
+            }
           },
           {
             title: 'Role',
@@ -229,7 +229,7 @@ export const DisqusPostsPage: React.FC = () => {
                 <Typography.Text type="secondary">Guest</Typography.Text>
               ) : (
                 <Typography.Text type="success">Disqus</Typography.Text>
-              ),
+              )
           },
           {
             title: 'Likes',
@@ -239,7 +239,7 @@ export const DisqusPostsPage: React.FC = () => {
                 <Icon.LikeOutlined />
                 {item.likes}
               </Space>
-            ),
+            )
           },
           {
             title: 'Dislikes',
@@ -249,7 +249,7 @@ export const DisqusPostsPage: React.FC = () => {
                 <Icon.DislikeOutlined />
                 {item.dislikes}
               </Space>
-            ),
+            )
           },
           {
             title: 'State',
@@ -262,20 +262,20 @@ export const DisqusPostsPage: React.FC = () => {
                     value: item.isApproved,
                     label: 'Approved',
                     state: 'success',
-                    icon: <Icon.CheckCircleOutlined />,
+                    icon: <Icon.CheckCircleOutlined />
                   },
                   {
                     value: item.isDeleted,
                     label: 'Deleted',
                     state: 'danger',
-                    icon: <Icon.CloseCircleOutlined />,
+                    icon: <Icon.CloseCircleOutlined />
                   },
                   {
                     value: item.isSpam,
                     label: 'SPAM',
                     state: 'danger',
-                    icon: <Icon.CloseCircleOutlined />,
-                  },
+                    icon: <Icon.CloseCircleOutlined />
+                  }
                 ]
                   .filter((i) => i.value)
                   .map((i, index) => (
@@ -286,14 +286,14 @@ export const DisqusPostsPage: React.FC = () => {
                     </Typography.Text>
                   ))}
               </div>
-            ),
+            )
           },
           {
             title: 'Create at',
             dataIndex: 'createdAt',
             width: 160,
-            render: (_, item) => stringToYMD(item.createdAt),
-          },
+            render: (_, item) => stringToYMD(item.createdAt)
+          }
         ]}
       />
       <div className={styles.loadmore}>

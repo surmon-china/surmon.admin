@@ -23,7 +23,7 @@ export const TagPage: React.FC = () => {
   const submitting = useLoading()
   const tag = useShallowReactive<ResponsePaginationData<Tag>>({
     data: [],
-    pagination: undefined,
+    pagination: undefined
   })
 
   // 多选
@@ -34,7 +34,7 @@ export const TagPage: React.FC = () => {
 
   // 过滤参数
   const filterParams = useReactive({
-    keyword: '',
+    keyword: ''
   })
 
   // 弹窗
@@ -78,7 +78,7 @@ export const TagPage: React.FC = () => {
   const refreshData = () => {
     fetchData({
       page: tag.pagination?.current_page,
-      per_page: tag.pagination?.per_page,
+      per_page: tag.pagination?.per_page
     })
   }
 
@@ -90,7 +90,7 @@ export const TagPage: React.FC = () => {
       onOk: () =>
         deleteTag(tag._id!).then(() => {
           refreshData()
-        }),
+        })
     })
   }
 
@@ -103,7 +103,7 @@ export const TagPage: React.FC = () => {
       onOk: () =>
         deleteTags(ids).then(() => {
           refreshData()
-        }),
+        })
     })
   }
 
@@ -113,7 +113,7 @@ export const TagPage: React.FC = () => {
         .promise(
           putTag({
             ...activeEditData.value,
-            ...tag,
+            ...tag
           })
         )
         .then(() => {
@@ -143,8 +143,8 @@ export const TagPage: React.FC = () => {
         </Button>
       }
     >
-      <Space className={styles.toolbar}>
-        <Space>
+      <Space className={styles.toolbar} wrap>
+        <Space wrap>
           <Input.Search
             className={styles.search}
             placeholder="输入关键词搜索"
@@ -170,8 +170,8 @@ export const TagPage: React.FC = () => {
               {
                 label: '批量删除',
                 icon: <Icon.DeleteOutlined />,
-                onClick: handleDeleteList,
-              },
+                onClick: handleDeleteList
+              }
             ]}
           >
             批量操作
@@ -185,7 +185,7 @@ export const TagPage: React.FC = () => {
           dataSource={tag.data}
           rowSelection={{
             selectedRowKeys: selectedIDs.value,
-            onChange: handleSelect,
+            onChange: handleSelect
           }}
           pagination={{
             pageSizeOptions: ['10', '20', '50'],
@@ -195,33 +195,34 @@ export const TagPage: React.FC = () => {
             showSizeChanger: true,
             onChange(page, pageSize) {
               return fetchData({ page, per_page: pageSize })
-            },
+            }
           }}
           columns={[
             {
               title: 'ID',
               width: 60,
               dataIndex: 'id',
+              responsive: ['md']
             },
             {
               title: '名称',
               dataIndex: 'name',
-              width: 140,
+              width: 140
             },
             {
               title: '别名',
               dataIndex: 'slug',
-              width: 160,
+              width: 160
             },
             {
               title: '描述',
-              dataIndex: 'description',
+              dataIndex: 'description'
             },
             {
               title: '文章',
               width: 80,
               align: 'right',
-              dataIndex: 'articles_count',
+              dataIndex: 'articles_count'
             },
             {
               title: '操作',
@@ -257,8 +258,8 @@ export const TagPage: React.FC = () => {
                     查看
                   </Button>
                 </Button.Group>
-              ),
-            },
+              )
+            }
           ]}
         />
       </Spin>

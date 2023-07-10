@@ -33,9 +33,9 @@ export function getComments(params: GetCommentsParams = {}) {
         childrenField: 'children',
         dataField: null,
         rootParentIds: {
-          0: true,
-        },
-      }) as Array<CommentTree>,
+          0: true
+        }
+      }) as Array<CommentTree>
     }))
 }
 
@@ -63,7 +63,7 @@ export function updateCommentsState(
     .patch(COMMENT_API_PATH, {
       comment_ids: commentIds,
       post_ids: postIds,
-      state,
+      state
     })
     .then((response) => response.result)
 }

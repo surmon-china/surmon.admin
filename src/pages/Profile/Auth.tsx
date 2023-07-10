@@ -33,7 +33,7 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
     return submitting.promise(putAuth(_adminAuth)).then(() => {
       if (_adminAuth.new_password) {
         notification.info({
-          message: '修改了新密码，即将跳转到登录页...',
+          message: '修改了新密码，即将跳转到登录页...'
         })
         setTimeout(() => {
           removeToken()
@@ -50,7 +50,7 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
       Reflect.deleteProperty(newAdminAuth, 'rel_new_password')
       updateAdminAuth({
         ...adminAuth.data,
-        ...newAdminAuth,
+        ...newAdminAuth
       }).then(() => {
         scrollTo(document.body)
       })
@@ -116,8 +116,8 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
           rules={[
             {
               message: '确保新旧密码不一致，且有效',
-              validator: validatePassword,
-            },
+              validator: validatePassword
+            }
           ]}
         >
           <Input.Password placeholder="旧密码" autoComplete="password" />
@@ -128,8 +128,8 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
           rules={[
             {
               message: '确保新旧密码不一致，且有效',
-              validator: validatePassword,
-            },
+              validator: validatePassword
+            }
           ]}
         >
           <Input.Password placeholder="新密码" autoComplete="new_password" />
@@ -140,8 +140,8 @@ export const AuthForm: React.FC<BaseFormProps> = (props) => {
           rules={[
             {
               message: '确保新旧密码不一致，且有效',
-              validator: validatePassword,
-            },
+              validator: validatePassword
+            }
           ]}
         >
           <Input.Password placeholder="确认新密码" autoComplete="rel_new_password" />

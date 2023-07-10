@@ -10,12 +10,12 @@ export const DISQUS_API_PATH = '/disqus'
 
 export enum OrderType {
   Desc = 'desc',
-  Asc = 'asc',
+  Asc = 'asc'
 }
 
 export enum ThreadState {
   Open = 'open',
-  Closed = 'closed',
+  Closed = 'closed'
 }
 
 export enum PostState {
@@ -24,7 +24,7 @@ export enum PostState {
   Spam = 'spam',
   Deleted = 'deleted',
   Flagged = 'flagged',
-  Highlighted = 'highlighted',
+  Highlighted = 'highlighted'
 }
 
 export interface GeneralDisqusParams {
@@ -53,7 +53,7 @@ export async function downloadNodePressXMLToDisqus() {
   const response = await nodepress.$({
     url: `${DISQUS_API_PATH}/export-xml`,
     method: 'GET',
-    responseType: 'blob',
+    responseType: 'blob'
   })
   saveFile(response.data, 'nodepress-export-to-disqus.xml', 'application/xml')
 }

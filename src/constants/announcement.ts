@@ -10,6 +10,6 @@ export interface Announcement {
   _id?: string
   state: number
   content: string
-  update_at: string
-  create_at: string
+  updated_at: string
+  created_at: string
 }

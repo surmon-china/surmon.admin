@@ -2,7 +2,7 @@ import React from 'react'
 import { useRef, onMounted } from 'veact'
 import { Form, Input, Button, Select, Spin, Card, Space, Statistic } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor/lazy'
+import { UniversalEditor, UEditorLanguage } from '@/components/common/UniversalEditor'
 import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
 import { Option } from '@/constants/option'
 import { useLoading } from 'veact-use'
@@ -25,7 +25,7 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
     data.value = option
     form.setFieldsValue({
       ...option,
-      ad_config: formatJSONString(option.ad_config, 2),
+      ad_config: formatJSONString(option.ad_config, 2)
     })
   }
 
@@ -38,7 +38,7 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
       .promise(
         putOption({
           ...newOption,
-          ad_config: formatJSONString(newOption.ad_config),
+          ad_config: formatJSONString(newOption.ad_config)
         })
       )
       .then(resetDataForm)
@@ -48,7 +48,7 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
     form.validateFields().then((newOption) => {
       updateOption({
         ...data.value,
-        ...newOption,
+        ...newOption
       }).then(() => {
         scrollTo(document.body)
       })
@@ -72,6 +72,7 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
         <Form.Item label=" ">
           <Card size="small">
             <Statistic
+              valueStyle={{ fontWeight: 'bold' }}
               value={data.value?.meta.likes}
               suffix="次"
               title={
@@ -102,12 +103,12 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
           rules={[
             {
               message: '请输入',
-              required: true,
+              required: true
             },
             {
               message: '请输入正确的 URL',
-              type: 'url',
-            },
+              type: 'url'
+            }
           ]}
         >
           <Input suffix={<Icon.LinkOutlined />} placeholder="https://example.me" />
@@ -119,20 +120,19 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
           rules={[
             {
               message: '请输入',
-              required: true,
+              required: true
             },
             {
               message: '请输入正确的邮箱地址',
-              type: 'email',
-            },
+              type: 'email'
+            }
           ]}
         >
           <Input suffix={<Icon.MailOutlined />} placeholder="example@xxx.me" />
         </Form.Item>
         <Form.Item name="statement" label="站点声明">
           <UniversalEditor
-            minRows={10}
-            maxRows={30}
+            rows={22}
             eid="app-statement"
             defaultLanguage={UEditorLanguage.Markdown}
             disabledMinimap={true}
@@ -177,13 +177,12 @@ export const BaseForm: React.FC<BaseFormProps> = (props) => {
                 } catch (error) {
                   return Promise.reject(error)
                 }
-              },
-            },
+              }
+            }
           ]}
         >
           <UniversalEditor
-            minRows={22}
-            maxRows={30}
+            rows={22}
             eid="app-ad-config"
             defaultLanguage={UEditorLanguage.JSON}
             disabledCacheDraft={true}

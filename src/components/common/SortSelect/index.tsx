@@ -38,7 +38,7 @@ export const SortSelect: React.FC<SortSelectProps> = (props) => {
               {st(sortType).icon}
               {st(sortType).name}
             </Space>
-          ),
+          )
         }
       })}
     />

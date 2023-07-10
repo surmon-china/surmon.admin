@@ -49,8 +49,8 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
       <Form.Item label="TID">
         <Typography.Text copyable={true}>{feedback.tid}</Typography.Text>
       </Form.Item>
-      <Form.Item label="发布于">{stringToYMD(feedback.create_at!)}</Form.Item>
-      <Form.Item label="最后修改于">{stringToYMD(feedback.update_at!)}</Form.Item>
+      <Form.Item label="发布于">{stringToYMD(feedback.created_at!)}</Form.Item>
+      <Form.Item label="最后修改于">{stringToYMD(feedback.updated_at!)}</Form.Item>
       <Form.Item name="marked" label="是否标记">
         <Radio.Group size="middle">
           <Radio.Button value={false}>{getMarkedByBoolean(false).icon}</Radio.Button>
@@ -109,7 +109,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
     <Drawer
       width="46rem"
       title="反馈详情"
-      visible={props.visible.value}
+      open={props.visible.value}
       onClose={props.onCancel}
       destroyOnClose={true}
     >

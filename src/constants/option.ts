@@ -24,5 +24,5 @@ export interface Option {
   }
   friend_links: Array<GeneralKeyValue>
   ad_config: string
-  update_at: string
+  updated_at: string
 }

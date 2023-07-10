@@ -34,7 +34,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
       dataSource={props.data}
       rowSelection={{
         selectedRowKeys: props.selectedIds,
-        onChange: props.onSelecte,
+        onChange: props.onSelecte
       }}
       pagination={{
         pageSizeOptions: ['10', '20', '50'],
@@ -42,31 +42,34 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
         pageSize: props.pagination?.per_page,
         total: props.pagination?.total,
         showSizeChanger: true,
-        onChange: props.onPagination,
+        onChange: props.onPagination
       }}
       columns={[
         {
           title: 'ID',
           width: 40,
           dataIndex: 'id',
+          responsive: ['md']
         },
         {
           title: 'PID',
           width: 40,
           dataIndex: 'pid',
-          render: (_, comment) => <UniversalText text={comment.pid} />,
+          responsive: ['md'],
+          render: (_, comment) => <UniversalText text={comment.pid} />
         },
         {
           title: 'POST_ID',
           width: 40,
           dataIndex: 'post_id',
+          responsive: ['md'],
           render(_, comment) {
             return (
               <Button size="small" type="ghost" onClick={() => props.onPostId(comment.post_id)}>
                 {comment.post_id}
               </Button>
             )
-          },
+          }
         },
         {
           title: '评论内容',
@@ -78,7 +81,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
             >
               {comment.content}
             </Typography.Paragraph>
-          ),
+          )
         },
         {
           title: '个人信息',
@@ -88,7 +91,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
             return (
               <Space direction="vertical">
                 <Space>
-                  <CommentAvatar comment={comment} />
+                  <CommentAvatar comment={comment} size="large" />
                   <UniversalText text={comment.author.name} />
                 </Space>
                 <UniversalText
@@ -111,7 +114,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 </Space>
               </Space>
             )
-          },
+          }
         },
         {
           title: '发布于',
@@ -153,11 +156,11 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 </Space>
                 <UniversalText
                   prefix={<Icon.ClockCircleOutlined />}
-                  text={stringToYMD(comment.create_at!)}
+                  text={stringToYMD(comment.created_at!)}
                 />
               </Space>
             )
-          },
+          }
         },
         {
           title: '状态',
@@ -182,7 +185,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 <Tag icon={<Icon.LineHeightOutlined />}>{comment.content.length} 字</Tag>
               </Space>
             )
-          },
+          }
         },
         {
           title: '操作',
@@ -270,8 +273,8 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 宿主页面
               </Button>
             </Space>
-          ),
-        },
+          )
+        }
       ]}
     />
   )

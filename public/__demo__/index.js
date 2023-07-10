@@ -1,9 +1,8 @@
 // JSON actions
 const fetchJSON = (filePath) => {
-  return fetch(`/veact-admin/__demo__/mock/${filePath}.json`).then((response) =>
-    response.json()
-  )
+  return fetch(`/veact-admin/__demo__/mock/${filePath}.json`).then((response) => response.json())
 }
+
 // first fetch cache data map
 const _cacheData = new Map()
 const ensureJSON = async (filePath) => {
@@ -29,56 +28,62 @@ window.__axiosAdapter = (config) => {
   // 3. 所有请求返回错误，提示：Demo 站点无法操作数据
   const handlers = {
     '/auth/login': {
-      post: () => ensureJSON('auth/login'),
+      post: () => ensureJSON('auth/login')
     },
     '/auth/check': {
-      post: () => ensureJSON('auth/check'),
+      post: () => ensureJSON('auth/check')
     },
     '/auth/admin': {
-      get: () => ensureJSON('auth/admin'),
+      get: () => ensureJSON('auth/admin')
     },
     '/expansion/statistic': {
-      get: () => ensureJSON('expansion/statistic'),
+      get: () => ensureJSON('expansion/statistic')
     },
     '/expansion/google-token': {
-      get: () => ensureJSON('expansion/google-token'),
+      get: () => ensureJSON('expansion/google-token')
     },
     '/expansion/uptoken': {
-      get: () => ensureJSON('expansion/uptoken'),
+      get: () => ensureJSON('expansion/uptoken')
+    },
+    '/vote': {
+      get: () => ensureJSON('vote')
+    },
+    '/feedback': {
+      get: () => ensureJSON('feedback')
     },
     '/announcement': {
-      get: () => ensureJSON('announcement'),
+      get: () => ensureJSON('announcement')
     },
     '/category': {
-      get: () => ensureJSON('category'),
+      get: () => ensureJSON('category')
     },
     '/tag': {
-      get: () => ensureJSON('tag'),
+      get: () => ensureJSON('tag')
     },
     '/comment': {
-      get: () => ensureJSON('comment'),
+      get: () => ensureJSON('comment')
     },
     '/disqus/config': {
-      get: () => ensureJSON('disqus/config'),
+      get: () => ensureJSON('disqus/config')
     },
     '/option': {
-      get: () => ensureJSON('option'),
+      get: () => ensureJSON('option')
     },
     '/article': {
-      get: () => ensureJSON('article/list'),
+      get: () => ensureJSON('article/list')
     },
     '/article/calendar': {
-      get: () => ensureJSON('article/calendar'),
+      get: () => ensureJSON('article/calendar')
     },
     '/article/612c81321a53290533a7b782': {
-      get: () => ensureJSON('article/612c81321a53290533a7b782'),
+      get: () => ensureJSON('article/612c81321a53290533a7b782')
     },
     '/article/610c29438a907384c63fef00': {
-      get: () => ensureJSON('article/610c29438a907384c63fef00'),
+      get: () => ensureJSON('article/610c29438a907384c63fef00')
     },
     '/article/61030f5fcf1faa098ee126b2': {
-      get: () => ensureJSON('article/61030f5fcf1faa098ee126b2'),
-    },
+      get: () => ensureJSON('article/61030f5fcf1faa098ee126b2')
+    }
   }
 
   return new Promise(async (resolve) => {
@@ -88,23 +93,23 @@ window.__axiosAdapter = (config) => {
         status: 200,
         statusText: 'OK',
         headers: {
-          'content-type': 'application/json',
+          'content-type': 'application/json'
         },
-        data: await target(),
+        data: await target()
       })
     } else {
       return resolve({
         status: 400,
         statusText: 'ERROR',
         headers: {
-          'content-type': 'application/json',
+          'content-type': 'application/json'
         },
         data: {
           status: 'error',
           message: '操作失败',
           error: 'Demo 站点不支持此数据操作',
-          result: null,
-        },
+          result: null
+        }
       })
     }
   })

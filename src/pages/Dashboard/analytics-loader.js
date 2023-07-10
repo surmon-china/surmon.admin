@@ -5,7 +5,7 @@ export function loadScript() {
       q: [],
       ready: function (f) {
         this.q.push(f)
-      },
+      }
     }
     js = d.createElement(s)
     fs = d.getElementsByTagName(s)[0]

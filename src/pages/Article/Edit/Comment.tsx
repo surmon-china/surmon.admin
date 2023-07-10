@@ -24,7 +24,7 @@ const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
       {props.comments.map((comment) => (
         <Comment
           key={comment.id}
-          datetime={stringToYMD(comment.create_at!)}
+          datetime={stringToYMD(comment.created_at!)}
           actions={[
             <Typography.Text key="time" type={comment.likes ? 'danger' : 'secondary'}>
               <Icon.HeartOutlined />
@@ -40,7 +40,7 @@ const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
             <span key="device">
               <UniversalText text={parseDevice(comment.agent!)} placeholder="未知设备" />
             </span>,
-            <UniversalText key="ip" text={comment.ip} copyable={true} type="secondary" />,
+            <UniversalText key="ip" text={comment.ip} copyable={true} type="secondary" />
           ]}
           author={
             <div>
@@ -91,7 +91,7 @@ export const ArticleComment: React.FC<ArticleCommentProps> = (props) => {
     <Drawer
       width="48rem"
       title={`文章评论（${count ?? '-'}）`}
-      visible={visible}
+      open={visible}
       onClose={props.onClose}
       footer={
         <Row justify="space-between" align="bottom">

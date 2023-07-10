@@ -3,6 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import lodash from 'lodash'
 import nodepress from '@/services/nodepress'
 import { Option } from '@/constants/option'
 
@@ -12,7 +13,7 @@ export const EXPANSION_API_PATH = {
   UPLOAD: '/expansion/upload',
   STATISTIC: '/expansion/statistic',
   GOOGLE_TOKEN: '/expansion/google-token',
-  DATA_BASE_BACKUP: '/expansion/database-backup',
+  DATA_BASE_BACKUP: '/expansion/database-backup'
 }
 
 export interface Statistics {
@@ -80,9 +81,11 @@ export async function uploadStaticToNodePress(options: {
       size: number
     }>(EXPANSION_API_PATH.UPLOAD, param, {
       onUploadProgress: ({ loaded, total }) => {
-        const progress = (loaded / total) * 100
-        options.onProgress?.(progress)
-      },
+        if (lodash.isNumber(total)) {
+          const progress = (loaded / total) * 100
+          options.onProgress?.(progress)
+        }
+      }
     })
     .then((response) => response.result)
 }

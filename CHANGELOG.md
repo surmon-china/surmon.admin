@@ -2,11 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+### 2.0.0 (2023-07-10)
+
+**Feature**
+
+- Update various dependencies
+- Use `pnpm` instead of `yarn` as a package management tool
+- Rename field `create_at` to `created_at`a nd `update_at` to `updated_at`
+- Refactor `UniversalEditor` component
+
 ### 1.9.0 (2022-12-22)
 
 **Feature**
 
-- update various dependencies
+- Update various dependencies
 
 ### v1.8.2 (2022-09-23)
 

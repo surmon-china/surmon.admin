@@ -1,8 +1,8 @@
 import classnames from 'classnames'
 import React from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useComputed } from 'veact'
-import { Menu, Spin, MenuProps } from 'antd'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Menu, Spin, Typography, MenuProps } from 'antd'
 import * as Icon from '@ant-design/icons'
 
 import { GITHUB_REPO_URL } from '@/config'
@@ -24,22 +24,22 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
       {
         key: rc(RouteKey.Dashboard).path,
         icon: rc(RouteKey.Dashboard).icon,
-        label: rc(RouteKey.Dashboard).name,
+        label: rc(RouteKey.Dashboard).name
       },
       {
         key: rc(RouteKey.Announcement).path,
         icon: rc(RouteKey.Announcement).icon,
-        label: rc(RouteKey.Announcement).name,
+        label: rc(RouteKey.Announcement).name
       },
       {
         key: rc(RouteKey.Category).path,
         icon: rc(RouteKey.Category).icon,
-        label: rc(RouteKey.Category).name,
+        label: rc(RouteKey.Category).name
       },
       {
         key: rc(RouteKey.Tag).path,
         icon: rc(RouteKey.Tag).icon,
-        label: rc(RouteKey.Tag).name,
+        label: rc(RouteKey.Tag).name
       },
       {
         key: rc(RouteKey.Article).path,
@@ -48,18 +48,18 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
         children: [
           {
             key: rc(RouteKey.ArticleList).path,
-            label: rc(RouteKey.ArticleList).name,
+            label: rc(RouteKey.ArticleList).name
           },
           {
             key: rc(RouteKey.ArticlePost).path,
-            label: rc(RouteKey.ArticlePost).name,
-          },
-        ],
+            label: rc(RouteKey.ArticlePost).name
+          }
+        ]
       },
       {
         key: rc(RouteKey.Comment).path,
         icon: rc(RouteKey.Comment).icon,
-        label: rc(RouteKey.Comment).name,
+        label: rc(RouteKey.Comment).name
       },
       {
         key: rc(RouteKey.Disqus).path,
@@ -68,33 +68,33 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
         children: [
           {
             key: rc(RouteKey.DisqusPost).path,
-            label: rc(RouteKey.DisqusPost).name,
+            label: rc(RouteKey.DisqusPost).name
           },
           {
             key: rc(RouteKey.DisqusThread).path,
-            label: rc(RouteKey.DisqusThread).name,
+            label: rc(RouteKey.DisqusThread).name
           },
           {
             key: rc(RouteKey.DisqusSync).path,
-            label: rc(RouteKey.DisqusSync).name,
-          },
-        ],
+            label: rc(RouteKey.DisqusSync).name
+          }
+        ]
       },
       {
         key: rc(RouteKey.Vote).path,
         icon: rc(RouteKey.Vote).icon,
-        label: rc(RouteKey.Vote).name,
+        label: rc(RouteKey.Vote).name
       },
       {
         key: rc(RouteKey.Feedback).path,
         icon: rc(RouteKey.Feedback).icon,
-        label: rc(RouteKey.Feedback).name,
+        label: rc(RouteKey.Feedback).name
       },
       {
         key: rc(RouteKey.Profile).path,
         icon: rc(RouteKey.Profile).icon,
-        label: rc(RouteKey.Profile).name,
-      },
+        label: rc(RouteKey.Profile).name
+      }
     ]
   })
 
@@ -110,19 +110,24 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
         />
       </Link>
       <Spin spinning={admin.loading.value} size="small">
-        <div className={styles.userInfo}>
+        <div className={classnames(styles.userInfo, props.isSiderCollapsed && styles.collapsed)}>
           <img
+            className={styles.avatar}
+            draggable={false}
             src={admin.data.avatar}
             alt={admin.data.name}
-            draggable={false}
-            className={classnames(styles.avatar, props.isSiderCollapsed && styles.collapsed)}
           />
-          {!props.isSiderCollapsed && (
-            <>
-              <span className={styles.name}>{admin.data.name}</span>
-              <span className={styles.slogan}>{admin.data.slogan}</span>
-            </>
-          )}
+          <Typography.Title level={5} className={styles.name} title={admin.data.name}>
+            {admin.data.name || '-'}
+          </Typography.Title>
+          <Typography.Text
+            className={styles.slogan}
+            ellipsis={true}
+            type="secondary"
+            title={admin.data.slogan}
+          >
+            {props.isSiderCollapsed ? '...' : admin.data.slogan || '-'}
+          </Typography.Text>
         </div>
       </Spin>
       <Menu
@@ -143,8 +148,8 @@ export const AppSider: React.FC<AppSiderProps> = (props) => {
             key: 'github',
             icon: <Icon.GithubOutlined />,
             label: 'source-code',
-            onClick: () => window.open(GITHUB_REPO_URL),
-          },
+            onClick: () => window.open(GITHUB_REPO_URL)
+          }
         ]}
       />
     </div>

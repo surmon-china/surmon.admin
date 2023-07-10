@@ -1,4 +1,5 @@
-@import '@/styles/init.less';
+@import '@/styles/mixins.less';
+@import '@/styles/variables.less';
 
 .category {
   .toolbar {
@@ -17,9 +18,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: @radius;
+    border-radius: @app-border-radius;
     &:hover {
-      background-color: @module-hover-bg;
+      background-color: @app-module-hover-background;
     }
 
     .content {

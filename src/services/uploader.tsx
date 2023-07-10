@@ -11,7 +11,7 @@ const UPLOAD_FILE_SIZE_LIMIT = 3000000
 
 export enum UploadErrorCode {
   FileSizeLimit = 'fileSizeLimit',
-  Failure = 'failure',
+  Failure = 'failure'
 }
 
 export interface UploaderOptions {
@@ -44,7 +44,7 @@ export const useUploader = () => {
           progressing.value = true
           progress.value = _progress * 100
           options?.onProgress?.(_progress)
-        },
+        }
       })
         .then((result) => {
           console.info('[upoader]', '上传完成', result.url)
@@ -54,7 +54,7 @@ export const useUploader = () => {
           console.warn('[upoader]', '上传失败', error)
           return Promise.reject({
             code: UploadErrorCode.Failure,
-            error,
+            error
           })
         })
         .finally(() => {
@@ -67,6 +67,6 @@ export const useUploader = () => {
     upload,
     uploading,
     progressing,
-    progress,
+    progress
   }
 }

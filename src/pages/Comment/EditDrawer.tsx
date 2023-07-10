@@ -11,11 +11,11 @@ import {
   Select,
   Drawer,
   Space,
-  Spin,
+  Spin
 } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { UniversalText } from '@/components/common/UniversalText'
-import { UniversalEditor } from '@/components/common/UniversalEditor/lazy'
+import { UniversalEditor } from '@/components/common/UniversalEditor'
 import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
 import { IPLocation } from '@/components/common/IPLocation'
 import { getArticle } from '@/store/article'
@@ -68,7 +68,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
     <Drawer
       width="46rem"
       title="评论详情"
-      visible={props.visible.value}
+      open={props.visible.value}
       onClose={props.onCancel}
       destroyOnClose={true}
     >
@@ -85,8 +85,10 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             <Divider type="vertical" />
             <Typography.Text copyable={true}>{props.comment.value?._id}</Typography.Text>
           </Form.Item>
-          <Form.Item label="发布于">{stringToYMD(props.comment.value?.create_at!)}</Form.Item>
-          <Form.Item label="最后修改于">{stringToYMD(props.comment.value?.update_at!)}</Form.Item>
+          <Form.Item label="发布于">{stringToYMD(props.comment.value?.created_at!)}</Form.Item>
+          <Form.Item label="最后修改于">
+            {stringToYMD(props.comment.value?.updated_at!)}
+          </Form.Item>
           <Form.Item label="用户头像">
             <CommentAvatar size="large" comment={props.comment.value!} />
           </Form.Item>
@@ -103,8 +105,8 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             rules={[
               {
                 message: '请输入正确的邮箱',
-                type: 'email',
-              },
+                type: 'email'
+              }
             ]}
           >
             <Input prefix={<Icon.MailOutlined />} placeholder="email" type="email" />
@@ -115,8 +117,8 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             rules={[
               {
                 message: '请输入正确的 URL',
-                type: 'url',
-              },
+                type: 'url'
+              }
             ]}
           >
             <Input
@@ -194,7 +196,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
                       {state.icon}
                       {state.name}
                     </Space>
-                  ),
+                  )
                 }
               })}
             />
@@ -204,12 +206,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             name="content"
             rules={[{ required: true, message: '请输入内容' }]}
           >
-            <UniversalEditor
-              disabledMinimap={true}
-              disabledCacheDraft={true}
-              minRows={14}
-              maxRows={18}
-            />
+            <UniversalEditor rows={14} disabledMinimap={true} disabledCacheDraft={true} />
           </Form.Item>
           <Form.Item
             label="自定义扩展"

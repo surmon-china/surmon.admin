@@ -8,7 +8,7 @@ import { PageHeaderAD } from './PageAD'
 
 import styles from './style.module.less'
 
-export const AppContent: React.FC = (props) => {
+export const AppContent: React.FC<React.PropsWithChildren> = (props) => {
   const location = useLocation()
   const [, ...paths] = location.pathname.split('/')
   const currentRoute = Array.from(routeMap.values()).find((route) => {

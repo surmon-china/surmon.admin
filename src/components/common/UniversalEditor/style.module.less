@@ -1,9 +1,10 @@
-@import '@/styles/init.less';
+@import '@/styles/mixins.less';
+@import '@/styles/variables.less';
 
 :global(.ant-form-item-has-error) {
   .universalEditor {
     &.formStatus {
-      border-color: @error;
+      border-color: @app-error-color;
     }
   }
 }
@@ -11,9 +12,8 @@
 @toolbar-height: 3rem;
 .universalEditor {
   width: 100%;
-  border: 1px solid @border;
-  border-radius: @radius;
-
+  border: 1px solid @app-border-color;
+  border-radius: @app-border-radius;
   &.fullScreen {
     width: 100vw;
     height: 100vh;
@@ -25,7 +25,6 @@
     left: 0;
     right: 0;
     z-index: 1000;
-
     .container {
       height: calc(100vh - @toolbar-height);
     }
@@ -33,9 +32,11 @@
 
   .toolbar {
     height: @toolbar-height;
-    padding: 0 @gap;
-    border-bottom: 1px solid @border;
-    background-color: @body-bg;
+    padding: 0 @app-gap;
+    border-top-left-radius: @app-border-radius;
+    border-top-right-radius: @app-border-radius;
+    border-bottom: 1px solid @app-border-color;
+    background-color: @app-module-background;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -54,21 +55,25 @@
     display: flex;
     position: relative;
     overflow: hidden;
-    background-color: @module-bg;
 
-    .editor {
-      flex: 1;
+    .editorWrapper {
+      display: flex;
       position: relative;
-      &.placeholder {
-        &::before {
-          position: absolute;
-          top: 0;
-          left: 70px;
-          z-index: 1;
-          content: attr(placeholder);
-          color: @text-disabled;
-          font-style: italic;
-        }
+      text-align: initial;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 72px;
+        z-index: 1;
+        content: attr(data-placeholder);
+        color: @app-disabled-color;
+        font-style: italic;
+      }
+      // hide placeholder when focus or not empty
+      &:focus-within::before,
+      &[data-nonempty='true']::before {
+        display: none;
       }
     }
 
@@ -80,10 +85,11 @@
       height: 100%;
       padding: 2rem;
       overflow-y: scroll;
+      background-color: @app-module-background;
 
       .markdown {
         a {
-          color: @primary;
+          color: @app-primary-color;
           font-weight: bold;
           margin: 0 0.1em;
 
@@ -98,14 +104,14 @@
           display: block;
           text-align: center;
           border-radius: 2px;
-          border: 0.5rem solid @border;
+          border: 0.5rem solid @app-border-color;
         }
 
         code {
           padding: 0.3em 0.5em;
           margin: 0 0.5em;
           border-radius: 2px;
-          background-color: @border;
+          background-color: @app-border-color;
         }
 
         p {
@@ -130,7 +136,7 @@
         blockquote {
           margin: 1.2em 0;
           text-indent: 0em;
-          background-color: @border;
+          background-color: @app-border-color;
           border-left: 0.5em solid #aaa;
           padding: 0.5em 1em;
           padding-left: 1.5em;
@@ -155,7 +161,7 @@
             padding: 0.5em 1em;
 
             &:hover {
-              background-color: @module-bg;
+              background-color: @app-module-background;
             }
 
             > ul {

@@ -1,4 +1,5 @@
-@import '@/styles/init.less';
+@import '@/styles/mixins.less';
+@import '@/styles/variables.less';
 
 .helloPage {
   width: 100%;
@@ -14,12 +15,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: @font-size-h1;
-    background-color: @module-bg;
+    font-size: @app-font-size-h1;
+    background-color: @app-module-background;
     user-select: none;
     cursor: pointer;
     &:hover {
-      background-color: @module-bg-lighter;
+      background-color: @app-module-background-lighter;
     }
   }
 
@@ -28,9 +29,9 @@
     width: 30rem;
     height: 6rem;
     padding: 2rem;
-    border-radius: @radius * 2;
-    background-color: @module-bg;
-    font-size: @font-size-h2;
+    border-radius: @app-border-radius * 2;
+    background-color: @app-module-background;
+    font-size: @app-font-size-h2;
     text-align: center;
     border: none;
     outline: none;

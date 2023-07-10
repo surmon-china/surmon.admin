@@ -1,4 +1,5 @@
-@import '@/styles/init.less';
+@import '@/styles/mixins.less';
+@import '@/styles/variables.less';
 
 .loading {
   width: 100%;
@@ -12,7 +13,7 @@
 
   .text {
     margin-top: 1rem;
-    font-size: @font-size-small;
+    font-size: @app-font-size-small;
   }
 
   .animation {
@@ -35,8 +36,8 @@
       position: absolute;
       width: 16px;
       height: 16px;
-      border-radius: @radius;
-      background: @primary;
+      border-radius: 2px;
+      background: @app-primary-color;
       animation: animation 2s linear infinite;
     }
     & div:nth-child(1) {

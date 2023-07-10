@@ -9,18 +9,18 @@ import { IPLocation } from './general'
 
 export enum VoteTarget {
   Post = 1,
-  Comment = 2,
+  Comment = 2
 }
 
 export enum VoteType {
   Upvote = 1,
-  Downvote = -1,
+  Downvote = -1
 }
 
 export enum VoteAuthorType {
   Anonymous = 0,
   Guest = 1,
-  Disqus = 2,
+  Disqus = 2
 }
 
 export interface Vote {
@@ -34,13 +34,13 @@ export interface Vote {
   ip: string | null
   ip_location: Partial<IPLocation> | null
   user_agent?: string | null
-  create_at?: string
-  update_at?: string
+  created_at?: string
+  updated_at?: string
 }
 
 const voteTargetMap = new Map([
   [VoteTarget.Post, '页面'],
-  [VoteTarget.Comment, '评论'],
+  [VoteTarget.Comment, '评论']
 ])
 export const getVoteTargetText = (voteTarget: VoteTarget) => {
   return voteTargetMap.get(voteTarget)!
@@ -49,7 +49,7 @@ export const getVoteTargetText = (voteTarget: VoteTarget) => {
 const voteAuthorTypeMap = new Map([
   [VoteAuthorType.Anonymous, '匿名用户'],
   [VoteAuthorType.Guest, '本地访客'],
-  [VoteAuthorType.Disqus, 'Disqus 用户'],
+  [VoteAuthorType.Disqus, 'Disqus 用户']
 ])
 export const getVoteAuthorTypeText = (voteAuthorType: VoteAuthorType) => {
   return voteAuthorTypeMap.get(voteAuthorType)!
@@ -60,13 +60,13 @@ const voteTypeMap = new Map(
     {
       id: VoteType.Upvote,
       name: '+1',
-      icon: <Icon.LikeOutlined />,
+      icon: <Icon.LikeOutlined />
     },
     {
       id: VoteType.Downvote,
       name: '-1',
-      icon: <Icon.DislikeOutlined />,
-    },
+      icon: <Icon.DislikeOutlined />
+    }
   ].map((item) => [item.id, item])
 )
 export const voteTypes = Array.from<ReturnType<typeof getVoteTypeById>>(voteTypeMap.values())

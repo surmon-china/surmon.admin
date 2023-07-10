@@ -35,7 +35,7 @@ export interface Article {
     views: number
     comments: number
   }
-  update_at?: string
-  create_at?: string
+  updated_at?: string
+  created_at?: string
   extends: Array<GeneralKeyValue>
 }

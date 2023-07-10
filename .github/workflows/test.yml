@@ -7,17 +7,24 @@ jobs:
     name: Build test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-          cache: "yarn"
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Install pnpm & dependencies
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: true
 
       - name: Lint
-        run: yarn lint
+        run: pnpm run lint
 
       - name: Build
-        run: yarn build
+        run: pnpm run build

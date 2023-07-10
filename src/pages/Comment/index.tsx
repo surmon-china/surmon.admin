@@ -16,7 +16,7 @@ import {
   useWatch,
   toRaw,
   batchedUpdates,
-  useComputed,
+  useComputed
 } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Input, Select, Divider, Modal, Space, message } from 'antd'
@@ -29,14 +29,14 @@ import {
   deleteComments,
   putComment,
   reviseCommentIPLocation,
-  updateCommentsState,
+  updateCommentsState
 } from '@/store/comment'
 import {
   Comment as CommentType,
   CommentState,
   commentStates,
   COMMENT_GUESTBOOK_POST_ID,
-  cs,
+  cs
 } from '@/constants/comment'
 import { ResponsePaginationData } from '@/constants/request'
 import { SortTypeWithHot } from '@/constants/sort'
@@ -52,7 +52,7 @@ const SELECT_ALL_VALUE = 'ALL'
 const DEFAULT_FILTER_PARAMS = Object.freeze({
   postId: LIST_ALL_VALUE as number | typeof LIST_ALL_VALUE,
   state: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | CommentState,
-  sort: SortTypeWithHot.Desc,
+  sort: SortTypeWithHot.Desc
 })
 
 export const CommentPage: React.FC = () => {
@@ -66,14 +66,14 @@ export const CommentPage: React.FC = () => {
   const submitting = useLoading()
   const comment = useShallowReactive<ResponsePaginationData<CommentType>>({
     data: [],
-    pagination: undefined,
+    pagination: undefined
   })
 
   // 过滤参数
   const serarchKeyword = useRef('')
   const filterParams = useReactive({
     ...DEFAULT_FILTER_PARAMS,
-    postId: postIdParam || DEFAULT_FILTER_PARAMS.postId,
+    postId: postIdParam || DEFAULT_FILTER_PARAMS.postId
   })
   const updatePostId = (postId: number | string) => {
     filterParams.postId = Number(postId)
@@ -109,7 +109,7 @@ export const CommentPage: React.FC = () => {
       sort: filterParams.sort,
       post_id: filterParams.postId !== LIST_ALL_VALUE ? filterParams.postId : undefined,
       state: filterParams.state !== SELECT_ALL_VALUE ? filterParams.state : undefined,
-      keyword: Boolean(serarchKeyword.value) ? serarchKeyword.value : undefined,
+      keyword: Boolean(serarchKeyword.value) ? serarchKeyword.value : undefined
     }
 
     loading.promise(getComments(getParams)).then((response) => {
@@ -135,7 +135,7 @@ export const CommentPage: React.FC = () => {
   const refreshData = () => {
     fetchData({
       page: comment.pagination?.current_page,
-      per_page: comment.pagination?.per_page,
+      per_page: comment.pagination?.per_page
     })
   }
 
@@ -150,7 +150,7 @@ export const CommentPage: React.FC = () => {
           _.uniq(comments.map((c) => c.post_id))
         ).then(() => {
           refreshData()
-        }),
+        })
     })
   }
 
@@ -166,7 +166,7 @@ export const CommentPage: React.FC = () => {
           state
         ).then(() => {
           refreshData()
-        }),
+        })
     })
   }
 
@@ -175,7 +175,7 @@ export const CommentPage: React.FC = () => {
       .promise(
         putComment({
           ...activeEditData.value,
-          ...comment,
+          ...comment
         })
       )
       .then(() => {
@@ -188,7 +188,7 @@ export const CommentPage: React.FC = () => {
     done: [] as string[],
     fail: [] as string[],
     todo: [] as string[],
-    running: false,
+    running: false
   })
 
   const doIPLocationTask = () => {
@@ -214,7 +214,7 @@ export const CommentPage: React.FC = () => {
       const messages = [
         '任务结束',
         `done: ${ipLocationTask.done.length}`,
-        `fail: ${ipLocationTask.fail.length}`,
+        `fail: ${ipLocationTask.fail.length}`
       ]
       message.info(messages.join('，'))
     }
@@ -245,7 +245,7 @@ export const CommentPage: React.FC = () => {
       bordered={false}
       className={styles.comment}
       extra={
-        <Space>
+        <Space wrap>
           <Button.Group>
             {ipLocationTask.running && (
               <Button
@@ -253,7 +253,7 @@ export const CommentPage: React.FC = () => {
                 onClick={() => {
                   Modal.info({
                     title: '任务详情',
-                    content: JSON.stringify(ipLocationTask, null, 2),
+                    content: JSON.stringify(ipLocationTask, null, 2)
                   })
                 }}
               >
@@ -286,8 +286,8 @@ export const CommentPage: React.FC = () => {
         </Space>
       }
     >
-      <Space align="center" className={styles.toolbar}>
-        <Space>
+      <Space className={styles.toolbar} align="center" wrap>
+        <Space wrap>
           <Select
             className={classnames(styles.select, styles.type)}
             loading={loading.state.value}
@@ -298,12 +298,12 @@ export const CommentPage: React.FC = () => {
             options={[
               {
                 value: LIST_ALL_VALUE,
-                label: '全部评论',
+                label: '全部评论'
               },
               {
                 value: COMMENT_GUESTBOOK_POST_ID,
-                label: '留言评论',
-              },
+                label: '留言评论'
+              }
             ]}
             dropdownRender={(menu) => (
               <div>
@@ -339,9 +339,9 @@ export const CommentPage: React.FC = () => {
                       {state.icon}
                       {state.name}
                     </Space>
-                  ),
+                  )
                 }
-              }),
+              })
             ]}
           />
           <SortSelect
@@ -378,28 +378,28 @@ export const CommentPage: React.FC = () => {
               {
                 label: '退为草稿',
                 icon: <Icon.EditOutlined />,
-                onClick: () => handleStateChange(selectComments.value, CommentState.Auditing),
+                onClick: () => handleStateChange(selectComments.value, CommentState.Auditing)
               },
               {
                 label: '审核通过',
                 icon: <Icon.CheckOutlined />,
-                onClick: () => handleStateChange(selectComments.value, CommentState.Published),
+                onClick: () => handleStateChange(selectComments.value, CommentState.Published)
               },
               {
                 label: '标为垃圾',
                 icon: <Icon.StopOutlined />,
-                onClick: () => handleStateChange(selectComments.value, CommentState.Spam),
+                onClick: () => handleStateChange(selectComments.value, CommentState.Spam)
               },
               {
                 label: '移回收站',
                 icon: <Icon.DeleteOutlined />,
-                onClick: () => handleStateChange(selectComments.value, CommentState.Deleted),
+                onClick: () => handleStateChange(selectComments.value, CommentState.Deleted)
               },
               {
                 label: '彻底删除',
                 icon: <Icon.DeleteOutlined />,
-                onClick: () => handleDelete(selectComments.value),
-              },
+                onClick: () => handleDelete(selectComments.value)
+              }
             ]}
           >
             批量操作

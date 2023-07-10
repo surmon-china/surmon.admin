@@ -24,7 +24,7 @@ export enum RouteKey {
   Article,
   ArticleList,
   ArticlePost,
-  ArticleEdit,
+  ArticleEdit
 }
 
 export interface RouteConfig {
@@ -40,102 +40,102 @@ export const routeMap: ReadonlyMap<RouteKey, RouteConfig> = new Map(
     {
       id: RouteKey.Hello,
       name: '来者何人',
-      path: '/hello',
+      path: '/hello'
     },
     {
       id: RouteKey.Dashboard,
       name: '超级看板',
       path: '/dashboard',
-      icon: <Icon.DashboardOutlined />,
+      icon: <Icon.DashboardOutlined />
     },
     {
       id: RouteKey.Profile,
       name: '系统设置',
       path: '/profile',
-      icon: <Icon.SettingOutlined />,
+      icon: <Icon.SettingOutlined />
     },
     {
       id: RouteKey.Announcement,
       name: '公告管理',
       path: '/announcement',
-      icon: <Icon.SoundOutlined />,
+      icon: <Icon.SoundOutlined />
     },
     {
       id: RouteKey.Category,
       name: '文章分类',
       path: '/category',
-      icon: <Icon.FolderOpenOutlined />,
+      icon: <Icon.FolderOpenOutlined />
     },
     {
       id: RouteKey.Tag,
       name: '文章标签',
       path: '/tag',
-      icon: <Icon.TagsOutlined />,
+      icon: <Icon.TagsOutlined />
     },
     {
       id: RouteKey.Comment,
       name: '评论管理',
       path: '/comment',
-      icon: <Icon.CommentOutlined />,
+      icon: <Icon.CommentOutlined />
     },
     {
       id: RouteKey.Vote,
       name: '表态记录',
       path: '/vote',
-      icon: <Icon.LikeOutlined />,
+      icon: <Icon.LikeOutlined />
     },
     {
       id: RouteKey.Feedback,
       name: '站点反馈',
       path: '/feedback',
-      icon: <Icon.BulbOutlined />,
+      icon: <Icon.BulbOutlined />
     },
     {
       id: RouteKey.Disqus,
       name: 'Disqus',
       path: '/disqus',
-      icon: <Icon.MessageOutlined />,
+      icon: <Icon.MessageOutlined />
     },
     {
       id: RouteKey.DisqusPost,
       name: 'Posts',
       path: '/disqus/posts',
       subPath: 'posts',
-      icon: <Icon.MessageOutlined />,
+      icon: <Icon.MessageOutlined />
     },
     {
       id: RouteKey.DisqusThread,
       name: 'Threads',
       path: '/disqus/threads',
       subPath: 'threads',
-      icon: <Icon.AppstoreOutlined />,
+      icon: <Icon.AppstoreOutlined />
     },
     {
       id: RouteKey.DisqusSync,
       name: 'Synchronize',
       path: '/disqus/synchronize',
       subPath: 'synchronize',
-      icon: <Icon.CloudSyncOutlined />,
+      icon: <Icon.CloudSyncOutlined />
     },
     {
       id: RouteKey.Article,
       name: '文章管理',
       path: '/article',
-      icon: <Icon.CoffeeOutlined />,
+      icon: <Icon.CoffeeOutlined />
     },
     {
       id: RouteKey.ArticleList,
       name: '文章列表',
       path: '/article/list',
       subPath: 'list',
-      icon: <Icon.OrderedListOutlined />,
+      icon: <Icon.OrderedListOutlined />
     },
     {
       id: RouteKey.ArticlePost,
       name: '新撰文章',
       path: '/article/post',
       subPath: 'post',
-      icon: <Icon.EditOutlined />,
+      icon: <Icon.EditOutlined />
     },
     {
       id: RouteKey.ArticleEdit,
@@ -145,8 +145,8 @@ export const routeMap: ReadonlyMap<RouteKey, RouteConfig> = new Map(
       icon: <Icon.EditOutlined />,
       pather(article_id: string) {
         return generatePath(this.path, { article_id })
-      },
-    },
+      }
+    }
   ].map((route) => [route.id, route])
 )
 

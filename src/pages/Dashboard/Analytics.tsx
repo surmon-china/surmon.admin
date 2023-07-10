@@ -1,11 +1,12 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import React from 'react'
 import classnames from 'classnames'
 import { useRef, useShallowRef, onMounted, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
-import { Card, Divider, Button, Spin, Space, DatePicker } from 'antd'
+import { Row, Col, Card, Divider, Button, Spin, Space } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { APP_COLOR_PRIMARY } from '@/config'
+import DatePicker from '@/components/antd/DatePicker'
+import { APP_COLOR_PRIMARY, APP_LAYOUT_GUTTER_SIZE } from '@/config'
 import { getGAToken } from '@/store/system'
 import styles from './style.module.less'
 
@@ -18,7 +19,7 @@ const GOOGLE_CHART_ID_MAP = {
   COUNTRY: 'country',
   CITY: 'city',
   BROWSER: 'browser',
-  OS: 'os',
+  OS: 'os'
 }
 
 const GOOGLE_CHART_BG_OPACITY = 0.05
@@ -33,7 +34,7 @@ const GOOGLE_CHART_COLORS = [
   '#6f52b8',
   '#1c7cd5',
   '#56b9f7',
-  '#0ae8eb',
+  '#0ae8eb'
 ]
 
 export const Analytics: React.FC = () => {
@@ -41,11 +42,11 @@ export const Analytics: React.FC = () => {
   const loading = useLoading()
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const rerenderAnalytics = useShallowRef<any>(() => {})
-  const chartDate = useShallowRef<moment.Moment | null>(null)
+  const chartDate = useShallowRef<dayjs.Dayjs | null>(null)
   const stringChartDate = useComputed(() => {
     if (chartDate.value) {
       const formated = chartDate.value.format('YYYY-MM-DD')
-      const today = moment().format('YYYY-MM-DD')
+      const today = dayjs().format('YYYY-MM-DD')
       return formated === today ? 'today' : formated
     } else {
       return 'today'
@@ -62,11 +63,11 @@ export const Analytics: React.FC = () => {
       gapi.analytics.ready(() => {
         // 服务端授权立即生效，无需事件处理
         gapi.analytics.auth.authorize({
-          serverAuth: { access_token: accessToken },
+          serverAuth: { access_token: accessToken }
         })
 
         const viewSelector = new gapi.analytics.ViewSelector({
-          container: GOOGLE_CHART_VIEW_SELECTOR_ID,
+          container: GOOGLE_CHART_VIEW_SELECTOR_ID
         })
         viewSelector.execute()
 
@@ -76,7 +77,7 @@ export const Analytics: React.FC = () => {
             dimensions: 'ga:hour',
             metrics: 'ga:sessions',
             'start-date': date,
-            'end-date': date,
+            'end-date': date
           },
           chart: {
             type: 'LINE',
@@ -86,40 +87,40 @@ export const Analytics: React.FC = () => {
               width: '100%',
               chartArea: {
                 left: '25',
-                right: '25',
+                right: '25'
               },
               focusTarget: 'category',
               dataOpacity: 0.6,
               pointSize: 14,
               vAxis: {
                 gridlines: {
-                  color: '#454545',
+                  color: '#454545'
                 },
                 baselineColor: '#454545',
                 textStyle: {
-                  color: '#fff',
-                },
+                  color: '#fff'
+                }
               },
               hAxis: {
                 textStyle: {
-                  color: '#fff',
-                },
+                  color: '#fff'
+                }
               },
               backgroundColor: {
-                fillOpacity: GOOGLE_CHART_BG_OPACITY,
+                fillOpacity: GOOGLE_CHART_BG_OPACITY
               },
               tooltip: {
                 textStyle: {
-                  fontSize: 13,
-                },
+                  fontSize: 13
+                }
               },
               legend: {
                 textStyle: {
-                  color: '#fff',
-                },
-              },
-            },
-          },
+                  color: '#fff'
+                }
+              }
+            }
+          }
         })
 
         const getPieChart = (dimensions: string, container: string, title: string) => {
@@ -130,7 +131,7 @@ export const Analytics: React.FC = () => {
               'start-date': date,
               'end-date': date,
               'max-results': 15,
-              sort: '-ga:sessions',
+              sort: '-ga:sessions'
             },
             chart: {
               container,
@@ -141,41 +142,41 @@ export const Analytics: React.FC = () => {
                 pieHole: 0.5,
                 colors: GOOGLE_CHART_COLORS,
                 chartArea: {
-                  left: '25',
+                  left: '25'
                 },
                 annotations: {
                   stem: {
                     color: 'transparent',
-                    length: 120,
+                    length: 120
                   },
                   textStyle: {
                     color: '#9E9E9E',
-                    fontSize: 18,
-                  },
+                    fontSize: 18
+                  }
                 },
                 backgroundColor: {
-                  fillOpacity: GOOGLE_CHART_BG_OPACITY,
+                  fillOpacity: GOOGLE_CHART_BG_OPACITY
                 },
                 titleTextStyle: {
-                  color: '#fff',
+                  color: '#fff'
                 },
                 pieSliceBorderColor: 'transparent',
                 pieSliceTextStyle: {
-                  color: '#fff',
+                  color: '#fff'
                 },
                 tooltip: {
                   showColorCode: true,
                   textStyle: {
-                    fontSize: 12,
-                  },
+                    fontSize: 12
+                  }
                 },
                 legend: {
                   textStyle: {
-                    color: '#fff',
-                  },
-                },
-              },
-            },
+                    color: '#fff'
+                  }
+                }
+              }
+            }
           })
         }
 
@@ -241,13 +242,13 @@ export const Analytics: React.FC = () => {
         <Space>
           <DatePicker
             disabled={loading.state.value}
-            disabledDate={(date) => date.isAfter(moment())}
+            disabledDate={(date) => date.isAfter(dayjs())}
             value={chartDate.value}
             onChange={(date) => {
               chartDate.value = date
               rerenderAnalytics.value?.({
                 'start-date': stringChartDate.value,
-                'end-date': stringChartDate.value,
+                'end-date': stringChartDate.value
               })
             }}
           />
@@ -278,18 +279,32 @@ export const Analytics: React.FC = () => {
       }
     >
       <Spin spinning={loading.state.value}>
-        <div className={styles.pieCharts}>
-          <div
-            id={GOOGLE_CHART_ID_MAP.COUNTRY}
-            className={classnames(styles.chart, styles.country)}
-          />
-          <div id={GOOGLE_CHART_ID_MAP.CITY} className={classnames(styles.chart, styles.city)} />
-          <div
-            id={GOOGLE_CHART_ID_MAP.BROWSER}
-            className={classnames(styles.chart, styles.browser)}
-          />
-          <div id={GOOGLE_CHART_ID_MAP.OS} className={classnames(styles.chart, styles.os)} />
-        </div>
+        <Row
+          className={styles.pieCharts}
+          gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}
+        >
+          <Col xs={24} md={12} lg={6}>
+            <div
+              id={GOOGLE_CHART_ID_MAP.COUNTRY}
+              className={classnames(styles.chart, styles.country)}
+            />
+          </Col>
+          <Col xs={24} md={12} lg={6}>
+            <div
+              id={GOOGLE_CHART_ID_MAP.CITY}
+              className={classnames(styles.chart, styles.city)}
+            />
+          </Col>
+          <Col xs={24} md={12} lg={6}>
+            <div
+              id={GOOGLE_CHART_ID_MAP.BROWSER}
+              className={classnames(styles.chart, styles.browser)}
+            />
+          </Col>
+          <Col xs={24} md={12} lg={6}>
+            <div id={GOOGLE_CHART_ID_MAP.OS} className={classnames(styles.chart, styles.os)} />
+          </Col>
+        </Row>
         <Divider />
         <div id={GOOGLE_CHART_TIMELINE_ID} className={styles.timeline}></div>
       </Spin>

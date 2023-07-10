@@ -10,15 +10,18 @@ import * as Icon from '@ant-design/icons'
 import zhCN from 'antd/lib/locale/zh_CN'
 
 import * as CONFIG from '@/config'
+import { useAdminState } from '@/state/admin'
 import { AppSider } from './Sider'
 import { AppHeader } from './Header'
 import { AppContent } from './Content'
-import { adminState } from '@/state/admin'
 
 import styles from './style.module.less'
 
-export const AppLayout: React.FC = (props) => {
-  const isSiderCollapsed = useRef(false)
+const INIT_ON_WEB_DEVICE = window.innerWidth >= 992
+
+export const AppLayout: React.FC<React.PropsWithChildren> = (props) => {
+  const adminState = useAdminState()
+  const isSiderCollapsed = useRef(!INIT_ON_WEB_DEVICE)
   const toggleSider = () => {
     isSiderCollapsed.value = !isSiderCollapsed.value
   }
@@ -40,6 +43,7 @@ export const AppLayout: React.FC = (props) => {
           collapsed={isSiderCollapsed.value}
           className={styles.appSider}
           width={siderWidth.value}
+          theme="dark"
         >
           <AppSider isSiderCollapsed={isSiderCollapsed.value} />
         </Layout.Sider>

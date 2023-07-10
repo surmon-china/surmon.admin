@@ -31,7 +31,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
   const uploadFile = (file: File) => {
     notification.info({
       message: '开始上传',
-      description: '文件开始上传',
+      description: '文件开始上传'
     })
 
     uploader
@@ -40,7 +40,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
         props.onChange?.(result.url)
         notification.success({
           message: '上传成功',
-          description: result.key,
+          description: result.key
         })
       })
       .catch((error) => {
@@ -49,7 +49,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
           description:
             error.code === UploadErrorCode.Failure
               ? String(error.error?.message ?? error.error)
-              : error.code,
+              : error.code
         })
       })
   }

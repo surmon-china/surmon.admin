@@ -13,7 +13,7 @@ import {
   useWatch,
   toRaw,
   batchedUpdates,
-  useComputed,
+  useComputed
 } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd'
@@ -35,7 +35,7 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
   tid: ALL_VALUE as number | typeof ALL_VALUE,
   emotion: ALL_VALUE as number | typeof ALL_VALUE,
   marked: ALL_VALUE as 0 | 1 | typeof ALL_VALUE,
-  sort: SortTypeBase.Desc,
+  sort: SortTypeBase.Desc
 })
 
 export const FeedbackPage: React.FC = () => {
@@ -43,14 +43,14 @@ export const FeedbackPage: React.FC = () => {
   const submitting = useLoading()
   const feedbacks = useShallowReactive<ResponsePaginationData<Feedback>>({
     data: [],
-    pagination: undefined,
+    pagination: undefined
   })
 
   // 过滤参数
   const serarchKeyword = useRef('')
   const filterParams = useReactive({
     ...DEFAULT_FILTER_PARAMS,
-    tid: DEFAULT_FILTER_PARAMS.tid,
+    tid: DEFAULT_FILTER_PARAMS.tid
   })
   const updateTargetID = (postId: number | string) => {
     filterParams.tid = Number(postId)
@@ -87,7 +87,7 @@ export const FeedbackPage: React.FC = () => {
       tid: filterParams.tid !== ALL_VALUE ? filterParams.tid : undefined,
       emotion: filterParams.emotion !== ALL_VALUE ? filterParams.emotion : undefined,
       marked: filterParams.marked !== ALL_VALUE ? filterParams.marked : undefined,
-      keyword: Boolean(serarchKeyword.value) ? serarchKeyword.value : undefined,
+      keyword: Boolean(serarchKeyword.value) ? serarchKeyword.value : undefined
     }
 
     loading.promise(getFeedbacks(getParams)).then((response) => {
@@ -114,7 +114,7 @@ export const FeedbackPage: React.FC = () => {
   const refreshData = () => {
     fetchData({
       page: feedbacks.pagination?.current_page,
-      per_page: feedbacks.pagination?.per_page,
+      per_page: feedbacks.pagination?.per_page
     })
   }
 
@@ -126,21 +126,21 @@ export const FeedbackPage: React.FC = () => {
       onOk: () =>
         deleteFeedbacks(feedbacks.map((c) => c._id!)).then(() => {
           refreshData()
-        }),
+        })
     })
   }
 
   const handleSubmit = (feedback: Feedback) => {
     const { emotion_emoji, emotion_text, ...target } = {
       ...activeEditData.value,
-      ...feedback,
+      ...feedback
     }
 
     submitting
       .promise(
         putFeedback({
           ...target,
-          ip: target.ip || null,
+          ip: target.ip || null
         })
       )
       .then(() => {
@@ -161,8 +161,8 @@ export const FeedbackPage: React.FC = () => {
       bordered={false}
       className={styles.feedback}
     >
-      <Space align="center" className={styles.toolbar}>
-        <Space>
+      <Space className={styles.toolbar} align="center" wrap>
+        <Space wrap>
           <Select
             className={styles.select}
             loading={loading.state.value}
@@ -173,12 +173,12 @@ export const FeedbackPage: React.FC = () => {
             options={[
               {
                 value: ALL_VALUE,
-                label: '所有反馈',
+                label: '所有反馈'
               },
               {
                 value: 0,
-                label: '站点反馈',
-              },
+                label: '站点反馈'
+              }
             ]}
             dropdownRender={(menu) => (
               <div>
@@ -210,7 +210,7 @@ export const FeedbackPage: React.FC = () => {
               { value: 2, label: '2 分' },
               { value: 3, label: '3 分' },
               { value: 4, label: '4 分' },
-              { value: 5, label: '5 分' },
+              { value: 5, label: '5 分' }
             ]}
           />
           <Select
@@ -229,8 +229,8 @@ export const FeedbackPage: React.FC = () => {
                     {state.icon}
                     {state.name}
                   </Space>
-                ),
-              })),
+                )
+              }))
             ]}
           />
           <SortSelect
@@ -265,8 +265,8 @@ export const FeedbackPage: React.FC = () => {
               {
                 label: '彻底删除',
                 icon: <Icon.DeleteOutlined />,
-                onClick: () => handleDelete(selectFeedbacks.value),
-              },
+                onClick: () => handleDelete(selectFeedbacks.value)
+              }
             ]}
           >
             批量操作

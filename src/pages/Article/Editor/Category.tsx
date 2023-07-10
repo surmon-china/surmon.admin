@@ -33,6 +33,8 @@ const CategorySelect: React.FC<CategorySelectProps> = (props) => {
         <Spin spinning={categoriesLoading.state.value}>
           <Tree
             className={styles.categorySelect}
+            virtual={false}
+            showIcon={false}
             showLine={true}
             checkable={true}
             blockNode={true}
@@ -45,7 +47,7 @@ const CategorySelect: React.FC<CategorySelectProps> = (props) => {
             }}
             treeData={getAntdTreeByTree({
               tree: categories.value,
-              valuer: (c) => c._id,
+              valuer: (c) => c._id
             })}
             titleRender={(nodeData) => {
               const category: CategoryTree = (nodeData as any).data
@@ -93,8 +95,8 @@ export const CategoryForm: React.FC<CategoryFormProps> = (props) => {
               } else {
                 return Promise.reject()
               }
-            },
-          },
+            }
+          }
         ]}
       >
         <CategorySelect />
