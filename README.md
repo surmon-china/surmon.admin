@@ -53,6 +53,6 @@ pnpm run serve
 
 **Rule:**
 
-- `any PR open` → `CI:Build test`
-- `new tag v*` → `CI:Create Release`
-- `release create` → `CI:Deploy` → `release branch & demo branch`
+- Any PR opend → `CI:Build test`
+- New tag `v*` → `CI:Create Release`
+- Release created → `CI:Deploy` → `release to product branch (release / demo)`
