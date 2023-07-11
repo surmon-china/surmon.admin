@@ -8,7 +8,7 @@ export const demoConfiger = (defaultConfig: UserConfig): UserConfig => {
     // base path
     base: DEMO_BASE_PATH,
     plugins: [
-      ...defaultConfig.plugins,
+      ...Array.from(defaultConfig.plugins!),
       {
         name: 'demo-html-transform',
         transformIndexHtml(html) {
@@ -17,8 +17,8 @@ export const demoConfiger = (defaultConfig: UserConfig): UserConfig => {
             // append mock entry
             `<script src="${DEMO_BASE_PATH}__demo__/index.js"></script></head>`
           )
-        },
-      },
-    ],
+        }
+      }
+    ]
   }
 }

@@ -7,9 +7,9 @@
         "pid": null,
         "_id": "589e0ad54a4ad562430953d2",
         "id": 2,
-        "name": "宁静寺",
+        "name": "技术探索",
         "slug": "code",
-        "description": "说法者，无法可说，是名说法",
+        "description": "和技术相关的思考与实践",
         "extends": [
           { "_id": "589e0ad54a4ad562430953d3", "name": "icon", "value": "icon-code" },
           {
@@ -27,9 +27,9 @@
         "pid": null,
         "_id": "589e07c04a4ad562430953d0",
         "id": 1,
-        "name": "无色庵",
+        "name": "生活随笔",
         "slug": "insight",
-        "description": "远离颠倒梦想",
+        "description": "记录生活点滴和思考",
         "extends": [
           { "value": "icon-thinking", "name": "icon" },
           {

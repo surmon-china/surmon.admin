@@ -5,10 +5,10 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Menu, Spin, Typography, MenuProps } from 'antd'
 import * as Icon from '@ant-design/icons'
 
-import { GITHUB_REPO_URL } from '@/config'
-import { getResourceUrl } from '@/transforms/url'
 import { RouteKey, rc } from '@/routes'
 import { useAdminState } from '@/state/admin'
+import { getResourceUrl } from '@/transforms/url'
+import { GITHUB_REPO_URL } from '@/config'
 
 import styles from './style.module.less'
 export interface AppSiderProps {

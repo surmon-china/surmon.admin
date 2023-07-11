@@ -132,7 +132,7 @@
         "id": 1,
         "name": "生活",
         "slug": "life",
-        "description": "与生命",
+        "description": "生活中的小思考",
         "extends": [
           { "_id": "58c8a3dccc2ca807b19d23ce", "value": "icon-coffee", "name": "icon" }
         ],

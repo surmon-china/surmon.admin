@@ -8,7 +8,7 @@ import { BLOG_URL, BASE_PATH } from '@/config'
 
 export const getResourceUrl = (uri: string) => {
   const path = BASE_PATH.endsWith('/') ? BASE_PATH : `${BASE_PATH}/`
-  return uri.startsWith('/') ? path + uri.substr(1, uri.length) : path + uri
+  return uri.startsWith('/') ? path + uri.substring(1, uri.length) : path + uri
 }
 
 export const BLOG_ARTICLE_URL_PREFIX = `${BLOG_URL}/article/`

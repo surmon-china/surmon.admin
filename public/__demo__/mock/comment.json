@@ -11,7 +11,7 @@
         "dislikes": 0,
         "_id": "612df49f1a53290533a7b784",
         "post_id": 1,
-        "content": "很好的文章",
+        "content": "很认同的观点！",
         "agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.23 Safari/537.36",
         "author": {
           "name": "abc",
@@ -41,7 +41,7 @@
         "dislikes": 0,
         "_id": "612df2acd99dab052880dc0a",
         "post_id": 0,
-        "content": "我爱你~",
+        "content": "恰如陋室铭所言：谈笑有鸿儒，往来无白丁。",
         "agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.23 Safari/537.36",
         "author": {
           "name": "bcd",
@@ -70,11 +70,11 @@
         "dislikes": 0,
         "_id": "6126f3e336d18e84be8d754d",
         "post_id": 2,
-        "content": "hello, world!",
+        "content": "Hello, world!",
         "agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.131 Safari/537.36",
         "author": {
           "name": "Surmon",
-          "email": "surmon.me@gmail.com",
+          "email": "surmon.fake@gmail.com",
           "site": "https://surmon.me"
         },
         "ip": "113.100.143.202",
@@ -88,7 +88,16 @@
         },
         "created_at": "2021-08-26T01:52:35.612Z",
         "updated_at": "2021-08-26T01:52:35.612Z",
-        "extends": [],
+        "extends": [
+          {
+            "name": "disqus-author-username",
+            "value": "Surmon"
+          },
+          {
+            "name": "disqus-author-id",
+            "value": "1000000"
+          }
+        ],
         "id": 4,
         "__v": 0
       },

@@ -15,10 +15,10 @@ export const proxyConfiger = (defaultConfig: UserConfig): UserConfig => {
           changeOrigin: true,
           headers: {
             origin: 'https://surmon.me',
-            referer: 'https://surmon.me',
-          },
-        },
-      },
-    },
+            referer: 'https://surmon.me'
+          }
+        }
+      }
+    }
   }
 }
