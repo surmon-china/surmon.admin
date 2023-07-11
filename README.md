@@ -28,7 +28,7 @@
 
 ## Screenshot
 
-![](https://raw.githubusercontent.com/surmon-china/veact-admin/main/presses/dashboard.png)
+![](/screenhots/dashboard.png)
 
 ## Development setup
 
