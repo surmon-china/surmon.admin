@@ -49,9 +49,9 @@
             "pid": null,
             "_id": "589e07c04a4ad562430953d0",
             "id": 1,
-            "name": "无色庵",
+            "name": "生活随笔",
             "slug": "insight",
-            "description": "远离颠倒梦想",
+            "description": "记录生活点滴和思考",
             "extends": [
               { "value": "icon-thinking", "name": "icon" },
               {
@@ -86,7 +86,7 @@
             "id": 38,
             "name": "生活",
             "slug": "life",
-            "description": "与生命",
+            "description": "生活中的小思考",
             "extends": [
               {
                 "_id": "58c8a3dccc2ca807b19d23ce",
@@ -121,9 +121,9 @@
             "pid": null,
             "_id": "589e07c04a4ad562430953d0",
             "id": 1,
-            "name": "无色庵",
+            "name": "生活随笔",
             "slug": "insight",
-            "description": "远离颠倒梦想",
+            "description": "记录生活点滴和思考",
             "extends": [
               { "value": "icon-thinking", "name": "icon" },
               {
@@ -193,9 +193,9 @@
             "pid": null,
             "_id": "589e07c04a4ad562430953d0",
             "id": 1,
-            "name": "无色庵",
+            "name": "生活随笔",
             "slug": "insight",
-            "description": "远离颠倒梦想",
+            "description": "记录生活点滴和思考",
             "extends": [
               { "value": "icon-thinking", "name": "icon" },
               {
