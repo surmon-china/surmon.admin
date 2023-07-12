@@ -23,7 +23,6 @@
               }
             ],
             "created_at": "2017-09-07T17:52:20.941Z",
-            "__v": 0,
             "updated_at": "2018-08-31T20:08:34.689Z"
           },
           {
@@ -40,7 +39,6 @@
               }
             ],
             "created_at": "2017-06-23T14:52:02.428Z",
-            "__v": 0,
             "updated_at": "2021-09-02T14:04:25.873Z"
           }
         ],
@@ -59,7 +57,6 @@
                 "value": "https://static.surmon.me/18-10-30/42118397.jpg"
               }
             ],
-            "__v": 0,
             "created_at": "2017-02-10T18:34:40.680Z",
             "updated_at": "2020-12-02T18:12:07.019Z"
           }
@@ -67,13 +64,12 @@
         "_id": "612c81321a53290533a7b782",
         "title": "JavaScript 权威指南小结",
         "description": "学习总结",
-        "thumb": "/veact-admin/images/thumbnail.jpg",
+        "thumbnail": "/veact-admin/images/thumbnail.jpg",
         "extends": [],
         "meta": { "likes": 14, "views": 297, "comments": 2 },
         "created_at": "2021-08-30T06:56:50.474Z",
         "updated_at": "2021-08-31T06:27:24.341Z",
-        "id": 3,
-        "__v": 0
+        "id": 3
       },
       {
         "keywords": ["每日一记", "日记怎么写"],
@@ -95,7 +91,6 @@
               }
             ],
             "created_at": "2017-03-15T02:15:56.590Z",
-            "__v": 0,
             "updated_at": "2020-09-10T17:39:53.732Z"
           },
           {
@@ -112,7 +107,6 @@
               }
             ],
             "created_at": "2017-06-23T14:52:02.428Z",
-            "__v": 0,
             "updated_at": "2021-09-02T14:04:25.873Z"
           }
         ],
@@ -131,7 +125,6 @@
                 "value": "https://static.surmon.me/18-10-30/42118397.jpg"
               }
             ],
-            "__v": 0,
             "created_at": "2017-02-10T18:34:40.680Z",
             "updated_at": "2020-12-02T18:12:07.019Z"
           }
@@ -139,13 +132,12 @@
         "_id": "610c29438a907384c63fef00",
         "title": "今日日记",
         "description": "今天发生的一些事情",
-        "thumb": "/veact-admin/images/thumbnail.jpg",
+        "thumbnail": "/veact-admin/images/thumbnail.jpg",
         "extends": [],
         "meta": { "likes": 9, "views": 915, "comments": 11 },
         "created_at": "2021-08-05T18:09:07.585Z",
         "updated_at": "2021-08-05T19:37:29.659Z",
-        "id": 2,
-        "__v": 0
+        "id": 2
       },
       {
         "keywords": ["新疆旅行", "独库公路骑行", "veact 状态库"],
@@ -167,7 +159,6 @@
               }
             ],
             "created_at": "2017-06-23T14:52:02.428Z",
-            "__v": 0,
             "updated_at": "2021-09-02T14:04:25.873Z"
           },
           {
@@ -184,7 +175,6 @@
               }
             ],
             "created_at": "2017-09-07T17:52:20.941Z",
-            "__v": 0,
             "updated_at": "2018-08-31T20:08:34.689Z"
           }
         ],
@@ -203,7 +193,6 @@
                 "value": "https://static.surmon.me/18-10-30/42118397.jpg"
               }
             ],
-            "__v": 0,
             "created_at": "2017-02-10T18:34:40.680Z",
             "updated_at": "2020-12-02T18:12:07.019Z"
           }
@@ -211,13 +200,12 @@
         "_id": "61030f5fcf1faa098ee126b2",
         "title": "旅途感想",
         "description": "没有整理好的旅途感想",
-        "thumb": "/veact-admin/images/thumbnail.jpg",
+        "thumbnail": "/veact-admin/images/thumbnail.jpg",
         "extends": [],
         "meta": { "likes": 15, "views": 771, "comments": 9 },
         "created_at": "2021-07-29T20:28:15.700Z",
         "updated_at": "2021-08-05T18:11:44.233Z",
-        "id": 1,
-        "__v": 0
+        "id": 1
       }
     ],
     "pagination": { "total": 3, "current_page": 1, "total_page": 1, "per_page": 16 }

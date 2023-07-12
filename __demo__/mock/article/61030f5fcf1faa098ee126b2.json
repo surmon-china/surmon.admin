@@ -15,11 +15,10 @@
     "title": "旅途感想",
     "description": "没有整理好的旅途感想",
     "content": "\n旅途的开始，心情是轻松的。\n\n此处省略一万字...\n",
-    "thumb": "/veact-admin/images/thumbnail.jpg",
+    "thumbnail": "/veact-admin/images/thumbnail.jpg",
     "extends": [],
     "meta": { "likes": 51, "views": 11672, "comments": 39 },
     "updated_at": "2019-07-24T15:53:33.133Z",
-    "created_at": "2017-05-10T16:17:04.716Z",
-    "__v": 0
+    "created_at": "2017-05-10T16:17:04.716Z"
   }
 }
