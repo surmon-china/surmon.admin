@@ -22,10 +22,10 @@ import { StateForm } from './State'
 import styles from './style.module.less'
 
 export type BaseFormModel = Partial<
-  Pick<Article, 'slug' | 'tag' | 'title' | 'content' | 'keywords' | 'description'>
+  Pick<Article, 'slug' | 'tags' | 'title' | 'content' | 'keywords' | 'description'>
 >
-export type CategoryFormModel = Pick<Article, 'category'>
-export type ThumbFormModel = Pick<Article, 'thumb'>
+export type CategoryFormModel = Pick<Article, 'categories'>
+export type ThumbnailFormModel = Pick<Article, 'thumbnail'>
 export type ExtendFormModel = Pick<Article, 'extends'>
 export type StateFormModel = Pick<Article, 'state' | 'origin' | 'public'>
 
@@ -35,14 +35,14 @@ const DEFAULT_ARTICLE: Article = Object.freeze({
   description: '',
   keywords: [],
   content: '',
-  thumb: '',
+  thumbnail: '',
   origin: ArticleOrigin.Original,
   state: PublishState.Published,
   public: ArticlePublic.Public,
   lang: ArticleLanguage.Chinese,
-  disabled_comment: false,
-  tag: [],
-  category: [],
+  disabled_comments: false,
+  tags: [],
+  categories: [],
   extends: []
 })
 
@@ -58,14 +58,14 @@ export interface ArticleEditorProps {
 export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
   const [mainForm] = Form.useForm<BaseFormModel>()
   const [categoryFormModel] = Form.useForm<CategoryFormModel>()
-  const [thumbFormModel] = Form.useForm<ThumbFormModel>()
+  const [thumbnailFormModel] = Form.useForm<ThumbnailFormModel>()
   const [extendFormModel] = Form.useForm<ExtendFormModel>()
   const [stateFormModel] = Form.useForm<StateFormModel>()
 
   const setFormsValue = (formValue: Article) => {
     mainForm.setFieldsValue(formValue)
     categoryFormModel.setFieldsValue(formValue)
-    thumbFormModel.setFieldsValue(formValue)
+    thumbnailFormModel.setFieldsValue(formValue)
     extendFormModel.setFieldsValue(formValue)
     stateFormModel.setFieldsValue(formValue)
   }
@@ -76,7 +76,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
         ...props.article?.value,
         ...(await mainForm.validateFields()),
         ...(await categoryFormModel.validateFields()),
-        ...(await thumbFormModel.validateFields()),
+        ...(await thumbnailFormModel.validateFields()),
         ...(await extendFormModel.validateFields()),
         ...(await stateFormModel.validateFields())
       }
@@ -129,8 +129,8 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
             <Col span={24}>
               <Card title="缩略图" bordered={false}>
                 <Spin spinning={props.loading}>
-                  <Form scrollToFirstError={true} form={thumbFormModel}>
-                    <Form.Item noStyle={true} name="thumb">
+                  <Form scrollToFirstError={true} form={thumbnailFormModel}>
+                    <Form.Item noStyle={true} name="thumbnail">
                       <ImageUploader directory="thumbnail" />
                     </Form.Item>
                   </Form>

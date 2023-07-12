@@ -85,7 +85,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = (props) => {
       <Form.Item
         noStyle={true}
         required={true}
-        name="category"
+        name="categories"
         rules={[
           {
             message: '至少应该选择一个分类',

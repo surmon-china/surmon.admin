@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+### 2.1.0 (2023-07-12)
+
+- Improve UX experience
+- Rename field `article.thumb` to `article.thumbnail`
+- Rename field `article.tag` to `article.tags`
+- Rename field `article.category` to `article.categories`
+- Rename field `article.disabled_comment` to `article.disabled_comments`
+
 ### 2.0.0 (2023-07-10)
 
 **Feature**

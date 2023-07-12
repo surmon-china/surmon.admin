@@ -6,7 +6,8 @@
 import React from 'react'
 import * as Icon from '@ant-design/icons'
 
-/** 文章语言 */
+// 文章语言: https://github.com/surmon-china/nodepress/blob/main/src/constants/biz.constant.ts#L8
+// language: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 export enum ArticleLanguage {
   English = 'en', // English
   Chinese = 'zh' // 简体中文

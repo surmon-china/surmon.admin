@@ -18,7 +18,7 @@ export interface ArticleListTableProps {
   selectedIds: Array<string>
   onSelecte(ids: Array<any>): any
   onPagination(page: number, pageSize?: number): any
-  onUpdateState(comment: Article, state: PublishState): any
+  onUpdateState(article: Article, state: PublishState): any
 }
 export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
   return (
@@ -49,7 +49,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           title: '文章',
           width: 360,
           dataIndex: 'content',
-          render: (_, comment) => (
+          render: (_, article) => (
             <Card
               size="small"
               bordered={false}
@@ -62,14 +62,14 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
                 minHeight: '100px',
-                backgroundImage: `url("${comment.thumb}")`,
+                backgroundImage: `url("${article.thumbnail}")`,
                 backgroundBlendMode: 'soft-light'
               }}
             >
               <Card.Meta
                 title={
                   <Typography.Title style={{ marginTop: '5px' }} level={5}>
-                    {comment.title}
+                    {article.title}
                   </Typography.Title>
                 }
                 description={
@@ -78,7 +78,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                     style={{ marginBottom: '5px' }}
                     ellipsis={{ rows: 2, expandable: true }}
                   >
-                    {comment.description}
+                    {article.description}
                   </Typography.Paragraph>
                 }
               />
@@ -92,14 +92,14 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           render(_, article) {
             return (
               <Space direction="vertical">
-                {article.category.map((category) => (
+                {article.categories.map((category) => (
                   <Space size="small" key={category._id}>
                     <Icon.FolderOpenOutlined />
                     {category.name}
                   </Space>
                 ))}
                 <Space size="small" wrap>
-                  {article.tag.map((tag) => (
+                  {article.tags.map((tag) => (
                     <Tag icon={<Icon.TagOutlined />} key={tag._id}>
                       {tag.name}
                     </Tag>

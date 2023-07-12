@@ -90,7 +90,7 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
           })}
         />
       </Form.Item>
-      <Form.Item required={true} name="disabled_comment" label="文章评论" rules={[requiredRule]}>
+      <Form.Item required={true} name="disabled_comments" label="文章评论" rules={[requiredRule]}>
         <Radio.Group style={{ width: '100%' }}>
           <Radio.Button value={false} style={{ width: '50%' }}>
             <Space size="small">

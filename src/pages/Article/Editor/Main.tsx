@@ -156,7 +156,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
         >
           <Select placeholder="输入关键词后回车" mode="tags" />
         </Form.Item>
-        <Form.Item label="标签" name="tag">
+        <Form.Item label="标签" name="tags">
           <TagSelect />
         </Form.Item>
         <br />

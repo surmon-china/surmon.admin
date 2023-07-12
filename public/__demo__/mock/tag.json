@@ -11,7 +11,6 @@
         "extends": [{ "_id": "5b6c8c63675aa44f25b6ca1a", "name": "icon", "value": "icon-math" }],
         "created_at": "2018-08-09T18:48:03.736Z",
         "id": 10,
-        "__v": 0,
         "updated_at": "2018-08-10T20:11:12.609Z",
         "articles_count": 2
       },
@@ -29,7 +28,6 @@
           }
         ],
         "created_at": "2017-10-14T18:42:35.936Z",
-        "__v": 0,
         "updated_at": "2019-10-21T04:06:02.334Z",
         "articles_count": 4
       },
@@ -43,7 +41,6 @@
           { "_id": "59b18754c8bfdb5b0c06980c", "name": "icon", "value": "icon-coffee" }
         ],
         "created_at": "2017-09-07T17:52:20.941Z",
-        "__v": 0,
         "updated_at": "2018-08-31T20:08:34.689Z",
         "articles_count": 45
       },
@@ -57,7 +54,6 @@
           { "_id": "598a7e4bfea25765985ec09d", "name": "icon", "value": "icon-network" }
         ],
         "created_at": "2017-08-09T03:15:23.343Z",
-        "__v": 0,
         "updated_at": "2019-07-20T22:45:55.708Z",
         "articles_count": 5
       },
@@ -69,7 +65,6 @@
         "description": "No fear in my heart",
         "extends": [{ "name": "icon", "value": "icon-emoji", "_id": "594d2b1251c61940c28c8550" }],
         "created_at": "2017-06-23T14:52:02.428Z",
-        "__v": 0,
         "updated_at": "2021-09-02T13:45:20.372Z",
         "articles_count": 31
       },
@@ -87,7 +82,6 @@
           }
         ],
         "created_at": "2017-05-10T16:12:48.247Z",
-        "__v": 0,
         "updated_at": "2019-10-21T04:04:51.421Z",
         "articles_count": 3
       },
@@ -99,7 +93,6 @@
         "description": "学习使我快乐",
         "extends": [{ "_id": "58f9ca4eaffb3b0a42e21d97", "name": "icon", "value": "icon-study" }],
         "created_at": "2017-04-21T09:01:02.463Z",
-        "__v": 0,
         "updated_at": "2019-07-20T22:43:52.139Z",
         "articles_count": 14
       },
@@ -111,7 +104,6 @@
         "description": "World Wide Web",
         "extends": [{ "name": "icon", "value": "icon-html5" }],
         "created_at": "2017-03-24T02:03:43.058Z",
-        "__v": 0,
         "updated_at": "2021-02-15T19:26:40.972Z",
         "articles_count": 30
       },
@@ -123,7 +115,6 @@
         "description": "Machine Learning",
         "extends": [{ "name": "icon", "value": "icon-ai", "_id": "58cf526b6c729a5f1405fa0d" }],
         "created_at": "2017-03-20T03:54:19.654Z",
-        "__v": 0,
         "updated_at": "2017-03-20T11:02:12.498Z",
         "articles_count": 5
       },
@@ -137,7 +128,6 @@
           { "_id": "58c8a3dccc2ca807b19d23ce", "value": "icon-coffee", "name": "icon" }
         ],
         "created_at": "2017-03-15T02:15:56.590Z",
-        "__v": 0,
         "updated_at": "2020-09-10T17:39:53.732Z",
         "articles_count": 47
       }

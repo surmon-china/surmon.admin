@@ -22,14 +22,14 @@ export interface Article {
   content?: string
   description: string
   keywords: string[]
-  thumb?: string
-  tag: Array<Tag>
-  category: Array<Category>
+  thumbnail?: string
+  tags: Array<Tag>
+  categories: Array<Category>
   origin: ArticleOrigin
   public: ArticlePublic
   state: PublishState
   lang: ArticleLanguage
-  disabled_comment: boolean
+  disabled_comments: boolean
   meta?: {
     likes: number
     views: number

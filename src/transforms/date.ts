@@ -5,10 +5,10 @@
 
 import dayjs from 'dayjs'
 
-/** Moment → 秒时间戳 */
+/** Dayjs → 秒时间戳 */
 export const dayjsToTimestamp = (dayjs: dayjs.Dayjs) => dayjs.unix()
 
-/** 秒时间戳 → Moment */
+/** 秒时间戳 → Dayjs */
 export const timestampToDayjs = (timestamp: number) => dayjs.unix(timestamp)
 
 /** 时间戳 → YMD */

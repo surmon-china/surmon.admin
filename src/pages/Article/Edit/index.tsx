@@ -132,10 +132,10 @@ export const ArticleEdit: React.FC = () => {
         extra={
           <Space wrap>
             <Button.Group>
-              <Button size="small" icon={<Icon.HeartOutlined />}>
+              <Button size="small" icon={<Icon.HeartOutlined />} disabled>
                 {article.value?.meta?.likes} 喜欢
               </Button>
-              <Button size="small" icon={<Icon.EyeOutlined />}>
+              <Button size="small" icon={<Icon.EyeOutlined />} disabled>
                 {article.value?.meta?.views} 阅读
               </Button>
               <Button

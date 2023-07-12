@@ -6,7 +6,7 @@
 import React from 'react'
 import { useShallowReactive, useRef, onMounted, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
-import { Button, Card, Divider, Modal, Space, Spin, Tree, Typography } from 'antd'
+import { Button, Card, Empty, Divider, Modal, Space, Spin, Tree, Typography } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { UniversalText } from '@/components/common/UniversalText'
 import { ResponsePaginationData } from '@/constants/request'
@@ -128,7 +128,13 @@ export const CategoryPage: React.FC = () => {
       </Space>
       <Divider />
       <Spin spinning={loading.state.value}>
-        {loaded.value && (
+        {loaded.value && !categories.pagination?.total ? (
+          <Empty
+            description="暂无分类"
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            style={{ marginBottom: '1rem' }}
+          />
+        ) : (
           <Tree
             className={styles.tree}
             checkable={false}

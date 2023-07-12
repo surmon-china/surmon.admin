@@ -13,16 +13,11 @@ import { saveFile } from '@/services/file'
 import { timestampToYMD } from '@/transforms/date'
 import { markdownToHTML } from '@/transforms/markdown'
 import { editor, KeyMod, KeyCode } from './monaco'
-import { UEditorLanguage, setUEditorCache } from './shared'
+import { UEditorLanguage, UEditorLanguages, UEditorLanguageMap, setUEditorCache } from './shared'
 
 import styles from './style.module.less'
 
 export * from './shared'
-
-const fileExtMap = new Map([
-  [UEditorLanguage.Markdown, 'md'],
-  [UEditorLanguage.JSON, 'json']
-])
 
 export interface UniversalEditorProps {
   value?: string
@@ -113,7 +108,7 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
 
   const handleSaveContent = () => {
     const time = timestampToYMD(Date.now())
-    const fileExt = fileExtMap.get(language)
+    const fileExt = UEditorLanguageMap.get(language)!.ext
     const fileName = `${editorID}-${time}.${fileExt}`
     saveFile(propValue, fileName)
   }
@@ -162,20 +157,14 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
             )}
             <Select
               size="small"
+              className={styles.language}
               value={language}
               onChange={setLanguage}
               disabled={props.disbaled || isPreviewing}
-              className={styles.language}
-              options={[
-                {
-                  label: 'Markdown',
-                  value: UEditorLanguage.Markdown
-                },
-                {
-                  label: 'JSON',
-                  value: UEditorLanguage.JSON
-                }
-              ]}
+              options={UEditorLanguages.map((lang) => ({
+                label: lang.name,
+                value: lang.id
+              }))}
             />
             <Button
               size="small"
