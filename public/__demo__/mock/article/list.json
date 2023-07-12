@@ -8,7 +8,7 @@
         "state": 1,
         "public": 1,
         "origin": 1,
-        "tag": [
+        "tags": [
           {
             "_id": "59b18754c8bfdb5b0c06980b",
             "id": 46,
@@ -42,7 +42,7 @@
             "updated_at": "2021-09-02T14:04:25.873Z"
           }
         ],
-        "category": [
+        "categories": [
           {
             "pid": null,
             "_id": "589e07c04a4ad562430953d0",
@@ -76,7 +76,7 @@
         "state": 0,
         "public": 1,
         "origin": 0,
-        "tag": [
+        "tags": [
           {
             "_id": "58c8a3dccc2ca807b19d23cd",
             "id": 38,
@@ -110,7 +110,7 @@
             "updated_at": "2021-09-02T14:04:25.873Z"
           }
         ],
-        "category": [
+        "categories": [
           {
             "pid": null,
             "_id": "589e07c04a4ad562430953d0",
@@ -144,7 +144,7 @@
         "state": 1,
         "public": -1,
         "origin": 0,
-        "tag": [
+        "tags": [
           {
             "_id": "594d2b1251c61940c28c854f",
             "id": 44,
@@ -178,7 +178,7 @@
             "updated_at": "2018-08-31T20:08:34.689Z"
           }
         ],
-        "category": [
+        "categories": [
           {
             "pid": null,
             "_id": "589e07c04a4ad562430953d0",
