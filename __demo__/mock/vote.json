@@ -22,8 +22,7 @@
         "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.67",
         "created_at": "2023-07-08T10:49:36.265Z",
         "updated_at": "2023-07-08T10:49:36.265Z",
-        "id": 707,
-        "__v": 0
+        "id": 707
       },
       {
         "_id": "64a8ba66145e45b682e75657",
@@ -44,8 +43,7 @@
         "user_agent": "Mozilla/5.0 (Linux; Android 12; HarmonyOS; LIO-AL00; HMSCore 6.11.0.302) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.88 HuaweiBrowser/14.0.0.322 Mobile Safari/537.36",
         "created_at": "2023-07-08T01:22:46.795Z",
         "updated_at": "2023-07-08T01:22:46.795Z",
-        "id": 706,
-        "__v": 0
+        "id": 706
       },
       {
         "_id": "64a84aa2145e45b682e749bc",
@@ -66,8 +64,7 @@
         "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
         "created_at": "2023-07-07T17:25:54.449Z",
         "updated_at": "2023-07-07T17:25:54.449Z",
-        "id": 705,
-        "__v": 0
+        "id": 705
       },
       {
         "_id": "64a6c37d145e45b682e70aac",
@@ -88,8 +85,7 @@
         "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
         "created_at": "2023-07-06T13:37:01.390Z",
         "updated_at": "2023-07-06T13:37:01.390Z",
-        "id": 704,
-        "__v": 0
+        "id": 704
       },
       {
         "_id": "64a6518e145e45b682e6f990",
@@ -110,8 +106,7 @@
         "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
         "created_at": "2023-07-06T05:30:54.116Z",
         "updated_at": "2023-07-06T05:30:54.116Z",
-        "id": 703,
-        "__v": 0
+        "id": 703
       },
       {
         "_id": "64a3d92c145e45b682e68def",
@@ -132,8 +127,7 @@
         "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
         "created_at": "2023-07-04T08:32:44.833Z",
         "updated_at": "2023-07-04T08:32:44.833Z",
-        "id": 697,
-        "__v": 0
+        "id": 697
       },
       {
         "_id": "64a3d825145e45b682e68d98",
@@ -154,8 +148,7 @@
         "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
         "created_at": "2023-07-04T08:28:21.684Z",
         "updated_at": "2023-07-04T08:28:21.684Z",
-        "id": 696,
-        "__v": 0
+        "id": 696
       },
       {
         "_id": "649e777c145e45b682e5952d",
@@ -180,8 +173,7 @@
         "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.55",
         "created_at": "2023-06-30T06:34:36.926Z",
         "updated_at": "2023-06-30T06:34:36.926Z",
-        "id": 695,
-        "__v": 0
+        "id": 695
       },
       {
         "_id": "649d525d145e45b682e55a2b",
@@ -202,8 +194,7 @@
         "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
         "created_at": "2023-06-29T09:43:57.454Z",
         "updated_at": "2023-06-29T09:43:57.454Z",
-        "id": 694,
-        "__v": 0
+        "id": 694
       },
       {
         "_id": "649d524f145e45b682e55a24",
@@ -224,8 +215,7 @@
         "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
         "created_at": "2023-06-29T09:43:43.513Z",
         "updated_at": "2023-06-29T09:43:43.513Z",
-        "id": 693,
-        "__v": 0
+        "id": 693
       },
       {
         "_id": "649d202c145e45b682e54d38",
@@ -246,8 +236,7 @@
         "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
         "created_at": "2023-06-29T06:09:48.917Z",
         "updated_at": "2023-06-29T06:09:48.917Z",
-        "id": 692,
-        "__v": 0
+        "id": 692
       }
     ],
     "pagination": {
