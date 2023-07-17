@@ -15,5 +15,5 @@ export interface Tag {
   updated_at: string
   created_at: string
   extends: Array<GeneralKeyValue>
-  articles_count?: number
+  article_count?: number
 }

@@ -160,7 +160,7 @@ export const CategoryPage: React.FC = () => {
                       <Typography.Text type="secondary">{category.slug}</Typography.Text>
                       <Divider type="vertical" />
                       <Typography.Text type="secondary">
-                        {category.articles_count} 篇
+                        {category.article_count} 篇
                       </Typography.Text>
                     </Space>
                     <div>

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### 2.1.2 (2023-07-17)
+
+- Rename field `tag.articles_count` to `tag.article_count`
+- Rename field `category.articles_count` to `category.article_count`
+
 ### 2.1.0 (2023-07-12)
 
 - Improve UX experience

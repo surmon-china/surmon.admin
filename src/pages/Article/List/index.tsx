@@ -271,7 +271,7 @@ export const ArticleList: React.FC = () => {
                 { label: '全部标签', value: SELECT_ALL_VALUE },
                 ...tags.value.map((tag) => ({
                   value: tag.slug,
-                  label: `${tag.name} (${tag.articles_count})`
+                  label: `${tag.name} (${tag.article_count})`
                 }))
               ]}
             />
