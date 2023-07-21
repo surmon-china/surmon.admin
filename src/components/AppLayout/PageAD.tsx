@@ -2,23 +2,20 @@ import React from 'react'
 import { onMounted, useRef } from 'veact'
 import { Button } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { ENABLED_AD } from '@/config'
 
 import styles from './style.module.less'
 
 export const PageHeaderAD: React.FC = () => {
-  const isEnabledAD = useRef(Boolean(ENABLED_AD))
+  const isVisibleAD = useRef(true)
   const closeAD = () => {
-    isEnabledAD.value = false
+    isVisibleAD.value = false
   }
 
   onMounted(() => {
-    if (isEnabledAD.value) {
-      ;((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({})
-    }
+    ;((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({})
   })
 
-  if (isEnabledAD.value) {
+  if (isVisibleAD.value) {
     return (
       <div className={styles.appPageHeaderMammon}>
         <div className={styles.mammonBox}>

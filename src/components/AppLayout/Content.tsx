@@ -5,6 +5,7 @@ import * as Icon from '@ant-design/icons'
 import { scrollTo } from '@/services/scroller'
 import { routeMap } from '@/routes'
 import { PageHeaderAD } from './PageAD'
+import { ENABLED_AD } from '@/config'
 
 import styles from './style.module.less'
 
@@ -28,7 +29,7 @@ export const AppContent: React.FC<React.PropsWithChildren> = (props) => {
           ))}
         </Breadcrumb>
       </div>
-      <PageHeaderAD />
+      {ENABLED_AD && <PageHeaderAD />}
       <div className={styles.pageContent}>{props?.children}</div>
       <BackTop className={styles.backTop} onClick={() => scrollTo(document.body)}>
         <div className={styles.tigger}>
