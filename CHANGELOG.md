@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### 2.2.0 (2023-07-22)
+
+- Remove Google Analytics Card, becauese ['The new GA4 properties can only be used from the Analytics Data API'](https://stackoverflow.com/questions/64571852/does-the-google-analytics-embed-api-support-the-new-ga4-properties)
+
 ### 2.1.2 (2023-07-17)
 
 - Rename field `tag.articles_count` to `tag.article_count`

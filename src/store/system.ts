@@ -38,7 +38,7 @@ export function getArticleCalendar() {
     .then((response) => response.result)
 }
 
-/** 获取 GA Token */
+/** 获取 GA Token（仅适用于 V3） */
 export function getGAToken(): Promise<string> {
   return nodepress
     .get<any>(EXPANSION_API_PATH.GOOGLE_TOKEN)
