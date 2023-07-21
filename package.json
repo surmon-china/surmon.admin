@@ -1,6 +1,6 @@
 {
   "name": "veact-admin",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "author": "Surmon",
   "license": "MIT",
   "repository": {
@@ -37,7 +37,7 @@
     "rc-picker": "2.x",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.14.1",
+    "react-router-dom": "^6.14.2",
     "react-top-loading-bar": "^2.3.1",
     "react-transition-group": "^4.4.5",
     "ua-parser-js": "^1.0.35",
@@ -46,21 +46,21 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.195",
-    "@types/marked": "^5.0.0",
+    "@types/marked": "^5.0.1",
     "@types/node": "^20.4.1",
-    "@types/react": "^18.2.14",
+    "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/react-transition-group": "^4.4.6",
     "@types/ua-parser-js": "^0.7.36",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
     "@vitejs/plugin-react": "^4.0.3",
-    "eslint": "^8.44.0",
+    "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^5.0.0",
     "less": "^4.1.3",
     "prettier": "^3.0.0",
     "typescript": "^5.1.6",
-    "vite": "^4.4.3"
+    "vite": "^4.4.6"
   }
 }
