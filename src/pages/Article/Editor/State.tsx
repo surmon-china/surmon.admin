@@ -92,15 +92,11 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
       </Form.Item>
       <Form.Item required={true} name="disabled_comments" label="文章评论" rules={[requiredRule]}>
         <Radio.Group style={{ width: '100%' }}>
-          <Radio.Button value={false} style={{ width: '50%' }}>
-            <Space size="small">
-              <Icon.CheckCircleOutlined /> 允许
-            </Space>
+          <Radio.Button value={false} style={{ width: '50%', whiteSpace: 'nowrap' }}>
+            <Icon.CheckCircleOutlined /> 允许
           </Radio.Button>
-          <Radio.Button value={true} style={{ width: '50%' }}>
-            <Space size="small">
-              <Icon.StopOutlined /> 禁止
-            </Space>
+          <Radio.Button value={true} style={{ width: '50%', whiteSpace: 'nowrap' }}>
+            <Icon.StopOutlined /> 禁止
           </Radio.Button>
         </Radio.Group>
       </Form.Item>

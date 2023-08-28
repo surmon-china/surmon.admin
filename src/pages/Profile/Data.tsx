@@ -56,7 +56,7 @@ export const DataForm: React.FC<DataFormProps> = (props) => {
           loading={loading.isLoading(LoadingKey.Archive)}
           onClick={handleUpdateArchive}
         >
-          更新 Archive
+          更新 Archive 及缓存
         </Button>
       </Col>
     </Row>

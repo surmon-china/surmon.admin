@@ -131,6 +131,7 @@ export const FeedbackPage: React.FC = () => {
   }
 
   const handleSubmit = (feedback: Feedback) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { emotion_emoji, emotion_text, ...target } = {
       ...activeEditData.value,
       ...feedback

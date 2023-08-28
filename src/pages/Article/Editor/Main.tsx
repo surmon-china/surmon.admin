@@ -58,9 +58,15 @@ const TagSelect: React.FC<TagSelectProps> = (props) => {
               <Button
                 size="small"
                 key={tag._id!}
-                type={isChecked ? 'primary' : 'default'}
-                icon={isChecked ? <Icon.CheckCircleOutlined /> : <Icon.TagOutlined />}
                 onClick={() => handleClick(tag, !isChecked)}
+                type={isChecked ? 'primary' : 'default'}
+                icon={
+                  isChecked ? (
+                    <Icon.CheckCircleOutlined />
+                  ) : (
+                    <Icon.TagOutlined style={{ opacity: 0.6 }} />
+                  )
+                }
               >
                 {tag.name}
               </Button>

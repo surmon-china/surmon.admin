@@ -5,10 +5,12 @@
 
 import React from 'react'
 import { Ref, useWatch, onMounted } from 'veact'
-import { Card, Row, Col, Form, message, Spin } from 'antd'
+import { Card, Row, Col, Form, message, Spin, Button } from 'antd'
+import * as Icon from '@ant-design/icons'
 import { APP_LAYOUT_GUTTER_SIZE } from '@/config'
 import { ImageUploader } from '@/components/common/ImageUploader'
 import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
+import { openJSONEditor } from '@/components/common/ModalJsonEditor'
 import { Article } from '@/constants/article'
 import { PublishState } from '@/constants/publish'
 import { ArticleOrigin } from '@/constants/article/origin'
@@ -88,6 +90,12 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
     }
   }
 
+  const handleEditExtendsAsJSON = () => {
+    openJSONEditor('以 JSON 编辑自定义扩展', extendFormModel.getFieldsValue(), (newValue) => {
+      extendFormModel.setFieldsValue(newValue)
+    })
+  }
+
   useWatch(
     () => props.article?.value,
     (article) => {
@@ -138,7 +146,21 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
               </Card>
             </Col>
             <Col span={24}>
-              <Card title="自定义扩展" bordered={false}>
+              <Card
+                title="自定义扩展"
+                bordered={false}
+                extra={
+                  <Button
+                    type="link"
+                    size="small"
+                    icon={<Icon.EditOutlined />}
+                    disabled={props.loading}
+                    onClick={handleEditExtendsAsJSON}
+                  >
+                    以 JSON 编辑
+                  </Button>
+                }
+              >
                 <Spin spinning={props.loading}>
                   <Form scrollToFirstError={true} form={extendFormModel}>
                     <Form.Item noStyle={true} shouldUpdate={true}>
