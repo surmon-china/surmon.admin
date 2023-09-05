@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+### 2.4.0 (2023-09-06)
+
+- Add comment calendar in Dashboard
+- Add article new language type `mix`
+
 ### 2.2.0 (2023-07-22)
 
 - Remove Google Analytics Card, becauese ['The new GA4 properties can only be used from the Analytics Data API'](https://stackoverflow.com/questions/64571852/does-the-google-analytics-embed-api-support-the-new-ga4-properties)

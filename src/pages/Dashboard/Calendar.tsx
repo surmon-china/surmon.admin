@@ -110,7 +110,7 @@ export const Calendar: React.FC = () => {
             <div>
               <Typography.Text strong>{date}</Typography.Text>
               <Divider type="horizontal" style={{ margin: '6px 0' }} />
-              <div>文章: {articleCount}</div>
+              <div style={{ marginBottom: 4 }}>文章: {articleCount}</div>
               <div>评论：{commentCount}</div>
             </div>
           ) : (
