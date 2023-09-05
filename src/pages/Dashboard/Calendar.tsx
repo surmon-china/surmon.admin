@@ -4,7 +4,7 @@ import React, { useMemo, useRef as useReactRef, WheelEventHandler } from 'react'
 import { useRef, useComputed, onMounted, onBeforeUnmount } from 'veact'
 import { useLoading } from 'veact-use'
 import { Card, Tooltip, Divider, Typography } from 'antd'
-import { ArticleCalendarItem, getArticleCalendar } from '@/store/system'
+import { StatisticsCalendarItem, getArticleCalendar, getCommentCalendar } from '@/store/system'
 
 import styles from './style.module.less'
 
@@ -30,12 +30,15 @@ export const Calendar: React.FC = () => {
     }
   }
 
-  const loading = useLoading()
-  const articleCalendar = useRef<Array<ArticleCalendarItem>>([])
-  const fetchArticleCalendar = () => {
-    return loading.promise(getArticleCalendar()).then((result) => {
-      articleCalendar.value = result
-    })
+  const calendarloading = useLoading()
+  const articleCalendar = useRef<Array<StatisticsCalendarItem>>([])
+  const commentCalendar = useRef<Array<StatisticsCalendarItem>>([])
+  const fetchCalendarData = async () => {
+    const [acResult, ccResult] = await calendarloading.promise(
+      Promise.all([getArticleCalendar(), getCommentCalendar()])
+    )
+    articleCalendar.value = acResult
+    commentCalendar.value = ccResult
   }
 
   // current month | day
@@ -52,11 +55,12 @@ export const Calendar: React.FC = () => {
 
   const months = useComputed(() => {
     const firstArticelDate = articleCalendar.value[0]?.date
-    if (!firstArticelDate) {
+    const firstCommentDate = commentCalendar.value[0]?.date
+    if (!firstArticelDate && !firstCommentDate) {
       return []
     }
 
-    const firstDay = dayjs(firstArticelDate)
+    const firstDay = dayjs(firstArticelDate || firstCommentDate)
     const today = dayjs()
     // prev months
     const duration = dayjs.duration(firstDay.diff(today))
@@ -74,7 +78,7 @@ export const Calendar: React.FC = () => {
   })
 
   onMounted(() => {
-    fetchArticleCalendar().then(() => {
+    fetchCalendarData().then(() => {
       setTimeout(() => {
         if (calendarElement.current) {
           calendarElement.current.scrollLeft = calendarElement.current.scrollWidth
@@ -89,40 +93,63 @@ export const Calendar: React.FC = () => {
   })
 
   const renderDay = (date: string) => {
-    const count = articleCalendar.value.find((ac) => ac.date === date)?.count || 0
-    const title = !count ? (
-      date
-    ) : (
-      <span>
-        {date}
-        <Divider type="vertical" />
-        <strong>{count}</strong>
-      </span>
-    )
-
-    const brightnessStyle = !count
-      ? {}
-      : {
-          filter: `brightness(${count * 0.5})`
-        }
+    const articleCount = articleCalendar.value.find((i) => i.date === date)?.count || 0
+    const commentCount = commentCalendar.value.find((i) => i.date === date)?.count || 0
+    const total = articleCount + commentCount
+    const getPointHeightStyle = (value: number) => {
+      return isNaN(value) ? 0 : `${Math.floor(value * 100)}%`
+    }
 
     return (
       <Tooltip
-        title={title}
-        destroyTooltipOnHide={{ keepParent: false }}
         mouseEnterDelay={0}
         mouseLeaveDelay={0}
+        destroyTooltipOnHide={{ keepParent: false }}
+        title={
+          total ? (
+            <div>
+              <Typography.Text strong>{date}</Typography.Text>
+              <Divider type="horizontal" style={{ margin: '6px 0' }} />
+              <div>文章: {articleCount}</div>
+              <div>评论：{commentCount}</div>
+            </div>
+          ) : (
+            <Typography.Text type="secondary">{date} (无)</Typography.Text>
+          )
+        }
       >
         <div
-          className={classnames(styles.day, count ? styles.active : '')}
-          style={brightnessStyle}
-        ></div>
+          className={classnames(styles.day)}
+          data-date={date}
+          data-total-count={total}
+          data-article-count={articleCount}
+          data-comment-count={commentCount}
+        >
+          {!articleCount ? null : (
+            <div
+              className={classnames(styles.item, styles.article)}
+              style={{
+                height: getPointHeightStyle(articleCount / total),
+                filter: `brightness(${articleCount * 0.5})`
+              }}
+            />
+          )}
+          {!commentCount ? null : (
+            <div
+              className={classnames(styles.item, styles.comment)}
+              style={{
+                height: getPointHeightStyle(commentCount / total),
+                filter: `brightness(${commentCount * 0.3})`
+              }}
+            />
+          )}
+        </div>
       </Tooltip>
     )
   }
 
   return (
-    <Card bordered={false} className={styles.calendarCard} loading={loading.state.value}>
+    <Card bordered={false} className={styles.calendarCard} loading={calendarloading.state.value}>
       <div className={styles.calendar} ref={calendarElement}>
         {months.value.map((month, index) => (
           <div className={styles.month} key={index}>

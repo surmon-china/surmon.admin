@@ -53,8 +53,15 @@
             width: 10px;
             height: 10px;
             background-color: @app-module-background-lighter;
-            &.active {
-              background-color: @app-primary-color;
+
+            .item {
+              width: 100%;
+              &.article {
+                background-color: @app-primary-color;
+              }
+              &.comment {
+                background-color: #f8981d;
+              }
             }
           }
         }

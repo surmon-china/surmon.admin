@@ -26,15 +26,24 @@ export function getStatistics() {
     .then((response) => response.result)
 }
 
-export interface ArticleCalendarItem {
+export interface StatisticsCalendarItem {
   date: string
   count: number
 }
+
 /** 获取文章创作日历信息 */
 export function getArticleCalendar() {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
   return nodepress
-    .get<Array<ArticleCalendarItem>>('/article/calendar', { params: { timezone } })
+    .get<Array<StatisticsCalendarItem>>('/article/calendar', { params: { timezone } })
+    .then((response) => response.result)
+}
+
+/** 获取评论创建日历信息 */
+export function getCommentCalendar() {
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  return nodepress
+    .get<Array<StatisticsCalendarItem>>('/comment/calendar', { params: { timezone } })
     .then((response) => response.result)
 }
 
