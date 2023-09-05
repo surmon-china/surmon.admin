@@ -61,7 +61,10 @@ window.__axiosAdapter = (config) => {
       get: () => ensureJSON('tag')
     },
     '/comment': {
-      get: () => ensureJSON('comment')
+      get: () => ensureJSON('comment/list')
+    },
+    '/comment/calendar': {
+      get: () => ensureJSON('comment/calendar')
     },
     '/disqus/config': {
       get: () => ensureJSON('disqus/config')
