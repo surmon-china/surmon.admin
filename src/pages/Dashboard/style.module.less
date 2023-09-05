@@ -53,6 +53,11 @@
             width: 10px;
             height: 10px;
             background-color: @app-module-background-lighter;
+            &:not([data-total-count='0']) {
+              &:hover {
+                outline: 1px solid white;
+              }
+            }
 
             .item {
               width: 100%;
