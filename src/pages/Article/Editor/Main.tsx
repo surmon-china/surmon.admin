@@ -147,19 +147,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
         >
           <Input.TextArea rows={4} placeholder="文章描述" />
         </Form.Item>
-        <Form.Item
-          label="关键词"
-          name="keywords"
-          required={true}
-          rules={[
-            {
-              message: '至少应该有一个关键词',
-              validator(_, value: string[]) {
-                return Boolean(value?.length) ? Promise.resolve() : Promise.reject()
-              }
-            }
-          ]}
-        >
+        <Form.Item label="关键词" name="keywords">
           <Select placeholder="输入关键词后回车" mode="tags" />
         </Form.Item>
         <Form.Item label="标签" name="tags">
