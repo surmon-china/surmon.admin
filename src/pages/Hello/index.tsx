@@ -86,7 +86,7 @@ export const HelloPage: React.FC = () => {
               />
             ) : (
               <div className={styles.title} onClick={toEditMode} onTouchEnd={toEditMode}>
-                🤘
+                🔐
               </div>
             )}
           </CSSTransition>

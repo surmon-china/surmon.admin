@@ -3,6 +3,7 @@ import { Card, Result, Button, Space, Typography } from 'antd'
 import { LineChartOutlined } from '@ant-design/icons'
 import { APP_COLOR_PRIMARY } from '@/config'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CHART_COLORS = [
   APP_COLOR_PRIMARY,
   '#2fc32f',

@@ -9,18 +9,12 @@
   align-items: center;
 
   .title {
-    width: 6rem;
-    height: 6rem;
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: @app-font-size-h1;
-    background-color: @app-module-background;
+    font-size: @app-font-size-h1 * 2;
     user-select: none;
     cursor: pointer;
+    filter: grayscale(1);
     &:hover {
-      background-color: @app-module-background-lighter;
+      filter: grayscale(0);
     }
   }
 

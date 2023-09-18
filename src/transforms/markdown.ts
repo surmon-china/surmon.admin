@@ -50,9 +50,7 @@ marked.setOptions({
   renderer,
   gfm: true,
   breaks: false,
-  pedantic: false,
-  mangle: false,
-  headerIds: false
+  pedantic: false
 })
 
 export const markdownToHTML = marked
