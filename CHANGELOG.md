@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### 2.6.0 (2023-10-09)
+
+- Add `featured` field in article
+
 ### 2.4.0 (2023-09-06)
 
 - Add comment calendar in Dashboard
