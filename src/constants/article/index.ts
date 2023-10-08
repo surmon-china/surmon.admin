@@ -29,6 +29,7 @@ export interface Article {
   public: ArticlePublic
   state: PublishState
   lang: ArticleLanguage
+  featured: boolean
   disabled_comments: boolean
   meta?: {
     likes: number

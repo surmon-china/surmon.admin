@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Select, Divider, Space, Radio, FormInstance } from 'antd'
+import { Button, Form, Select, Divider, Space, Switch, FormInstance } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { publishStates } from '@/constants/publish'
 import { articleOrigins } from '@/constants/article/origin'
@@ -90,15 +90,23 @@ export const StateForm: React.FC<StateFormProps> = (props) => {
           })}
         />
       </Form.Item>
-      <Form.Item required={true} name="disabled_comments" label="文章评论" rules={[requiredRule]}>
-        <Radio.Group style={{ width: '100%' }}>
-          <Radio.Button value={false} style={{ width: '50%', whiteSpace: 'nowrap' }}>
-            <Icon.CheckCircleOutlined /> 允许
-          </Radio.Button>
-          <Radio.Button value={true} style={{ width: '50%', whiteSpace: 'nowrap' }}>
-            <Icon.StopOutlined /> 禁止
-          </Radio.Button>
-        </Radio.Group>
+      <Form.Item
+        required={true}
+        name="featured"
+        label="精选文章"
+        rules={[requiredRule]}
+        valuePropName="checked"
+      >
+        <Switch checkedChildren="是" unCheckedChildren="否" style={{ width: 50 }} />
+      </Form.Item>
+      <Form.Item
+        required={true}
+        name="disabled_comments"
+        label="禁止评论"
+        rules={[requiredRule]}
+        valuePropName="checked"
+      >
+        <Switch checkedChildren="是" unCheckedChildren="否" style={{ width: 50 }} />
       </Form.Item>
       <Divider />
       <Button

@@ -43,6 +43,7 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
   sort: SortTypeWithHot.Desc,
   tag_slug: SELECT_ALL_VALUE as SelectAllType | string,
   category_slug: SELECT_ALL_VALUE as SelectAllType | string,
+  featured: SELECT_ALL_VALUE as SelectAllType | boolean,
   lang: SELECT_ALL_VALUE as SelectAllType | ArticleLanguage,
   public: SELECT_ALL_VALUE as SelectAllType | ArticlePublic,
   origin: SELECT_ALL_VALUE as SelectAllType | ArticleOrigin,
@@ -163,6 +164,15 @@ export const ArticleList: React.FC = () => {
       <Space className={styles.toolbar} align="center" wrap>
         <Space direction="vertical">
           <Space wrap>
+            <Button
+              type={filterParams.featured === true ? 'primary' : 'default'}
+              icon={filterParams.featured === true ? <Icon.StarFilled /> : <Icon.StarOutlined />}
+              onClick={() => {
+                filterParams.featured = filterParams.featured === true ? SELECT_ALL_VALUE : true
+              }}
+            >
+              精选文章
+            </Button>
             <Select
               className={styles.select}
               loading={loading.state.value}

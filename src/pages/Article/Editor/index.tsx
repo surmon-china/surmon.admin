@@ -42,6 +42,7 @@ const DEFAULT_ARTICLE: Article = Object.freeze({
   state: PublishState.Published,
   public: ArticlePublic.Public,
   lang: ArticleLanguage.Chinese,
+  featured: false,
   disabled_comments: false,
   tags: [],
   categories: [],
