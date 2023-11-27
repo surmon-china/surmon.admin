@@ -14,13 +14,9 @@
 
 **适用于 [surmon.me](https://github.com/surmon-china/surmon.me) 博客的管理员后台应用，使用 [`React`](https://github.com/facebook/react) 和 [`Veact`](https://github.com/veactjs/veact) 进行开发。**
 
-> **👁 在线预览：[Online DEMO site](https://github.surmon.me/veact-admin)**
+**在线预览：[Online demo site](https://github.surmon.me/veact-admin)**
 
-> **📝 更新记录：[CHANGELOG.md](/CHANGELOG.md#changelog)**
-
----
-
-**🔥 其他 [相关项目](https://github.com/stars/surmon-china/lists/surmon-me)：**
+**其他 [相关项目](https://github.com/stars/surmon-china/lists/surmon-me)：**
 
 - **[`nodepress`](https://github.com/surmon-china/nodepress)** - RESTful API service for Blog | 博客服务端
 - **[`surmon.me`](https://github.com/surmon-china/surmon.me)** - SSR blog website | 博客前端
