@@ -36,19 +36,14 @@ export const DataForm: React.FC<DataFormProps> = (props) => {
   return (
     <Row>
       <Col span={props.wrapperSpan} offset={props.labelSpan}>
-        <Button.Group>
-          <Button
-            icon={<Icon.CloudUploadOutlined />}
-            type="primary"
-            loading={loading.isLoading(LoadingKey.Databse)}
-            onClick={handleUpdateDatabaseBackup}
-          >
-            立即更新数据库备份
-          </Button>
-          <Button icon={<Icon.CloudDownloadOutlined />} type="primary" disabled={true}>
-            从备份文件恢复数据库（暂不支持）
-          </Button>
-        </Button.Group>
+        <Button
+          icon={<Icon.CloudUploadOutlined />}
+          type="primary"
+          loading={loading.isLoading(LoadingKey.Databse)}
+          onClick={handleUpdateDatabaseBackup}
+        >
+          立即更新数据库备份
+        </Button>
         <Divider />
         <Button
           icon={<Icon.SyncOutlined />}
