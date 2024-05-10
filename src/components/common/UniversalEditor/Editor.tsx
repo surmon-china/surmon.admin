@@ -69,7 +69,8 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
       contextmenu: false, // 禁用右键菜单
       roundedSelection: false, // 选中区域直角
       scrollBeyondLastLine: false, // 底部不留空
-      wordBasedSuggestions: true, // 根据已有单词自动提示
+      occurrencesHighlight: 'multiFile',
+      wordBasedSuggestions: 'currentDocument', // 根据已有单词自动提示
       acceptSuggestionOnEnter: 'on', // 回车命中选中词
       scrollbar: {
         // `alwaysConsumeMouseWheel: false` 用于确保滚动事件始终可冒泡至外层

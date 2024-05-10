@@ -96,7 +96,7 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
           )
         },
         {
-          title: 'IP 位置',
+          title: 'IP / GEO',
           dataIndex: 'ip',
           render(_, vote) {
             return (
@@ -116,7 +116,7 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
           }
         },
         {
-          title: '软件终端',
+          title: '软件 / 终端',
           dataIndex: 'user_agent',
           render(_, vote) {
             return (
@@ -138,7 +138,7 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
           }
         },
         {
-          title: '硬件时间',
+          title: '硬件 / 时间',
           dataIndex: 'created_at',
           render(_, vote) {
             return (
