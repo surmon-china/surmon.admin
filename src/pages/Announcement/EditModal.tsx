@@ -8,7 +8,7 @@ import { Ref, useWatch } from 'veact'
 import { Form, Select, Modal, Space, Divider, Typography } from 'antd'
 import { UniversalEditor } from '@/components/common/UniversalEditor'
 import { Announcement } from '@/constants/announcement'
-import { PublishState, ps } from '@/constants/publish'
+import { PublishState, getPublishState } from '@/constants/publish'
 import { stringToYMD } from '@/transforms/date'
 import { STATE_IDS } from './index'
 
@@ -73,7 +73,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
           <Select
             placeholder="选择状态"
             options={STATE_IDS.map((state) => {
-              const target = ps(state)
+              const target = getPublishState(state)
               return {
                 value: target.id,
                 label: (

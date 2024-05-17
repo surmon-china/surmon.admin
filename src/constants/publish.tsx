@@ -13,31 +13,29 @@ export enum PublishState {
   Recycle = -1 // 回收站
 }
 
-const publishStateMap = new Map(
-  [
-    {
-      id: PublishState.Draft,
-      name: '草稿',
-      icon: <Icon.EditOutlined />,
-      color: 'orange'
-    },
-    {
-      id: PublishState.Published,
-      name: '已发布',
-      icon: <Icon.CheckOutlined />,
-      color: 'green'
-    },
-    {
-      id: PublishState.Recycle,
-      name: '回收站',
-      icon: <Icon.DeleteOutlined />,
-      color: 'red'
-    }
-  ].map((item) => [item.id, item])
-)
+export const publishStates = [
+  {
+    id: PublishState.Draft,
+    name: '草稿',
+    icon: <Icon.EditOutlined />,
+    color: 'orange'
+  },
+  {
+    id: PublishState.Published,
+    name: '已发布',
+    icon: <Icon.CheckOutlined />,
+    color: 'green'
+  },
+  {
+    id: PublishState.Recycle,
+    name: '回收站',
+    icon: <Icon.DeleteOutlined />,
+    color: 'red'
+  }
+]
 
-export const ps = (state: PublishState) => {
+const publishStateMap = new Map(publishStates.map((item) => [item.id, item]))
+
+export const getPublishState = (state: PublishState) => {
   return publishStateMap.get(state)!
 }
-
-export const publishStates = Array.from<ReturnType<typeof ps>>(publishStateMap.values())

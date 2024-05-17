@@ -27,22 +27,22 @@ export interface Feedback {
   updated_at?: string
 }
 
-const markedStateMap = new Map(
-  [
-    {
-      number: 0,
-      boolean: false,
-      name: '未标记',
-      icon: <Icon.StarOutlined />
-    },
-    {
-      number: 1,
-      boolean: true,
-      name: '已标记',
-      icon: <Icon.StarFilled style={{ color: '#fadb14' }} />
-    }
-  ].map((item) => [item.number, item])
-)
+export const markedStates = [
+  {
+    number: 0,
+    boolean: false,
+    name: '未标记',
+    icon: <Icon.StarOutlined />
+  },
+  {
+    number: 1,
+    boolean: true,
+    name: '已标记',
+    icon: <Icon.StarFilled style={{ color: '#fadb14' }} />
+  }
+]
+
+const markedStateMap = new Map(markedStates.map((item) => [item.number, item]))
 
 export const getMarkedByNumber = (number: number) => {
   return markedStateMap.get(number)!
@@ -51,7 +51,3 @@ export const getMarkedByNumber = (number: number) => {
 export const getMarkedByBoolean = (boolean: boolean) => {
   return markedStateMap.get(boolean ? 1 : 0)!
 }
-
-export const markedStates = Array.from<ReturnType<typeof getMarkedByNumber>>(
-  markedStateMap.values()
-)

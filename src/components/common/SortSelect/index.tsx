@@ -6,7 +6,7 @@
 import classnames from 'classnames'
 import React from 'react'
 import { Select, Space } from 'antd'
-import { st, SortTypeBase, SortTypeWithHot } from '@/constants/sort'
+import { getSortType, SortTypeBase, SortTypeWithHot } from '@/constants/sort'
 
 import styles from './style.module.less'
 
@@ -35,8 +35,8 @@ export const SortSelect: React.FC<SortSelectProps> = (props) => {
           value: sortType,
           label: (
             <Space>
-              {st(sortType).icon}
-              {st(sortType).name}
+              {getSortType(sortType).icon}
+              {getSortType(sortType).name}
             </Space>
           )
         }

@@ -3,12 +3,12 @@ import { Tag, Table, Button, Popover, Space } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { UniversalText } from '@/components/common/UniversalText'
 import { IPLocation } from '@/components/common/IPLocation'
-import { Pagination } from '@/constants/request'
+import { Pagination } from '@/constants/nodepress'
 import { COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
 import {
   Vote,
   VoteType,
-  getVoteTypeById,
+  getVoteType,
   getVoteTargetText,
   getVoteAuthorTypeText
 } from '@/constants/vote'
@@ -24,6 +24,7 @@ export interface VoteListTableProps {
   onSelecte(ids: Array<any>): any
   onPagination(page: number, pageSize?: number): any
 }
+
 export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
   return (
     <Table<Vote>
@@ -63,10 +64,10 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
           dataIndex: 'vote_type',
           render: (_, vote) => (
             <Tag
-              icon={getVoteTypeById(vote.vote_type).icon}
+              icon={getVoteType(vote.vote_type).icon}
               color={vote.vote_type === VoteType.Upvote ? 'green' : 'red'}
             >
-              <strong>{getVoteTypeById(vote.vote_type).name}</strong>
+              <strong>{getVoteType(vote.vote_type).name}</strong>
             </Tag>
           )
         },

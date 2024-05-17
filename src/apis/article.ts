@@ -5,10 +5,8 @@
 
 import { PublishState } from '@/constants/publish'
 import { SortTypeWithHot } from '@/constants/sort'
-import { ArticleId, Article } from '@/constants/article'
-import { ArticleOrigin } from '@/constants/article/origin'
-import { ArticlePublic } from '@/constants/article/public'
-import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/request'
+import { ArticleId, Article, ArticleOrigin, ArticlePublic } from '@/constants/article'
+import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/nodepress'
 import nodepress from '@/services/nodepress'
 
 export const ARTICLE_API_PATH = '/article'

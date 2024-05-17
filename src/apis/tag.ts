@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/request'
+import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/nodepress'
 import { Tag } from '@/constants/tag'
 import nodepress from '@/services/nodepress'
 

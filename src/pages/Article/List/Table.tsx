@@ -3,11 +3,9 @@ import { Link } from 'react-router-dom'
 import { Table, Button, Typography, Card, Tag, Space } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { RoutesPather } from '@/routes'
-import { Pagination } from '@/constants/request'
-import { Article } from '@/constants/article'
-import { ao } from '@/constants/article/origin'
-import { ap } from '@/constants/article/public'
-import { PublishState, ps } from '@/constants/publish'
+import { Pagination } from '@/constants/nodepress'
+import { Article, getArticleOrigin, getArticlePublic } from '@/constants/article'
+import { PublishState, getPublishState } from '@/constants/publish'
 import { getBlogArticleUrl } from '@/transforms/url'
 import { numberToKilo } from '@/transforms/number'
 import { stringToYMD } from '@/transforms/date'
@@ -150,7 +148,11 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           render: (_, article) => {
             return (
               <Space direction="vertical">
-                {[ps(article.state), ap(article.public), ao(article.origin)].map((state) => (
+                {[
+                  getPublishState(article.state),
+                  getArticlePublic(article.public),
+                  getArticleOrigin(article.origin)
+                ].map((state) => (
                   <Tag icon={state.icon} color={state.color} key={state.id + state.name}>
                     {state.name}
                   </Tag>

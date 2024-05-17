@@ -20,24 +20,26 @@ export enum SortTypeWithHot {
   Hot = 2
 }
 
-const sortTypeMap = new Map(
-  [
-    {
-      id: SortTypeWithHot.Desc,
-      name: '最新',
-      icon: <Icon.SortDescendingOutlined />
-    },
-    {
-      id: SortTypeWithHot.Asc,
-      name: '最早',
-      icon: <Icon.SortAscendingOutlined />
-    },
-    {
-      id: SortTypeWithHot.Hot,
-      name: '最热',
-      icon: <Icon.FireOutlined />
-    }
-  ].map((item) => [item.id, item])
-)
+const sortTypes = [
+  {
+    id: SortTypeWithHot.Desc,
+    name: '最新',
+    icon: <Icon.SortDescendingOutlined />
+  },
+  {
+    id: SortTypeWithHot.Asc,
+    name: '最早',
+    icon: <Icon.SortAscendingOutlined />
+  },
+  {
+    id: SortTypeWithHot.Hot,
+    name: '最热',
+    icon: <Icon.FireOutlined />
+  }
+]
 
-export const st = (state: number) => sortTypeMap.get(state)!
+const sortTypeMap = new Map(sortTypes.map((item) => [item.id, item]))
+
+export const getSortType = (state: number) => {
+  return sortTypeMap.get(state)!
+}

@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/request'
+import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/nodepress'
 import { Vote, VoteTarget, VoteType, VoteAuthorType } from '@/constants/vote'
 import { SortTypeBase } from '@/constants/sort'
 import nodepress from '@/services/nodepress'

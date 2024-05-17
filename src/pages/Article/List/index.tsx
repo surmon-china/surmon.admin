@@ -22,14 +22,20 @@ import { useTranslation } from '@/i18n'
 import { RoutesKey, RoutesPath } from '@/routes'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { SortSelect } from '@/components/common/SortSelect'
-import { ResponsePaginationData } from '@/constants/request'
+import { ResponsePaginationData } from '@/constants/nodepress'
 import { SortTypeWithHot } from '@/constants/sort'
-import { publishStates, PublishState, ps } from '@/constants/publish'
+import { publishStates, PublishState, getPublishState } from '@/constants/publish'
 import { Tag } from '@/constants/tag'
-import { ArticleId, Article } from '@/constants/article'
-import { ArticleOrigin, articleOrigins } from '@/constants/article/origin'
-import { ArticlePublic, articlePublics } from '@/constants/article/public'
-import { ArticleLanguage, articleLanguages } from '@/constants/article/language'
+import {
+  ArticleId,
+  Article,
+  ArticleOrigin,
+  articleOrigins,
+  ArticlePublic,
+  articlePublics,
+  ArticleLanguage,
+  articleLanguages
+} from '@/constants/article'
 import { scrollTo } from '@/services/scroller'
 import { getTags } from '@/apis/tag'
 import { getArticles, GetArticleParams, patchArticlesState } from '@/apis/article'
@@ -131,7 +137,7 @@ export const ArticleList: React.FC = () => {
 
   const handleStateChange = (articleIds: Array<ArticleId>, state: PublishState) => {
     Modal.confirm({
-      title: `确定要将 ${articleIds.length} 个文章更新为「 ${ps(state).name} 」状态吗？`,
+      title: `确定要将 ${articleIds.length} 个文章更新为「 ${getPublishState(state).name} 」状态吗？`,
       content: '操作不可撤销',
       centered: true,
       onOk() {

@@ -6,7 +6,7 @@
 import { arrayToTree } from 'performant-array-to-tree'
 import { TreeDataNode } from 'antd'
 import { Category } from '@/constants/category'
-import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/request'
+import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/nodepress'
 import nodepress from '@/services/nodepress'
 
 export const CATEGORY_API_PATH = '/category'

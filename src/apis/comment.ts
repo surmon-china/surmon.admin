@@ -4,7 +4,7 @@
  */
 
 import { arrayToTree } from 'performant-array-to-tree'
-import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/request'
+import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/nodepress'
 import { Comment, CommentState } from '@/constants/comment'
 import { SortTypeWithHot } from '@/constants/sort'
 import nodepress from '@/services/nodepress'

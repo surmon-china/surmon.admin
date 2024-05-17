@@ -4,7 +4,7 @@ import * as Icon from '@ant-design/icons'
 import { Placeholder } from '@/components/common/Placeholder'
 import { UniversalText } from '@/components/common/UniversalText'
 import { IPLocation } from '@/components/common/IPLocation'
-import { Pagination } from '@/constants/request'
+import { Pagination } from '@/constants/nodepress'
 import { Feedback, getMarkedByBoolean } from '@/constants/feedback'
 import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
@@ -22,6 +22,7 @@ export interface FeedbackListTableProps {
   onDetail(feedback: Feedback, index: number): any
   onDelete(feedback: Feedback, index: number): any
 }
+
 export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
   return (
     <Table<Feedback>

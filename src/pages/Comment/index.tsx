@@ -37,9 +37,9 @@ import {
   CommentState,
   commentStates,
   COMMENT_GUESTBOOK_POST_ID,
-  cs
+  getCommentState
 } from '@/constants/comment'
-import { ResponsePaginationData } from '@/constants/request'
+import { ResponsePaginationData } from '@/constants/nodepress'
 import { SortTypeWithHot } from '@/constants/sort'
 import { scrollTo } from '@/services/scroller'
 import { getBlogGuestbookUrl } from '@/transforms/url'
@@ -158,7 +158,7 @@ export const CommentPage: React.FC = () => {
 
   const handleStateChange = (comments: Array<CommentType>, state: CommentState) => {
     Modal.confirm({
-      title: `确定要将 ${comments.length} 个评论更新为「 ${cs(state).name} 」状态吗？`,
+      title: `确定要将 ${comments.length} 个评论更新为「 ${getCommentState(state).name} 」状态吗？`,
       content: '操作不可撤销',
       centered: true,
       onOk: () =>

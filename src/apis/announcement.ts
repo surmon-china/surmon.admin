@@ -5,7 +5,7 @@
 
 import { Announcement } from '@/constants/announcement'
 import { PublishState } from '@/constants/publish'
-import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/request'
+import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/nodepress'
 import nodepress from '@/services/nodepress'
 
 export const ANNOUNCEMENT_API_PATH = '/announcement'

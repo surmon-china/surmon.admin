@@ -2,9 +2,7 @@ import React from 'react'
 import { Button, Form, Select, Divider, Space, Switch, FormInstance } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { publishStates } from '@/constants/publish'
-import { articleOrigins } from '@/constants/article/origin'
-import { articlePublics } from '@/constants/article/public'
-import { articleLanguages } from '@/constants/article/language'
+import { articleOrigins, articlePublics, articleLanguages } from '@/constants/article'
 import { StatesFormModel } from '.'
 
 const REQUIRED_RULE = {

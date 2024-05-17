@@ -23,7 +23,7 @@ import { useTranslation } from '@/i18n'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { SortSelect } from '@/components/common/SortSelect'
 import { GetVotesParams, getVotes, deleteVotes } from '@/apis/vote'
-import { ResponsePaginationData } from '@/constants/request'
+import { ResponsePaginationData } from '@/constants/nodepress'
 import { SortTypeBase } from '@/constants/sort'
 import {
   Vote,

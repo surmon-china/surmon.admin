@@ -4,8 +4,8 @@ import * as Icon from '@ant-design/icons'
 import { UniversalText } from '@/components/common/UniversalText'
 import { Placeholder } from '@/components/common/Placeholder'
 import { IPLocation } from '@/components/common/IPLocation'
-import { Pagination } from '@/constants/request'
-import { Comment, CommentState, cs } from '@/constants/comment'
+import { Pagination } from '@/constants/nodepress'
+import { Comment, CommentState, getCommentState } from '@/constants/comment'
 import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
 import { getBlogURLByPostID } from '@/transforms/url'
@@ -167,7 +167,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
           width: 120,
           dataIndex: 'state',
           render: (_, comment) => {
-            const state = cs(comment.state)
+            const state = getCommentState(comment.state)
             return (
               <Space direction="vertical">
                 <Tag icon={<Icon.LikeOutlined />} color={comment.likes > 0 ? 'red' : undefined}>

@@ -27,8 +27,8 @@ import {
 } from '@/apis/announcement'
 import { useTranslation } from '@/i18n'
 import { Announcement as AnnouncementType } from '@/constants/announcement'
-import { ResponsePaginationData } from '@/constants/request'
-import { PublishState, ps } from '@/constants/publish'
+import { ResponsePaginationData } from '@/constants/nodepress'
+import { PublishState, getPublishState } from '@/constants/publish'
 import { useLoading } from 'veact-use'
 import { scrollTo } from '@/services/scroller'
 import { stringToYMD } from '@/transforms/date'
@@ -192,7 +192,7 @@ export const AnnouncementPage: React.FC = () => {
             options={[
               { label: '全部状态', value: SELECT_ALL_VALUE },
               ...STATE_IDS.map((state) => {
-                const target = ps(state)
+                const target = getPublishState(state)
                 return {
                   value: target.id,
                   label: (
@@ -278,7 +278,7 @@ export const AnnouncementPage: React.FC = () => {
               width: 120,
               dataIndex: 'state',
               render: (_, ann) => {
-                const state = ps(ann.state)
+                const state = getPublishState(ann.state)
                 return (
                   <Tag icon={state.icon} color={state.color}>
                     {state.name}

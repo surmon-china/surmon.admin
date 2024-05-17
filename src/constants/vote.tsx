@@ -7,22 +7,6 @@ import React from 'react'
 import * as Icon from '@ant-design/icons'
 import { IPLocation } from './general'
 
-export enum VoteTarget {
-  Post = 1,
-  Comment = 2
-}
-
-export enum VoteType {
-  Upvote = 1,
-  Downvote = -1
-}
-
-export enum VoteAuthorType {
-  Anonymous = 0,
-  Guest = 1,
-  Disqus = 2
-}
-
 export interface Vote {
   _id: string
   id: number
@@ -38,10 +22,27 @@ export interface Vote {
   updated_at?: string
 }
 
+export enum VoteType {
+  Upvote = 1,
+  Downvote = -1
+}
+
+export enum VoteTarget {
+  Post = 1,
+  Comment = 2
+}
+
+export enum VoteAuthorType {
+  Anonymous = 0,
+  Guest = 1,
+  Disqus = 2
+}
+
 const voteTargetMap = new Map([
   [VoteTarget.Post, '页面'],
   [VoteTarget.Comment, '评论']
 ])
+
 export const getVoteTargetText = (voteTarget: VoteTarget) => {
   return voteTargetMap.get(voteTarget)!
 }
@@ -51,25 +52,26 @@ const voteAuthorTypeMap = new Map([
   [VoteAuthorType.Guest, '本地访客'],
   [VoteAuthorType.Disqus, 'Disqus 用户']
 ])
+
 export const getVoteAuthorTypeText = (voteAuthorType: VoteAuthorType) => {
   return voteAuthorTypeMap.get(voteAuthorType)!
 }
 
-const voteTypeMap = new Map(
-  [
-    {
-      id: VoteType.Upvote,
-      name: '+1',
-      icon: <Icon.LikeOutlined />
-    },
-    {
-      id: VoteType.Downvote,
-      name: '-1',
-      icon: <Icon.DislikeOutlined />
-    }
-  ].map((item) => [item.id, item])
-)
-export const voteTypes = Array.from<ReturnType<typeof getVoteTypeById>>(voteTypeMap.values())
-export const getVoteTypeById = (voteType: VoteType) => {
+export const voteTypes = [
+  {
+    id: VoteType.Upvote,
+    name: '+1',
+    icon: <Icon.LikeOutlined />
+  },
+  {
+    id: VoteType.Downvote,
+    name: '-1',
+    icon: <Icon.DislikeOutlined />
+  }
+]
+
+const voteTypeMap = new Map(voteTypes.map((item) => [item.id, item]))
+
+export const getVoteType = (voteType: VoteType) => {
   return voteTypeMap.get(voteType)!
 }

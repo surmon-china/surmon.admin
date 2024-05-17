@@ -9,6 +9,7 @@ export const get = (key: string) => {
 export const set = (key: string, data: string) => {
   return localStorage.setItem(key, data)
 }
+
 export const remove = (key: string) => {
   localStorage.removeItem(key)
 }
@@ -16,6 +17,7 @@ export const remove = (key: string) => {
 export const setJSON = (key: string, data: any) => {
   set(key, JSON.stringify(data))
 }
+
 export const getJSON = <T = any>(key: string): T | null => {
   const data = get(key)
   return typeof data === 'string' ? JSON.parse(data) : null

@@ -10,7 +10,7 @@ import { Button, Card, Empty, Divider, Modal, Space, Spin, Tree, Typography } fr
 import * as Icon from '@ant-design/icons'
 import { useTranslation } from '@/i18n'
 import { UniversalText } from '@/components/common/UniversalText'
-import { ResponsePaginationData } from '@/constants/request'
+import { ResponsePaginationData } from '@/constants/nodepress'
 import { Category as CategoryType } from '@/constants/category'
 import { getBlogCategoryUrl } from '@/transforms/url'
 import {
