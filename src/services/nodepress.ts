@@ -6,7 +6,7 @@
 import { notification } from 'antd'
 import axios, { AxiosInstance, Method as AxiosMethod } from 'axios'
 import { API_URL, APP_AUTH_HEADER_KEY } from '@/config'
-import { AUTH_API_PATH } from '@/apis/auth'
+import { AUTH_API_PATHS } from '@/apis/auth'
 import { RoutesKey, RoutesPath } from '@/routes'
 import { i18n } from '@/i18n'
 import token from './token'
@@ -51,7 +51,7 @@ nodepress.interceptors.request.use((config) => {
   if (token.isTokenValid()) {
     config.headers = config.headers || {}
     config.headers[APP_AUTH_HEADER_KEY] = `Bearer ${token.getToken()}`
-  } else if (config.url !== AUTH_API_PATH.LOGIN) {
+  } else if (config.url !== AUTH_API_PATHS.LOGIN) {
     notification.error({
       message: i18n.t('nodepress.request.invalid_token.title'),
       description: i18n.t('nodepress.request.invalid_token.description'),
