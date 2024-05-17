@@ -27,15 +27,20 @@ export interface Feedback {
   updated_at?: string
 }
 
+export enum MarkedState {
+  No = 0,
+  Yes = 1
+}
+
 export const markedStates = [
   {
-    number: 0,
+    number: MarkedState.No,
     boolean: false,
     name: '未标记',
     icon: <Icon.StarOutlined />
   },
   {
-    number: 1,
+    number: MarkedState.Yes,
     boolean: true,
     name: '已标记',
     icon: <Icon.StarFilled style={{ color: '#fadb14' }} />
@@ -49,5 +54,5 @@ export const getMarkedByNumber = (number: number) => {
 }
 
 export const getMarkedByBoolean = (boolean: boolean) => {
-  return markedStateMap.get(boolean ? 1 : 0)!
+  return markedStateMap.get(boolean ? MarkedState.Yes : MarkedState.No)!
 }

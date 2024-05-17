@@ -11,19 +11,18 @@ import { stringToYMD } from '@/transforms/date'
 
 import styles from './style.module.less'
 
-export interface FeedbackListTableProps {
+export interface TableListProps {
   loading: boolean
   data: Array<Feedback>
   pagination: Pagination
   selectedIds: Array<string>
-  onTargetID(id: number): any
-  onSelecte(ids: Array<any>): any
-  onPagination(page: number, pageSize?: number): any
-  onDetail(feedback: Feedback, index: number): any
-  onDelete(feedback: Feedback, index: number): any
+  onSelect(ids: Array<any>): void
+  onPagination(page: number, pageSize?: number): void
+  onDetail(feedback: Feedback, index: number): void
+  onDelete(feedback: Feedback, index: number): void
 }
 
-export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
+export const TableList: React.FC<TableListProps> = (props) => {
   return (
     <Table<Feedback>
       rowKey="_id"
@@ -31,7 +30,7 @@ export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
       dataSource={props.data}
       rowSelection={{
         selectedRowKeys: props.selectedIds,
-        onChange: props.onSelecte
+        onChange: props.onSelect
       }}
       pagination={{
         pageSizeOptions: ['10', '20', '50'],
@@ -73,7 +72,7 @@ export const FeedbackListTable: React.FC<FeedbackListTableProps> = (props) => {
           dataIndex: 'content',
           render: (_, feedback) => (
             <Typography.Paragraph
-              className={styles.content}
+              className={styles.feedbackContent}
               ellipsis={{ rows: 3, expandable: true }}
             >
               {feedback.content}
