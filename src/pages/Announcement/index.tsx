@@ -15,6 +15,7 @@ import {
 } from 'veact'
 import { Table, Button, Card, Input, Tag, Select, Divider, Spin, Modal, Space } from 'antd'
 import * as Icon from '@ant-design/icons'
+
 import { DropdownMenu } from '@/components/common/DropdownMenu'
 import {
   getAnnouncements,
@@ -23,7 +24,8 @@ import {
   deleteAnnouncements,
   putAnnouncement,
   createAnnouncement
-} from '@/store/announcement'
+} from '@/apis/announcement'
+import { useTranslation } from '@/i18n'
 import { Announcement as AnnouncementType } from '@/constants/announcement'
 import { ResponsePaginationData } from '@/constants/request'
 import { PublishState, ps } from '@/constants/publish'
@@ -40,6 +42,7 @@ const SELECT_ALL_VALUE = 'ALL'
 export const AnnouncementPage: React.FC = () => {
   const loading = useLoading()
   const submitting = useLoading()
+  const { i18n } = useTranslation()
   const announcement = useShallowReactive<ResponsePaginationData<AnnouncementType>>({
     data: [],
     pagination: undefined
@@ -166,9 +169,11 @@ export const AnnouncementPage: React.FC = () => {
 
   return (
     <Card
-      title={`公告列表（${announcement.pagination?.total ?? '-'}）`}
       bordered={false}
       className={styles.announcement}
+      title={i18n.t('page.announcement.list.title', {
+        total: announcement.pagination?.total ?? '-'
+      })}
       extra={
         <Button type="primary" size="small" icon={<Icon.PlusOutlined />} onClick={createNewData}>
           发布新公告
@@ -178,7 +183,7 @@ export const AnnouncementPage: React.FC = () => {
       <Space className={styles.toolbar} align="center" wrap>
         <Space wrap>
           <Select
-            className={styles.selec}
+            className={styles.select}
             loading={loading.state.value}
             value={filterParams.state}
             onChange={(state) => {
@@ -202,7 +207,7 @@ export const AnnouncementPage: React.FC = () => {
           />
           <Input.Search
             className={styles.search}
-            placeholder="输入关键词搜索"
+            placeholder={i18n.t('common.list.filter.search')}
             loading={loading.state.value}
             onSearch={() => fetchData()}
             value={filterParams.keyword}
@@ -215,11 +220,12 @@ export const AnnouncementPage: React.FC = () => {
             loading={loading.state.value}
             onClick={() => resetParamsAndRefresh()}
           >
-            重置并刷新
+            {i18n.t('common.list.filter.reset_and_refresh')}
           </Button>
         </Space>
         <Space>
           <DropdownMenu
+            text="批量操作"
             disabled={!selectedIDs.value.length}
             options={[
               {
@@ -228,9 +234,7 @@ export const AnnouncementPage: React.FC = () => {
                 onClick: handleDeleteList
               }
             ]}
-          >
-            批量操作
-          </DropdownMenu>
+          />
         </Space>
       </Space>
       <Divider />
@@ -287,9 +291,8 @@ export const AnnouncementPage: React.FC = () => {
               width: 160,
               dataIndex: 'actions',
               render: (_, ann, index) => (
-                <Button.Group>
+                <Button.Group size="small">
                   <Button
-                    size="small"
                     type="text"
                     icon={<Icon.EditOutlined />}
                     onClick={() => editData(index)}
@@ -297,7 +300,6 @@ export const AnnouncementPage: React.FC = () => {
                     编辑
                   </Button>
                   <Button
-                    size="small"
                     type="text"
                     danger={true}
                     icon={<Icon.DeleteOutlined />}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Ref, useWatch } from 'veact'
 import { Form, Input, Modal, TreeSelect, Typography, Divider, TreeDataNode } from 'antd'
-import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
+import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { Category as CategoryType } from '@/constants/category'
 import { stringToYMD } from '@/transforms/date'
 
@@ -148,7 +148,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
           extra="可以为当前分类增加自定义扩展属性，如：icon、background"
           shouldUpdate={true}
         >
-          <FormDataKeyValue fieldName="extends" />
+          <FormKeyValueInput fieldName="extends" />
         </Form.Item>
       </Form>
     </Modal>

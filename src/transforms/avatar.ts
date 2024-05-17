@@ -1,5 +1,5 @@
 /**
- * @file Avatar
+ * @file Avatar URL
  * @author Surmon <https://github.com/surmon-china>
  */
 

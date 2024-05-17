@@ -1,76 +1,33 @@
 @import '@/styles/mixins.less';
 @import '@/styles/variables.less';
 
-.dashboard {
+.dashboardPage {
   width: 100%;
 
-  .statistic {
-    .statisticCard {
-      user-select: none;
+  :global(.ant-skeleton-paragraph) {
+    margin-bottom: 0;
+  }
+}
 
-      .icon {
-        font-size: @app-font-size-h1;
-        line-height: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
+.statisticCard {
+  user-select: none;
+
+  .icon {
+    font-size: @font-size-h1;
+    line-height: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  .calendarCard {
-    .calendar {
-      min-height: 100px;
-      display: flex;
-      padding-bottom: @app-gap;
-      overflow-y: hidden;
-      overflow-x: scroll;
-      scroll-snap-type: x mandatory;
-      // scroll-behavior: smooth;
+  .divider {
+    margin: @gap 0;
+  }
 
-      .month {
-        scroll-snap-align: start;
-        margin-right: @app-gap * 1.5;
-        &:last-child {
-          margin-right: 0;
-        }
-
-        .title {
-          min-width: 50px;
-          margin-bottom: @app-gap;
-          user-select: none;
-        }
-
-        .days {
-          width: auto;
-          display: grid;
-          grid-template-rows: repeat(7, 1fr);
-          grid-auto-flow: column;
-          grid-auto-columns: min-content;
-          grid-gap: 5px;
-
-          .day {
-            width: 10px;
-            height: 10px;
-            background-color: @app-module-background-lighter;
-            &:not([data-total-count='0']) {
-              &:hover {
-                outline: 1px solid white;
-              }
-            }
-
-            .item {
-              width: 100%;
-              &.article {
-                background-color: @app-primary-color;
-              }
-              &.comment {
-                background-color: #f8981d;
-              }
-            }
-          }
-        }
-      }
+  .link {
+    color: @color-text;
+    &:hover {
+      color: @color-link;
     }
   }
 }

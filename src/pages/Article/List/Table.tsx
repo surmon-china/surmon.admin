@@ -2,14 +2,15 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Table, Button, Typography, Card, Tag, Space } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { RouteKey, rc } from '@/routes'
+import { RoutesPather } from '@/routes'
 import { Pagination } from '@/constants/request'
 import { Article } from '@/constants/article'
 import { ao } from '@/constants/article/origin'
 import { ap } from '@/constants/article/public'
 import { PublishState, ps } from '@/constants/publish'
-import { stringToYMD } from '@/transforms/date'
 import { getBlogArticleUrl } from '@/transforms/url'
+import { numberToKilo } from '@/transforms/number'
+import { stringToYMD } from '@/transforms/date'
 
 export interface ArticleListTableProps {
   loading: boolean
@@ -20,6 +21,7 @@ export interface ArticleListTableProps {
   onPagination(page: number, pageSize?: number): any
   onUpdateState(article: Article, state: PublishState): any
 }
+
 export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
   return (
     <Table<Article>
@@ -53,35 +55,31 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
             <Card
               size="small"
               bordered={false}
-              bodyStyle={{
-                minHeight: '100px',
-                backdropFilter: 'blur(2px)'
+              styles={{
+                body: { minHeight: '108px' }
               }}
               style={{
-                margin: '1rem 0',
-                backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                minHeight: '100px',
-                backgroundImage: `url("${article.thumbnail}")`,
-                backgroundBlendMode: 'soft-light'
+                margin: 'var(--app-padding-xs) 0',
+                background: `linear-gradient(
+                  to right bottom,
+                  rgba(0, 0, 0, 0.8),
+                  rgba(0, 0, 0, 0.4)
+                ),
+                url("${article.thumbnail}") center / cover`
               }}
             >
-              <Card.Meta
-                title={
-                  <Typography.Title style={{ marginTop: '5px' }} level={5}>
-                    {article.title}
-                  </Typography.Title>
-                }
-                description={
-                  <Typography.Paragraph
-                    type="secondary"
-                    style={{ marginBottom: '5px' }}
-                    ellipsis={{ rows: 2, expandable: true }}
-                  >
-                    {article.description}
-                  </Typography.Paragraph>
-                }
-              />
+              <Typography.Title
+                level={5}
+                style={{ marginTop: 'var(--app-padding-xs)', color: 'white' }}
+              >
+                {article.title}
+              </Typography.Title>
+              <Typography.Paragraph
+                style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                ellipsis={{ rows: 2, expandable: true }}
+              >
+                {article.description}
+              </Typography.Paragraph>
             </Card>
           )
         },
@@ -118,7 +116,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
               <Space direction="vertical">
                 <Space size="small">
                   <Icon.EyeOutlined />
-                  浏览 {article.meta?.views} 次
+                  浏览 {numberToKilo(article.meta?.views ?? 0)} 次
                 </Space>
                 <Space size="small">
                   <Icon.HeartOutlined />
@@ -139,8 +137,8 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           render(_, article) {
             return (
               <Space direction="vertical">
-                <span>最早发布：{stringToYMD(article.created_at!)}</span>
-                <span>最后更新：{stringToYMD(article.updated_at!)}</span>
+                <span>发布：{stringToYMD(article.created_at!)}</span>
+                <span>更新：{stringToYMD(article.updated_at!)}</span>
               </Space>
             )
           }
@@ -167,7 +165,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           dataIndex: 'actions',
           render: (_, article) => (
             <Space direction="vertical">
-              <Link to={rc(RouteKey.ArticleEdit).pather!(article._id!)}>
+              <Link to={RoutesPather.articleDetail(article._id!)}>
                 <Button size="small" type="text" block={true} icon={<Icon.EditOutlined />}>
                   文章详情
                 </Button>
@@ -211,7 +209,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 block={true}
                 type="link"
                 target="_blank"
-                icon={<Icon.LinkOutlined />}
+                icon={<Icon.ExportOutlined />}
                 href={getBlogArticleUrl(article.id!)}
               >
                 宿主页面

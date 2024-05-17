@@ -21,6 +21,7 @@ import {
 import { useLoading } from 'veact-use'
 import { Button, Card, Input, Select, Divider, Modal, Space, message } from 'antd'
 import * as Icon from '@ant-design/icons'
+import { useTranslation } from '@/i18n'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { SortSelect } from '@/components/common/SortSelect'
 import {
@@ -30,7 +31,7 @@ import {
   putComment,
   reviseCommentIPLocation,
   updateCommentsState
-} from '@/store/comment'
+} from '@/apis/comment'
 import {
   Comment as CommentType,
   CommentState,
@@ -56,6 +57,7 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
 })
 
 export const CommentPage: React.FC = () => {
+  const { i18n } = useTranslation()
   // params
   const location = useLocation()
   const { post_id } = queryString.parse(location.search)
@@ -73,7 +75,7 @@ export const CommentPage: React.FC = () => {
   const serarchKeyword = useRef('')
   const filterParams = useReactive({
     ...DEFAULT_FILTER_PARAMS,
-    postId: postIdParam || DEFAULT_FILTER_PARAMS.postId
+    postId: postIdParam ?? DEFAULT_FILTER_PARAMS.postId
   })
   const updatePostId = (postId: number | string) => {
     filterParams.postId = Number(postId)
@@ -241,9 +243,9 @@ export const CommentPage: React.FC = () => {
 
   return (
     <Card
-      title={`评论列表（${comment.pagination?.total ?? '-'}）`}
       bordered={false}
       className={styles.comment}
+      title={i18n.t('page.comment.list.title', { total: comment.pagination?.total ?? '-' })}
       extra={
         <Space wrap>
           <Button.Group>
@@ -368,11 +370,12 @@ export const CommentPage: React.FC = () => {
             loading={loading.state.value}
             onClick={() => resetParamsAndRefresh()}
           >
-            重置并刷新
+            {i18n.t('common.list.filter.reset_and_refresh')}
           </Button>
         </Space>
         <Space>
           <DropdownMenu
+            text="批量操作"
             disabled={!selectedIds.value.length}
             options={[
               {
@@ -401,9 +404,7 @@ export const CommentPage: React.FC = () => {
                 onClick: () => handleDelete(selectComments.value)
               }
             ]}
-          >
-            批量操作
-          </DropdownMenu>
+          />
         </Space>
       </Space>
       <Divider />

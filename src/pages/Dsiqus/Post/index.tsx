@@ -11,7 +11,7 @@ import { Button, Card, Table, Select, Input, Space, Divider, Typography, Avatar 
 import * as Icon from '@ant-design/icons'
 import { Placeholder } from '@/components/common/Placeholder'
 import { UniversalText } from '@/components/common/UniversalText'
-import { getConfig, getPosts, PostState, OrderType, GeneralDisqusParams } from '@/store/disqus'
+import { getConfig, getPosts, PostState, OrderType, GeneralDisqusParams } from '@/apis/disqus'
 import { scrollTo } from '@/services/scroller'
 import { stringToYMD } from '@/transforms/date'
 

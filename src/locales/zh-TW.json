@@ -1,0 +1,61 @@
+{
+  "app.booting": "系統啟動中...",
+  "app.running": "系統啟動成功",
+
+  "logout.title": "退出登錄",
+  "logout.confirmation": "確定要退出登錄嗎？",
+
+  "nodepress.request.invalid_token.title": "Token 無效",
+  "nodepress.request.invalid_token.description": "Token 無效或不存在",
+  "nodepress.response.success": "數據請求成功",
+
+  "page.dashboard.title": "超級看板",
+
+  "page.announcement.title": "公告管理",
+  "page.announcement.list.title": "公告列表（{{total}}）",
+
+  "page.category.title": "文章分類",
+  "page.category.list.title": "分類列表（{{total}}）",
+
+  "page.tag.title": "文章標籤",
+  "page.tag.list.title": "標籤列表（{{total}}）",
+
+  "page.article.title": "文章管理",
+  "page.article.list": "所有文章",
+  "page.article.create": "新撰文章",
+  "page.article.edit": "編輯文章",
+
+  "page.article.list.title": "文章列表（{{total}}）",
+  "page.article.list.filter.featured": "精選文章",
+  "page.article.list.filter.search": "輸入文章標題、內容搜索",
+
+  "page.article.editor.content": "文章內容",
+  "page.article.editor.categories": "分類目錄",
+  "page.article.editor.thumbnail": "縮略圖",
+  "page.article.editor.extends": "自定義擴展",
+  "page.article.editor.states": "發布選項",
+
+  "page.comment.title": "評論管理",
+  "page.comment.list.title": "評論列表（{{total}}）",
+
+  "page.vote.title": "表態記錄",
+  "page.vote.list.title": "記錄列表（{{total}}）",
+
+  "page.feedback.title": "站點反饋",
+  "page.feedback.list.title": "反饋列表（{{total}}）",
+
+  "page.disqus.title": "Disqus",
+  "page.disqus.posts": "Posts",
+  "page.disqus.threads": "Threads",
+  "page.disqus.synchronize": "Synchronize",
+
+  "page.setting.title": "系統設置",
+  "page.setting.general.title": "通用設置",
+  "page.setting.data.title": "數據安全",
+  "page.setting.userinfo.title": "站長資料",
+
+  "common.list.filter.search": "輸入關鍵詞搜索",
+  "common.list.filter.refresh": "刷新",
+  "common.list.filter.reset_and_refresh": "重置並刷新",
+  "common.table.actions": "操作"
+}

@@ -7,7 +7,7 @@ import React from 'react'
 import { useLoading } from 'veact-use'
 import { Card, Steps, Space, Result, Button, Upload, Modal } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { downloadNodePressXMLToDisqus, importDisqusXMLToNodePress } from '@/store/disqus'
+import { downloadNodePressXMLToDisqus, importDisqusXMLToNodePress } from '@/apis/disqus'
 import { APP_LAYOUT_SPACE_SIZE } from '@/config'
 
 import styles from './style.module.less'

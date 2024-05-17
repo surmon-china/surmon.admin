@@ -14,13 +14,13 @@ import {
   Spin
 } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { UniversalText } from '@/components/common/UniversalText'
-import { UniversalEditor } from '@/components/common/UniversalEditor'
-import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
-import { IPLocation } from '@/components/common/IPLocation'
-import { getArticle } from '@/store/article'
-import { Article } from '@/constants/article'
 import { Comment, commentStates, COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
+import { UniversalEditor } from '@/components/common/UniversalEditor'
+import { UniversalText } from '@/components/common/UniversalText'
+import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
+import { IPLocation } from '@/components/common/IPLocation'
+import { getArticle } from '@/apis/article'
+import { Article } from '@/constants/article'
 import { stringToYMD } from '@/transforms/date'
 import { getBlogURLByPostID } from '@/transforms/url'
 import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
@@ -206,14 +206,21 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             name="content"
             rules={[{ required: true, message: '请输入内容' }]}
           >
-            <UniversalEditor rows={14} disabledMinimap={true} disabledCacheDraft={true} />
+            <UniversalEditor
+              rows={12}
+              placeholder="输入评论内容..."
+              disabledLanguageSelect={true}
+              disabledLineNumbers={true}
+              disabledFoldGutter={true}
+              disabledCacheDraft={true}
+            />
           </Form.Item>
           <Form.Item
             label="自定义扩展"
             extra="可以为当前评论增加自定义扩展属性"
             shouldUpdate={true}
           >
-            <FormDataKeyValue fieldName="extends" />
+            <FormKeyValueInput fieldName="extends" />
           </Form.Item>
           <Form.Item label=" ">
             <Button

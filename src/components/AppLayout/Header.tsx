@@ -1,92 +1,107 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Dropdown, Avatar, Button, Modal, Spin } from 'antd'
+import { Dropdown, Avatar, Button, Modal, Select, Flex } from 'antd'
 import * as Icon from '@ant-design/icons'
-
-import { RouteKey, rc } from '@/routes'
+import { RoutesKey, RoutesPath } from '@/routes'
+import { useTranslation } from '@/i18n'
+import { useTheme } from '@/contexts/Theme'
+import { useLocale, languages } from '@/contexts/Locale'
+import { useAdminProfile } from '@/contexts/AdminProfile'
 import { removeToken } from '@/services/token'
-import { useAdminState } from '@/state/admin'
 
 import styles from './style.module.less'
 
-interface AppHeaderProps {
+export interface AppHeaderProps {
   isSiderCollapsed: boolean
   onToggleSider(): void
 }
+
 export const AppHeader: React.FC<AppHeaderProps> = (props) => {
   const navigate = useNavigate()
-  const adminState = useAdminState()
+  const theme = useTheme()
+  const locale = useLocale()
+  const adminProfile = useAdminProfile()
+  const { i18n } = useTranslation()
 
-  const redriectToProfileRoute = () => {
-    navigate(rc(RouteKey.Profile).path)
+  const redriectToSettingPage = () => {
+    navigate(RoutesPath[RoutesKey.Setting])
   }
 
   const logout = () => {
     Modal.confirm({
-      title: '确定要退出吗？',
+      title: i18n.t('logout.confirmation'),
       centered: true,
       onOk() {
-        console.log('退出系统')
         removeToken()
-        navigate(rc(RouteKey.Hello).path)
+        navigate(RoutesPath[RoutesKey.Hello])
       }
     })
   }
 
   return (
-    <div className={styles.headerContent}>
-      <div className={styles.left}>
+    <Flex justify="space-between" className={styles.headerContent}>
+      <Flex align="center" gap="middle">
         <Button
-          className={styles.siderToggler}
-          type="link"
+          type="text"
+          className={styles.item}
           onClick={props.onToggleSider}
-          icon={React.createElement(
-            props.isSiderCollapsed ? Icon.MenuUnfoldOutlined : Icon.MenuFoldOutlined,
-            {
-              className: 'trigger'
-            }
-          )}
-        ></Button>
-      </div>
-      <div className={styles.user}>
-        <Spin spinning={adminState.loading.value} size="small">
-          <Dropdown
-            placement="bottomRight"
-            menu={{
-              items: [
-                {
-                  key: 'profile',
-                  icon: <Icon.SettingOutlined />,
-                  label: '系统设置',
-                  onClick: redriectToProfileRoute
-                },
-                {
-                  key: 'divider',
-                  type: 'divider'
-                },
-                {
-                  key: 'logout',
-                  icon: <Icon.LogoutOutlined />,
-                  label: '退出登录',
-                  danger: true,
-                  onClick: logout
-                }
-              ]
-            }}
-          >
-            <div className={styles.content}>
-              <span>{adminState.data.name}</span>
-              <Avatar
-                shape="square"
-                size="small"
-                icon={<Icon.UserOutlined />}
-                className={styles.avatar}
-                src={adminState.data.avatar}
-              />
-            </div>
-          </Dropdown>
-        </Spin>
-      </div>
-    </div>
+          icon={props.isSiderCollapsed ? <Icon.MenuUnfoldOutlined /> : <Icon.MenuFoldOutlined />}
+        />
+        <Button
+          type="text"
+          className={styles.item}
+          onClick={() => theme.toggleTheme()}
+          icon={theme.isDark ? <Icon.MoonOutlined /> : <Icon.SunOutlined />}
+        />
+        <Select
+          size="small"
+          className={styles.item}
+          style={{ minWidth: 90 }}
+          value={locale.language}
+          onChange={locale.changeLanguage}
+          options={languages.map((lang) => ({
+            value: lang.code,
+            label: lang.name
+          }))}
+        />
+      </Flex>
+      <Flex align="center" justify="center">
+        <Dropdown
+          placement="bottomRight"
+          menu={{
+            items: [
+              {
+                key: 'profile',
+                icon: <Icon.SettingOutlined />,
+                label: i18n.t('page.setting.title'),
+                onClick: redriectToSettingPage
+              },
+              {
+                key: 'divider',
+                type: 'divider'
+              },
+              {
+                key: 'logout',
+                icon: <Icon.LogoutOutlined />,
+                label: i18n.t('logout.title'),
+                danger: true,
+                onClick: logout
+              }
+            ]
+          }}
+        >
+          <div className={styles.userMenu}>
+            <span>{adminProfile.data.name}</span>
+            <Avatar
+              shape="square"
+              size="small"
+              icon={<Icon.UserOutlined />}
+              className={styles.avatar}
+              src={adminProfile.data.avatar}
+            />
+          </div>
+        </Dropdown>
+      </Flex>
+    </Flex>
   )
 }

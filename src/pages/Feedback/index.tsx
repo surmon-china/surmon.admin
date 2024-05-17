@@ -16,11 +16,12 @@ import {
   useComputed
 } from 'veact'
 import { useLoading } from 'veact-use'
+import { useTranslation } from '@/i18n'
 import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { SortSelect } from '@/components/common/SortSelect'
-import { getFeedbacks, GetFeedbacksParams, deleteFeedbacks, putFeedback } from '@/store/feedback'
+import { getFeedbacks, GetFeedbacksParams, deleteFeedbacks, putFeedback } from '@/apis/feedback'
 import { ResponsePaginationData } from '@/constants/request'
 import { SortTypeBase } from '@/constants/sort'
 import { Feedback, markedStates } from '@/constants/feedback'
@@ -39,6 +40,7 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
 })
 
 export const FeedbackPage: React.FC = () => {
+  const { i18n } = useTranslation()
   const loading = useLoading()
   const submitting = useLoading()
   const feedbacks = useShallowReactive<ResponsePaginationData<Feedback>>({
@@ -158,9 +160,9 @@ export const FeedbackPage: React.FC = () => {
 
   return (
     <Card
-      title={`反馈列表（${feedbacks.pagination?.total ?? '-'}）`}
       bordered={false}
       className={styles.feedback}
+      title={i18n.t('page.feedback.list.title', { total: feedbacks.pagination?.total ?? '-' })}
     >
       <Space className={styles.toolbar} align="center" wrap>
         <Space wrap>
@@ -256,11 +258,12 @@ export const FeedbackPage: React.FC = () => {
             loading={loading.state.value}
             onClick={() => resetParamsAndRefresh()}
           >
-            重置并刷新
+            {i18n.t('common.list.filter.reset_and_refresh')}
           </Button>
         </Space>
         <Space>
           <DropdownMenu
+            text="批量操作"
             disabled={!selectedIds.value.length}
             options={[
               {
@@ -269,9 +272,7 @@ export const FeedbackPage: React.FC = () => {
                 onClick: () => handleDelete(selectFeedbacks.value)
               }
             ]}
-          >
-            批量操作
-          </DropdownMenu>
+          />
         </Space>
       </Space>
       <Divider />

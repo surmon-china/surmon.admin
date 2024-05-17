@@ -1,0 +1,17 @@
+@import '@/styles/mixins.less';
+@import '@/styles/variables.less';
+
+.inputWrapper {
+  width: 100%;
+
+  .inputGroup {
+    width: 100%;
+
+    & > * {
+      &:nth-child(1),
+      &:nth-child(2) {
+        flex: 1;
+      }
+    }
+  }
+}

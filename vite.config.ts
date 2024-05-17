@@ -27,6 +27,7 @@ const config: UserConfig = {
       output: {
         manualChunks(id) {
           const incs = (ds: string[]) => ds.some((d) => id.includes(`node_modules/${d}`))
+          // TODO: 测试 Codemirror 如果打包后不大，且自动分包正常的话，则移除这一段
           if (id.includes('node_modules/monaco-editor')) {
             return 'monaco-editor'
           } else if (

@@ -1,6 +1,5 @@
 /**
  * @file File service
- * @module service.file
  * @author Surmon <macichong@bytedance.com>
  */
 

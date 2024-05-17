@@ -9,27 +9,30 @@ import { Card, Row, Col, Form, message, Spin, Button } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { APP_LAYOUT_GUTTER_SIZE } from '@/config'
 import { ImageUploader } from '@/components/common/ImageUploader'
-import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
+import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { openJSONEditor } from '@/components/common/ModalJsonEditor'
 import { Article } from '@/constants/article'
 import { PublishState } from '@/constants/publish'
 import { ArticleOrigin } from '@/constants/article/origin'
 import { ArticlePublic } from '@/constants/article/public'
 import { ArticleLanguage } from '@/constants/article/language'
+import { useLocale } from '@/contexts/Locale'
+import { useTheme } from '@/contexts/Theme'
+import { useTranslation } from '@/i18n'
 import { scrollTo } from '@/services/scroller'
-import { MainForm } from './Main'
-import { CategoryForm } from './Category'
-import { StateForm } from './State'
+import { MainForm } from './MainForm'
+import { CategoriesForm } from './CategoriesForm'
+import { StatesForm } from './StatesForm'
 
 import styles from './style.module.less'
 
-export type BaseFormModel = Partial<
+export type MainFormModel = Partial<
   Pick<Article, 'slug' | 'tags' | 'title' | 'content' | 'keywords' | 'description'>
 >
-export type CategoryFormModel = Pick<Article, 'categories'>
+export type CategoriesFormModel = Pick<Article, 'categories'>
 export type ThumbnailFormModel = Pick<Article, 'thumbnail'>
-export type ExtendFormModel = Pick<Article, 'extends'>
-export type StateFormModel = Pick<Article, 'state' | 'origin' | 'public'>
+export type ExtendsFormModel = Pick<Article, 'extends'>
+export type StatesFormModel = Pick<Article, 'state' | 'origin' | 'public'>
 
 const DEFAULT_ARTICLE: Article = Object.freeze({
   slug: null,
@@ -50,7 +53,6 @@ const DEFAULT_ARTICLE: Article = Object.freeze({
 })
 
 export interface ArticleEditorProps {
-  title: string
   extra?: React.ReactNode
   loading: boolean
   submitting: boolean
@@ -58,19 +60,23 @@ export interface ArticleEditorProps {
   editorCacheID?: string
   onSubmit(article: Article): any
 }
+
 export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
-  const [mainForm] = Form.useForm<BaseFormModel>()
-  const [categoryFormModel] = Form.useForm<CategoryFormModel>()
+  const { i18n } = useTranslation()
+  const { language } = useLocale()
+  const { theme } = useTheme()
+  const [mainForm] = Form.useForm<MainFormModel>()
+  const [categoriesFormModel] = Form.useForm<CategoriesFormModel>()
   const [thumbnailFormModel] = Form.useForm<ThumbnailFormModel>()
-  const [extendFormModel] = Form.useForm<ExtendFormModel>()
-  const [stateFormModel] = Form.useForm<StateFormModel>()
+  const [extendsFormModel] = Form.useForm<ExtendsFormModel>()
+  const [statesFormModel] = Form.useForm<StatesFormModel>()
 
   const setFormsValue = (formValue: Article) => {
     mainForm.setFieldsValue(formValue)
-    categoryFormModel.setFieldsValue(formValue)
+    categoriesFormModel.setFieldsValue(formValue)
     thumbnailFormModel.setFieldsValue(formValue)
-    extendFormModel.setFieldsValue(formValue)
-    stateFormModel.setFieldsValue(formValue)
+    extendsFormModel.setFieldsValue(formValue)
+    statesFormModel.setFieldsValue(formValue)
   }
 
   const handleSubmit = async () => {
@@ -78,10 +84,10 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
       const data = {
         ...props.article?.value,
         ...(await mainForm.validateFields()),
-        ...(await categoryFormModel.validateFields()),
+        ...(await categoriesFormModel.validateFields()),
         ...(await thumbnailFormModel.validateFields()),
-        ...(await extendFormModel.validateFields()),
-        ...(await stateFormModel.validateFields())
+        ...(await extendsFormModel.validateFields()),
+        ...(await statesFormModel.validateFields())
       }
       data.slug = data.slug || null
       props.onSubmit?.(data as Article)
@@ -92,8 +98,12 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
   }
 
   const handleEditExtendsAsJSON = () => {
-    openJSONEditor('以 JSON 编辑自定义扩展', extendFormModel.getFieldsValue(), (newValue) => {
-      extendFormModel.setFieldsValue(newValue)
+    openJSONEditor({
+      title: '以 JSON 编辑自定义扩展',
+      initTheme: theme,
+      initLanguage: language,
+      initValue: extendsFormModel.getFieldsValue(),
+      callback: (newValue) => extendsFormModel.setFieldsValue(newValue)
     })
   }
 
@@ -117,7 +127,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
         <Col xs={24} lg={17}>
           <Card
             bordered={false}
-            title={props.title}
+            title={i18n.t('page.article.editor.content')}
             className={styles.articleeEitor}
             extra={props.extra}
           >
@@ -129,14 +139,14 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
         <Col xs={24} lg={7}>
           <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
             <Col span={24}>
-              <Card title="分类目录" bordered={false}>
+              <Card title={i18n.t('page.article.editor.categories')} bordered={false}>
                 <Spin spinning={props.loading}>
-                  <CategoryForm form={categoryFormModel} />
+                  <CategoriesForm form={categoriesFormModel} />
                 </Spin>
               </Card>
             </Col>
             <Col span={24}>
-              <Card title="缩略图" bordered={false}>
+              <Card title={i18n.t('page.article.editor.thumbnail')} bordered={false}>
                 <Spin spinning={props.loading}>
                   <Form scrollToFirstError={true} form={thumbnailFormModel}>
                     <Form.Item noStyle={true} name="thumbnail">
@@ -148,7 +158,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
             </Col>
             <Col span={24}>
               <Card
-                title="自定义扩展"
+                title={i18n.t('page.article.editor.extends')}
                 bordered={false}
                 extra={
                   <Button
@@ -163,19 +173,19 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
                 }
               >
                 <Spin spinning={props.loading}>
-                  <Form scrollToFirstError={true} form={extendFormModel}>
+                  <Form scrollToFirstError={true} form={extendsFormModel}>
                     <Form.Item noStyle={true} shouldUpdate={true}>
-                      <FormDataKeyValue fieldName="extends" />
+                      <FormKeyValueInput fieldName="extends" />
                     </Form.Item>
                   </Form>
                 </Spin>
               </Card>
             </Col>
             <Col span={24}>
-              <Card title="发布选项" bordered={false}>
+              <Card title={i18n.t('page.article.editor.states')} bordered={false}>
                 <Spin spinning={props.loading}>
-                  <StateForm
-                    form={stateFormModel}
+                  <StatesForm
+                    form={statesFormModel}
                     submitting={props.submitting}
                     onSubmit={handleSubmit}
                   />

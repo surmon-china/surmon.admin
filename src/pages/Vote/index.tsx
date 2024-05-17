@@ -18,9 +18,11 @@ import {
 import { useLoading } from 'veact-use'
 import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd'
 import * as Icon from '@ant-design/icons'
+
+import { useTranslation } from '@/i18n'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { SortSelect } from '@/components/common/SortSelect'
-import { GetVotesParams, getVotes, deleteVotes } from '@/store/vote'
+import { GetVotesParams, getVotes, deleteVotes } from '@/apis/vote'
 import { ResponsePaginationData } from '@/constants/request'
 import { SortTypeBase } from '@/constants/sort'
 import {
@@ -47,6 +49,7 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
 })
 
 export const VotePage: React.FC = () => {
+  const { i18n } = useTranslation()
   const loading = useLoading()
   const votes = useShallowReactive<ResponsePaginationData<Vote>>({
     data: [],
@@ -124,7 +127,7 @@ export const VotePage: React.FC = () => {
 
   return (
     <Card
-      title={`用户表态记录（${votes.pagination?.total ?? '-'}）`}
+      title={i18n.t('page.vote.list.title', { total: votes.pagination?.total ?? '-' })}
       bordered={false}
       className={styles.vote}
     >
@@ -143,7 +146,7 @@ export const VotePage: React.FC = () => {
               { value: VoteTarget.Comment, label: getVoteTargetText(VoteTarget.Comment) }
             ]}
           />
-          <Input.Group compact>
+          <Space.Compact>
             <Button onClick={() => updateTargetID(void 0)}>All</Button>
             <Input.Search
               className={styles.targetIdInput}
@@ -160,7 +163,7 @@ export const VotePage: React.FC = () => {
                 }
               }}
             />
-          </Input.Group>
+          </Space.Compact>
           <Select
             className={styles.select}
             loading={loading.state.value}
@@ -210,11 +213,12 @@ export const VotePage: React.FC = () => {
             loading={loading.state.value}
             onClick={() => resetParamsAndRefresh()}
           >
-            重置并刷新
+            {i18n.t('common.list.filter.reset_and_refresh')}
           </Button>
         </Space>
         <Space>
           <DropdownMenu
+            text="批量操作"
             disabled={!selectedIds.value.length}
             options={[
               {
@@ -223,9 +227,7 @@ export const VotePage: React.FC = () => {
                 onClick: () => handleDelete(selectVotes.value)
               }
             ]}
-          >
-            批量操作
-          </DropdownMenu>
+          />
         </Space>
       </Space>
       <Divider />

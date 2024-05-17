@@ -1,0 +1,79 @@
+{
+  "login.verifying_token": "校验 Token...",
+  "login.initializing": "正在初始化...",
+  "login.invalid_token_message_title": "好久不见！",
+  "login.invalid_token_message_description": "你还好吗？",
+
+  "logout.title": "退出登录",
+  "logout.confirmation": "确定要退出登陆吗？",
+
+  "nodepress.request.invalid_token.title": "Token 无效",
+  "nodepress.request.invalid_token.description": "Token 无效或不存在",
+  "nodepress.response.success": "数据请求成功",
+
+  "component.form_key_value.add": "增加数据项",
+  "component.modal_json_editor.save": "提交更新",
+  "component.modal_json_editor.error": "JSON 格式错误",
+  "component.modal_json_editor.placeholder": "请输入 JSON 内容",
+  "component.image_uploader.state.start": "开始上传",
+  "component.image_uploader.state.succeeded": "上传成功",
+  "component.image_uploader.state.failed": "上传失败",
+  "component.image_uploader.input.placeholder": "可以直接输入地址",
+  "component.universal_editor.cacheable_title": "已开启本地草稿缓存",
+  "component.universal_editor.state.length": "字数",
+  "component.universal_editor.state.line_count": "行数",
+  "component.universal_editor.state.selected_count": "已选",
+  "component.universal_editor.state.selected_length": "已选字数",
+
+  "common.list.filter.search": "输入关键词搜索",
+  "common.list.filter.refresh": "刷新",
+  "common.list.filter.reset_and_refresh": "重置并刷新",
+
+  "common.table.states": "状态",
+  "common.table.actions": "操作",
+
+  "page.dashboard.title": "超级看板",
+
+  "page.announcement.title": "公告管理",
+  "page.announcement.list.title": "公告列表（{{total}}）",
+
+  "page.category.title": "文章分类",
+  "page.category.list.title": "分类列表（{{total}}）",
+
+  "page.tag.title": "文章标签",
+  "page.tag.list.title": "标签列表（{{total}}）",
+
+  "page.article.title": "文章管理",
+  "page.article.list": "所有文章",
+  "page.article.create": "新撰文章",
+  "page.article.edit": "编辑文章",
+
+  "page.article.list.title": "文章列表（{{total}}）",
+  "page.article.list.filter.featured": "精选文章",
+  "page.article.list.filter.search": "输入文章标题、内容搜索",
+
+  "page.article.editor.content": "文章内容",
+  "page.article.editor.categories": "分类目录",
+  "page.article.editor.thumbnail": "缩略图",
+  "page.article.editor.extends": "自定义扩展",
+  "page.article.editor.states": "发布选项",
+
+  "page.comment.title": "评论管理",
+  "page.comment.list.title": "评论列表（{{total}}）",
+
+  "page.vote.title": "表态记录",
+  "page.vote.list.title": "记录列表（{{total}}）",
+
+  "page.feedback.title": "站点反馈",
+  "page.feedback.list.title": "反馈列表（{{total}}）",
+
+  "page.disqus.title": "Disqus",
+  "page.disqus.posts": "Posts",
+  "page.disqus.threads": "Threads",
+  "page.disqus.synchronize": "Synchronize",
+
+  "page.setting.title": "系统设置",
+  "page.setting.general.title": "通用设置",
+  "page.setting.data.title": "数据安全",
+  "page.setting.userinfo.title": "站长资料"
+}

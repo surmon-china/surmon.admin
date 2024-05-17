@@ -1,6 +1,5 @@
 /**
- * @file clipboard service
- * @module service.clipboard
+ * @file Clipboard service
  * @author Surmon <https://github.com/surmon-china>
  */
 

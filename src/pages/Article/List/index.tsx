@@ -18,7 +18,8 @@ import {
 import { useLoading } from 'veact-use'
 import { Button, Card, Input, Select, Divider, Modal, Space, TreeSelect } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { RouteKey, rc } from '@/routes'
+import { useTranslation } from '@/i18n'
+import { RoutesKey, RoutesPath } from '@/routes'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { SortSelect } from '@/components/common/SortSelect'
 import { ResponsePaginationData } from '@/constants/request'
@@ -30,9 +31,9 @@ import { ArticleOrigin, articleOrigins } from '@/constants/article/origin'
 import { ArticlePublic, articlePublics } from '@/constants/article/public'
 import { ArticleLanguage, articleLanguages } from '@/constants/article/language'
 import { scrollTo } from '@/services/scroller'
-import { getTags } from '@/store/tag'
-import { getArticles, GetArticleParams, patchArticlesState } from '@/store/article'
-import { getCategories, getAntdTreeByTree, CategoryTree } from '@/store/category'
+import { getTags } from '@/apis/tag'
+import { getArticles, GetArticleParams, patchArticlesState } from '@/apis/article'
+import { getCategories, getAntdTreeByTree, CategoryTree } from '@/apis/category'
 import { ArticleListTable } from './Table'
 
 import styles from './style.module.less'
@@ -51,6 +52,7 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
 })
 
 export const ArticleList: React.FC = () => {
+  const { i18n } = useTranslation()
   const loading = useLoading()
   const article = useShallowReactive<ResponsePaginationData<Article>>({
     data: [],
@@ -150,13 +152,13 @@ export const ArticleList: React.FC = () => {
 
   return (
     <Card
-      title={`文章列表（${article.pagination?.total ?? '-'}）`}
       bordered={false}
       className={styles.articleList}
+      title={i18n.t('page.article.list.title', { total: article.pagination?.total ?? '-' })}
       extra={
-        <Link to={rc(RouteKey.ArticlePost).path}>
+        <Link to={RoutesPath[RoutesKey.ArticlePost]}>
           <Button type="primary" size="small" icon={<Icon.EditOutlined />}>
-            新撰文章
+            {i18n.t('page.article.create')}
           </Button>
         </Link>
       }
@@ -171,7 +173,7 @@ export const ArticleList: React.FC = () => {
                 filterParams.featured = filterParams.featured === true ? SELECT_ALL_VALUE : true
               }}
             >
-              精选文章
+              {i18n.t('page.article.list.filter.featured')}
             </Button>
             <Select
               className={styles.select}
@@ -310,7 +312,7 @@ export const ArticleList: React.FC = () => {
           <Space wrap>
             <Input.Search
               className={styles.search}
-              placeholder="输入文章标题、内容搜索"
+              placeholder={i18n.t('page.article.list.filter.search')}
               loading={loading.state.value}
               onSearch={() => fetchData()}
               value={serarchKeyword.value}
@@ -323,12 +325,13 @@ export const ArticleList: React.FC = () => {
               loading={loading.state.value}
               onClick={resetParamsAndRefresh}
             >
-              重置并刷新
+              {i18n.t('common.list.filter.reset_and_refresh')}
             </Button>
           </Space>
         </Space>
         <Space>
           <DropdownMenu
+            text="批量操作"
             disabled={!selectedIds.value.length}
             options={[
               {
@@ -347,9 +350,7 @@ export const ArticleList: React.FC = () => {
                 onClick: () => handleStateChange(selectedIds.value, PublishState.Recycle)
               }
             ]}
-          >
-            批量操作
-          </DropdownMenu>
+          />
         </Space>
       </Space>
       <Divider />

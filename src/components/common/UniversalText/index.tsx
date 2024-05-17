@@ -9,7 +9,7 @@ import { BaseType } from 'antd/lib/typography/Base'
 import { Placeholder, PlaceholderProps } from '../Placeholder'
 
 export interface UniversalTextProps {
-  text: any
+  text: React.ReactNode
   type?: BaseType
   className?: string
   copyable?: boolean
@@ -22,7 +22,7 @@ export const UniversalText: React.FC<UniversalTextProps> = (props) => {
   return (
     <Space size="small" className={props.className}>
       {props.prefix}
-      <Placeholder data={props.text} placeholder={props.placeholder}>
+      <Placeholder<React.ReactNode> data={props.text} placeholder={props.placeholder}>
         {(text) => (
           <Typography.Text copyable={props.copyable} type={props.type}>
             {text}

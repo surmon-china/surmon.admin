@@ -1,5 +1,5 @@
 /**
- * @file JSON 处理
+ * @file JSON parser
  * @author Surmon <https://github.com/surmon-china>
  */
 

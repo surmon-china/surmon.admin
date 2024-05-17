@@ -65,7 +65,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
           responsive: ['md'],
           render(_, comment) {
             return (
-              <Button size="small" type="ghost" onClick={() => props.onPostId(comment.post_id)}>
+              <Button size="small" ghost onClick={() => props.onPostId(comment.post_id)}>
                 {comment.post_id}
               </Button>
             )
@@ -267,7 +267,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 block={true}
                 type="link"
                 target="_blank"
-                icon={<Icon.LinkOutlined />}
+                icon={<Icon.ExportOutlined />}
                 href={getBlogURLByPostID(comment.post_id)}
               >
                 宿主页面

@@ -1,5 +1,5 @@
 /**
- * @file emoji
+ * @file Emoji
  * @author Surmon <https://github.com/surmon-china>
  */
 

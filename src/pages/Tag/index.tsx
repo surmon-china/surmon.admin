@@ -8,8 +8,10 @@ import { useShallowReactive, useRef, onMounted, useReactive, useComputed } from 
 import { useLoading } from 'veact-use'
 import { Table, Button, Card, Input, Divider, Spin, Modal, Space } from 'antd'
 import * as Icon from '@ant-design/icons'
+
+import { useTranslation } from '@/i18n'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
-import { getTags, GetTagParams, deleteTag, deleteTags, putTag, createTag } from '@/store/tag'
+import { getTags, GetTagParams, deleteTag, deleteTags, putTag, createTag } from '@/apis/tag'
 import { ResponsePaginationData } from '@/constants/request'
 import { Tag } from '@/constants/tag'
 import { scrollTo } from '@/services/scroller'
@@ -19,6 +21,7 @@ import { EditModal } from './EditModal'
 import styles from './style.module.less'
 
 export const TagPage: React.FC = () => {
+  const { i18n } = useTranslation()
   const loading = useLoading()
   const submitting = useLoading()
   const tag = useShallowReactive<ResponsePaginationData<Tag>>({
@@ -134,9 +137,9 @@ export const TagPage: React.FC = () => {
 
   return (
     <Card
-      title={`标签列表（${tag.pagination?.total ?? '-'}）`}
       bordered={false}
       className={styles.tag}
+      title={i18n.t('page.tag.list.title', { total: tag.pagination?.total ?? '-' })}
       extra={
         <Button type="primary" size="small" icon={<Icon.PlusOutlined />} onClick={createNewData}>
           创建新标签
@@ -147,7 +150,7 @@ export const TagPage: React.FC = () => {
         <Space wrap>
           <Input.Search
             className={styles.search}
-            placeholder="输入关键词搜索"
+            placeholder={i18n.t('common.list.filter.search')}
             loading={loading.state.value}
             onSearch={() => fetchData()}
             value={filterParams.keyword}
@@ -160,11 +163,12 @@ export const TagPage: React.FC = () => {
             loading={loading.state.value}
             onClick={resetParamsAndRefresh}
           >
-            重置并刷新
+            {i18n.t('common.list.filter.reset_and_refresh')}
           </Button>
         </Space>
         <Space>
           <DropdownMenu
+            text="批量操作"
             disabled={!selectedIDs.value.length}
             options={[
               {
@@ -173,9 +177,7 @@ export const TagPage: React.FC = () => {
                 onClick: handleDeleteList
               }
             ]}
-          >
-            批量操作
-          </DropdownMenu>
+          />
         </Space>
       </Space>
       <Divider />
@@ -230,9 +232,8 @@ export const TagPage: React.FC = () => {
               align: 'right',
               dataIndex: 'actions',
               render: (_, tag, index) => (
-                <Button.Group>
+                <Button.Group size="small">
                   <Button
-                    size="small"
                     type="text"
                     icon={<Icon.EditOutlined />}
                     onClick={() => editData(index)}
@@ -240,7 +241,6 @@ export const TagPage: React.FC = () => {
                     编辑
                   </Button>
                   <Button
-                    size="small"
                     type="text"
                     danger={true}
                     icon={<Icon.DeleteOutlined />}
@@ -249,10 +249,9 @@ export const TagPage: React.FC = () => {
                     删除
                   </Button>
                   <Button
-                    size="small"
                     type="link"
                     target="_blank"
-                    icon={<Icon.LinkOutlined />}
+                    icon={<Icon.ExportOutlined />}
                     href={getBlogTagUrl(tag.slug)}
                   >
                     查看

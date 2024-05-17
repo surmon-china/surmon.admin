@@ -8,6 +8,7 @@ import { useShallowReactive, useRef, onMounted, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Empty, Divider, Modal, Space, Spin, Tree, Typography } from 'antd'
 import * as Icon from '@ant-design/icons'
+import { useTranslation } from '@/i18n'
 import { UniversalText } from '@/components/common/UniversalText'
 import { ResponsePaginationData } from '@/constants/request'
 import { Category as CategoryType } from '@/constants/category'
@@ -19,12 +20,13 @@ import {
   deleteCategory,
   putCategory,
   createCategory
-} from '@/store/category'
+} from '@/apis/category'
 import { EditModal } from './EditModal'
 
 import styles from './style.module.less'
 
 export const CategoryPage: React.FC = () => {
+  const { i18n } = useTranslation()
   const loading = useLoading()
   const submitting = useLoading()
   const loaded = useRef(false)
@@ -106,9 +108,9 @@ export const CategoryPage: React.FC = () => {
 
   return (
     <Card
-      title={`分类列表（${categories.pagination?.total ?? '-'}）`}
       bordered={false}
       className={styles.category}
+      title={i18n.t('page.category.list.title', { total: categories.pagination?.total ?? '-' })}
       extra={
         <Button type="primary" size="small" icon={<Icon.PlusOutlined />} onClick={createNewData}>
           创建新分类
@@ -122,7 +124,7 @@ export const CategoryPage: React.FC = () => {
             loading={loading.state.value}
             onClick={() => fetchData()}
           >
-            刷新
+            {i18n.t('common.list.filter.refresh')}
           </Button>
         </Space>
       </Space>
@@ -189,7 +191,7 @@ export const CategoryPage: React.FC = () => {
                     <Divider type="vertical" />
                     <Button
                       size="small"
-                      icon={<Icon.LinkOutlined />}
+                      icon={<Icon.ExportOutlined />}
                       type="link"
                       target="_blank"
                       href={getBlogCategoryUrl(category.slug)}

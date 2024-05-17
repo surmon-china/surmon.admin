@@ -7,18 +7,19 @@ import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
-import { Modal, Button, Space, Badge, Divider, message } from 'antd'
+import { Modal, Button, Space, Divider, message } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { RouteKey, rc } from '@/routes'
-import { getUEditorCache } from '@/components/common/UniversalEditor'
-import { Article } from '@/constants/article'
+import { RoutesKey, RoutesPath, RoutesPather } from '@/routes'
+import { getUnEditorCache } from '@/components/common/UniversalEditor'
 import { SortTypeWithHot } from '@/constants/sort'
+import { Article } from '@/constants/article'
 import { scrollTo } from '@/services/scroller'
-import { getArticle, putArticle, deleteArticles } from '@/store/article'
-import { getComments, CommentTree } from '@/store/comment'
+import { getArticle, putArticle, deleteArticles } from '@/apis/article'
+import { getComments, CommentTree } from '@/apis/comment'
+import { numberToKilo } from '@/transforms/number'
 import { getBlogArticleUrl } from '@/transforms/url'
 import { ArticleEditor } from '../Editor'
-import { ArticleComment } from './Comment'
+import { ArticleComments } from './Comments'
 
 export const ArticleEdit: React.FC = () => {
   const { article_id: articleID } = useParams<'article_id'>()
@@ -26,10 +27,9 @@ export const ArticleEdit: React.FC = () => {
   const fetching = useLoading()
   const submitting = useLoading()
   const article = useRef<Article | null>(null)
-  const articleCacheID = React.useMemo(
-    () => rc(RouteKey.ArticleEdit).pather!(articleID),
-    [articleID]
-  )
+  const articleCacheID = React.useMemo(() => {
+    return RoutesPather.articleDetail(articleID!)
+  }, [articleID])
 
   // Modal
   const isVisibleCommentModal = useRef<boolean>(false)
@@ -62,36 +62,36 @@ export const ArticleEdit: React.FC = () => {
 
   const fetchDeleteArticle = () => {
     return submitting.promise(deleteArticles([article.value?._id!])).then(() => {
-      navigate(rc(RouteKey.ArticleList).path)
+      navigate(RoutesPath[RoutesKey.ArticleList])
       scrollTo(document.body)
-    })
-  }
-
-  const handleManageComment = () => {
-    navigate({
-      pathname: rc(RouteKey.Comment).path,
-      search: `post_id=${article.value?.id!}`
     })
   }
 
   const handleDelete = () => {
     Modal.confirm({
-      title: `你确定要彻底删除文章 《${article!.value!.title}》 吗？`,
+      title: `你确定要彻底删除文章《${article!.value!.title}》吗？`,
       content: '该行为是物理删除，不可恢复！',
       onOk: fetchDeleteArticle,
       okButtonProps: {
         danger: true,
-        type: 'ghost'
+        ghost: true
       }
+    })
+  }
+
+  const navigateToCommentList = () => {
+    navigate({
+      pathname: RoutesPath[RoutesKey.Comment],
+      search: `post_id=${article.value?.id!}`
     })
   }
 
   onMounted(async () => {
     try {
-      const _article = await fetching.promise(getArticle(articleID!))
-      fetchComments(_article.id!)
-      const localContent = getUEditorCache(articleCacheID)
-      if (Boolean(localContent) && localContent !== _article.content) {
+      const remote = await fetching.promise(getArticle(articleID!))
+      fetchComments(remote.id!)
+      const localContent = getUnEditorCache(articleCacheID)
+      if (!!localContent && localContent !== remote.content) {
         Modal.confirm({
           title: '本地缓存存在未保存的文章，是否要覆盖远程数据？',
           content: '如果覆盖错了，就自己刷新吧！',
@@ -102,14 +102,14 @@ export const ArticleEdit: React.FC = () => {
             danger: true
           },
           onOk() {
-            article.value = { ..._article, content: localContent || '' }
+            article.value = { ...remote, content: localContent || '' }
           },
           onCancel() {
-            article.value = _article
+            article.value = remote
           }
         })
       } else {
-        article.value = _article
+        article.value = remote
       }
     } catch (error: any) {
       Modal.error({
@@ -123,39 +123,38 @@ export const ArticleEdit: React.FC = () => {
   return (
     <>
       <ArticleEditor
-        title="编辑文章"
         article={article}
         editorCacheID={articleCacheID}
         loading={fetching.state.value}
         submitting={submitting.state.value}
         onSubmit={fetchUpdateArticle}
         extra={
-          <Space wrap>
-            <Button.Group>
-              <Button size="small" icon={<Icon.HeartOutlined />} disabled>
-                {article.value?.meta?.likes} 喜欢
+          <Space size="small" wrap>
+            <Button.Group size="small">
+              <Button icon={<Icon.EyeOutlined />} disabled>
+                {numberToKilo(article.value?.meta?.views ?? 0)} 阅读
               </Button>
-              <Button size="small" icon={<Icon.EyeOutlined />} disabled>
-                {article.value?.meta?.views} 阅读
+              <Button icon={<Icon.HeartOutlined />} disabled>
+                {numberToKilo(article.value?.meta?.likes ?? 0)} 喜欢
               </Button>
               <Button
-                size="small"
-                icon={<Icon.LinkOutlined />}
-                target="_blank"
-                href={getBlogArticleUrl(article.value?.id!)}
-              />
-            </Button.Group>
-            <Badge count={commentCount.value}>
-              <Button
-                type="ghost"
-                size="small"
                 icon={<Icon.CommentOutlined />}
                 disabled={fetching.state.value}
                 onClick={openCommentModal}
               >
-                文章评论
+                {numberToKilo(commentCount.value)} 评论
               </Button>
-            </Badge>
+            </Button.Group>
+            <Divider type="vertical" />
+            <Button
+              size="small"
+              type="dashed"
+              icon={<Icon.ExportOutlined />}
+              target="_blank"
+              href={getBlogArticleUrl(article.value?.id!)}
+            >
+              打开
+            </Button>
             <Divider type="vertical" />
             <Button
               type="dashed"
@@ -171,13 +170,13 @@ export const ArticleEdit: React.FC = () => {
           </Space>
         }
       />
-      <ArticleComment
+      <ArticleComments
         visible={isVisibleCommentModal.value}
         loading={commentLoading.state.value}
         count={commentCount.value}
         comments={comments.value}
         onClose={closeCommentModal}
-        onManage={handleManageComment}
+        onNavigate={navigateToCommentList}
         onRefresh={() => fetchComments(article.value?.id!)}
       />
     </>

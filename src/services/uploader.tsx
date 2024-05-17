@@ -5,7 +5,7 @@
 
 import { useRef } from 'veact'
 import { useLoading } from 'veact-use'
-import { uploadStaticToNodePress } from '@/store/system'
+import { uploadStaticToNodePress } from '@/apis/system'
 
 const UPLOAD_FILE_SIZE_LIMIT = 3000000
 
@@ -34,24 +34,24 @@ export const useUploader = () => {
 
     // upload file
     const _fileName = (fileName ?? file.name).replace(/ /gi, '')
-    console.info('[upoader]', '开始上传：', _fileName)
+    console.debug('[upoader]', 'Start uploading:', _fileName)
     return uploading.promise(
       uploadStaticToNodePress({
         file,
         name: _fileName,
         onProgress: (_progress) => {
-          console.info('[upoader]', '上传有一个新进度', _progress)
+          console.debug('[upoader]', 'New upload progress:', _progress)
           progressing.value = true
           progress.value = _progress * 100
           options?.onProgress?.(_progress)
         }
       })
         .then((result) => {
-          console.info('[upoader]', '上传完成', result.url)
+          console.debug('[upoader]', 'Upload completed:', result.url)
           return result
         })
         .catch((error) => {
-          console.warn('[upoader]', '上传失败', error)
+          console.warn('[upoader]', 'Upload failed:', error)
           return Promise.reject({
             code: UploadErrorCode.Failure,
             error

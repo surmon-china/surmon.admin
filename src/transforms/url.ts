@@ -1,5 +1,5 @@
 /**
- * @file 链接转换
+ * @file URL transform
  * @author Surmon <https://github.com/surmon-china>
  */
 

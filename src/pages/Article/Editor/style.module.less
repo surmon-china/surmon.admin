@@ -6,13 +6,25 @@
 
 .categorySelect {
   :global(.ant-tree-treenode) {
-    margin-bottom: 1rem;
+    margin-bottom: @gap;
     &:last-child {
       margin-bottom: 0;
     }
   }
   :global(.ant-tree-checkbox) {
-    margin: 0 8px;
-    margin-top: 5px;
+    margin: 0 @gap-x;
+    margin-top: @gap-xx;
+  }
+}
+
+.mainMultipleImageUploader {
+  width: 100%;
+
+  .copyButton {
+    margin-bottom: @gap-md;
+  }
+
+  :global(.ant-upload-list-item) {
+    margin-top: @gap-sm !important;
   }
 }

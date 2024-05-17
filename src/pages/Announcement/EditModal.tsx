@@ -92,10 +92,13 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
           rules={[{ required: true, message: '请输入内容' }]}
         >
           <UniversalEditor
-            disabledMinimap={true}
-            disabledToolbar={true}
-            disabledCacheDraft={true}
+            placeholder="输入公告内容..."
             rows={10}
+            autoFocus={true}
+            disabledToolbar={true}
+            disabledFoldGutter={true}
+            disabledLineNumbers={true}
+            disabledCacheDraft={true}
           />
         </Form.Item>
       </Form>
