@@ -1,6 +1,6 @@
 import React from 'react'
 import { Ref, useWatch } from 'veact'
-import { Form, Typography, Input, Button, Divider, Drawer, Spin, Radio, Statistic } from 'antd'
+import { Form, Typography, Input, Button, Divider, Drawer, Radio, Statistic } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { IPLocation } from '@/components/common/IPLocation'
 import { UniversalText } from '@/components/common/UniversalText'
@@ -26,8 +26,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
 
   useWatch(props.visible, (visible) => {
     if (visible) {
-      const targetFeedback = props.feedback.value
-      form.setFieldsValue(targetFeedback || {})
+      form.setFieldsValue(props.feedback.value || {})
     } else {
       form.resetFields()
     }
@@ -94,8 +93,8 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
       </Form.Item>
       <Form.Item label=" ">
         <Button
-          icon={<Icon.CheckOutlined />}
           type="primary"
+          icon={<Icon.CheckOutlined />}
           loading={props.loading}
           onClick={handleSubmit}
         >
@@ -109,13 +108,12 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
     <Drawer
       width="46rem"
       title="反馈详情"
+      loading={props.loading}
       open={props.visible.value}
       onClose={props.onCancel}
       destroyOnClose={true}
     >
-      <Spin spinning={props.loading}>
-        {props.feedback.value ? getFormElement(props.feedback.value) : null}
-      </Spin>
+      {props.feedback.value ? getFormElement(props.feedback.value) : null}
     </Drawer>
   )
 }
