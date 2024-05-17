@@ -5,7 +5,7 @@
 
 import React, { useMemo, useState } from 'react'
 import { onMounted } from 'veact'
-import { Space, Row, Col, Radio, Card, Result } from 'antd'
+import { Space, Row, Col, Select, Card, Result } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { useLoading } from '@/services/loading'
 import { APP_LAYOUT_SPACE_SIZE, APP_LAYOUT_GUTTER_SIZE } from '@/config'
@@ -20,6 +20,19 @@ export enum CalendarDataKey {
   Article = 'article',
   Comment = 'comment'
 }
+
+const calendarDataOptions = [
+  {
+    value: CalendarDataKey.Comment,
+    icon: <Icon.CommentOutlined />,
+    text: '评论'
+  },
+  {
+    value: CalendarDataKey.Article,
+    icon: <Icon.CoffeeOutlined />,
+    text: '文章'
+  }
+]
 
 export const DashboardPage: React.FC = () => {
   const statisticsLoading = useLoading()
@@ -76,19 +89,20 @@ export const DashboardPage: React.FC = () => {
             data={activeCalendarData}
             loading={articleCalendarloading.state || commentCalendarloading.state}
             cardExtra={
-              <Radio.Group
+              <Select
                 size="small"
-                buttonStyle="solid"
                 value={activeCalendarDataKey}
-                onChange={(e) => setActiveCalendarDataKey(e.target.value)}
-              >
-                <Radio.Button value={CalendarDataKey.Article}>
-                  <Icon.CoffeeOutlined /> 文章
-                </Radio.Button>
-                <Radio.Button value={CalendarDataKey.Comment}>
-                  <Icon.CommentOutlined /> 评论
-                </Radio.Button>
-              </Radio.Group>
+                onChange={(value) => setActiveCalendarDataKey(value)}
+                options={calendarDataOptions.map((option) => ({
+                  value: option.value,
+                  label: (
+                    <Space size="small">
+                      {option.icon}
+                      {option.text}
+                    </Space>
+                  )
+                }))}
+              />
             }
           />
         </Col>
