@@ -4,6 +4,7 @@
  */
 
 import React from 'react'
+import { useLoading } from 'veact-use'
 import {
   useShallowReactive,
   useRef,
@@ -15,24 +16,17 @@ import {
 } from 'veact'
 import { Table, Button, Card, Input, Tag, Select, Divider, Spin, Modal, Space } from 'antd'
 import * as Icon from '@ant-design/icons'
-
-import { DropdownMenu } from '@/components/common/DropdownMenu'
-import {
-  getAnnouncements,
-  GetAnnouncementsParams,
-  deleteAnnouncement,
-  deleteAnnouncements,
-  putAnnouncement,
-  createAnnouncement
-} from '@/apis/announcement'
+import * as api from '@/apis/announcement'
+import type { GetAnnouncementsParams } from '@/apis/announcement'
 import { useTranslation } from '@/i18n'
+import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { Announcement as AnnouncementType } from '@/constants/announcement'
 import { ResponsePaginationData } from '@/constants/nodepress'
 import { PublishState, getPublishState } from '@/constants/publish'
-import { useLoading } from 'veact-use'
 import { scrollTo } from '@/services/scroller'
 import { stringToYMD } from '@/transforms/date'
 import { EditModal } from './EditModal'
+
 import styles from './style.module.less'
 
 export const STATE_IDS = [PublishState.Draft, PublishState.Published]
@@ -87,7 +81,7 @@ export const AnnouncementPage: React.FC = () => {
       keyword: Boolean(filterParams.keyword) ? filterParams.keyword : undefined
     }
 
-    loading.promise(getAnnouncements(getParams)).then((response) => {
+    loading.promise(api.getAnnouncements(getParams)).then((response) => {
       batchedUpdates(() => {
         announcement.data = response.data
         announcement.pagination = response.pagination
@@ -118,7 +112,7 @@ export const AnnouncementPage: React.FC = () => {
       content: '删除后不可恢复',
       centered: true,
       onOk: () =>
-        deleteAnnouncement(id).then(() => {
+        api.deleteAnnouncement(id).then(() => {
           refreshData()
         })
     })
@@ -131,7 +125,7 @@ export const AnnouncementPage: React.FC = () => {
       content: '删除后不可恢复',
       centered: true,
       onOk: () =>
-        deleteAnnouncements(ids).then(() => {
+        api.deleteAnnouncements(ids).then(() => {
           refreshData()
         })
     })
@@ -141,7 +135,7 @@ export const AnnouncementPage: React.FC = () => {
     if (activeEditData.value) {
       submitting
         .promise(
-          putAnnouncement({
+          api.putAnnouncement({
             ...activeEditData.value,
             ...announcement
           })
@@ -151,7 +145,7 @@ export const AnnouncementPage: React.FC = () => {
           refreshData()
         })
     } else {
-      submitting.promise(createAnnouncement(announcement)).then(() => {
+      submitting.promise(api.createAnnouncement(announcement)).then(() => {
         closeModal()
         refreshData()
       })
