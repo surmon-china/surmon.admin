@@ -20,6 +20,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
   return (
     <Table<Announcement>
       rowKey="_id"
+      loading={props.loading}
       dataSource={props.data}
       rowSelection={{
         selectedRowKeys: props.selectedIds,

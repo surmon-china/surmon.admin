@@ -7,7 +7,7 @@ import React from 'react'
 import { useShallowReactive, useRef, onMounted, useWatch, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
 import { useTranslation } from '@/i18n'
-import { Card, Divider, Modal, Drawer } from 'antd'
+import { Card, Divider, Modal, Drawer, Spin } from 'antd'
 import * as Icons from '@ant-design/icons'
 import * as api from '@/apis/feedback'
 import type { GetFeedbacksParams } from '@/apis/feedback'
@@ -44,21 +44,21 @@ export const FeedbackPage: React.FC = () => {
     return feedbacks.data.filter((c) => selectedIds.value.includes(c._id!))
   })
 
-  // edit modal
-  const isVisibleModal = useRef(false)
+  // edit drawer
+  const isVisibleDrawer = useRef(false)
   const activeEditItemIndex = useRef<number | null>(null)
   const activeEditFeedback = useComputed(() => {
     const index = activeEditItemIndex.value
     return index !== null ? feedbacks.data[index] : null
   })
 
-  const closeEditModal = () => {
-    isVisibleModal.value = false
+  const closeEditDrawer = () => {
+    isVisibleDrawer.value = false
   }
 
-  const openEditModal = (index: number) => {
+  const openEditDrawer = (index: number) => {
     activeEditItemIndex.value = index
-    isVisibleModal.value = true
+    isVisibleDrawer.value = true
   }
 
   const fetchList = (params?: GetFeedbacksParams) => {
@@ -107,7 +107,7 @@ export const FeedbackPage: React.FC = () => {
     }
 
     updating.promise(api.putFeedback(payload)).then(() => {
-      closeEditModal()
+      closeEditDrawer()
       refreshList()
     })
   }
@@ -156,7 +156,7 @@ export const FeedbackPage: React.FC = () => {
         pagination={feedbacks.pagination}
         selectedIds={selectedIds.value}
         onSelect={(ids) => (selectedIds.value = ids)}
-        onDetail={(_, index) => openEditModal(index)}
+        onDetail={(_, index) => openEditDrawer(index)}
         onDelete={(feedback) => deleteItems([feedback])}
         onPaginate={(page, pageSize) => fetchList({ page, per_page: pageSize })}
       />
@@ -164,16 +164,18 @@ export const FeedbackPage: React.FC = () => {
         width="46rem"
         title="反馈详情"
         destroyOnClose={true}
-        open={isVisibleModal.value}
-        onClose={closeEditModal}
+        open={isVisibleDrawer.value}
+        onClose={closeEditDrawer}
       >
-        {activeEditFeedback.value && (
-          <EditForm
-            loading={updating.state.value}
-            feedback={activeEditFeedback.value}
-            onSubmit={(feedback) => updateItem(feedback)}
-          />
-        )}
+        <Spin spinning={updating.state.value}>
+          {activeEditFeedback.value && (
+            <EditForm
+              loading={updating.state.value}
+              feedback={activeEditFeedback.value}
+              onSubmit={(feedback) => updateItem(feedback)}
+            />
+          )}
+        </Spin>
       </Drawer>
     </Card>
   )
