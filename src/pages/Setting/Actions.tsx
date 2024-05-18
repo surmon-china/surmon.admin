@@ -2,25 +2,25 @@ import React from 'react'
 import { useLoading } from 'veact-use'
 import { Button, Row, Divider, Modal } from 'antd'
 import * as Icon from '@ant-design/icons'
-import { updateDatabaseBackup, updateArchiveCache } from '@/apis/system'
+import * as api from '@/apis/system'
 
-export const DataForm: React.FC = () => {
+export const ActionsForm: React.FC = () => {
   const databaseLoading = useLoading()
   const archiveLoading = useLoading()
 
-  const handleUpdateDatabaseBackup = () => {
+  const updateDatabaseBackup = () => {
     Modal.confirm({
       centered: true,
       title: '更新备份会导致强制覆盖旧的数据库备份，确定要继续吗？',
-      onOk: () => databaseLoading.promise(updateDatabaseBackup())
+      onOk: () => databaseLoading.promise(api.updateDatabaseBackup())
     })
   }
 
-  const handleUpdateArchive = () => {
+  const updateArchiveCache = () => {
     Modal.confirm({
       centered: true,
       title: '将会更新全站的所有全量数据缓存，确定要继续吗？',
-      onOk: () => archiveLoading.promise(updateArchiveCache())
+      onOk: () => archiveLoading.promise(api.updateArchiveCache())
     })
   }
 
@@ -30,7 +30,7 @@ export const DataForm: React.FC = () => {
         type="primary"
         block={true}
         loading={databaseLoading.state.value}
-        onClick={handleUpdateDatabaseBackup}
+        onClick={updateDatabaseBackup}
         icon={<Icon.CloudUploadOutlined />}
       >
         立即更新数据库备份
@@ -40,7 +40,7 @@ export const DataForm: React.FC = () => {
         type="primary"
         block={true}
         loading={archiveLoading.state.value}
-        onClick={handleUpdateArchive}
+        onClick={updateArchiveCache}
         icon={<Icon.CloudSyncOutlined />}
       >
         更新 Archive 及缓存

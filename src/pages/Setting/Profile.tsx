@@ -4,11 +4,11 @@ import { useLoading } from 'veact-use'
 import { useNavigate } from 'react-router-dom'
 import { Form, Input, Button, Spin, Divider, notification } from 'antd'
 import * as Icon from '@ant-design/icons'
+import * as api from '@/apis/admin'
 import { RoutesKey, RoutesPath } from '@/routes'
 import { useAdminProfile } from '@/contexts/AdminProfile'
 import { ImageUploader } from '@/components/common/ImageUploader'
 import { AdminProfile } from '@/constants/admin'
-import { getAdminProfile, putAdminProfile } from '@/apis/admin'
 import { scrollTo } from '@/services/scroller'
 import { removeToken } from '@/services/token'
 
@@ -20,11 +20,11 @@ export const ProfileForm: React.FC = () => {
   const [form] = Form.useForm<AdminProfile>()
 
   const fetchLatestProfile = () => {
-    loading.promise(getAdminProfile()).then(form.setFieldsValue)
+    loading.promise(api.getAdminProfile()).then(form.setFieldsValue)
   }
 
   const updateProfile = (adminProfile: AdminProfile) => {
-    return updating.promise(putAdminProfile(adminProfile)).then(() => {
+    return updating.promise(api.putAdminProfile(adminProfile)).then(() => {
       if (adminProfile.new_password) {
         notification.info({
           message: '修改了新密码，即将跳转到登录页...'
@@ -40,7 +40,7 @@ export const ProfileForm: React.FC = () => {
     })
   }
 
-  const handleSubmit = () => {
+  const handleFormSubmit = () => {
     form.validateFields().then((newAdminAuth) => {
       Reflect.deleteProperty(newAdminAuth, 'rel_new_password')
       updateProfile({ ...newAdminAuth }).then(() => {
@@ -130,11 +130,11 @@ export const ProfileForm: React.FC = () => {
           <Input.Password placeholder="确认新密码" autoComplete="rel_new_password" />
         </Form.Item>
         <Button
-          icon={<Icon.CheckOutlined />}
           type="primary"
           block={true}
+          icon={<Icon.CheckOutlined />}
           loading={updating.state.value}
-          onClick={handleSubmit}
+          onClick={handleFormSubmit}
         >
           保存
         </Button>

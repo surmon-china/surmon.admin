@@ -9,7 +9,7 @@ import * as Icon from '@ant-design/icons'
 import { useTranslation } from '@/i18n'
 import { APP_LAYOUT_GUTTER_SIZE } from '@/config'
 import { GeneralForm } from './General'
-import { DataForm } from './Data'
+import { ActionsForm } from './Actions'
 import { ProfileForm } from './Profile'
 
 interface PageCardProps extends React.PropsWithChildren {
@@ -47,7 +47,7 @@ export const SettingPage: React.FC = () => {
               title={i18n.t('page.setting.data.title')}
               icon={<Icon.CloudServerOutlined />}
             >
-              <DataForm />
+              <ActionsForm />
             </PageCard>
           </Col>
           <Col span={24}>
