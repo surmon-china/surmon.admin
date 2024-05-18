@@ -335,7 +335,7 @@ export const ArticleList: React.FC = () => {
               loading={loading.state.value}
               onClick={resetParamsAndRefresh}
             >
-              {i18n.t('common.list.filter.reset_and_refresh')}
+              {i18n.t('common.list.filter.refresh_with_reset')}
             </Button>
           </Space>
         </Space>

@@ -27,7 +27,7 @@
 
   "common.list.filter.search": "Input keywords to search",
   "common.list.filter.refresh": "Refresh",
-  "common.list.filter.reset_and_refresh": "Reset and Refresh",
+  "common.list.filter.refresh_with_reset": "Reset and Refresh",
 
   "common.table.states": "States",
   "common.table.actions": "Actions",

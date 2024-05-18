@@ -1,40 +1,19 @@
 @import '@/styles/mixins.less';
 @import '@/styles/variables.less';
 
-.category {
-  .toolbar {
-    display: flex;
-    justify-content: space-between;
-
-    .search {
-      width: 200px;
-    }
+.categoryTreeNode {
+  position: relative;
+  width: 100%;
+  padding: @gap;
+  border-radius: @border-radius-sm;
+  transition: @motion-duration-fast;
+  &:hover {
+    background-color: var(--app-color-bg-text-hover);
   }
 
-  @paddingSize: 10px;
-  .categoryNode {
-    width: 100%;
-    padding: @paddingSize;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .content {
-      .title {
-        width: 100%;
-        margin-bottom: 5px;
-      }
-    }
-  }
-
-  .tree {
-    margin-bottom: -1rem;
-  }
-
-  :global(.ant-tree-treenode) {
-    margin-bottom: 1rem;
-  }
-  :global(.ant-tree-switcher) {
-    padding-top: @paddingSize;
+  .levelIcon {
+    position: absolute;
+    left: -1.5em;
+    color: @color-text-quaternary;
   }
 }

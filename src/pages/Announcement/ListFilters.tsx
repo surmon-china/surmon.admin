@@ -77,7 +77,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
           loading={props.loading}
           onClick={() => props.onResetRefresh()}
         >
-          {i18n.t('common.list.filter.reset_and_refresh')}
+          {i18n.t('common.list.filter.refresh_with_reset')}
         </Button>
       </Space>
       <Space>{props.extra}</Space>

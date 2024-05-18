@@ -9,7 +9,7 @@ const formLayout = {
   wrapperCol: { span: 18 }
 }
 
-const initFormData = {
+const DEFAULT_TAG_DATA: Partial<TagType> = {
   extends: [
     {
       name: 'icon',
@@ -36,7 +36,7 @@ export const FormModal: React.FC<FormModalProps> = (props) => {
 
   useEffect(() => {
     form.resetFields()
-    form.setFieldsValue(props.initData ?? initFormData)
+    form.setFieldsValue(props.initData ?? DEFAULT_TAG_DATA)
   }, [props.initData, props.visible])
 
   return (

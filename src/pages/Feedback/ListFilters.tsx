@@ -117,7 +117,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
           onClick={props.onResetRefresh}
         >
           <span>
-            <Trans i18nKey="common.list.filter.reset_and_refresh" />
+            <Trans i18nKey="common.list.filter.refresh_with_reset" />
           </span>
         </Button>
       </Space>

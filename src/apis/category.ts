@@ -31,26 +31,22 @@ export function getCategories(params: GeneralPaginateQueryParams = {}) {
 }
 
 /** 获取符合 Antd 的分类树 */
-export function getAntdTreeByTree({
-  tree,
-  valuer,
-  disabledWhen
-}: {
+export function getAntdTreeByTree(options: {
   tree: Array<CategoryTree>
   valuer(category: Category): any
   disabledWhen?(category: Category): boolean
 }) {
   const toAntdTree = (_tree: Array<CategoryTree>): TreeDataNode[] => {
-    return _tree.map((category) => ({
-      data: category,
-      title: category.name,
-      key: valuer(category),
-      value: valuer(category),
-      disabled: disabledWhen?.(category) ?? false,
-      children: toAntdTree(category.children || [])
+    return _tree.map((_category) => ({
+      data: _category,
+      title: _category.name,
+      key: options.valuer(_category),
+      value: options.valuer(_category),
+      disabled: options.disabledWhen?.(_category) ?? false,
+      children: toAntdTree(_category.children || [])
     }))
   }
-  return toAntdTree(tree)
+  return toAntdTree(options.tree)
 }
 
 /** 创建分类 */

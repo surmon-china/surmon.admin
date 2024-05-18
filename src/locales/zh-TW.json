@@ -27,7 +27,7 @@
 
   "common.list.filter.search": "輸入關鍵詞搜索",
   "common.list.filter.refresh": "刷新",
-  "common.list.filter.reset_and_refresh": "重置並刷新",
+  "common.list.filter.refresh_with_reset": "重置並刷新",
 
   "common.table.states": "狀態",
   "common.table.actions": "操作",

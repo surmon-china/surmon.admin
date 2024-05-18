@@ -1,12 +1,16 @@
-import React from 'react'
-import { Ref, useWatch } from 'veact'
+import React, { useEffect } from 'react'
 import { Form, Input, Modal, TreeSelect, Typography, Divider, TreeDataNode } from 'antd'
 import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { Category as CategoryType } from '@/constants/category'
 import { stringToYMD } from '@/transforms/date'
 
+const formLayout = {
+  labelCol: { span: 5 },
+  wrapperCol: { span: 18 }
+}
+
 const CATEGORY_NULL_VALUE = 'null'
-const DEFAULT_CATEGORY: Partial<CategoryType> = {
+const DEFAULT_CATEGORY_DATA: Partial<CategoryType> = {
   pid: CATEGORY_NULL_VALUE,
   extends: [
     {
@@ -16,24 +20,19 @@ const DEFAULT_CATEGORY: Partial<CategoryType> = {
   ]
 }
 
-const formLayout = {
-  labelCol: { span: 5 },
-  wrapperCol: { span: 18 }
-}
-
-export interface EditModalProps {
+export interface FormModalProps {
   title: string
   loading: boolean
-  visible: Ref<boolean>
-  category: Ref<CategoryType | null>
-  tree: TreeDataNode[]
-  categories: CategoryType[]
-  onSubmit(category: CategoryType): void
+  visible: boolean
+  initData: CategoryType | null
+  selectTree: TreeDataNode[]
+  onSubmit(data: CategoryType): void
   onCancel(): void
 }
 
-export const EditModal: React.FC<EditModalProps> = (props) => {
+export const FormModal: React.FC<FormModalProps> = (props) => {
   const [form] = Form.useForm<CategoryType>()
+
   const handleSubmit = () => {
     form.validateFields().then((formValue) => {
       props.onSubmit({
@@ -43,45 +42,41 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
     })
   }
 
-  useWatch(props.visible, (visible) => {
-    if (!visible) {
+  useEffect(() => {
+    if (props.initData) {
       form.resetFields()
+      form.setFieldsValue({
+        ...props.initData,
+        pid: props.initData.pid ?? CATEGORY_NULL_VALUE
+      })
     } else {
-      const propCategory = props.category.value
-      if (propCategory) {
-        form.setFieldsValue({
-          ...propCategory,
-          pid: propCategory.pid ?? CATEGORY_NULL_VALUE
-        })
-      } else {
-        form.setFieldsValue({ ...DEFAULT_CATEGORY })
-      }
+      form.resetFields()
+      form.setFieldsValue({ ...DEFAULT_CATEGORY_DATA })
     }
-  })
+  }, [props.initData, props.visible])
 
   return (
     <Modal
+      width={680}
+      centered={true}
+      forceRender={true}
       title={props.title}
       confirmLoading={props.loading}
-      open={props.visible.value}
+      open={props.visible}
       onCancel={props.onCancel}
       onOk={handleSubmit}
-      centered={true}
-      width={680}
       okText="提交"
     >
       <Form {...formLayout} colon={false} form={form}>
-        {props.category.value && (
+        {props.initData && (
           <>
             <Form.Item label="ID">
-              <Typography.Text copyable={true}>{props.category.value.id}</Typography.Text>
+              <Typography.Text copyable={true}>{props.initData.id}</Typography.Text>
               <Divider type="vertical" />
-              <Typography.Text copyable={true}>{props.category.value._id}</Typography.Text>
+              <Typography.Text copyable={true}>{props.initData._id}</Typography.Text>
             </Form.Item>
-            <Form.Item label="发布于">{stringToYMD(props.category.value.created_at)}</Form.Item>
-            <Form.Item label="最后修改于">
-              {stringToYMD(props.category.value.updated_at)}
-            </Form.Item>
+            <Form.Item label="创建于">{stringToYMD(props.initData.created_at)}</Form.Item>
+            <Form.Item label="最后修改于">{stringToYMD(props.initData.updated_at)}</Form.Item>
           </>
         )}
         <Form.Item
@@ -110,14 +105,10 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
               validator(_, value) {
                 if (value === CATEGORY_NULL_VALUE) {
                   return Promise.resolve()
-                }
-                if (value === props.category.value?._id) {
+                } else if (value === props.initData?._id) {
                   return Promise.reject()
-                }
-                if (props.categories.some((c) => c._id === value)) {
-                  return Promise.resolve()
                 } else {
-                  return Promise.reject()
+                  return Promise.resolve()
                 }
               }
             }
@@ -132,7 +123,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
                 key: 'null',
                 value: CATEGORY_NULL_VALUE
               },
-              ...props.tree
+              ...props.selectTree
             ]}
           />
         </Form.Item>
