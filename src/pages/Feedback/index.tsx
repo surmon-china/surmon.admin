@@ -40,8 +40,8 @@ export const FeedbackPage: React.FC = () => {
   })
 
   // edit modal
-  const activeEditItemIndex = useRef<number | null>(null)
   const isVisibleModal = useRef(false)
+  const activeEditItemIndex = useRef<number | null>(null)
   const activeEditFeedback = useComputed(() => {
     const index = activeEditItemIndex.value
     return index !== null ? feedbacks.data[index] : null
@@ -134,7 +134,7 @@ export const FeedbackPage: React.FC = () => {
         onKeywordSearch={() => fetchList()}
         params={filterParams.value}
         onParamsChange={(value) => Object.assign(filterParams.value, value)}
-        onRefresh={resetFiltersToDefault}
+        onResetRefresh={resetFiltersToDefault}
         extra={
           <DropdownMenu
             text="批量操作"

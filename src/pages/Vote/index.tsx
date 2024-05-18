@@ -112,7 +112,7 @@ export const VotePage: React.FC = () => {
         onTargetIdSearch={() => fetchList()}
         params={filterParams.value}
         onParamsChange={(value) => Object.assign(filterParams.value, value)}
-        onRefresh={resetFiltersToDefault}
+        onResetRefresh={resetFiltersToDefault}
         extra={
           <DropdownMenu
             text="批量操作"

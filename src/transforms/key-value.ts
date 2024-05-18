@@ -1,6 +1,5 @@
 /**
  * @file BIZ key value transformer
- * @module transformer/key-value
  * @author Surmon <https://github.com/surmon-china>
  */
 

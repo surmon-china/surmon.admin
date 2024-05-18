@@ -35,8 +35,8 @@ export const TagPage: React.FC = () => {
   const selectedIds = useRef<Array<string>>([])
 
   // modal
-  const activeEditTagIndex = useRef<number | null>(null)
   const isVisibleModal = useRef(false)
+  const activeEditTagIndex = useRef<number | null>(null)
   const activeEditTag = useComputed(() => {
     const index = activeEditTagIndex.value
     return index !== null ? tags.data[index] : null
@@ -148,9 +148,9 @@ export const TagPage: React.FC = () => {
       <ListFilters
         loading={loading.state.value}
         keyword={searchKeyword.value}
-        onKeywordSearch={() => fetchList()}
-        onRefresh={resetParamsAndRefresh}
         onKeywordChange={(keyword) => (searchKeyword.value = keyword)}
+        onKeywordSearch={() => fetchList()}
+        onResetRefresh={resetParamsAndRefresh}
         extra={
           <DropdownMenu
             text="批量操作"

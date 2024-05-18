@@ -1,47 +1,42 @@
-/**
- * @file Announcement editor
- * @author Surmon <https://github.com/surmon-china>
- */
-
-import React from 'react'
-import { Ref, useWatch } from 'veact'
+import React, { useEffect } from 'react'
 import { Form, Select, Modal, Space, Divider, Typography } from 'antd'
 import { UniversalEditor } from '@/components/common/UniversalEditor'
-import { PublishState, getPublishState } from '@/constants/publish'
-import { Announcement } from '@/constants/announcement'
+import { Announcement, AnnouncementState, announcementStates } from '@/constants/announcement'
 import { stringToYMD } from '@/transforms/date'
-import { STATE_IDS } from './index'
 
 const formLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 19 }
 }
 
-export interface EditModalProps {
+export interface FormModalProps {
   title: string
   loading: boolean
-  visible: Ref<boolean>
-  announcement: Ref<Announcement | null>
-  onSubmit(announcement: Announcement): void
+  visible: boolean
+  initData: Announcement | null
+  onSubmit(data: Announcement): void
   onCancel(): void
 }
 
-export const EditModal: React.FC<EditModalProps> = (props) => {
+export const FormModal: React.FC<FormModalProps> = (props) => {
   const [form] = Form.useForm<Announcement>()
+
   const handleSubmit = () => {
     form.validateFields().then(props.onSubmit)
   }
 
-  useWatch(props.visible, (visible) => {
-    visible ? form.setFieldsValue(props.announcement.value || {}) : form.resetFields()
-  })
+  useEffect(() => {
+    form.resetFields()
+    form.setFieldsValue(props.initData ?? {})
+  }, [props.initData, props.visible])
 
   return (
     <Modal
       width={680}
+      forceRender={true}
       title={props.title}
+      open={props.visible}
       confirmLoading={props.loading}
-      open={props.visible.value}
       onCancel={props.onCancel}
       onOk={handleSubmit}
       centered={true}
@@ -49,41 +44,34 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
       okText="提交"
     >
       <Form {...formLayout} colon={false} form={form}>
-        {props.announcement.value && (
+        {props.initData && (
           <>
             <Form.Item label="ID">
-              <Typography.Text copyable={true}>{props.announcement.value?.id}</Typography.Text>
+              <Typography.Text copyable={true}>{props.initData.id}</Typography.Text>
               <Divider type="vertical" />
-              <Typography.Text copyable={true}>{props.announcement.value?._id}</Typography.Text>
+              <Typography.Text copyable={true}>{props.initData._id}</Typography.Text>
             </Form.Item>
-            <Form.Item label="发布于">
-              {stringToYMD(props.announcement.value?.created_at)}
-            </Form.Item>
-            <Form.Item label="最后修改于">
-              {stringToYMD(props.announcement.value?.updated_at)}
-            </Form.Item>
+            <Form.Item label="发布于">{stringToYMD(props.initData.created_at)}</Form.Item>
+            <Form.Item label="最后修改于">{stringToYMD(props.initData.updated_at)}</Form.Item>
           </>
         )}
         <Form.Item
           label="发布状态"
           name="state"
-          initialValue={PublishState.Published}
+          initialValue={AnnouncementState.Published}
           rules={[{ required: true, message: '请选择状态' }]}
         >
           <Select
             placeholder="选择状态"
-            options={STATE_IDS.map((state) => {
-              const target = getPublishState(state)
-              return {
-                value: target.id,
-                label: (
-                  <Space>
-                    {target.icon}
-                    {target.name}
-                  </Space>
-                )
-              }
-            })}
+            options={announcementStates.map((state) => ({
+              value: state.id,
+              label: (
+                <Space>
+                  {state.icon}
+                  {state.name}
+                </Space>
+              )
+            }))}
           />
         </Form.Item>
         <Form.Item

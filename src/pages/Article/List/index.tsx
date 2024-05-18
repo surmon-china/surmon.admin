@@ -24,7 +24,6 @@ import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { SortSelect } from '@/components/common/SortSelect'
 import { ResponsePaginationData } from '@/constants/nodepress'
 import { SortTypeWithHot } from '@/constants/sort'
-import { publishStates, PublishState, getPublishState } from '@/constants/publish'
 import { Tag } from '@/constants/tag'
 import {
   ArticleId,
@@ -34,7 +33,10 @@ import {
   ArticlePublic,
   articlePublics,
   ArticleLanguage,
-  articleLanguages
+  articleLanguages,
+  articlePublishs,
+  ArticlePublish,
+  getArticlePublish
 } from '@/constants/article'
 import { scrollTo } from '@/services/scroller'
 import { getTags } from '@/apis/tag'
@@ -54,7 +56,7 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
   lang: SELECT_ALL_VALUE as SelectAllType | ArticleLanguage,
   public: SELECT_ALL_VALUE as SelectAllType | ArticlePublic,
   origin: SELECT_ALL_VALUE as SelectAllType | ArticleOrigin,
-  state: SELECT_ALL_VALUE as SelectAllType | PublishState
+  state: SELECT_ALL_VALUE as SelectAllType | ArticlePublish
 })
 
 export const ArticleList: React.FC = () => {
@@ -135,9 +137,9 @@ export const ArticleList: React.FC = () => {
     })
   }
 
-  const handleStateChange = (articleIds: Array<ArticleId>, state: PublishState) => {
+  const handleStateChange = (articleIds: Array<ArticleId>, state: ArticlePublish) => {
     Modal.confirm({
-      title: `确定要将 ${articleIds.length} 个文章更新为「 ${getPublishState(state).name} 」状态吗？`,
+      title: `确定要将 ${articleIds.length} 个文章更新为「 ${getArticlePublish(state).name} 」状态吗？`,
       content: '操作不可撤销',
       centered: true,
       onOk() {
@@ -192,7 +194,7 @@ export const ArticleList: React.FC = () => {
               }}
               options={[
                 { label: '全部状态', value: SELECT_ALL_VALUE },
-                ...publishStates.map((state) => {
+                ...articlePublishs.map((state) => {
                   return {
                     value: state.id,
                     label: (
@@ -345,17 +347,17 @@ export const ArticleList: React.FC = () => {
               {
                 label: '退为草稿',
                 icon: <Icons.RollbackOutlined />,
-                onClick: () => handleStateChange(selectedIds.value, PublishState.Draft)
+                onClick: () => handleStateChange(selectedIds.value, ArticlePublish.Draft)
               },
               {
                 label: '直接发布',
                 icon: <Icons.CheckOutlined />,
-                onClick: () => handleStateChange(selectedIds.value, PublishState.Published)
+                onClick: () => handleStateChange(selectedIds.value, ArticlePublish.Published)
               },
               {
                 label: '移回收站',
                 icon: <Icons.DeleteOutlined />,
-                onClick: () => handleStateChange(selectedIds.value, PublishState.Recycle)
+                onClick: () => handleStateChange(selectedIds.value, ArticlePublish.Recycle)
               }
             ]}
           />

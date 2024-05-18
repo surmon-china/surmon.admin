@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button, Form, Select, Divider, Space, Switch, FormInstance } from 'antd'
 import * as Icons from '@ant-design/icons'
-import { publishStates } from '@/constants/publish'
-import { articleOrigins, articlePublics, articleLanguages } from '@/constants/article'
+import { articlePublics, articlePublishs } from '@/constants/article'
+import { articleOrigins, articleLanguages } from '@/constants/article'
 import { StatesFormModel } from '.'
 
 const REQUIRED_RULE = {
@@ -28,7 +28,7 @@ export const StatesForm: React.FC<StatesFormProps> = (props) => {
       <Form.Item required={true} name="state" label="发布状态" rules={[REQUIRED_RULE]}>
         <Select
           placeholder="文章发布状态"
-          options={publishStates.map((state) => {
+          options={articlePublishs.map((state) => {
             return {
               value: state.id,
               label: (

@@ -4,8 +4,13 @@ import { Table, Button, Typography, Card, Tag, Space } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { RoutesPather } from '@/routes'
 import { Pagination } from '@/constants/nodepress'
-import { Article, getArticleOrigin, getArticlePublic } from '@/constants/article'
-import { PublishState, getPublishState } from '@/constants/publish'
+import {
+  Article,
+  getArticleOrigin,
+  getArticlePublic,
+  ArticlePublish,
+  getArticlePublish
+} from '@/constants/article'
 import { getBlogArticleUrl } from '@/transforms/url'
 import { numberToKilo } from '@/transforms/number'
 import { stringToYMD } from '@/transforms/date'
@@ -17,7 +22,7 @@ export interface ArticleListTableProps {
   selectedIds: Array<string>
   onSelecte(ids: Array<any>): any
   onPaginate(page: number, pageSize?: number): any
-  onUpdateState(article: Article, state: PublishState): any
+  onUpdateState(article: Article, state: ArticlePublish): any
 }
 
 export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
@@ -149,7 +154,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
             return (
               <Space direction="vertical">
                 {[
-                  getPublishState(article.state),
+                  getArticlePublish(article.state),
                   getArticlePublic(article.public),
                   getArticleOrigin(article.origin)
                 ].map((state) => (
@@ -172,36 +177,36 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                   文章详情
                 </Button>
               </Link>
-              {article.state === PublishState.Draft && (
+              {article.state === ArticlePublish.Draft && (
                 <Button
                   size="small"
                   type="text"
                   block={true}
                   icon={<Icons.CheckOutlined />}
-                  onClick={() => props.onUpdateState(article, PublishState.Published)}
+                  onClick={() => props.onUpdateState(article, ArticlePublish.Published)}
                 >
                   <Typography.Text type="success">直接发布</Typography.Text>
                 </Button>
               )}
-              {article.state === PublishState.Published && (
+              {article.state === ArticlePublish.Published && (
                 <Button
                   size="small"
                   type="text"
                   block={true}
                   danger={true}
                   icon={<Icons.DeleteOutlined />}
-                  onClick={() => props.onUpdateState(article, PublishState.Recycle)}
+                  onClick={() => props.onUpdateState(article, ArticlePublish.Recycle)}
                 >
                   移回收站
                 </Button>
               )}
-              {article.state === PublishState.Recycle && (
+              {article.state === ArticlePublish.Recycle && (
                 <Button
                   size="small"
                   type="text"
                   block={true}
                   icon={<Icons.RollbackOutlined />}
-                  onClick={() => props.onUpdateState(article, PublishState.Draft)}
+                  onClick={() => props.onUpdateState(article, ArticlePublish.Draft)}
                 >
                   <Typography.Text type="warning">退至草稿</Typography.Text>
                 </Button>

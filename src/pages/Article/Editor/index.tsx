@@ -11,8 +11,8 @@ import { APP_LAYOUT_GUTTER_SIZE } from '@/config'
 import { ImageUploader } from '@/components/common/ImageUploader'
 import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { openJSONEditor } from '@/components/common/ModalJsonEditor'
-import { Article, ArticleOrigin, ArticlePublic, ArticleLanguage } from '@/constants/article'
-import { PublishState } from '@/constants/publish'
+import { ArticleOrigin, ArticlePublic, ArticlePublish } from '@/constants/article'
+import { Article, ArticleLanguage } from '@/constants/article'
 import { useLocale } from '@/contexts/Locale'
 import { useTheme } from '@/contexts/Theme'
 import { useTranslation } from '@/i18n'
@@ -39,7 +39,7 @@ const DEFAULT_ARTICLE: Article = Object.freeze({
   content: '',
   thumbnail: '',
   origin: ArticleOrigin.Original,
-  state: PublishState.Published,
+  state: ArticlePublish.Published,
   public: ArticlePublic.Public,
   lang: ArticleLanguage.Chinese,
   featured: false,

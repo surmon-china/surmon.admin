@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-// import { Ref, useWatch } from 'veact'
 import { Form, Input, Modal, Divider, Typography } from 'antd'
 import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { Tag as TagType } from '@/constants/tag'
@@ -38,12 +37,13 @@ export const FormModal: React.FC<FormModalProps> = (props) => {
   useEffect(() => {
     form.resetFields()
     form.setFieldsValue(props.initData ?? initFormData)
-  }, [props.initData])
+  }, [props.initData, props.visible])
 
   return (
     <Modal
       width={680}
       centered={true}
+      forceRender={true}
       title={props.title}
       confirmLoading={props.loading}
       open={props.visible}

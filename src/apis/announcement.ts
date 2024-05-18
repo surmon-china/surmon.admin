@@ -3,8 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { Announcement } from '@/constants/announcement'
-import { PublishState } from '@/constants/publish'
+import { Announcement, AnnouncementState } from '@/constants/announcement'
 import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/nodepress'
 import nodepress from '@/services/nodepress'
 
@@ -15,7 +14,7 @@ export interface GetAnnouncementsParams extends GeneralPaginateQueryParams {
   /** 搜索关键词 */
   keyword?: string
   /** 发布状态 */
-  state?: PublishState
+  state?: AnnouncementState
 }
 
 /** 获取公告列表 */

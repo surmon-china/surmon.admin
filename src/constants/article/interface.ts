@@ -4,11 +4,11 @@
  */
 
 import { GeneralKeyValue } from '../general'
-import { PublishState } from '../publish'
 import { Category } from '../category'
 import { Tag } from '../tag'
 import { ArticleOrigin } from './origin'
 import { ArticlePublic } from './public'
+import { ArticlePublish } from './publish'
 import { ArticleLanguage } from './language'
 
 export type ArticleId = string | number
@@ -27,7 +27,7 @@ export interface Article {
   categories: Array<Category>
   origin: ArticleOrigin
   public: ArticlePublic
-  state: PublishState
+  state: ArticlePublish
   lang: ArticleLanguage
   featured: boolean
   disabled_comments: boolean

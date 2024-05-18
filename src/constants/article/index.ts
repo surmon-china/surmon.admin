@@ -1,4 +1,5 @@
 export type { ArticleId, Article } from './interface'
 export { ArticleOrigin, articleOrigins, getArticleOrigin } from './origin'
 export { ArticlePublic, articlePublics, getArticlePublic } from './public'
+export { ArticlePublish, articlePublishs, getArticlePublish } from './publish'
 export { ArticleLanguage, articleLanguages, getArticleLanguage } from './language'

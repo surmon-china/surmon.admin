@@ -31,7 +31,7 @@ export interface ListFiltersProps {
   onParamsChange(value: Partial<FilterParams>): void
   onKeywordChange(keyword: string): void
   onKeywordSearch(): void
-  onRefresh(): void
+  onResetRefresh(): void
   extra?: React.ReactNode
 }
 
@@ -111,7 +111,11 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
             }
           }}
         />
-        <Button icon={<Icons.ReloadOutlined />} loading={props.loading} onClick={props.onRefresh}>
+        <Button
+          icon={<Icons.ReloadOutlined />}
+          loading={props.loading}
+          onClick={props.onResetRefresh}
+        >
           <span>
             <Trans i18nKey="common.list.filter.reset_and_refresh" />
           </span>
