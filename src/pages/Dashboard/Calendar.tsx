@@ -80,7 +80,7 @@ export const CalendarCard: React.FC<CalendarCardProps> = (props) => {
       title={props.title}
       loading={props.loading}
       extra={
-        <Space>
+        <Space wrap>
           <Button.Group size="small">
             <Button onClick={() => selectDataRange(dayjs().subtract(1, 'month'))}>
               最近一月
