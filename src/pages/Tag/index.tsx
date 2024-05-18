@@ -179,8 +179,8 @@ export const TagPage: React.FC = () => {
       <FormModal
         title={activeEditTag.value ? '编辑标签' : '新标签'}
         loading={submitting.state.value}
-        visible={isVisibleModal}
-        initTag={activeEditTag}
+        visible={isVisibleModal.value}
+        initData={activeEditTag.value}
         onCancel={closeModal}
         onSubmit={(tag) => (activeEditTag.value ? updateTag(tag) : createTag(tag))}
       />

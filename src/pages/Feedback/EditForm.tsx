@@ -1,6 +1,6 @@
 import React from 'react'
-import { Ref, useWatch } from 'veact'
-import { Form, Typography, Input, Button, Divider, Drawer, Radio, Statistic } from 'antd'
+import { onMounted } from 'veact'
+import { Form, Typography, Input, Button, Divider, Radio, Statistic } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { IPLocation } from '@/components/common/IPLocation'
 import { UniversalText } from '@/components/common/UniversalText'
@@ -8,31 +8,26 @@ import { Feedback, getMarkedByBoolean } from '@/constants/feedback'
 import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
 
-export interface EditDrawerProps {
+export interface EditFormProps {
   loading: boolean
-  visible: Ref<boolean>
-  feedback: Ref<Feedback | null>
-  onSubmit(feedback: Feedback): void
-  onCancel(): void
+  initData: Feedback
+  onSubmit(value: Feedback): void
 }
 
-export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
+export const EditForm: React.FC<EditFormProps> = (props) => {
   const [form] = Form.useForm<Feedback>()
+
   const handleSubmit = () => {
     form.validateFields().then((formValue) => {
       props.onSubmit(formValue)
     })
   }
 
-  useWatch(props.visible, (visible) => {
-    if (visible) {
-      form.setFieldsValue(props.feedback.value || {})
-    } else {
-      form.resetFields()
-    }
+  onMounted(() => {
+    form.setFieldsValue(props.initData)
   })
 
-  const getFormElement = (feedback: Feedback) => (
+  return (
     <Form
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 18 }}
@@ -41,15 +36,15 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
       form={form}
     >
       <Form.Item label="ID">
-        <Typography.Text copyable={true}>{feedback.id}</Typography.Text>
+        <Typography.Text copyable={true}>{props.initData.id}</Typography.Text>
         <Divider type="vertical" />
-        <Typography.Text copyable={true}>{feedback._id}</Typography.Text>
+        <Typography.Text copyable={true}>{props.initData._id}</Typography.Text>
       </Form.Item>
       <Form.Item label="TID">
-        <Typography.Text copyable={true}>{feedback.tid}</Typography.Text>
+        <Typography.Text copyable={true}>{props.initData.tid}</Typography.Text>
       </Form.Item>
-      <Form.Item label="发布于">{stringToYMD(feedback.created_at!)}</Form.Item>
-      <Form.Item label="最后修改于">{stringToYMD(feedback.updated_at!)}</Form.Item>
+      <Form.Item label="发布于">{stringToYMD(props.initData.created_at!)}</Form.Item>
+      <Form.Item label="最后修改于">{stringToYMD(props.initData.updated_at!)}</Form.Item>
       <Form.Item name="marked" label="是否标记">
         <Radio.Group size="middle">
           <Radio.Button value={false}>{getMarkedByBoolean(false).icon}</Radio.Button>
@@ -63,22 +58,22 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
         <Input prefix={<Icons.MailOutlined />} placeholder="email" type="email" />
       </Form.Item>
       <Form.Item label="IP 地址">
-        <UniversalText text={feedback.ip || null} copyable={true} />
+        <UniversalText text={props.initData.ip || null} copyable={true} />
       </Form.Item>
       <Form.Item label="IP 地理位置">
-        <IPLocation data={feedback.ip_location} fullname={true} />
+        <IPLocation data={props.initData.ip_location} fullname={true} />
       </Form.Item>
       <Form.Item label="终端">
-        <UniversalText text={parseBrowser(feedback.user_agent!)} placeholder="未知浏览器" />
+        <UniversalText text={parseBrowser(props.initData.user_agent!)} placeholder="未知浏览器" />
         <Divider type="vertical" />
-        <UniversalText text={parseOS(feedback.user_agent!)} placeholder="未知系统" />
+        <UniversalText text={parseOS(props.initData.user_agent!)} placeholder="未知系统" />
         <Divider type="vertical" />
-        <UniversalText text={parseDevice(feedback.user_agent!)} placeholder="未知设备" />
+        <UniversalText text={parseDevice(props.initData.user_agent!)} placeholder="未知设备" />
       </Form.Item>
       <Form.Item label="反馈评分">
         <Statistic
-          prefix={feedback.emotion_emoji}
-          value={`${feedback.emotion_text} (${feedback.emotion})`}
+          prefix={props.initData.emotion_emoji}
+          value={`${props.initData.emotion_text} (${props.initData.emotion})`}
         />
       </Form.Item>
       <Form.Item
@@ -102,18 +97,5 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
         </Button>
       </Form.Item>
     </Form>
-  )
-
-  return (
-    <Drawer
-      width="46rem"
-      title="反馈详情"
-      loading={props.loading}
-      open={props.visible.value}
-      onClose={props.onCancel}
-      destroyOnClose={true}
-    >
-      {props.feedback.value ? getFormElement(props.feedback.value) : null}
-    </Drawer>
   )
 }

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Ref, useWatch } from 'veact'
+import React, { useEffect } from 'react'
+// import { Ref, useWatch } from 'veact'
 import { Form, Input, Modal, Divider, Typography } from 'antd'
 import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { Tag as TagType } from '@/constants/tag'
@@ -10,61 +10,57 @@ const formLayout = {
   wrapperCol: { span: 18 }
 }
 
+const initFormData = {
+  extends: [
+    {
+      name: 'icon',
+      value: 'icon-tag'
+    }
+  ]
+}
+
 export interface FormModalProps {
   title: string
   loading: boolean
-  visible: Ref<boolean>
-  initTag: Ref<TagType | null>
+  visible: boolean
+  initData: TagType | null
   onSubmit(tag: TagType): void
   onCancel(): void
 }
 
 export const FormModal: React.FC<FormModalProps> = (props) => {
   const [form] = Form.useForm<TagType>()
+
   const handleSubmit = () => {
     form.validateFields().then(props.onSubmit)
   }
 
-  useWatch(props.visible, (visible) => {
-    if (!visible) {
-      form.resetFields()
-    } else {
-      form.setFieldsValue(
-        props.initTag.value || {
-          extends: [
-            {
-              name: 'icon',
-              value: 'icon-tag'
-            }
-          ]
-        }
-      )
-    }
-  })
+  useEffect(() => {
+    form.resetFields()
+    form.setFieldsValue(props.initData ?? initFormData)
+  }, [props.initData])
 
   return (
     <Modal
+      width={680}
+      centered={true}
       title={props.title}
       confirmLoading={props.loading}
-      open={props.visible.value}
+      open={props.visible}
       onCancel={props.onCancel}
       onOk={handleSubmit}
-      centered={true}
-      width={680}
       okText="提交"
     >
       <Form {...formLayout} colon={false} form={form}>
-        {props.initTag.value && (
+        {props.initData && (
           <>
             <Form.Item label="ID">
-              <Typography.Text copyable={true}>{props.initTag.value?.id}</Typography.Text>
+              <Typography.Text copyable={true}>{props.initData?.id}</Typography.Text>
               <Divider type="vertical" />
-              <Typography.Text copyable={true}>{props.initTag.value?._id}</Typography.Text>
+              <Typography.Text copyable={true}>{props.initData?._id}</Typography.Text>
             </Form.Item>
-            <Form.Item label="创建于">{stringToYMD(props.initTag.value?.created_at)}</Form.Item>
-            <Form.Item label="最后修改于">
-              {stringToYMD(props.initTag.value?.updated_at)}
-            </Form.Item>
+            <Form.Item label="创建于">{stringToYMD(props.initData?.created_at)}</Form.Item>
+            <Form.Item label="最后修改于">{stringToYMD(props.initData?.updated_at)}</Form.Item>
           </>
         )}
         <Form.Item

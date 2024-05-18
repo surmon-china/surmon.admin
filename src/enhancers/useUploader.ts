@@ -1,5 +1,5 @@
 /**
- * @desc General file uploader
+ * @desc General file uploader hook based on veact
  * @author Surmon <https://github.com/surmon-china>
  */
 

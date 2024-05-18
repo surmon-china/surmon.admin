@@ -4,8 +4,7 @@
  */
 
 import React from 'react'
-import { isEqual } from 'lodash'
-import { useShallowReactive, useRef, onMounted, useWatch, toRaw, useComputed } from 'veact'
+import { useShallowReactive, useRef, onMounted, useWatch, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
 import { Card, Divider, Modal } from 'antd'
 import * as Icons from '@ant-design/icons'
@@ -77,7 +76,7 @@ export const VotePage: React.FC = () => {
     })
   }
 
-  const resetFiltersByTargetId = (vote: Vote) => {
+  const resetFiltersToTargetId = (vote: Vote) => {
     filterTargetId.value = vote.target_id
     filterParams.value = {
       ...DEFAULT_FILTER_PARAMS,
@@ -85,13 +84,9 @@ export const VotePage: React.FC = () => {
     }
   }
 
-  const resetParamsAndRefresh = () => {
-    if (isEqual(toRaw(filterParams), DEFAULT_FILTER_PARAMS)) {
-      fetchList()
-    } else {
-      filterTargetId.value = DEFAULT_TARGET_ID
-      filterParams.value = { ...DEFAULT_FILTER_PARAMS }
-    }
+  const resetFiltersToDefault = () => {
+    filterTargetId.value = DEFAULT_TARGET_ID
+    filterParams.value = { ...DEFAULT_FILTER_PARAMS }
   }
 
   useWatch(
@@ -117,7 +112,7 @@ export const VotePage: React.FC = () => {
         onTargetIdSearch={() => fetchList()}
         params={filterParams.value}
         onParamsChange={(value) => Object.assign(filterParams.value, value)}
-        onRefresh={resetParamsAndRefresh}
+        onRefresh={resetFiltersToDefault}
         extra={
           <DropdownMenu
             text="批量操作"
@@ -140,7 +135,7 @@ export const VotePage: React.FC = () => {
         pagination={votes.pagination!}
         onSelecte={(ids) => (selectedIds.value = ids)}
         onPaginate={(page, pageSize) => fetchList({ page, per_page: pageSize })}
-        onClickTarget={(vote) => resetFiltersByTargetId(vote)}
+        onClickTarget={(vote) => resetFiltersToTargetId(vote)}
       />
     </Card>
   )

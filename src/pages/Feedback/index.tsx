@@ -4,11 +4,10 @@
  */
 
 import React from 'react'
-import { isEqual } from 'lodash'
-import { useShallowReactive, useRef, onMounted, useWatch, toRaw, useComputed } from 'veact'
+import { useShallowReactive, useRef, onMounted, useWatch, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
 import { useTranslation } from '@/i18n'
-import { Card, Divider, Modal } from 'antd'
+import { Card, Divider, Modal, Drawer } from 'antd'
 import * as Icons from '@ant-design/icons'
 import * as api from '@/apis/feedback'
 import type { GetFeedbacksParams } from '@/apis/feedback'
@@ -19,7 +18,7 @@ import { scrollTo } from '@/services/scroller'
 import type { FilterParams } from './ListFilters'
 import { ListFilters, DEFAULT_FILTER_PARAMS, getQueryParams } from './ListFilters'
 import { TableList } from './TableList'
-import { EditDrawer } from './EditDrawer'
+import { EditForm } from './EditForm'
 
 export const FeedbackPage: React.FC = () => {
   const { i18n } = useTranslation()
@@ -83,8 +82,8 @@ export const FeedbackPage: React.FC = () => {
       title: `确定要彻底删除 ${feedbacks.length} 个反馈吗？`,
       content: '该行为是物理删除，不可恢复！',
       centered: true,
-      onOk() {
-        return api.deleteFeedbacks(feedbacks.map((c) => c._id!)).then(() => {
+      onOk: () => {
+        return api.deleteFeedbacks(feedbacks.map((f) => f._id!)).then(() => {
           refreshList()
         })
       }
@@ -108,13 +107,9 @@ export const FeedbackPage: React.FC = () => {
     })
   }
 
-  const resetParamsAndRefresh = () => {
+  const resetFiltersToDefault = () => {
     searchKeyword.value = ''
-    if (isEqual(toRaw(filterParams), DEFAULT_FILTER_PARAMS)) {
-      fetchList()
-    } else {
-      filterParams.value = { ...DEFAULT_FILTER_PARAMS }
-    }
+    filterParams.value = { ...DEFAULT_FILTER_PARAMS }
   }
 
   useWatch(
@@ -139,7 +134,7 @@ export const FeedbackPage: React.FC = () => {
         onKeywordSearch={() => fetchList()}
         params={filterParams.value}
         onParamsChange={(value) => Object.assign(filterParams.value, value)}
-        onRefresh={resetParamsAndRefresh}
+        onRefresh={resetFiltersToDefault}
         extra={
           <DropdownMenu
             text="批量操作"
@@ -165,13 +160,21 @@ export const FeedbackPage: React.FC = () => {
         onDelete={(feedback) => deleteItems([feedback])}
         onPaginate={(page, pageSize) => fetchList({ page, per_page: pageSize })}
       />
-      <EditDrawer
-        loading={updating.state.value}
-        visible={isVisibleModal}
-        feedback={activeEditFeedback}
-        onCancel={closeEditModal}
-        onSubmit={updateItem}
-      />
+      <Drawer
+        width="46rem"
+        title="反馈详情"
+        destroyOnClose={true}
+        open={isVisibleModal.value}
+        onClose={closeEditModal}
+      >
+        {activeEditFeedback.value && (
+          <EditForm
+            loading={updating.state.value}
+            initData={activeEditFeedback.value}
+            onSubmit={(data) => updateItem(data)}
+          />
+        )}
+      </Drawer>
     </Card>
   )
 }

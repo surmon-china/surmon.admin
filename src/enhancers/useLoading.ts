@@ -1,3 +1,8 @@
+/**
+ * @desc General loading state hook based on react
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { useState } from 'react'
 
 export const useLoading = (initState = false) => {

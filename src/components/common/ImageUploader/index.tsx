@@ -9,7 +9,7 @@ import { Upload, notification, Input, Space, Button, Tooltip } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { copy } from '@/services/clipboard'
 import { useTranslation } from '@/i18n'
-import { useUploader, UploadErrorCode } from '@/services/uploader'
+import { useUploader, UploadErrorCode } from '@/enhancers/useUploader'
 import { imageURLToMarkdown } from '@/transforms/markdown'
 
 import styles from './style.module.less'
