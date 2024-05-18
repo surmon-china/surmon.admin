@@ -7,7 +7,7 @@ import React from 'react'
 import { useShallowReactive, useRef, onMounted, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Divider, Modal } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import * as api from '@/apis/tag'
 import type { GetTagParams } from '@/apis/tag'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
@@ -138,7 +138,7 @@ export const TagPage: React.FC = () => {
         <Button
           type="primary"
           size="small"
-          icon={<Icon.PlusOutlined />}
+          icon={<Icons.PlusOutlined />}
           onClick={openCreateModal}
         >
           创建新标签
@@ -158,7 +158,7 @@ export const TagPage: React.FC = () => {
             options={[
               {
                 label: '批量删除',
-                icon: <Icon.DeleteOutlined />,
+                icon: <Icons.DeleteOutlined />,
                 onClick: () => deleteTags(selectedIds.value)
               }
             ]}
@@ -172,7 +172,7 @@ export const TagPage: React.FC = () => {
         pagination={tags.pagination}
         selectedIds={selectedIds.value}
         onSelect={(ids) => (selectedIds.value = ids)}
-        onPagination={(page, pageSize) => fetchList({ page, per_page: pageSize })}
+        onPaginate={(page, pageSize) => fetchList({ page, per_page: pageSize })}
         onEdit={(_, index) => openEditModal(index)}
         onDelete={(tag) => deleteTag(tag)}
       />

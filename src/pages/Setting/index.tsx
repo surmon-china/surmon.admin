@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { Card, Row, Col, Space } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { useTranslation } from '@/i18n'
 import { APP_LAYOUT_GUTTER_SIZE } from '@/config'
 import { GeneralForm } from './General'
@@ -36,7 +36,7 @@ export const SettingPage: React.FC = () => {
   return (
     <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
       <Col xs={24} lg={17}>
-        <PageCard title={i18n.t('page.setting.general.title')} icon={<Icon.ControlOutlined />}>
+        <PageCard title={i18n.t('page.setting.general.title')} icon={<Icons.ControlOutlined />}>
           <GeneralForm labelSpan={4} wrapperSpan={19} />
         </PageCard>
       </Col>
@@ -45,13 +45,13 @@ export const SettingPage: React.FC = () => {
           <Col span={24}>
             <PageCard
               title={i18n.t('page.setting.data.title')}
-              icon={<Icon.CloudServerOutlined />}
+              icon={<Icons.CloudServerOutlined />}
             >
               <ActionsForm />
             </PageCard>
           </Col>
           <Col span={24}>
-            <PageCard title={i18n.t('page.setting.userinfo.title')} icon={<Icon.UserOutlined />}>
+            <PageCard title={i18n.t('page.setting.userinfo.title')} icon={<Icons.UserOutlined />}>
               <ProfileForm />
             </PageCard>
           </Col>

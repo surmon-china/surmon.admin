@@ -2,7 +2,7 @@ import React from 'react'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import { Form, Input, Button, Select, Spin, Statistic } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import * as api from '@/apis/system'
 import { UniversalEditor, UnEditorLanguage } from '@/components/common/UniversalEditor'
 import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
@@ -103,7 +103,7 @@ export const GeneralForm: React.FC<GeneralFormProps> = (props) => {
             }
           ]}
         >
-          <Input suffix={<Icon.LinkOutlined />} placeholder="https://example.me" />
+          <Input suffix={<Icons.LinkOutlined />} placeholder="https://example.me" />
         </Form.Item>
         <Form.Item
           name="site_email"
@@ -120,7 +120,7 @@ export const GeneralForm: React.FC<GeneralFormProps> = (props) => {
             }
           ]}
         >
-          <Input suffix={<Icon.MailOutlined />} placeholder="example@xxx.me" />
+          <Input suffix={<Icons.MailOutlined />} placeholder="example@xxx.me" />
         </Form.Item>
         <Form.Item name="statement" label="站点声明">
           <UniversalEditor
@@ -185,7 +185,7 @@ export const GeneralForm: React.FC<GeneralFormProps> = (props) => {
         </Form.Item>
         <Form.Item label>
           <Button
-            icon={<Icon.CheckOutlined />}
+            icon={<Icons.CheckOutlined />}
             type="primary"
             size="large"
             style={{ width: 120 }}

@@ -1,8 +1,7 @@
 import React from 'react'
 import { Button, Input, Select, Space, Flex } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { Trans } from '@/i18n'
-import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { SortSelect } from '@/components/common/SortSelect'
 import { SortTypeBase } from '@/constants/sort'
 import { MarkedState } from '@/constants/feedback'
@@ -11,9 +10,9 @@ import styles from './style.module.less'
 
 export const SELECT_ALL_VALUE = 'ALL'
 export const DEFAULT_FILTER_PARAMS = {
+  marked: false as boolean,
   tid: SELECT_ALL_VALUE as number | typeof SELECT_ALL_VALUE,
   emotion: SELECT_ALL_VALUE as number | typeof SELECT_ALL_VALUE,
-  marked: SELECT_ALL_VALUE as MarkedState | typeof SELECT_ALL_VALUE,
   sort: SortTypeBase.Desc
 }
 
@@ -21,7 +20,7 @@ export type FilterParams = typeof DEFAULT_FILTER_PARAMS
 export const getQueryParams = (params: FilterParams) => ({
   tid: params.tid !== SELECT_ALL_VALUE ? params.tid : void 0,
   emotion: params.emotion !== SELECT_ALL_VALUE ? params.emotion : void 0,
-  marked: params.marked !== SELECT_ALL_VALUE ? params.marked : void 0,
+  marked: params.marked ? MarkedState.Yes : void 0,
   sort: params.sort
 })
 
@@ -29,12 +28,11 @@ export interface ListFiltersProps {
   loading: boolean
   keyword: string
   params: FilterParams
-  disabledBatchActions?: boolean
   onParamsChange(value: Partial<FilterParams>): void
   onKeywordChange(keyword: string): void
   onKeywordSearch(): void
   onRefresh(): void
-  onBatchDelete(): void
+  extra?: React.ReactNode
 }
 
 export const ListFilters: React.FC<ListFiltersProps> = (props) => {
@@ -43,15 +41,9 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
       <Space wrap>
         <Button
           loading={props.loading}
-          type={props.params.marked === MarkedState.Yes ? 'primary' : 'default'}
-          icon={
-            props.params.marked === MarkedState.Yes ? <Icon.StarFilled /> : <Icon.StarOutlined />
-          }
-          onClick={() => {
-            props.onParamsChange({
-              marked: props.params.marked === MarkedState.Yes ? SELECT_ALL_VALUE : MarkedState.Yes
-            })
-          }}
+          type={props.params.marked ? 'primary' : 'default'}
+          icon={props.params.marked ? <Icons.StarFilled /> : <Icons.StarOutlined />}
+          onClick={() => props.onParamsChange({ marked: !props.params.marked })}
         >
           标记数据
         </Button>
@@ -110,29 +102,22 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
           className={styles.search}
           placeholder="输入反馈内容、作者信息搜索"
           loading={props.loading}
-          onSearch={() => props.onKeywordSearch()}
           value={props.keyword}
           onChange={(event) => props.onKeywordChange(event.target.value)}
+          allowClear={true}
+          onSearch={(_, __, info) => {
+            if (info?.source === 'input') {
+              props.onKeywordSearch()
+            }
+          }}
         />
-        <Button icon={<Icon.ReloadOutlined />} loading={props.loading} onClick={props.onRefresh}>
+        <Button icon={<Icons.ReloadOutlined />} loading={props.loading} onClick={props.onRefresh}>
           <span>
             <Trans i18nKey="common.list.filter.reset_and_refresh" />
           </span>
         </Button>
       </Space>
-      <Space>
-        <DropdownMenu
-          text="批量操作"
-          disabled={props.disabledBatchActions}
-          options={[
-            {
-              label: '彻底删除',
-              icon: <Icon.DeleteOutlined />,
-              onClick: props.onBatchDelete
-            }
-          ]}
-        />
-      </Space>
+      <Space>{props.extra}</Space>
     </Flex>
   )
 }

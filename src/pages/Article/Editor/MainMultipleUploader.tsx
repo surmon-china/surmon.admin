@@ -1,7 +1,7 @@
 import React from 'react'
 import { useReactive } from 'veact'
 import { Modal, message, Tooltip, Button, Upload, Card } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { copy } from '@/services/clipboard'
 import { useUploader } from '@/services/uploader'
 import { imageURLToMarkdown } from '@/transforms/markdown'
@@ -42,7 +42,7 @@ export const MainMultipleUploader: React.FC<MainMultipleUploaderProps> = (props)
           showDownloadIcon: true,
           downloadIcon: (
             <Tooltip title="Copy Markdown">
-              <Icon.CopyOutlined />
+              <Icons.CopyOutlined />
             </Tooltip>
           )
         }}
@@ -82,7 +82,7 @@ export const MainMultipleUploader: React.FC<MainMultipleUploaderProps> = (props)
       >
         <br />
         <p className="ant-upload-drag-icon">
-          <Icon.UploadOutlined />
+          <Icons.UploadOutlined />
         </p>
         <p className="ant-upload-text">文件拖到这里或点击上传</p>
         <br />

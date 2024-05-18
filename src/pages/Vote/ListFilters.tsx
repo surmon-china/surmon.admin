@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Input, Select, Space, Flex } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { Trans } from '@/i18n'
 import { SortTypeBase } from '@/constants/sort'
 import { SortSelect } from '@/components/common/SortSelect'
@@ -116,7 +116,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
           onChange={(sort) => props.onParamsChange({ sort })}
         />
         <Button
-          icon={<Icon.ReloadOutlined />}
+          icon={<Icons.ReloadOutlined />}
           loading={props.loading}
           onClick={() => props.onRefresh()}
         >

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Button, Typography, Popover, Space, Statistic } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { Placeholder } from '@/components/common/Placeholder'
 import { UniversalText } from '@/components/common/UniversalText'
 import { IPLocation } from '@/components/common/IPLocation'
@@ -17,7 +17,7 @@ export interface TableListProps {
   pagination?: Pagination
   selectedIds: Array<string>
   onSelect(ids: Array<any>): void
-  onPagination(page: number, pageSize?: number): void
+  onPaginate(page: number, pageSize?: number): void
   onDetail(feedback: Feedback, index: number): void
   onDelete(feedback: Feedback, index: number): void
 }
@@ -38,7 +38,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
         pageSize: props.pagination?.per_page,
         total: props.pagination?.total,
         showSizeChanger: true,
-        onChange: props.onPagination
+        onChange: props.onPaginate
       }}
       columns={[
         {
@@ -149,7 +149,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
                 >
                   <span>
                     <UniversalText
-                      prefix={<Icon.UserOutlined />}
+                      prefix={<Icons.UserOutlined />}
                       text={feedback.user_name}
                       placeholder="Anonymous"
                     />
@@ -157,7 +157,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
                 </Popover>
 
                 <UniversalText
-                  prefix={<Icon.ClockCircleOutlined />}
+                  prefix={<Icons.ClockCircleOutlined />}
                   text={stringToYMD(feedback.created_at!)}
                 />
               </Space>
@@ -174,7 +174,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
                 size="small"
                 type="text"
                 block={true}
-                icon={<Icon.EditOutlined />}
+                icon={<Icons.EditOutlined />}
                 onClick={() => props.onDetail(feedback, index)}
               >
                 反馈详情
@@ -184,7 +184,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
                 type="text"
                 danger={true}
                 block={true}
-                icon={<Icon.DeleteOutlined />}
+                icon={<Icons.DeleteOutlined />}
                 onClick={() => props.onDelete(feedback, index)}
               >
                 彻底删除

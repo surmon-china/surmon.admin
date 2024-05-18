@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { IPLocation } from './general'
 
 export interface Vote {
@@ -61,12 +61,12 @@ export const voteTypes = [
   {
     id: VoteType.Upvote,
     name: '+1',
-    icon: <Icon.LikeOutlined />
+    icon: <Icons.LikeOutlined />
   },
   {
     id: VoteType.Downvote,
     name: '-1',
-    icon: <Icon.DislikeOutlined />
+    icon: <Icons.DislikeOutlined />
   }
 ]
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Dropdown, Avatar, Button, Modal, Select, Flex } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { RoutesKey, RoutesPath } from '@/routes'
 import { useTranslation } from '@/i18n'
 import { useTheme } from '@/contexts/Theme'
@@ -45,13 +45,15 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
           type="text"
           className={styles.item}
           onClick={props.onToggleSider}
-          icon={props.isSiderCollapsed ? <Icon.MenuUnfoldOutlined /> : <Icon.MenuFoldOutlined />}
+          icon={
+            props.isSiderCollapsed ? <Icons.MenuUnfoldOutlined /> : <Icons.MenuFoldOutlined />
+          }
         />
         <Button
           type="text"
           className={styles.item}
           onClick={() => theme.toggleTheme()}
-          icon={theme.isDark ? <Icon.MoonOutlined /> : <Icon.SunOutlined />}
+          icon={theme.isDark ? <Icons.MoonOutlined /> : <Icons.SunOutlined />}
         />
         <Select
           size="small"
@@ -72,7 +74,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
             items: [
               {
                 key: 'profile',
-                icon: <Icon.SettingOutlined />,
+                icon: <Icons.SettingOutlined />,
                 label: i18n.t('page.setting.title'),
                 onClick: redriectToSettingPage
               },
@@ -82,7 +84,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
               },
               {
                 key: 'logout',
-                icon: <Icon.LogoutOutlined />,
+                icon: <Icons.LogoutOutlined />,
                 label: i18n.t('logout.title'),
                 danger: true,
                 onClick: logout
@@ -95,7 +97,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
             <Avatar
               shape="square"
               size="small"
-              icon={<Icon.UserOutlined />}
+              icon={<Icons.UserOutlined />}
               className={styles.avatar}
               src={adminProfile.data.avatar}
             />

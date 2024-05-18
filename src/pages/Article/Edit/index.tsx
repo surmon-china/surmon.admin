@@ -8,7 +8,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import { Modal, Button, Space, Divider, message } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { RoutesKey, RoutesPath, RoutesPather } from '@/routes'
 import { getUnEditorCache } from '@/components/common/UniversalEditor'
 import { SortTypeWithHot } from '@/constants/sort'
@@ -131,14 +131,14 @@ export const ArticleEdit: React.FC = () => {
         extra={
           <Space size="small" wrap>
             <Button.Group size="small">
-              <Button icon={<Icon.EyeOutlined />} disabled>
+              <Button icon={<Icons.EyeOutlined />} disabled>
                 {numberToKilo(article.value?.meta?.views ?? 0)} 阅读
               </Button>
-              <Button icon={<Icon.HeartOutlined />} disabled>
+              <Button icon={<Icons.HeartOutlined />} disabled>
                 {numberToKilo(article.value?.meta?.likes ?? 0)} 喜欢
               </Button>
               <Button
-                icon={<Icon.CommentOutlined />}
+                icon={<Icons.CommentOutlined />}
                 disabled={fetching.state.value}
                 onClick={openCommentModal}
               >
@@ -149,7 +149,7 @@ export const ArticleEdit: React.FC = () => {
             <Button
               size="small"
               type="dashed"
-              icon={<Icon.ExportOutlined />}
+              icon={<Icons.ExportOutlined />}
               target="_blank"
               href={getBlogArticleUrl(article.value?.id!)}
             >
@@ -160,7 +160,7 @@ export const ArticleEdit: React.FC = () => {
               type="dashed"
               size="small"
               danger={true}
-              icon={<Icon.DeleteOutlined />}
+              icon={<Icons.DeleteOutlined />}
               disabled={fetching.state.value}
               onClick={() => message.warning('双击执行删除操作')}
               onDoubleClick={handleDelete}

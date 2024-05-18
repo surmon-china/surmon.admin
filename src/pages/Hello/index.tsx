@@ -7,7 +7,7 @@ import classnames from 'classnames'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Spin, Input } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { RoutesKey, RoutesPath } from '@/routes'
 import { authLogin } from '@/apis/auth'
 import tokenService from '@/services/token'
@@ -71,7 +71,7 @@ export const HelloPage: React.FC = () => {
 
   return (
     <div className={classnames(styles.helloPage, isInputing ? styles.inputing : styles.normal)}>
-      <Spin spinning={isLoggingIn} indicator={<Icon.LoadingOutlined />}>
+      <Spin spinning={isLoggingIn} indicator={<Icons.LoadingOutlined />}>
         {isInputing ? passwordInput : lockIcon}
       </Spin>
     </div>

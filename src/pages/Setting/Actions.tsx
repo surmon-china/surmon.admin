@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLoading } from 'veact-use'
 import { Button, Row, Divider, Modal } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import * as api from '@/apis/system'
 
 export const ActionsForm: React.FC = () => {
@@ -31,7 +31,7 @@ export const ActionsForm: React.FC = () => {
         block={true}
         loading={databaseLoading.state.value}
         onClick={updateDatabaseBackup}
-        icon={<Icon.CloudUploadOutlined />}
+        icon={<Icons.CloudUploadOutlined />}
       >
         立即更新数据库备份
       </Button>
@@ -41,7 +41,7 @@ export const ActionsForm: React.FC = () => {
         block={true}
         loading={archiveLoading.state.value}
         onClick={updateArchiveCache}
-        icon={<Icon.CloudSyncOutlined />}
+        icon={<Icons.CloudSyncOutlined />}
       >
         更新 Archive 及缓存
       </Button>

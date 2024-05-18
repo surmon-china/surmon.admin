@@ -2,7 +2,7 @@ import React from 'react'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import { Spin, Button, Divider, Space, Typography } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import type { Tag } from '@/constants/tag'
 import { getTags } from '@/apis/tag'
 
@@ -47,9 +47,9 @@ export const MainTagSelect: React.FC<MainTagSelectProps> = (props) => {
                 type={isChecked ? 'primary' : 'default'}
                 icon={
                   isChecked ? (
-                    <Icon.CheckCircleOutlined />
+                    <Icons.CheckCircleOutlined />
                   ) : (
-                    <Icon.TagOutlined style={{ opacity: 0.6 }} />
+                    <Icons.TagOutlined style={{ opacity: 0.6 }} />
                   )
                 }
               >
@@ -62,7 +62,7 @@ export const MainTagSelect: React.FC<MainTagSelectProps> = (props) => {
         <Button
           size="small"
           type="dashed"
-          icon={<Icon.ReloadOutlined />}
+          icon={<Icons.ReloadOutlined />}
           loading={tagsLoading.state.value}
           onClick={fetchTags}
         >

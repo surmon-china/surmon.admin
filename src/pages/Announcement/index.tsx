@@ -15,7 +15,7 @@ import {
   useComputed
 } from 'veact'
 import { Table, Button, Card, Input, Tag, Select, Divider, Spin, Modal, Space } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import * as api from '@/apis/announcement'
 import type { GetAnnouncementsParams } from '@/apis/announcement'
 import { useTranslation } from '@/i18n'
@@ -169,7 +169,7 @@ export const AnnouncementPage: React.FC = () => {
         total: announcement.pagination?.total ?? '-'
       })}
       extra={
-        <Button type="primary" size="small" icon={<Icon.PlusOutlined />} onClick={createNewData}>
+        <Button type="primary" size="small" icon={<Icons.PlusOutlined />} onClick={createNewData}>
           发布新公告
         </Button>
       }
@@ -210,7 +210,7 @@ export const AnnouncementPage: React.FC = () => {
             }}
           />
           <Button
-            icon={<Icon.ReloadOutlined />}
+            icon={<Icons.ReloadOutlined />}
             loading={loading.state.value}
             onClick={() => resetParamsAndRefresh()}
           >
@@ -224,7 +224,7 @@ export const AnnouncementPage: React.FC = () => {
             options={[
               {
                 label: '批量删除',
-                icon: <Icon.DeleteOutlined />,
+                icon: <Icons.DeleteOutlined />,
                 onClick: handleDeleteList
               }
             ]}
@@ -288,7 +288,7 @@ export const AnnouncementPage: React.FC = () => {
                 <Button.Group size="small">
                   <Button
                     type="text"
-                    icon={<Icon.EditOutlined />}
+                    icon={<Icons.EditOutlined />}
                     onClick={() => editData(index)}
                   >
                     编辑
@@ -296,7 +296,7 @@ export const AnnouncementPage: React.FC = () => {
                   <Button
                     type="text"
                     danger={true}
-                    icon={<Icon.DeleteOutlined />}
+                    icon={<Icons.DeleteOutlined />}
                     onClick={() => handleDelete(ann._id!)}
                   >
                     删除

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Button, Typography, Popover, Tag, Space } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { UniversalText } from '@/components/common/UniversalText'
 import { Placeholder } from '@/components/common/Placeholder'
 import { IPLocation } from '@/components/common/IPLocation'
@@ -20,7 +20,7 @@ export interface CommentListTableProps {
   selectedIds: Array<string>
   onPostId(id: number): any
   onSelecte(ids: Array<any>): any
-  onPagination(page: number, pageSize?: number): any
+  onPaginate(page: number, pageSize?: number): any
   onDetail(comment: Comment, index: number): any
   onDelete(comment: Comment, index: number): any
   onUpdateState(comment: Comment, state: CommentState): any
@@ -42,7 +42,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
         pageSize: props.pagination?.per_page,
         total: props.pagination?.total,
         showSizeChanger: true,
-        onChange: props.onPagination
+        onChange: props.onPaginate
       }}
       columns={[
         {
@@ -96,12 +96,12 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 </Space>
                 <UniversalText
                   placeholder="Left blank"
-                  prefix={<Icon.MailOutlined />}
+                  prefix={<Icons.MailOutlined />}
                   text={comment.author.email}
                   copyable={true}
                 />
                 <Space size="small">
-                  <Icon.LinkOutlined />
+                  <Icons.LinkOutlined />
                   <Placeholder data={comment.author.site} placeholder="Left blank">
                     {(site) => (
                       <Popover placement="top" content={site}>
@@ -124,16 +124,16 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
             return (
               <Space direction="vertical">
                 <UniversalText
-                  prefix={<Icon.GlobalOutlined />}
+                  prefix={<Icons.GlobalOutlined />}
                   text={comment.ip}
                   copyable={true}
                 />
                 <Space size="small">
-                  <Icon.EnvironmentOutlined />
+                  <Icons.EnvironmentOutlined />
                   <IPLocation data={comment.ip_location} />
                 </Space>
                 <Space size="small">
-                  <Icon.CompassOutlined />
+                  <Icons.CompassOutlined />
                   <Popover
                     title="终端信息"
                     placement="right"
@@ -155,7 +155,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   </Popover>
                 </Space>
                 <UniversalText
-                  prefix={<Icon.ClockCircleOutlined />}
+                  prefix={<Icons.ClockCircleOutlined />}
                   text={stringToYMD(comment.created_at!)}
                 />
               </Space>
@@ -170,11 +170,11 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
             const state = getCommentState(comment.state)
             return (
               <Space direction="vertical">
-                <Tag icon={<Icon.LikeOutlined />} color={comment.likes > 0 ? 'red' : undefined}>
+                <Tag icon={<Icons.LikeOutlined />} color={comment.likes > 0 ? 'red' : undefined}>
                   {comment.likes} 个赞
                 </Tag>
                 <Tag
-                  icon={<Icon.DislikeOutlined />}
+                  icon={<Icons.DislikeOutlined />}
                   color={comment.dislikes > 0 ? 'gold' : undefined}
                 >
                   {comment.dislikes} 个踩
@@ -182,7 +182,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 <Tag icon={state.icon} color={state.color}>
                   {state.name}
                 </Tag>
-                <Tag icon={<Icon.LineHeightOutlined />}>{comment.content.length} 字</Tag>
+                <Tag icon={<Icons.LineHeightOutlined />}>{comment.content.length} 字</Tag>
               </Space>
             )
           }
@@ -197,7 +197,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 size="small"
                 type="text"
                 block={true}
-                icon={<Icon.EditOutlined />}
+                icon={<Icons.EditOutlined />}
                 onClick={() => props.onDetail(comment, index)}
               >
                 评论详情
@@ -207,7 +207,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   size="small"
                   type="text"
                   block={true}
-                  icon={<Icon.CheckOutlined />}
+                  icon={<Icons.CheckOutlined />}
                   onClick={() => props.onUpdateState(comment, CommentState.Published)}
                 >
                   <Typography.Text type="success">审核通过</Typography.Text>
@@ -219,7 +219,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   type="text"
                   block={true}
                   danger={true}
-                  icon={<Icon.StopOutlined />}
+                  icon={<Icons.StopOutlined />}
                   onClick={() => props.onUpdateState(comment, CommentState.Spam)}
                 >
                   标为垃圾
@@ -232,7 +232,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                   type="text"
                   block={true}
                   danger={true}
-                  icon={<Icon.DeleteOutlined />}
+                  icon={<Icons.DeleteOutlined />}
                   onClick={() => props.onUpdateState(comment, CommentState.Deleted)}
                 >
                   移回收站
@@ -245,7 +245,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                     size="small"
                     type="text"
                     block={true}
-                    icon={<Icon.EditOutlined />}
+                    icon={<Icons.EditOutlined />}
                     onClick={() => props.onUpdateState(comment, CommentState.Auditing)}
                   >
                     <Typography.Text type="warning">退为草稿</Typography.Text>
@@ -255,7 +255,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                     type="text"
                     danger={true}
                     block={true}
-                    icon={<Icon.DeleteOutlined />}
+                    icon={<Icons.DeleteOutlined />}
                     onClick={() => props.onDelete(comment, index)}
                   >
                     彻底删除
@@ -267,7 +267,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
                 block={true}
                 type="link"
                 target="_blank"
-                icon={<Icon.ExportOutlined />}
+                icon={<Icons.ExportOutlined />}
                 href={getBlogURLByPostID(comment.post_id)}
               >
                 宿主页面

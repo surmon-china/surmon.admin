@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 
 /** 文章来源 */
 export enum ArticleOrigin {
@@ -17,19 +17,19 @@ export const articleOrigins = [
   {
     id: ArticleOrigin.Original,
     name: '原创',
-    icon: <Icon.EditOutlined />,
+    icon: <Icons.EditOutlined />,
     color: 'green'
   },
   {
     id: ArticleOrigin.Reprint,
     name: '转载',
-    icon: <Icon.CopyOutlined />,
+    icon: <Icons.CopyOutlined />,
     color: 'red'
   },
   {
     id: ArticleOrigin.Hybrid,
     name: '衍生',
-    icon: <Icon.PullRequestOutlined />,
+    icon: <Icons.PullRequestOutlined />,
     color: 'orange'
   }
 ]

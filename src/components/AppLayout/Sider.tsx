@@ -2,7 +2,7 @@ import classnames from 'classnames'
 import React, { useMemo } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Menu, Spin, Typography, MenuProps, Space, Flex } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { GITHUB_REPO_URL } from '@/config'
 import { Trans } from '@/i18n'
 import { RouteObject, RoutesKey, RoutesPath } from '@/routes'
@@ -85,10 +85,10 @@ export const AppSider: React.FC<AppSiderProps> = ({ isSiderCollapsed }) => {
         className={classnames(styles.footerLink, isSiderCollapsed && styles.collapsed)}
       >
         {isSiderCollapsed ? (
-          <Icon.GithubOutlined />
+          <Icons.GithubOutlined />
         ) : (
           <Space size="small">
-            <Icon.GithubOutlined />
+            <Icons.GithubOutlined />
             source-code
           </Space>
         )}

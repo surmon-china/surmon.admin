@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 
 const ASC = 1 // 升序
 const DESC = -1 // 降序
@@ -24,17 +24,17 @@ const sortTypes = [
   {
     id: SortTypeWithHot.Desc,
     name: '最新',
-    icon: <Icon.SortDescendingOutlined />
+    icon: <Icons.SortDescendingOutlined />
   },
   {
     id: SortTypeWithHot.Asc,
     name: '最早',
-    icon: <Icon.SortAscendingOutlined />
+    icon: <Icons.SortAscendingOutlined />
   },
   {
     id: SortTypeWithHot.Hot,
     name: '最热',
-    icon: <Icon.FireOutlined />
+    icon: <Icons.FireOutlined />
   }
 ]
 

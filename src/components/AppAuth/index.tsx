@@ -3,9 +3,8 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react'
-import { useRef, onMounted, onBeforeUnmount } from 'veact'
-import { useLoading } from 'veact-use'
+import React, { useState } from 'react'
+import { onMounted, onBeforeUnmount } from 'veact'
 import { useNavigate } from 'react-router-dom'
 import { notification, Typography, Spin, Space, Flex } from 'antd'
 import { Loading3QuartersOutlined } from '@ant-design/icons'
@@ -30,9 +29,10 @@ const LOADING_ANIMATED_STYLE: React.CSSProperties = {
 export const AppAuth: React.FC<React.PropsWithChildren> = (props) => {
   const navigate = useNavigate()
   const { i18n } = useTranslation()
-  const loading = useLoading()
-  const isLogined = useRef(false)
-  const isAnimationEnded = useRef(false)
+
+  const [loading, setLoading] = useState(false)
+  const [isLogined, setLogined] = useState(false)
+  const [isAnimationEnded, setAnimationEnded] = useState(false)
 
   const autoLoginByToken = async () => {
     try {
@@ -41,14 +41,15 @@ export const AppAuth: React.FC<React.PropsWithChildren> = (props) => {
       // 1. Verify local Token
       await (isTokenValid() ? Promise.resolve() : Promise.reject('本地 Token 无效'))
       // 2. Verify Token form NodePress
-      await loading.promise(checkTokenValidity())
+      setLoading(true)
+      await checkTokenValidity().finally(() => setLoading(false))
       // Verification successful
       console.debug('Token verification successful.')
       // 3. Start auto-renewal of Token
       runRenewalToken()
       // A delay is needed to make sure the effect is smooth.
-      isLogined.value = true
-      setTimeout(() => (isAnimationEnded.value = true), LOADING_ANIMATED_DELAY)
+      setLogined(true)
+      setTimeout(() => setAnimationEnded(true), LOADING_ANIMATED_DELAY)
     } catch (error) {
       console.debug('Invalid token, need to log in again.', error)
       notification.info({
@@ -65,20 +66,18 @@ export const AppAuth: React.FC<React.PropsWithChildren> = (props) => {
 
   return (
     <div id="app-auth">
-      {isLogined.value && props.children}
-      {!isAnimationEnded.value && (
+      {isLogined && props.children}
+      {!isAnimationEnded && (
         <Flex
           align="center"
           justify="center"
           className={styles.appLoading}
-          style={isLogined.value ? LOADING_ANIMATED_STYLE : {}}
+          style={isLogined ? LOADING_ANIMATED_STYLE : {}}
         >
           <Space direction="vertical" align="center">
             <Spin indicator={<Loading3QuartersOutlined spin style={{ fontSize: 48 }} />} />
             <Typography.Text type="secondary">
-              {loading.state.value
-                ? i18n.t('login.verifying_token')
-                : i18n.t('login.initializing')}
+              {loading ? i18n.t('login.verifying_token') : i18n.t('login.initializing')}
             </Typography.Text>
           </Space>
         </Flex>

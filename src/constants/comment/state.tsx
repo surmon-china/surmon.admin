@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 
 /** 评论状态 */
 export enum CommentState {
@@ -18,25 +18,25 @@ export const commentStates = [
   {
     id: CommentState.Auditing,
     name: '待审核',
-    icon: <Icon.EditOutlined />,
+    icon: <Icons.EditOutlined />,
     color: 'blue'
   },
   {
     id: CommentState.Published,
     name: '已发布',
-    icon: <Icon.CheckOutlined />,
+    icon: <Icons.CheckOutlined />,
     color: 'green'
   },
   {
     id: CommentState.Spam,
     name: '垃圾评论',
-    icon: <Icon.StopOutlined />,
+    icon: <Icons.StopOutlined />,
     color: 'red'
   },
   {
     id: CommentState.Deleted,
     name: '回收站',
-    icon: <Icon.DeleteOutlined />,
+    icon: <Icons.DeleteOutlined />,
     color: 'orange'
   }
 ]

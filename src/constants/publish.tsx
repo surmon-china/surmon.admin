@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 
 /** 数据发布状态 */
 export enum PublishState {
@@ -17,19 +17,19 @@ export const publishStates = [
   {
     id: PublishState.Draft,
     name: '草稿',
-    icon: <Icon.EditOutlined />,
+    icon: <Icons.EditOutlined />,
     color: 'orange'
   },
   {
     id: PublishState.Published,
     name: '已发布',
-    icon: <Icon.CheckOutlined />,
+    icon: <Icons.CheckOutlined />,
     color: 'green'
   },
   {
     id: PublishState.Recycle,
     name: '回收站',
-    icon: <Icon.DeleteOutlined />,
+    icon: <Icons.DeleteOutlined />,
     color: 'red'
   }
 ]

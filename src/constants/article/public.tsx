@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 
 /** 文章公开状态 */
 export enum ArticlePublic {
@@ -17,19 +17,19 @@ export const articlePublics = [
   {
     id: ArticlePublic.Public,
     name: '公开',
-    icon: <Icon.UnlockOutlined />,
+    icon: <Icons.UnlockOutlined />,
     color: 'green'
   },
   {
     id: ArticlePublic.Secret,
     name: '私密',
-    icon: <Icon.LockOutlined />,
+    icon: <Icons.LockOutlined />,
     color: 'red'
   },
   {
     id: ArticlePublic.Reserve,
     name: '保留',
-    icon: <Icon.StopOutlined />,
+    icon: <Icons.StopOutlined />,
     color: 'orange'
   }
 ]

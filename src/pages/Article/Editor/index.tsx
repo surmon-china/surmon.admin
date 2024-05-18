@@ -6,7 +6,7 @@
 import React from 'react'
 import { Ref, useWatch, onMounted } from 'veact'
 import { Card, Row, Col, Form, message, Spin, Button } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { APP_LAYOUT_GUTTER_SIZE } from '@/config'
 import { ImageUploader } from '@/components/common/ImageUploader'
 import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
@@ -161,7 +161,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
                   <Button
                     type="link"
                     size="small"
-                    icon={<Icon.EditOutlined />}
+                    icon={<Icons.EditOutlined />}
                     disabled={props.loading}
                     onClick={handleEditExtendsAsJSON}
                   >

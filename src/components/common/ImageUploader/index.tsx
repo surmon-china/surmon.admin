@@ -6,7 +6,7 @@
 import React from 'react'
 import { useLoading } from 'veact-use'
 import { Upload, notification, Input, Space, Button, Tooltip } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { copy } from '@/services/clipboard'
 import { useTranslation } from '@/i18n'
 import { useUploader, UploadErrorCode } from '@/services/uploader'
@@ -77,7 +77,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
           <img className={styles.image} src={props.value} alt={props.value} />
         ) : (
           <Space className={styles.tigger} direction="vertical" align="center" size="small">
-            {uploader?.uploading.state.value ? <Icon.LoadingOutlined /> : <Icon.PlusOutlined />}
+            {uploader?.uploading.state.value ? <Icons.LoadingOutlined /> : <Icons.PlusOutlined />}
             {uploader?.uploading.state.value ? 'UPLOADING...' : 'UPLOAD'}
           </Space>
         )}
@@ -86,7 +86,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
         <Input
           allowClear={true}
           placeholder={i18n.t('component.image_uploader.input.placeholder')}
-          prefix={<Icon.LinkOutlined />}
+          prefix={<Icons.LinkOutlined />}
           value={props.value}
           onChange={(event) => props.onChange?.(event.target.value)}
         />
@@ -97,12 +97,12 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
             style={{ width: 'calc(100% - 32px - 1px)' }}
             readOnly={true}
             placeholder="Markdown image"
-            prefix={<Icon.FileMarkdownOutlined />}
+            prefix={<Icons.FileMarkdownOutlined />}
             value={imageURLToMarkdown(props.value)}
           />
           <Tooltip title="Copy Markdown">
             <Button
-              icon={<Icon.CopyOutlined />}
+              icon={<Icons.CopyOutlined />}
               onClick={() => copy(imageURLToMarkdown(props.value!))}
             />
           </Tooltip>

@@ -8,7 +8,7 @@ import { useShallowReactive, onMounted, useRef, useWatch } from 'veact'
 import { useLoading } from 'veact-use'
 import classnames from 'classnames'
 import { Button, Card, Table, Select, Tag, Space, Switch, Divider, Typography } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { getConfig, getThreads, ThreadState, OrderType, GeneralDisqusParams } from '@/apis/disqus'
 import { stringToYMD } from '@/transforms/date'
 import { scrollTo } from '@/services/scroller'
@@ -83,7 +83,7 @@ export const DisqusThreadsPage: React.FC = () => {
           type="primary"
           size="small"
           target="_blank"
-          icon={<Icon.DashboardOutlined />}
+          icon={<Icons.DashboardOutlined />}
           href={`https://${config.value?.forum}.disqus.com/admin/discussions/`}
         >
           Disqus Discussions
@@ -132,7 +132,7 @@ export const DisqusThreadsPage: React.FC = () => {
           ]}
         />
         <Button
-          icon={<Icon.ReloadOutlined />}
+          icon={<Icons.ReloadOutlined />}
           loading={loading.state.value}
           onClick={() => resetFetch()}
         >
@@ -194,7 +194,7 @@ export const DisqusThreadsPage: React.FC = () => {
             dataIndex: 'posts',
             render: (_, item) => (
               <Space size="small">
-                <Icon.CommentOutlined />
+                <Icons.CommentOutlined />
                 {item.posts}
               </Space>
             )
@@ -204,7 +204,7 @@ export const DisqusThreadsPage: React.FC = () => {
             key: 'likes',
             render: (_, item) => (
               <Space size="small">
-                <Icon.LikeOutlined />
+                <Icons.LikeOutlined />
                 {item.likes}
               </Space>
             )
@@ -214,7 +214,7 @@ export const DisqusThreadsPage: React.FC = () => {
             key: 'dislikes',
             render: (_, item) => (
               <Space size="small">
-                <Icon.DislikeOutlined />
+                <Icons.DislikeOutlined />
                 {item.dislikes}
               </Space>
             )

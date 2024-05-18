@@ -6,7 +6,7 @@
 import React, { useMemo, useState } from 'react'
 import { onMounted } from 'veact'
 import { Space, Row, Col, Select, Card, Result } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { useLoading } from '@/services/loading'
 import { APP_LAYOUT_SPACE_SIZE, APP_LAYOUT_GUTTER_SIZE } from '@/config'
 import { StatisticsCalendarItem, getArticleCalendar, getCommentCalendar } from '@/apis/system'
@@ -24,12 +24,12 @@ export enum CalendarDataKey {
 const calendarDataOptions = [
   {
     value: CalendarDataKey.Comment,
-    icon: <Icon.CommentOutlined />,
+    icon: <Icons.CommentOutlined />,
     text: '评论'
   },
   {
     value: CalendarDataKey.Article,
-    icon: <Icon.CoffeeOutlined />,
+    icon: <Icons.CoffeeOutlined />,
     text: '文章'
   }
 ]
@@ -111,7 +111,7 @@ export const DashboardPage: React.FC = () => {
         <Col xs={12}>
           <Card bordered={false} title="Analytics">
             <Result
-              icon={<Icon.StockOutlined style={{ color: 'var(--app-color-text-quaternary)' }} />}
+              icon={<Icons.StockOutlined style={{ color: 'var(--app-color-text-quaternary)' }} />}
             />
           </Card>
         </Col>
@@ -119,7 +119,7 @@ export const DashboardPage: React.FC = () => {
           <Card bordered={false} title="PieChart">
             <Result
               icon={
-                <Icon.PieChartOutlined style={{ color: 'var(--app-color-text-quaternary)' }} />
+                <Icons.PieChartOutlined style={{ color: 'var(--app-color-text-quaternary)' }} />
               }
             />
           </Card>

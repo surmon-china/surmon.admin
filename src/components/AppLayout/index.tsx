@@ -3,10 +3,10 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react'
-import { useRef, onMounted } from 'veact'
+import React, { useState } from 'react'
+import { onMounted } from 'veact'
 import { Layout, Space, Typography, Breakpoint, theme } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { useAdminProfile } from '@/contexts/AdminProfile'
 import { AppSider } from './Sider'
 import { AppHeader } from './Header'
@@ -20,10 +20,8 @@ const INIT_SIDER_COLLAPSED_STATE = window.innerWidth >= SCREEN_XL_PX
 
 export const AppLayout: React.FC<React.PropsWithChildren> = (props) => {
   const adminProfile = useAdminProfile()
-  const isSiderCollapsed = useRef(!INIT_SIDER_COLLAPSED_STATE)
-  const toggleSider = () => {
-    isSiderCollapsed.value = !isSiderCollapsed.value
-  }
+  const [isSiderCollapsed, setSiderCollapsed] = useState(!INIT_SIDER_COLLAPSED_STATE)
+  const toggleSiderCollapsed = () => setSiderCollapsed(!isSiderCollapsed)
 
   onMounted(() => {
     adminProfile.refresh()
@@ -35,24 +33,22 @@ export const AppLayout: React.FC<React.PropsWithChildren> = (props) => {
         className={styles.appSider}
         trigger={null}
         collapsible={true}
-        collapsed={isSiderCollapsed.value}
+        collapsed={isSiderCollapsed}
         breakpoint={SIDER_BREAKPOINT_TOKEN}
-        onBreakpoint={(isSmallerThanBreakpoint) => {
-          isSiderCollapsed.value = isSmallerThanBreakpoint
-        }}
+        onBreakpoint={(isSmallerThanBreakpoint) => setSiderCollapsed(isSmallerThanBreakpoint)}
       >
-        <AppSider isSiderCollapsed={isSiderCollapsed.value} />
+        <AppSider isSiderCollapsed={isSiderCollapsed} />
       </Layout.Sider>
       <Layout>
         <Layout.Header className={styles.appHeader}>
-          <AppHeader isSiderCollapsed={isSiderCollapsed.value} onToggleSider={toggleSider} />
+          <AppHeader isSiderCollapsed={isSiderCollapsed} onToggleSider={toggleSiderCollapsed} />
         </Layout.Header>
         <Layout.Content className={styles.appContent}>
           <AppContent>{props?.children}</AppContent>
         </Layout.Content>
         <Layout.Footer className={styles.appFooter}>
           <Space size="small">
-            <Icon.CodeOutlined />
+            <Icons.CodeOutlined />
             Powered by
             <Typography.Link target="_blank" href="https://github.com/facebook/react">
               React

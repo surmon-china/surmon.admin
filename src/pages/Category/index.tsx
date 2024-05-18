@@ -7,7 +7,7 @@ import React from 'react'
 import { useShallowReactive, useRef, onMounted, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Empty, Divider, Modal, Space, Spin, Tree, Typography } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { useTranslation } from '@/i18n'
 import { UniversalText } from '@/components/common/UniversalText'
 import { ResponsePaginationData } from '@/constants/nodepress'
@@ -112,7 +112,7 @@ export const CategoryPage: React.FC = () => {
       className={styles.category}
       title={i18n.t('page.category.list.title', { total: categories.pagination?.total ?? '-' })}
       extra={
-        <Button type="primary" size="small" icon={<Icon.PlusOutlined />} onClick={createNewData}>
+        <Button type="primary" size="small" icon={<Icons.PlusOutlined />} onClick={createNewData}>
           创建新分类
         </Button>
       }
@@ -120,7 +120,7 @@ export const CategoryPage: React.FC = () => {
       <Space className={styles.toolbar}>
         <Space>
           <Button
-            icon={<Icon.ReloadOutlined />}
+            icon={<Icons.ReloadOutlined />}
             loading={loading.state.value}
             onClick={() => fetchData()}
           >
@@ -173,7 +173,7 @@ export const CategoryPage: React.FC = () => {
                     <Button
                       size="small"
                       type="text"
-                      icon={<Icon.EditOutlined />}
+                      icon={<Icons.EditOutlined />}
                       onClick={() => editData(category._id!)}
                     >
                       编辑
@@ -183,7 +183,7 @@ export const CategoryPage: React.FC = () => {
                       size="small"
                       type="text"
                       danger={true}
-                      icon={<Icon.DeleteOutlined />}
+                      icon={<Icons.DeleteOutlined />}
                       onClick={() => handleDelete(category)}
                     >
                       删除
@@ -191,7 +191,7 @@ export const CategoryPage: React.FC = () => {
                     <Divider type="vertical" />
                     <Button
                       size="small"
-                      icon={<Icon.ExportOutlined />}
+                      icon={<Icons.ExportOutlined />}
                       type="link"
                       target="_blank"
                       href={getBlogCategoryUrl(category.slug)}

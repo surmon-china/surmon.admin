@@ -9,11 +9,13 @@ import { useShallowReactive, useRef, onMounted, useWatch, toRaw, useComputed } f
 import { useLoading } from 'veact-use'
 import { useTranslation } from '@/i18n'
 import { Card, Divider, Modal } from 'antd'
+import * as Icons from '@ant-design/icons'
+import * as api from '@/apis/feedback'
+import type { GetFeedbacksParams } from '@/apis/feedback'
+import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { ResponsePaginationData } from '@/constants/nodepress'
 import { Feedback } from '@/constants/feedback'
 import { scrollTo } from '@/services/scroller'
-import * as api from '@/apis/feedback'
-import type { GetFeedbacksParams } from '@/apis/feedback'
 import type { FilterParams } from './ListFilters'
 import { ListFilters, DEFAULT_FILTER_PARAMS, getQueryParams } from './ListFilters'
 import { TableList } from './TableList'
@@ -138,8 +140,19 @@ export const FeedbackPage: React.FC = () => {
         params={filterParams.value}
         onParamsChange={(value) => Object.assign(filterParams.value, value)}
         onRefresh={resetParamsAndRefresh}
-        disabledBatchActions={!selectedIds.value.length}
-        onBatchDelete={() => deleteItems(selectedFeedbacks.value)}
+        extra={
+          <DropdownMenu
+            text="批量操作"
+            disabled={!selectedIds.value.length}
+            options={[
+              {
+                label: '彻底删除',
+                icon: <Icons.DeleteOutlined />,
+                onClick: () => deleteItems(selectedFeedbacks.value)
+              }
+            ]}
+          />
+        }
       />
       <Divider />
       <TableList
@@ -150,7 +163,7 @@ export const FeedbackPage: React.FC = () => {
         onSelect={(ids) => (selectedIds.value = ids)}
         onDetail={(_, index) => openEditModal(index)}
         onDelete={(feedback) => deleteItems([feedback])}
-        onPagination={(page, pageSize) => fetchList({ page, per_page: pageSize })}
+        onPaginate={(page, pageSize) => fetchList({ page, per_page: pageSize })}
       />
       <EditDrawer
         loading={updating.state.value}

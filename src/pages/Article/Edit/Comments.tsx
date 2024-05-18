@@ -1,6 +1,6 @@
 import React from 'react'
 import { Row, Button, List, Divider, Flex, Space, Drawer, Tag, Typography } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { IPLocation } from '@/components/common/IPLocation'
 import { UniversalText } from '@/components/common/UniversalText'
 import { CommentAvatar } from '@/pages/Comment/Avatar'
@@ -42,7 +42,8 @@ const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
             </Typography.Text>
             <Divider type="vertical" />
             <Typography.Text key="time" type={comment.likes ? 'danger' : 'secondary'}>
-              {comment.likes ? <Icon.HeartFilled /> : <Icon.HeartOutlined />} {comment.likes} 喜欢
+              {comment.likes ? <Icons.HeartFilled /> : <Icons.HeartOutlined />} {comment.likes}{' '}
+              喜欢
             </Typography.Text>
             <Divider type="vertical" />
             <Typography.Text type="secondary">{stringToYMD(comment.created_at!)}</Typography.Text>
@@ -106,7 +107,7 @@ export const ArticleComments: React.FC<ArticleCommentsProps> = (props) => {
     <Row justify="space-between" align="bottom">
       <Button
         size="small"
-        icon={<Icon.ReloadOutlined />}
+        icon={<Icons.ReloadOutlined />}
         loading={props.loading}
         onClick={props.onRefresh}
       >
@@ -115,7 +116,7 @@ export const ArticleComments: React.FC<ArticleCommentsProps> = (props) => {
       <Button
         size="small"
         type="primary"
-        icon={<Icon.ExportOutlined />}
+        icon={<Icons.ExportOutlined />}
         onClick={props.onNavigate}
       >
         管理全部评论

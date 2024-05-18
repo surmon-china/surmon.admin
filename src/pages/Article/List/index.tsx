@@ -17,7 +17,7 @@ import {
 } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Input, Select, Divider, Modal, Space, TreeSelect } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { useTranslation } from '@/i18n'
 import { RoutesKey, RoutesPath } from '@/routes'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
@@ -163,7 +163,7 @@ export const ArticleList: React.FC = () => {
       title={i18n.t('page.article.list.title', { total: article.pagination?.total ?? '-' })}
       extra={
         <Link to={RoutesPath[RoutesKey.ArticlePost]}>
-          <Button type="primary" size="small" icon={<Icon.EditOutlined />}>
+          <Button type="primary" size="small" icon={<Icons.EditOutlined />}>
             {i18n.t('page.article.create')}
           </Button>
         </Link>
@@ -174,7 +174,9 @@ export const ArticleList: React.FC = () => {
           <Space wrap>
             <Button
               type={filterParams.featured === true ? 'primary' : 'default'}
-              icon={filterParams.featured === true ? <Icon.StarFilled /> : <Icon.StarOutlined />}
+              icon={
+                filterParams.featured === true ? <Icons.StarFilled /> : <Icons.StarOutlined />
+              }
               onClick={() => {
                 filterParams.featured = filterParams.featured === true ? SELECT_ALL_VALUE : true
               }}
@@ -327,7 +329,7 @@ export const ArticleList: React.FC = () => {
               }}
             />
             <Button
-              icon={<Icon.ReloadOutlined />}
+              icon={<Icons.ReloadOutlined />}
               loading={loading.state.value}
               onClick={resetParamsAndRefresh}
             >
@@ -342,17 +344,17 @@ export const ArticleList: React.FC = () => {
             options={[
               {
                 label: '退为草稿',
-                icon: <Icon.RollbackOutlined />,
+                icon: <Icons.RollbackOutlined />,
                 onClick: () => handleStateChange(selectedIds.value, PublishState.Draft)
               },
               {
                 label: '直接发布',
-                icon: <Icon.CheckOutlined />,
+                icon: <Icons.CheckOutlined />,
                 onClick: () => handleStateChange(selectedIds.value, PublishState.Published)
               },
               {
                 label: '移回收站',
-                icon: <Icon.DeleteOutlined />,
+                icon: <Icons.DeleteOutlined />,
                 onClick: () => handleStateChange(selectedIds.value, PublishState.Recycle)
               }
             ]}
@@ -367,7 +369,7 @@ export const ArticleList: React.FC = () => {
         data={article.data}
         pagination={article.pagination!}
         onUpdateState={(article, state) => handleStateChange([article._id!], state)}
-        onPagination={(page, pageSize) => fetchData({ page, per_page: pageSize })}
+        onPaginate={(page, pageSize) => fetchData({ page, per_page: pageSize })}
       />
     </Card>
   )

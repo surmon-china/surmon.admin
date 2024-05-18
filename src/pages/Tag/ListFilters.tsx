@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Input, Space, Flex } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { useTranslation } from '@/i18n'
 
 export interface ListFiltersProps {
@@ -30,7 +30,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
             }
           }}
         />
-        <Button icon={<Icon.ReloadOutlined />} loading={props.loading} onClick={props.onRefresh}>
+        <Button icon={<Icons.ReloadOutlined />} loading={props.loading} onClick={props.onRefresh}>
           {i18n.t('common.list.filter.reset_and_refresh')}
         </Button>
       </Space>

@@ -8,7 +8,7 @@ import React from 'react'
 import { useShallowReactive, onMounted, useRef, useWatch } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Table, Select, Input, Space, Divider, Typography, Avatar } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { Placeholder } from '@/components/common/Placeholder'
 import { UniversalText } from '@/components/common/UniversalText'
 import { getConfig, getPosts, PostState, OrderType, GeneralDisqusParams } from '@/apis/disqus'
@@ -89,7 +89,7 @@ export const DisqusPostsPage: React.FC = () => {
           type="primary"
           size="small"
           target="_blank"
-          icon={<Icon.DashboardOutlined />}
+          icon={<Icons.DashboardOutlined />}
           href={`https://${config.value?.forum}.disqus.com/admin/moderate/all/`}
         >
           Disqus Moderate
@@ -165,7 +165,7 @@ export const DisqusPostsPage: React.FC = () => {
           }}
         />
         <Button
-          icon={<Icon.ReloadOutlined />}
+          icon={<Icons.ReloadOutlined />}
           loading={loading.state.value}
           onClick={() => resetFetch()}
         >
@@ -236,7 +236,7 @@ export const DisqusPostsPage: React.FC = () => {
             key: 'likes',
             render: (_, item) => (
               <Space size="small">
-                <Icon.LikeOutlined />
+                <Icons.LikeOutlined />
                 {item.likes}
               </Space>
             )
@@ -246,7 +246,7 @@ export const DisqusPostsPage: React.FC = () => {
             key: 'dislikes',
             render: (_, item) => (
               <Space size="small">
-                <Icon.DislikeOutlined />
+                <Icons.DislikeOutlined />
                 {item.dislikes}
               </Space>
             )
@@ -262,19 +262,19 @@ export const DisqusPostsPage: React.FC = () => {
                     value: item.isApproved,
                     label: 'Approved',
                     state: 'success',
-                    icon: <Icon.CheckCircleOutlined />
+                    icon: <Icons.CheckCircleOutlined />
                   },
                   {
                     value: item.isDeleted,
                     label: 'Deleted',
                     state: 'danger',
-                    icon: <Icon.CloseCircleOutlined />
+                    icon: <Icons.CloseCircleOutlined />
                   },
                   {
                     value: item.isSpam,
                     label: 'SPAM',
                     state: 'danger',
-                    icon: <Icon.CloseCircleOutlined />
+                    icon: <Icons.CloseCircleOutlined />
                   }
                 ]
                   .filter((i) => i.value)

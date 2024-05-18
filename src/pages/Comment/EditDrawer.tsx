@@ -13,7 +13,7 @@ import {
   Space,
   Spin
 } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { Comment, commentStates, COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
 import { UniversalEditor } from '@/components/common/UniversalEditor'
 import { UniversalText } from '@/components/common/UniversalText'
@@ -97,7 +97,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             label="用户昵称"
             rules={[{ required: true, message: '必填' }]}
           >
-            <Input prefix={<Icon.UserOutlined />} />
+            <Input prefix={<Icons.UserOutlined />} />
           </Form.Item>
           <Form.Item
             name={['author', 'email']}
@@ -109,7 +109,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
               }
             ]}
           >
-            <Input prefix={<Icon.MailOutlined />} placeholder="email" type="email" />
+            <Input prefix={<Icons.MailOutlined />} placeholder="email" type="email" />
           </Form.Item>
           <Form.Item
             name={['author', 'site']}
@@ -122,11 +122,11 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             ]}
           >
             <Input
-              prefix={<Icon.LinkOutlined />}
+              prefix={<Icons.LinkOutlined />}
               type="url"
               placeholder="URL"
               suffix={
-                <Icon.SendOutlined
+                <Icons.SendOutlined
                   onClick={() => {
                     const url = props.comment.value?.author.site
                     if (url) {
@@ -157,16 +157,16 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
             />
           </Form.Item>
           <Form.Item name="likes" label="被赞" rules={[{ required: true, message: '必填' }]}>
-            <InputNumber addonBefore={<Icon.LikeOutlined />} placeholder="多少" />
+            <InputNumber addonBefore={<Icons.LikeOutlined />} placeholder="多少" />
           </Form.Item>
           <Form.Item name="dislikes" label="被踩" rules={[{ required: true, message: '必填' }]}>
-            <InputNumber addonBefore={<Icon.DislikeOutlined />} placeholder="多少" />
+            <InputNumber addonBefore={<Icons.DislikeOutlined />} placeholder="多少" />
           </Form.Item>
           <Form.Item label="宿主页面">
             <Button
               type="link"
               target="_blank"
-              icon={<Icon.LinkOutlined />}
+              icon={<Icons.LinkOutlined />}
               href={getBlogURLByPostID(props.comment.value?.post_id!)}
             >
               {props.comment.value?.post_id === COMMENT_GUESTBOOK_POST_ID
@@ -224,7 +224,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
           </Form.Item>
           <Form.Item label=" ">
             <Button
-              icon={<Icon.CheckOutlined />}
+              icon={<Icons.CheckOutlined />}
               type="primary"
               loading={props.loading}
               onClick={handleSubmit}

@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { useRef } from 'veact'
 import { Modal, Button, Form, Select, Input, Space } from 'antd'
 import type { FormInstance } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { UniversalEditor, UnEditorLanguage } from '@/components/common/UniversalEditor'
 import { BLOG_ARTICLE_URL_PREFIX } from '@/transforms/url'
 import { MainMultipleUploader } from './MainMultipleUploader'
@@ -99,7 +99,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
                 return (
                   <Button
                     size="small"
-                    icon={<Icon.CloudUploadOutlined />}
+                    icon={<Icons.CloudUploadOutlined />}
                     onClick={() => {
                       isVisibleUploaderModal.value = true
                     }}
@@ -123,7 +123,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
         }}
         title={
           <Space>
-            <Icon.FileImageOutlined />
+            <Icons.FileImageOutlined />
             图片上传器
           </Space>
         }

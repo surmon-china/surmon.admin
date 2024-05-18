@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { IPLocation } from './general'
 
 export interface Feedback {
@@ -37,13 +37,13 @@ export const markedStates = [
     number: MarkedState.No,
     boolean: false,
     name: '未标记',
-    icon: <Icon.StarOutlined />
+    icon: <Icons.StarOutlined />
   },
   {
     number: MarkedState.Yes,
     boolean: true,
     name: '已标记',
-    icon: <Icon.StarFilled style={{ color: '#fadb14' }} />
+    icon: <Icons.StarFilled style={{ color: '#fadb14' }} />
   }
 ]
 

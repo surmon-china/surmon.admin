@@ -8,7 +8,7 @@ import { isEqual } from 'lodash'
 import { useShallowReactive, useRef, onMounted, useWatch, toRaw, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
 import { Card, Divider, Modal } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import * as api from '@/apis/vote'
 import type { GetVotesParams } from '@/apis/vote'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
@@ -125,7 +125,7 @@ export const VotePage: React.FC = () => {
             options={[
               {
                 label: '彻底删除',
-                icon: <Icon.DeleteOutlined />,
+                icon: <Icons.DeleteOutlined />,
                 onClick: () => deleteItems(selectedVotes.value)
               }
             ]}
@@ -139,7 +139,7 @@ export const VotePage: React.FC = () => {
         data={votes.data}
         pagination={votes.pagination!}
         onSelecte={(ids) => (selectedIds.value = ids)}
-        onPagination={(page, pageSize) => fetchList({ page, per_page: pageSize })}
+        onPaginate={(page, pageSize) => fetchList({ page, per_page: pageSize })}
         onClickTarget={(vote) => resetFiltersByTargetId(vote)}
       />
     </Card>

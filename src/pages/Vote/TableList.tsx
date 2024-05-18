@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tag, Table, Button, Popover, Space } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { UniversalText } from '@/components/common/UniversalText'
 import { IPLocation } from '@/components/common/IPLocation'
 import { Pagination } from '@/constants/nodepress'
@@ -21,7 +21,7 @@ export interface TableListProps {
   pagination: Pagination
   selectedIds: Array<string>
   onSelecte(ids: Array<any>): void
-  onPagination(page: number, pageSize?: number): void
+  onPaginate(page: number, pageSize?: number): void
   onClickTarget(vote: Vote): void
 }
 
@@ -41,7 +41,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
         pageSize: props.pagination?.per_page,
         total: props.pagination?.total,
         showSizeChanger: true,
-        onChange: props.onPagination
+        onChange: props.onPaginate
       }}
       columns={[
         {
@@ -77,7 +77,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
           render: (_, vote) => (
             <Space direction="vertical">
               <UniversalText
-                prefix={<Icon.MehOutlined />}
+                prefix={<Icons.MehOutlined />}
                 text={getVoteAuthorTypeText(vote.author_type)}
               />
               <Popover
@@ -87,7 +87,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
               >
                 <span>
                   <UniversalText
-                    prefix={<Icon.UserOutlined />}
+                    prefix={<Icons.UserOutlined />}
                     text={vote.author?.name}
                     placeholder="未知用户"
                   />
@@ -103,13 +103,13 @@ export const TableList: React.FC<TableListProps> = (props) => {
             return (
               <Space direction="vertical">
                 <UniversalText
-                  prefix={<Icon.GlobalOutlined />}
+                  prefix={<Icons.GlobalOutlined />}
                   text={vote.ip}
                   copyable={true}
                   placeholder="未知 IP"
                 />
                 <Space size="small">
-                  <Icon.EnvironmentOutlined />
+                  <Icons.EnvironmentOutlined />
                   <IPLocation data={vote.ip_location} />
                 </Space>
               </Space>
@@ -123,13 +123,13 @@ export const TableList: React.FC<TableListProps> = (props) => {
             return (
               <Space direction="vertical">
                 <UniversalText
-                  prefix={<Icon.CompassOutlined />}
+                  prefix={<Icons.CompassOutlined />}
                   text={parseBrowser(vote.user_agent!)}
                   placeholder="未知浏览器"
                 />
                 <Space size="small">
                   <UniversalText
-                    prefix={<Icon.DesktopOutlined />}
+                    prefix={<Icons.DesktopOutlined />}
                     text={parseOS(vote.user_agent!)}
                     placeholder="未知系统"
                   />
@@ -146,13 +146,13 @@ export const TableList: React.FC<TableListProps> = (props) => {
               <Space direction="vertical">
                 <Space size="small">
                   <UniversalText
-                    prefix={<Icon.LaptopOutlined />}
+                    prefix={<Icons.LaptopOutlined />}
                     text={parseDevice(vote.user_agent!)}
                     placeholder="未知设备"
                   />
                 </Space>
                 <UniversalText
-                  prefix={<Icon.ClockCircleOutlined />}
+                  prefix={<Icons.ClockCircleOutlined />}
                   text={stringToYMD(vote.created_at!)}
                 />
               </Space>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Ref, useWatch } from 'veact'
 import { Form, Typography, Input, Button, Divider, Drawer, Radio, Statistic } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { IPLocation } from '@/components/common/IPLocation'
 import { UniversalText } from '@/components/common/UniversalText'
 import { Feedback, getMarkedByBoolean } from '@/constants/feedback'
@@ -57,10 +57,10 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
         </Radio.Group>
       </Form.Item>
       <Form.Item name="user_name" label="用户昵称">
-        <Input prefix={<Icon.UserOutlined />} />
+        <Input prefix={<Icons.UserOutlined />} />
       </Form.Item>
       <Form.Item name="user_email" label="用户邮箱">
-        <Input prefix={<Icon.MailOutlined />} placeholder="email" type="email" />
+        <Input prefix={<Icons.MailOutlined />} placeholder="email" type="email" />
       </Form.Item>
       <Form.Item label="IP 地址">
         <UniversalText text={feedback.ip || null} copyable={true} />
@@ -94,7 +94,7 @@ export const EditDrawer: React.FC<EditDrawerProps> = (props) => {
       <Form.Item label=" ">
         <Button
           type="primary"
-          icon={<Icon.CheckOutlined />}
+          icon={<Icons.CheckOutlined />}
           loading={props.loading}
           onClick={handleSubmit}
         >

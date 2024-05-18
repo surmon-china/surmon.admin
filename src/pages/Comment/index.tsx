@@ -20,7 +20,7 @@ import {
 } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Input, Select, Divider, Modal, Space, message } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { useTranslation } from '@/i18n'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { SortSelect } from '@/components/common/SortSelect'
@@ -268,7 +268,7 @@ export const CommentPage: React.FC = () => {
             )}
             <Button
               size="small"
-              icon={<Icon.GlobalOutlined />}
+              icon={<Icons.GlobalOutlined />}
               disabled={ipLocationTask.running}
               loading={ipLocationTask.running}
               onClick={() => handleReviseComemntsIPLocation()}
@@ -280,7 +280,7 @@ export const CommentPage: React.FC = () => {
             type="primary"
             size="small"
             target="_blank"
-            icon={<Icon.RocketOutlined />}
+            icon={<Icons.RocketOutlined />}
             href={getBlogGuestbookUrl()}
           >
             去留言板
@@ -366,7 +366,7 @@ export const CommentPage: React.FC = () => {
             }}
           />
           <Button
-            icon={<Icon.ReloadOutlined />}
+            icon={<Icons.ReloadOutlined />}
             loading={loading.state.value}
             onClick={() => resetParamsAndRefresh()}
           >
@@ -380,27 +380,27 @@ export const CommentPage: React.FC = () => {
             options={[
               {
                 label: '退为草稿',
-                icon: <Icon.EditOutlined />,
+                icon: <Icons.EditOutlined />,
                 onClick: () => handleStateChange(selectComments.value, CommentState.Auditing)
               },
               {
                 label: '审核通过',
-                icon: <Icon.CheckOutlined />,
+                icon: <Icons.CheckOutlined />,
                 onClick: () => handleStateChange(selectComments.value, CommentState.Published)
               },
               {
                 label: '标为垃圾',
-                icon: <Icon.StopOutlined />,
+                icon: <Icons.StopOutlined />,
                 onClick: () => handleStateChange(selectComments.value, CommentState.Spam)
               },
               {
                 label: '移回收站',
-                icon: <Icon.DeleteOutlined />,
+                icon: <Icons.DeleteOutlined />,
                 onClick: () => handleStateChange(selectComments.value, CommentState.Deleted)
               },
               {
                 label: '彻底删除',
-                icon: <Icon.DeleteOutlined />,
+                icon: <Icons.DeleteOutlined />,
                 onClick: () => handleDelete(selectComments.value)
               }
             ]}
@@ -418,7 +418,7 @@ export const CommentPage: React.FC = () => {
         onDetail={(_, index) => editData(index)}
         onDelete={(comment) => handleDelete([comment])}
         onUpdateState={(comment, state) => handleStateChange([comment], state)}
-        onPagination={(page, pageSize) => fetchData({ page, per_page: pageSize })}
+        onPaginate={(page, pageSize) => fetchData({ page, per_page: pageSize })}
       />
       <EditDrawer
         loading={submitting.state.value}

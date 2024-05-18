@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Table, Button, Typography, Card, Tag, Space } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { RoutesPather } from '@/routes'
 import { Pagination } from '@/constants/nodepress'
 import { Article, getArticleOrigin, getArticlePublic } from '@/constants/article'
@@ -16,7 +16,7 @@ export interface ArticleListTableProps {
   pagination: Pagination
   selectedIds: Array<string>
   onSelecte(ids: Array<any>): any
-  onPagination(page: number, pageSize?: number): any
+  onPaginate(page: number, pageSize?: number): any
   onUpdateState(article: Article, state: PublishState): any
 }
 
@@ -36,7 +36,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
         pageSize: props.pagination?.per_page,
         total: props.pagination?.total,
         showSizeChanger: true,
-        onChange: props.onPagination
+        onChange: props.onPaginate
       }}
       columns={[
         {
@@ -90,13 +90,13 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
               <Space direction="vertical">
                 {article.categories.map((category) => (
                   <Space size="small" key={category._id}>
-                    <Icon.FolderOpenOutlined />
+                    <Icons.FolderOpenOutlined />
                     {category.name}
                   </Space>
                 ))}
                 <Space size="small" wrap>
                   {article.tags.map((tag) => (
-                    <Tag icon={<Icon.TagOutlined />} key={tag._id}>
+                    <Tag icon={<Icons.TagOutlined />} key={tag._id}>
                       {tag.name}
                     </Tag>
                   ))}
@@ -113,15 +113,15 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
             return (
               <Space direction="vertical">
                 <Space size="small">
-                  <Icon.EyeOutlined />
+                  <Icons.EyeOutlined />
                   浏览 {numberToKilo(article.meta?.views ?? 0)} 次
                 </Space>
                 <Space size="small">
-                  <Icon.HeartOutlined />
+                  <Icons.HeartOutlined />
                   喜欢 {article.meta?.likes} 次
                 </Space>
                 <Space size="small">
-                  <Icon.CommentOutlined />
+                  <Icons.CommentOutlined />
                   评论 {article.meta?.comments} 条
                 </Space>
               </Space>
@@ -168,7 +168,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           render: (_, article) => (
             <Space direction="vertical">
               <Link to={RoutesPather.articleDetail(article._id!)}>
-                <Button size="small" type="text" block={true} icon={<Icon.EditOutlined />}>
+                <Button size="small" type="text" block={true} icon={<Icons.EditOutlined />}>
                   文章详情
                 </Button>
               </Link>
@@ -177,7 +177,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                   size="small"
                   type="text"
                   block={true}
-                  icon={<Icon.CheckOutlined />}
+                  icon={<Icons.CheckOutlined />}
                   onClick={() => props.onUpdateState(article, PublishState.Published)}
                 >
                   <Typography.Text type="success">直接发布</Typography.Text>
@@ -189,7 +189,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                   type="text"
                   block={true}
                   danger={true}
-                  icon={<Icon.DeleteOutlined />}
+                  icon={<Icons.DeleteOutlined />}
                   onClick={() => props.onUpdateState(article, PublishState.Recycle)}
                 >
                   移回收站
@@ -200,7 +200,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                   size="small"
                   type="text"
                   block={true}
-                  icon={<Icon.RollbackOutlined />}
+                  icon={<Icons.RollbackOutlined />}
                   onClick={() => props.onUpdateState(article, PublishState.Draft)}
                 >
                   <Typography.Text type="warning">退至草稿</Typography.Text>
@@ -211,7 +211,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
                 block={true}
                 type="link"
                 target="_blank"
-                icon={<Icon.ExportOutlined />}
+                icon={<Icons.ExportOutlined />}
                 href={getBlogArticleUrl(article.id!)}
               >
                 宿主页面

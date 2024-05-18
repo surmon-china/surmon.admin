@@ -3,7 +3,7 @@ import { onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import { useNavigate } from 'react-router-dom'
 import { Form, Input, Button, Spin, Divider, notification } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import * as api from '@/apis/admin'
 import { RoutesKey, RoutesPath } from '@/routes'
 import { useAdminProfile } from '@/contexts/AdminProfile'
@@ -132,7 +132,7 @@ export const ProfileForm: React.FC = () => {
         <Button
           type="primary"
           block={true}
-          icon={<Icon.CheckOutlined />}
+          icon={<Icons.CheckOutlined />}
           loading={updating.state.value}
           onClick={handleFormSubmit}
         >

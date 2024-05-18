@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Select, Space, Typography, Flex } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { UnEditorLanguage, UnEditorLanguages } from './shared'
 import { UniversalEditorProps } from './'
 
@@ -30,7 +30,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = (props) => {
         <Button
           size="small"
           disabled={props.disbaled}
-          icon={<Icon.DownloadOutlined />}
+          icon={<Icons.DownloadOutlined />}
           onClick={props.onPressSaveContent}
         />
       </Space>
@@ -40,7 +40,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = (props) => {
           <Button
             size="small"
             disabled={props.disbaled}
-            icon={props.isPreviewing ? <Icon.EyeInvisibleOutlined /> : <Icon.EyeOutlined />}
+            icon={props.isPreviewing ? <Icons.EyeInvisibleOutlined /> : <Icons.EyeOutlined />}
             onClick={() => props.onPreviewingChange?.(!props.isPreviewing)}
           />
         )}
@@ -59,7 +59,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = (props) => {
           size="small"
           disabled={props.disbaled}
           icon={
-            props.isFullscreen ? <Icon.FullscreenExitOutlined /> : <Icon.FullscreenOutlined />
+            props.isFullscreen ? <Icons.FullscreenExitOutlined /> : <Icons.FullscreenOutlined />
           }
           onClick={() => props.onFullscreenChange(!props.isFullscreen)}
         />

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 
 import { DashboardPage } from '@/pages/Dashboard'
 import { AnnouncementPage } from '@/pages/Announcement'
@@ -34,7 +34,7 @@ export const pageRoutes: RouteObject[] = [
     element: <DashboardPage />,
     handle: {
       i18nKey: 'page.dashboard.title',
-      icon: <Icon.DashboardOutlined />
+      icon: <Icons.DashboardOutlined />
     }
   },
   {
@@ -43,7 +43,7 @@ export const pageRoutes: RouteObject[] = [
     element: <AnnouncementPage />,
     handle: {
       i18nKey: 'page.announcement.title',
-      icon: <Icon.SoundOutlined />
+      icon: <Icons.SoundOutlined />
     }
   },
   {
@@ -52,7 +52,7 @@ export const pageRoutes: RouteObject[] = [
     element: <CategoryPage />,
     handle: {
       i18nKey: 'page.category.title',
-      icon: <Icon.FolderOpenOutlined />
+      icon: <Icons.FolderOpenOutlined />
     }
   },
   {
@@ -61,7 +61,7 @@ export const pageRoutes: RouteObject[] = [
     element: <TagPage />,
     handle: {
       i18nKey: 'page.tag.title',
-      icon: <Icon.TagsOutlined />
+      icon: <Icons.TagsOutlined />
     }
   },
   {
@@ -69,7 +69,7 @@ export const pageRoutes: RouteObject[] = [
     path: '/article',
     handle: {
       i18nKey: 'page.article.title',
-      icon: <Icon.CoffeeOutlined />
+      icon: <Icons.CoffeeOutlined />
     },
     children: [
       {
@@ -85,7 +85,7 @@ export const pageRoutes: RouteObject[] = [
         element: <ArticleList />,
         handle: {
           i18nKey: 'page.article.list',
-          icon: <Icon.OrderedListOutlined />
+          icon: <Icons.OrderedListOutlined />
         }
       },
       {
@@ -94,7 +94,7 @@ export const pageRoutes: RouteObject[] = [
         element: <ArticleCreate />,
         handle: {
           i18nKey: 'page.article.create',
-          icon: <Icon.EditOutlined />
+          icon: <Icons.EditOutlined />
         }
       },
       {
@@ -103,7 +103,7 @@ export const pageRoutes: RouteObject[] = [
         element: <ArticleEdit />,
         handle: {
           i18nKey: 'page.article.edit',
-          icon: <Icon.EditOutlined />,
+          icon: <Icons.EditOutlined />,
           hiddenInMenu: true
         }
       }
@@ -115,7 +115,7 @@ export const pageRoutes: RouteObject[] = [
     element: <CommentPage />,
     handle: {
       i18nKey: 'page.comment.title',
-      icon: <Icon.CommentOutlined />
+      icon: <Icons.CommentOutlined />
     }
   },
   {
@@ -123,7 +123,7 @@ export const pageRoutes: RouteObject[] = [
     path: '/disqus',
     handle: {
       i18nKey: 'page.disqus.title',
-      icon: <Icon.MessageOutlined />
+      icon: <Icons.MessageOutlined />
     },
     children: [
       {
@@ -139,7 +139,7 @@ export const pageRoutes: RouteObject[] = [
         element: <DisqusPostsPage />,
         handle: {
           i18nKey: 'page.disqus.posts',
-          icon: <Icon.OrderedListOutlined />
+          icon: <Icons.OrderedListOutlined />
         }
       },
       {
@@ -148,7 +148,7 @@ export const pageRoutes: RouteObject[] = [
         element: <DisqusThreadsPage />,
         handle: {
           i18nKey: 'page.disqus.threads',
-          icon: <Icon.AppstoreOutlined />
+          icon: <Icons.AppstoreOutlined />
         }
       },
       {
@@ -157,7 +157,7 @@ export const pageRoutes: RouteObject[] = [
         element: <DisqusSynchronizePage />,
         handle: {
           i18nKey: 'page.disqus.synchronize',
-          icon: <Icon.CloudSyncOutlined />
+          icon: <Icons.CloudSyncOutlined />
         }
       }
     ]
@@ -168,7 +168,7 @@ export const pageRoutes: RouteObject[] = [
     element: <VotePage />,
     handle: {
       i18nKey: 'page.vote.title',
-      icon: <Icon.LikeOutlined />
+      icon: <Icons.LikeOutlined />
     }
   },
   {
@@ -177,7 +177,7 @@ export const pageRoutes: RouteObject[] = [
     element: <FeedbackPage />,
     handle: {
       i18nKey: 'page.feedback.title',
-      icon: <Icon.BulbOutlined />
+      icon: <Icons.BulbOutlined />
     }
   },
   {
@@ -186,7 +186,7 @@ export const pageRoutes: RouteObject[] = [
     element: <SettingPage />,
     handle: {
       i18nKey: 'page.setting.title',
-      icon: <Icon.SettingOutlined />
+      icon: <Icons.SettingOutlined />
     }
   }
 ]

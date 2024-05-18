@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Card, Statistic, Flex, Divider, Skeleton, Rate, Typography } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { Statistics } from '@/apis/system'
 import { RoutesKey, RoutesPath } from '@/routes'
 import { numberToKilo } from '@/transforms/number'
@@ -41,14 +41,14 @@ export const getStatisticsCards = (statistics: Statistics | null, loading: boole
       title="今日阅读"
       value={statistics?.todayViews ?? '-'}
       suffix="次"
-      icon={<Icon.EyeOutlined />}
+      icon={<Icons.EyeOutlined />}
       extra={
         <Flex justify="space-between">
           <Typography.Text type="secondary">
             累计阅读 <strong>{numberToKilo(statistics?.totalViews ?? 0)}</strong>
           </Typography.Text>
           <Link className={styles.link} to={RoutesPath[RoutesKey.ArticlePost]}>
-            <Icon.EditOutlined /> 写文章
+            <Icons.EditOutlined /> 写文章
           </Link>
         </Flex>
       }
@@ -58,7 +58,7 @@ export const getStatisticsCards = (statistics: Statistics | null, loading: boole
       title="全站评论"
       value={statistics?.comments ?? '-'}
       suffix="条"
-      icon={<Icon.CommentOutlined />}
+      icon={<Icons.CommentOutlined />}
       extra={
         <Flex justify="space-between" align="center">
           <Link className={styles.link} to={RoutesPath[RoutesKey.Comment]}>
@@ -76,7 +76,7 @@ export const getStatisticsCards = (statistics: Statistics | null, loading: boole
       title="累计获得喜欢"
       value={statistics?.totalLikes ?? '-'}
       suffix="次"
-      icon={<Icon.HeartOutlined />}
+      icon={<Icons.HeartOutlined />}
       extra={
         <Flex justify="space-between">
           <Rate count={5} disabled allowHalf value={statistics?.averageEmotion} />
@@ -91,7 +91,7 @@ export const getStatisticsCards = (statistics: Statistics | null, loading: boole
       title="共发布文章"
       value={statistics?.articles ?? '-'}
       suffix="篇"
-      icon={<Icon.CoffeeOutlined />}
+      icon={<Icons.CoffeeOutlined />}
       extra={
         <Flex justify="space-between">
           <Typography.Text type="secondary">

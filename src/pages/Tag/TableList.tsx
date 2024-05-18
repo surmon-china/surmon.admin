@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Button } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { Pagination } from '@/constants/nodepress'
 import { Tag } from '@/constants/tag'
 import { getBlogTagUrl } from '@/transforms/url'
@@ -11,7 +11,7 @@ export interface TableListProps {
   pagination?: Pagination
   selectedIds: Array<string>
   onSelect(ids: Array<any>): void
-  onPagination(page: number, pageSize?: number): void
+  onPaginate(page: number, pageSize?: number): void
   onEdit(tag: Tag, index: number): void
   onDelete(tag: Tag, index: number): void
 }
@@ -32,7 +32,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
         pageSize: props.pagination?.per_page,
         total: props.pagination?.total,
         showSizeChanger: true,
-        onChange: props.onPagination
+        onChange: props.onPaginate
       }}
       columns={[
         {
@@ -70,7 +70,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
             <Button.Group size="small">
               <Button
                 type="text"
-                icon={<Icon.EditOutlined />}
+                icon={<Icons.EditOutlined />}
                 onClick={() => props.onEdit(tag, index)}
               >
                 编辑
@@ -78,7 +78,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
               <Button
                 type="text"
                 danger={true}
-                icon={<Icon.DeleteOutlined />}
+                icon={<Icons.DeleteOutlined />}
                 onClick={() => props.onDelete(tag, index)}
               >
                 删除
@@ -86,7 +86,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
               <Button
                 type="link"
                 target="_blank"
-                icon={<Icon.ExportOutlined />}
+                icon={<Icons.ExportOutlined />}
                 href={getBlogTagUrl(tag.slug)}
               >
                 查看

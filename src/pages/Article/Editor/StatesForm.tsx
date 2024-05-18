@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Form, Select, Divider, Space, Switch, FormInstance } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { publishStates } from '@/constants/publish'
 import { articleOrigins, articlePublics, articleLanguages } from '@/constants/article'
 import { StatesFormModel } from '.'
@@ -111,7 +111,7 @@ export const StatesForm: React.FC<StatesFormProps> = (props) => {
       <Button
         type="primary"
         block={true}
-        icon={<Icon.CheckOutlined />}
+        icon={<Icons.CheckOutlined />}
         loading={props.submitting}
         onClick={props.onSubmit}
       >
