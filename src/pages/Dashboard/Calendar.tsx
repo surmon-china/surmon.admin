@@ -99,10 +99,7 @@ export const CalendarCard: React.FC<CalendarCardProps> = (props) => {
       <CalendarChart
         ref={chartRef}
         options={chartConfig}
-        style={{
-          width: '100%',
-          height: '280px'
-        }}
+        style={{ width: '100%', height: '280px' }}
       />
     </Card>
   )

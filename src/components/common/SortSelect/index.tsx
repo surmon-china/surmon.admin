@@ -17,6 +17,7 @@ export interface SortSelectProps {
   loading?: boolean
   disabled?: boolean
   className?: string
+  style?: React.CSSProperties
 }
 
 export const SortSelect: React.FC<SortSelectProps> = (props) => {
@@ -26,6 +27,7 @@ export const SortSelect: React.FC<SortSelectProps> = (props) => {
   return (
     <Select
       className={classnames(styles.select, props.className)}
+      style={props.style}
       loading={props.loading}
       disabled={props.disabled}
       value={props.value}
@@ -34,7 +36,7 @@ export const SortSelect: React.FC<SortSelectProps> = (props) => {
         return {
           value: sortType,
           label: (
-            <Space>
+            <Space size="small">
               {getSortType(sortType).icon}
               {getSortType(sortType).name}
             </Space>

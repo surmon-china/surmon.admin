@@ -2,32 +2,32 @@ import React from 'react'
 import { Button, Input, Select, Space, Flex } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { Trans } from '@/i18n'
-import { SortSelect } from '@/components/common/SortSelect'
 import { SelectWithInput } from '@/components/common/SelectWithInput'
-import { SortTypeBase } from '@/constants/sort'
-import { MarkedState } from '@/constants/feedback'
+import { SortSelect } from '@/components/common/SortSelect'
+import { SortTypeWithHot } from '@/constants/sort'
+import { CommentState, commentStates, COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
 
 export const SELECT_ALL_VALUE = 'ALL'
-export const DEFAULT_FILTER_PARAMS = {
-  marked: false as boolean,
-  tid: SELECT_ALL_VALUE as number | typeof SELECT_ALL_VALUE,
-  emotion: SELECT_ALL_VALUE as number | typeof SELECT_ALL_VALUE,
-  sort: SortTypeBase.Desc
-}
+export const DEFAULT_FILTER_PARAMS = Object.freeze({
+  postId: SELECT_ALL_VALUE as number | typeof SELECT_ALL_VALUE,
+  state: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | CommentState,
+  sort: SortTypeWithHot.Desc
+})
 
 export type FilterParams = typeof DEFAULT_FILTER_PARAMS
 export const getQueryParams = (params: FilterParams) => ({
-  tid: params.tid !== SELECT_ALL_VALUE ? params.tid : void 0,
-  emotion: params.emotion !== SELECT_ALL_VALUE ? params.emotion : void 0,
-  marked: params.marked ? MarkedState.Yes : void 0,
+  post_id: params.postId !== SELECT_ALL_VALUE ? params.postId : void 0,
+  state: params.state !== SELECT_ALL_VALUE ? params.state : void 0,
   sort: params.sort
 })
 
 export interface ListFiltersProps {
   loading: boolean
-  keyword: string
   params: FilterParams
   onParamsChange(value: Partial<FilterParams>): void
+  postIdInput: string
+  onPostIdInputChange(postId: string): void
+  keyword: string
   onKeywordChange(keyword: string): void
   onKeywordSearch(): void
   onResetRefresh(): void
@@ -38,54 +38,57 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
   return (
     <Flex justify="space-between" gap="middle" wrap>
       <Space wrap>
-        <Button
-          loading={props.loading}
-          type={props.params.marked ? 'primary' : 'default'}
-          icon={props.params.marked ? <Icons.StarFilled /> : <Icons.StarOutlined />}
-          onClick={() => props.onParamsChange({ marked: !props.params.marked })}
-        >
-          标记数据
-        </Button>
         <SelectWithInput
           loading={props.loading}
-          inputStyle={{ width: 100 }}
-          inputPlaceholder="TID"
+          inputStyle={{ width: 126 }}
+          inputPlaceholder="POST ID"
           inputType="number"
+          inputValue={props.postIdInput}
+          onInputChange={(value) => props.onPostIdInputChange(value)}
           onInputSearch={(value) => {
-            const tid = value ? Number(value) : SELECT_ALL_VALUE
-            props.onParamsChange({ tid })
+            const postId = value ? Number(value) : SELECT_ALL_VALUE
+            props.onParamsChange({ postId })
           }}
           selectStyle={{ width: 110 }}
-          selectValue={props.params.tid}
-          onSelectChange={(tid) => props.onParamsChange({ tid })}
+          selectValue={props.params.postId}
+          onSelectChange={(postId) => {
+            props.onPostIdInputChange(postId === SELECT_ALL_VALUE ? '' : String(postId))
+            props.onParamsChange({ postId })
+          }}
+          selectLabelRender={({ label }) => label || '文章评论'}
           selectOptions={[
-            { value: SELECT_ALL_VALUE, label: '所有反馈' },
-            { value: 0, label: '站点反馈' }
+            { value: SELECT_ALL_VALUE, label: '全部评论' },
+            { value: COMMENT_GUESTBOOK_POST_ID, label: '留言评论' }
           ]}
         />
         <Select
-          style={{ width: 110 }}
+          style={{ width: 130 }}
           loading={props.loading}
-          value={props.params.emotion}
-          onChange={(emotion) => props.onParamsChange({ emotion })}
+          value={props.params.state}
+          onChange={(state) => props.onParamsChange({ state })}
           options={[
-            { value: SELECT_ALL_VALUE, label: '所有评分' },
-            { value: 1, label: '1 分' },
-            { value: 2, label: '2 分' },
-            { value: 3, label: '3 分' },
-            { value: 4, label: '4 分' },
-            { value: 5, label: '5 分' }
+            { label: '全部状态', value: SELECT_ALL_VALUE },
+            ...commentStates.map((state) => ({
+              value: state.id,
+              label: (
+                <Space size="small">
+                  {state.icon}
+                  {state.name}
+                </Space>
+              )
+            }))
           ]}
         />
         <SortSelect
           style={{ width: 110 }}
+          withHot={true}
           loading={props.loading}
           value={props.params.sort}
           onChange={(sort) => props.onParamsChange({ sort })}
         />
         <Input.Search
           style={{ width: 260 }}
-          placeholder="输入反馈内容、作者信息搜索"
+          placeholder="输入评论内容、作者信息搜索"
           loading={props.loading}
           value={props.keyword}
           onChange={(event) => props.onKeywordChange(event.target.value)}
@@ -99,7 +102,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
         <Button
           icon={<Icons.ReloadOutlined />}
           loading={props.loading}
-          onClick={props.onResetRefresh}
+          onClick={() => props.onResetRefresh()}
         >
           <span>
             <Trans i18nKey="common.list.filter.refresh_with_reset" />

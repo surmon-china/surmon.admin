@@ -13,20 +13,20 @@ import { CommentAvatar } from './Avatar'
 
 import styles from './style.module.less'
 
-export interface CommentListTableProps {
+export interface TableListProps {
   loading: boolean
-  data: Array<Comment>
-  pagination: Pagination
-  selectedIds: Array<string>
-  onPostId(id: number): any
-  onSelecte(ids: Array<any>): any
-  onPaginate(page: number, pageSize?: number): any
-  onDetail(comment: Comment, index: number): any
-  onDelete(comment: Comment, index: number): any
-  onUpdateState(comment: Comment, state: CommentState): any
+  data: Comment[]
+  pagination?: Pagination
+  selectedIds: string[]
+  onSelecte(ids: Array<any>): void
+  onPaginate(page: number, pageSize?: number): void
+  onDetail(comment: Comment, index: number): void
+  onDelete(comment: Comment, index: number): void
+  onUpdateState(comment: Comment, state: CommentState): void
+  onClickPostId(id: number): void
 }
 
-export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
+export const TableList: React.FC<TableListProps> = (props) => {
   return (
     <Table<Comment>
       rowKey="_id"
@@ -47,25 +47,25 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
       columns={[
         {
           title: 'ID',
-          width: 40,
+          width: 60,
           dataIndex: 'id',
           responsive: ['md']
         },
         {
           title: 'PID',
-          width: 40,
+          width: 70,
           dataIndex: 'pid',
           responsive: ['md'],
           render: (_, comment) => <UniversalText text={comment.pid} />
         },
         {
           title: 'POST_ID',
-          width: 40,
+          width: 50,
           dataIndex: 'post_id',
           responsive: ['md'],
           render(_, comment) {
             return (
-              <Button size="small" ghost onClick={() => props.onPostId(comment.post_id)}>
+              <Button size="small" onClick={() => props.onClickPostId(comment.post_id)}>
                 {comment.post_id}
               </Button>
             )
@@ -76,7 +76,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
           dataIndex: 'content',
           render: (_, comment) => (
             <Typography.Paragraph
-              className={styles.content}
+              className={styles.commentContent}
               ellipsis={{ rows: 6, expandable: true }}
             >
               {comment.content}
@@ -85,7 +85,7 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
         },
         {
           title: '个人信息',
-          width: 280,
+          width: 240,
           dataIndex: 'author',
           render(_, comment) {
             return (
@@ -170,7 +170,10 @@ export const CommentListTable: React.FC<CommentListTableProps> = (props) => {
             const state = getCommentState(comment.state)
             return (
               <Space direction="vertical">
-                <Tag icon={<Icons.LikeOutlined />} color={comment.likes > 0 ? 'red' : undefined}>
+                <Tag
+                  icon={<Icons.LikeOutlined />}
+                  color={comment.likes > 0 ? 'processing' : undefined}
+                >
                   {comment.likes} 个赞
                 </Tag>
                 <Tag

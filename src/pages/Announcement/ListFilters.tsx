@@ -6,8 +6,6 @@ import { SortSelect } from '@/components/common/SortSelect'
 import { SortTypeBase } from '@/constants/sort'
 import { AnnouncementState, announcementStates } from '@/constants/announcement'
 
-import styles from './style.module.less'
-
 export const SELECT_ALL_VALUE = 'ALL'
 export const DEFAULT_FILTER_PARAMS = {
   state: SELECT_ALL_VALUE as typeof SELECT_ALL_VALUE | AnnouncementState,
@@ -34,10 +32,10 @@ export interface ListFiltersProps {
 export const ListFilters: React.FC<ListFiltersProps> = (props) => {
   const { i18n } = useTranslation()
   return (
-    <Flex justify="space-between" gap="middle" wrap className={styles.listFilters}>
+    <Flex justify="space-between" gap="middle" wrap>
       <Space wrap>
         <Select
-          className={styles.select}
+          style={{ width: 110 }}
           loading={props.loading}
           value={props.params.state}
           onChange={(state) => props.onParamsChange({ state })}
@@ -46,7 +44,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
             ...announcementStates.map((state) => ({
               value: state.id,
               label: (
-                <Space>
+                <Space size="small">
                   {state.icon}
                   {state.name}
                 </Space>
@@ -55,12 +53,13 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
           ]}
         />
         <SortSelect
+          style={{ width: 110 }}
           loading={props.loading}
           value={props.params.sort}
           onChange={(sort) => props.onParamsChange({ sort })}
         />
         <Input.Search
-          className={styles.search}
+          style={{ width: 220 }}
           placeholder={i18n.t('common.list.filter.search')}
           loading={props.loading}
           value={props.keyword}

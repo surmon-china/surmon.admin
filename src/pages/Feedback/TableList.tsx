@@ -86,10 +86,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
           render: (_, feedback) => (
             <Placeholder data={feedback.remark || null}>
               {(remark) => (
-                <Typography.Paragraph
-                  className={styles.content}
-                  ellipsis={{ rows: 3, expandable: true }}
-                >
+                <Typography.Paragraph ellipsis={{ rows: 3, expandable: true }}>
                   {remark}
                 </Typography.Paragraph>
               )}
@@ -155,7 +152,6 @@ export const TableList: React.FC<TableListProps> = (props) => {
                     />
                   </span>
                 </Popover>
-
                 <UniversalText
                   prefix={<Icons.ClockCircleOutlined />}
                   text={stringToYMD(feedback.created_at!)}

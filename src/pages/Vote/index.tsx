@@ -19,8 +19,6 @@ import { FilterTargetId, DEFAULT_TARGET_ID } from './ListFilters'
 import { ListFilters, getQueryParams, DEFAULT_FILTER_PARAMS } from './ListFilters'
 import { TableList } from './TableList'
 
-import styles from './style.module.less'
-
 export const VotePage: React.FC = () => {
   const { i18n } = useTranslation()
   const loading = useLoading()
@@ -34,6 +32,19 @@ export const VotePage: React.FC = () => {
   const filterTargetId = useRef<FilterTargetId>(void 0)
   const setFilterTargetId = (id: number | void | undefined) => {
     filterTargetId.value = Number.isFinite(id) ? (id as number) : void 0
+  }
+
+  const resetFiltersToDefault = () => {
+    filterTargetId.value = DEFAULT_TARGET_ID
+    filterParams.value = { ...DEFAULT_FILTER_PARAMS }
+  }
+
+  const resetFiltersToTargetId = (vote: Vote) => {
+    filterTargetId.value = vote.target_id
+    filterParams.value = {
+      ...DEFAULT_FILTER_PARAMS,
+      target_type: vote.target_type
+    }
   }
 
   // select
@@ -76,19 +87,6 @@ export const VotePage: React.FC = () => {
     })
   }
 
-  const resetFiltersToTargetId = (vote: Vote) => {
-    filterTargetId.value = vote.target_id
-    filterParams.value = {
-      ...DEFAULT_FILTER_PARAMS,
-      target_type: vote.target_type
-    }
-  }
-
-  const resetFiltersToDefault = () => {
-    filterTargetId.value = DEFAULT_TARGET_ID
-    filterParams.value = { ...DEFAULT_FILTER_PARAMS }
-  }
-
   useWatch(
     () => filterParams.value,
     () => fetchList(),
@@ -101,7 +99,6 @@ export const VotePage: React.FC = () => {
 
   return (
     <Card
-      className={styles.votePage}
       bordered={false}
       title={i18n.t('page.vote.list.title', { total: votes.pagination?.total ?? '-' })}
     >

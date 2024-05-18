@@ -33,14 +33,14 @@ export const FormModal: React.FC<FormModalProps> = (props) => {
   return (
     <Modal
       width={680}
+      centered={true}
       forceRender={true}
+      destroyOnClose={true}
       title={props.title}
       open={props.visible}
       confirmLoading={props.loading}
       onCancel={props.onCancel}
       onOk={handleSubmit}
-      centered={true}
-      destroyOnClose={true}
       okText="提交"
     >
       <Form {...formLayout} colon={false} form={form}>
@@ -66,7 +66,7 @@ export const FormModal: React.FC<FormModalProps> = (props) => {
             options={announcementStates.map((state) => ({
               value: state.id,
               label: (
-                <Space>
+                <Space size="small">
                   {state.icon}
                   {state.name}
                 </Space>

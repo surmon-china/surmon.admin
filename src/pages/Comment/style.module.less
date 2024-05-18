@@ -1,37 +1,24 @@
 @import '@/styles/mixins.less';
 @import '@/styles/variables.less';
 
-.postIdInput {
-  padding: 10px;
-  input[type='number'] {
-    -moz-appearance: textfield;
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none !important;
-      margin: 0;
-    }
-  }
-}
-
-.comment {
-  .toolbar {
-    display: flex;
-    justify-content: space-between;
-
-    .select {
-      width: 120px;
-
-      &.type {
-        width: 150px;
-      }
-    }
-    .search {
-      width: 260px;
-    }
-  }
-}
-
-.content {
+.commentContent {
   overflow-wrap: anywhere;
   margin-bottom: 0 !important;
+}
+
+.avatarBadge {
+  .avatarBadgeIconWrapper {
+    @size: 22px;
+    width: @size;
+    height: @size;
+    border-radius: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .avatarBadgeIcon {
+      width: 16px;
+    }
+  }
 }

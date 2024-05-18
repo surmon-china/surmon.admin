@@ -32,7 +32,7 @@ export const StatesForm: React.FC<StatesFormProps> = (props) => {
             return {
               value: state.id,
               label: (
-                <Space>
+                <Space size="small">
                   {state.icon}
                   {state.name}
                 </Space>
@@ -48,7 +48,7 @@ export const StatesForm: React.FC<StatesFormProps> = (props) => {
             return {
               value: state.id,
               label: (
-                <Space>
+                <Space size="small">
                   {state.icon}
                   {state.name}
                 </Space>
@@ -64,7 +64,7 @@ export const StatesForm: React.FC<StatesFormProps> = (props) => {
             return {
               value: state.id,
               label: (
-                <Space>
+                <Space size="small">
                   {state.icon}
                   {state.name}
                 </Space>
@@ -80,7 +80,7 @@ export const StatesForm: React.FC<StatesFormProps> = (props) => {
             return {
               value: state.id,
               label: (
-                <Space>
+                <Space size="small">
                   {state.icon}
                   {state.name}
                 </Space>

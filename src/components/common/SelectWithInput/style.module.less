@@ -1,0 +1,15 @@
+@import '@/styles/mixins.less';
+@import '@/styles/variables.less';
+
+.input {
+  input[type='number'] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      margin: 0;
+    }
+  }
+}

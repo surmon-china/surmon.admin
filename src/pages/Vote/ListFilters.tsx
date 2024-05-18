@@ -1,13 +1,12 @@
 import React from 'react'
-import { Button, Input, Select, Space, Flex } from 'antd'
+import { Button, Select, Space, Flex } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { Trans } from '@/i18n'
 import { SortTypeBase } from '@/constants/sort'
 import { SortSelect } from '@/components/common/SortSelect'
+import { SelectWithInput } from '@/components/common/SelectWithInput'
 import { VoteTarget, VoteType, VoteAuthorType, voteTypes } from '@/constants/vote'
 import { getVoteTargetText, getVoteAuthorTypeText } from '@/constants/vote'
-
-import styles from './style.module.less'
 
 export const SELECT_ALL_VALUE = 'ALL'
 export const DEFAULT_TARGET_ID = void 0
@@ -40,45 +39,42 @@ export interface ListFiltersProps {
 
 export const ListFilters: React.FC<ListFiltersProps> = (props) => {
   return (
-    <Flex justify="space-between" gap="middle" wrap className={styles.listFilters}>
+    <Flex justify="space-between" gap="middle" wrap>
       <Space wrap>
         <Space.Compact>
-          <Select
-            className={styles.select}
+          <SelectWithInput
             loading={props.loading}
-            value={props.params.target_type}
-            onChange={(target_type) => props.onParamsChange({ target_type })}
-            options={[
-              { value: SELECT_ALL_VALUE, label: '所有类型' },
-              { value: VoteTarget.Post, label: getVoteTargetText(VoteTarget.Post) },
-              { value: VoteTarget.Comment, label: getVoteTargetText(VoteTarget.Comment) }
-            ]}
-          />
-          <Input.Search
-            className={styles.targetIdInput}
-            value={props.targetId}
-            placeholder="目标 ID"
-            type="number"
-            min={0}
-            step={1}
-            allowClear={true}
-            onSearch={(_, __, info) => {
-              if (info?.source === 'input') {
-                props.onTargetIdSearch()
-              }
-            }}
-            onChange={(event) => {
-              const value = event.target.value
+            inputStyle={{ width: 120 }}
+            inputPlaceholder={
+              (props.params.target_type === SELECT_ALL_VALUE
+                ? '目标'
+                : getVoteTargetText(props.params.target_type)) + ' ID'
+            }
+            inputType="number"
+            inputValue={props.targetId}
+            onInputSearch={() => props.onTargetIdSearch()}
+            onInputChange={(value) => {
               if (value && Number.isFinite(Number(value))) {
                 props.onTargetIdChange(Number(value))
               } else {
                 props.onTargetIdChange(void 0)
               }
             }}
+            selectStyle={{ width: 110 }}
+            selectValue={props.params.target_type}
+            onSelectChange={(target_type) => {
+              props.onTargetIdChange(void 0)
+              props.onParamsChange({ target_type })
+            }}
+            selectOptions={[
+              { value: SELECT_ALL_VALUE, label: '所有类型' },
+              { value: VoteTarget.Post, label: getVoteTargetText(VoteTarget.Post) },
+              { value: VoteTarget.Comment, label: getVoteTargetText(VoteTarget.Comment) }
+            ]}
           />
         </Space.Compact>
         <Select
-          className={styles.select}
+          style={{ width: 110 }}
           loading={props.loading}
           value={props.params.vote_type}
           onChange={(vote_type) => props.onParamsChange({ vote_type })}
@@ -87,7 +83,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
             ...voteTypes.map((type) => ({
               value: type.id,
               label: (
-                <Space>
+                <Space size="small">
                   {type.icon}
                   {type.name}
                 </Space>
@@ -96,7 +92,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
           ]}
         />
         <Select
-          className={styles.select}
+          style={{ width: 120 }}
           loading={props.loading}
           value={props.params.author_type}
           onChange={(author_type) => props.onParamsChange({ author_type })}
@@ -111,6 +107,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
           ]}
         />
         <SortSelect
+          style={{ width: 110 }}
           loading={props.loading}
           value={props.params.sort}
           onChange={(sort) => props.onParamsChange({ sort })}

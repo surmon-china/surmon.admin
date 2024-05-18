@@ -5,7 +5,7 @@ import { autoCommentAvatar } from '@/transforms/avatar'
 import { getDisqusUserName } from '@/transforms/disqus'
 import { getResourceUrl } from '@/transforms/url'
 
-import styles from './avatar.module.less'
+import styles from './style.module.less'
 
 export interface CommentAvatarProps {
   comment: Comment
@@ -13,7 +13,7 @@ export interface CommentAvatarProps {
 }
 
 export const CommentAvatar: React.FC<CommentAvatarProps> = (props) => {
-  const isDisqusUser = Boolean(getDisqusUserName(props.comment.extends))
+  const isDisqusUser = !!getDisqusUserName(props.comment.extends)
   const title = isDisqusUser ? 'Disqus user' : 'Guest user'
   const iconUrl = isDisqusUser ? '/images/disqus.svg' : '/images/logo.mini.svg'
   return (

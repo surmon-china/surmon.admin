@@ -33,6 +33,11 @@ export const FeedbackPage: React.FC = () => {
   const searchKeyword = useRef('')
   const filterParams = useRef<FilterParams>({ ...DEFAULT_FILTER_PARAMS })
 
+  const resetFiltersToDefault = () => {
+    searchKeyword.value = ''
+    filterParams.value = { ...DEFAULT_FILTER_PARAMS }
+  }
+
   // select
   const selectedIds = useRef<Array<string>>([])
   const selectedFeedbacks = useComputed(() => {
@@ -107,11 +112,6 @@ export const FeedbackPage: React.FC = () => {
     })
   }
 
-  const resetFiltersToDefault = () => {
-    searchKeyword.value = ''
-    filterParams.value = { ...DEFAULT_FILTER_PARAMS }
-  }
-
   useWatch(
     () => filterParams.value,
     () => fetchList(),
@@ -170,8 +170,8 @@ export const FeedbackPage: React.FC = () => {
         {activeEditFeedback.value && (
           <EditForm
             loading={updating.state.value}
-            initData={activeEditFeedback.value}
-            onSubmit={(data) => updateItem(data)}
+            feedback={activeEditFeedback.value}
+            onSubmit={(feedback) => updateItem(feedback)}
           />
         )}
       </Drawer>

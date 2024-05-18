@@ -10,8 +10,8 @@ import { stringToYMD } from '@/transforms/date'
 
 export interface EditFormProps {
   loading: boolean
-  initData: Feedback
-  onSubmit(value: Feedback): void
+  feedback: Feedback
+  onSubmit(feedback: Feedback): void
 }
 
 export const EditForm: React.FC<EditFormProps> = (props) => {
@@ -24,7 +24,7 @@ export const EditForm: React.FC<EditFormProps> = (props) => {
   }
 
   onMounted(() => {
-    form.setFieldsValue(props.initData)
+    form.setFieldsValue(props.feedback)
   })
 
   return (
@@ -36,15 +36,15 @@ export const EditForm: React.FC<EditFormProps> = (props) => {
       form={form}
     >
       <Form.Item label="ID">
-        <Typography.Text copyable={true}>{props.initData.id}</Typography.Text>
+        <Typography.Text copyable={true}>{props.feedback.id}</Typography.Text>
         <Divider type="vertical" />
-        <Typography.Text copyable={true}>{props.initData._id}</Typography.Text>
+        <Typography.Text copyable={true}>{props.feedback._id}</Typography.Text>
       </Form.Item>
       <Form.Item label="TID">
-        <Typography.Text copyable={true}>{props.initData.tid}</Typography.Text>
+        <Typography.Text copyable={true}>{props.feedback.tid}</Typography.Text>
       </Form.Item>
-      <Form.Item label="发布于">{stringToYMD(props.initData.created_at!)}</Form.Item>
-      <Form.Item label="最后修改于">{stringToYMD(props.initData.updated_at!)}</Form.Item>
+      <Form.Item label="发布于">{stringToYMD(props.feedback.created_at!)}</Form.Item>
+      <Form.Item label="最后修改于">{stringToYMD(props.feedback.updated_at!)}</Form.Item>
       <Form.Item name="marked" label="是否标记">
         <Radio.Group size="middle">
           <Radio.Button value={false}>{getMarkedByBoolean(false).icon}</Radio.Button>
@@ -58,22 +58,22 @@ export const EditForm: React.FC<EditFormProps> = (props) => {
         <Input prefix={<Icons.MailOutlined />} placeholder="email" type="email" />
       </Form.Item>
       <Form.Item label="IP 地址">
-        <UniversalText text={props.initData.ip || null} copyable={true} />
+        <UniversalText text={props.feedback.ip || null} copyable={true} />
       </Form.Item>
       <Form.Item label="IP 地理位置">
-        <IPLocation data={props.initData.ip_location} fullname={true} />
+        <IPLocation data={props.feedback.ip_location} fullname={true} />
       </Form.Item>
       <Form.Item label="终端">
-        <UniversalText text={parseBrowser(props.initData.user_agent!)} placeholder="未知浏览器" />
+        <UniversalText text={parseBrowser(props.feedback.user_agent!)} placeholder="未知浏览器" />
         <Divider type="vertical" />
-        <UniversalText text={parseOS(props.initData.user_agent!)} placeholder="未知系统" />
+        <UniversalText text={parseOS(props.feedback.user_agent!)} placeholder="未知系统" />
         <Divider type="vertical" />
-        <UniversalText text={parseDevice(props.initData.user_agent!)} placeholder="未知设备" />
+        <UniversalText text={parseDevice(props.feedback.user_agent!)} placeholder="未知设备" />
       </Form.Item>
       <Form.Item label="反馈评分">
         <Statistic
-          prefix={props.initData.emotion_emoji}
-          value={`${props.initData.emotion_text} (${props.initData.emotion})`}
+          prefix={props.feedback.emotion_emoji}
+          value={`${props.feedback.emotion_text} (${props.feedback.emotion})`}
         />
       </Form.Item>
       <Form.Item
