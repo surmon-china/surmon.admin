@@ -6,11 +6,6 @@
 import React from 'react'
 import * as Icons from '@ant-design/icons'
 
-export enum AnnouncementState {
-  Unpublished = 0,
-  Published = 1
-}
-
 /** 公告 */
 export interface Announcement {
   id?: number
@@ -19,6 +14,11 @@ export interface Announcement {
   content: string
   updated_at: string
   created_at: string
+}
+
+export enum AnnouncementState {
+  Unpublished = 0,
+  Published = 1
 }
 
 export const announcementStates = [
