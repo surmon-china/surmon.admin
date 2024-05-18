@@ -3,11 +3,11 @@ import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import { Form, Input, Button, Select, Spin, Statistic } from 'antd'
 import * as Icon from '@ant-design/icons'
+import * as api from '@/apis/system'
 import { UniversalEditor, UnEditorLanguage } from '@/components/common/UniversalEditor'
 import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { Option } from '@/constants/option'
 import { scrollTo } from '@/services/scroller'
-import { getOption, putOption } from '@/apis/system'
 import { formatJSONString } from '@/transforms/json'
 
 export interface GeneralFormProps {
@@ -17,10 +17,11 @@ export interface GeneralFormProps {
 
 export const GeneralForm: React.FC<GeneralFormProps> = (props) => {
   const loading = useLoading()
-  const submitting = useLoading()
+  const updating = useLoading()
   const data = useRef<Option | null>(null)
   const [form] = Form.useForm<Option>()
-  const resetDataForm = (option: Option) => {
+
+  const resetForm = (option: Option) => {
     data.value = option
     form.setFieldsValue({
       ...option,
@@ -29,26 +30,26 @@ export const GeneralForm: React.FC<GeneralFormProps> = (props) => {
   }
 
   const fetchOption = () => {
-    return loading.promise(getOption()).then(resetDataForm)
+    return loading.promise(api.getOption()).then(resetForm)
   }
 
   const updateOption = (newOption: Option) => {
-    return submitting
-      .promise(
-        putOption({
-          ...newOption,
-          ad_config: formatJSONString(newOption.ad_config)
-        })
-      )
-      .then(resetDataForm)
+    const payload = {
+      ...newOption,
+      ad_config: formatJSONString(newOption.ad_config)
+    }
+
+    return updating.promise(api.putOption(payload)).then(resetForm)
   }
 
   const handleSubmit = () => {
-    form.validateFields().then((newOption) => {
-      updateOption({
+    form.validateFields().then((formValues) => {
+      const payload = {
         ...data.value,
-        ...newOption
-      }).then(() => {
+        ...formValues
+      }
+
+      updateOption(payload).then(() => {
         scrollTo(document.body)
       })
     })
@@ -59,7 +60,7 @@ export const GeneralForm: React.FC<GeneralFormProps> = (props) => {
   })
 
   return (
-    <Spin spinning={loading.state.value || submitting.state.value}>
+    <Spin spinning={loading.state.value || updating.state.value}>
       <Form
         form={form}
         colon={false}
@@ -188,7 +189,7 @@ export const GeneralForm: React.FC<GeneralFormProps> = (props) => {
             type="primary"
             size="large"
             style={{ width: 120 }}
-            loading={submitting.state.value}
+            loading={updating.state.value}
             onClick={handleSubmit}
           >
             保存

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Input, Select, Space } from 'antd'
+import { Button, Input, Select, Space, Flex } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { Trans } from '@/i18n'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
@@ -39,7 +39,7 @@ export interface ListFiltersProps {
 
 export const ListFilters: React.FC<ListFiltersProps> = (props) => {
   return (
-    <Space className={styles.listFilters} align="center" wrap>
+    <Flex justify="space-between" gap="middle" wrap className={styles.listFilters}>
       <Space wrap>
         <Button
           loading={props.loading}
@@ -133,6 +133,6 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
           ]}
         />
       </Space>
-    </Space>
+    </Flex>
   )
 }

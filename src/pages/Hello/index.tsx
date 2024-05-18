@@ -8,10 +8,9 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Spin, Input } from 'antd'
 import * as Icon from '@ant-design/icons'
-
-import tokenService from '@/services/token'
 import { RoutesKey, RoutesPath } from '@/routes'
 import { authLogin } from '@/apis/auth'
+import tokenService from '@/services/token'
 
 import styles from './style.module.less'
 

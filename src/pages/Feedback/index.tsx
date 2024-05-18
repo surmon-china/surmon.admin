@@ -1,5 +1,5 @@
 /**
- * @file Feedback list page
+ * @file Feedback page
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -19,19 +19,17 @@ import { ListFilters, DEFAULT_FILTER_PARAMS, getQueryParams } from './ListFilter
 import { TableList } from './TableList'
 import { EditDrawer } from './EditDrawer'
 
-import styles from './style.module.less'
-
 export const FeedbackPage: React.FC = () => {
   const { i18n } = useTranslation()
   const loading = useLoading()
   const updating = useLoading()
   const feedbacks = useShallowReactive<ResponsePaginationData<Feedback>>({
     data: [],
-    pagination: undefined
+    pagination: void 0
   })
 
   // filters
-  const filterKeyword = useRef('')
+  const searchKeyword = useRef('')
   const filterParams = useRef<FilterParams>({ ...DEFAULT_FILTER_PARAMS })
 
   // select
@@ -43,7 +41,7 @@ export const FeedbackPage: React.FC = () => {
   // edit modal
   const activeEditItemIndex = useRef<number | null>(null)
   const isVisibleModal = useRef(false)
-  const activeEditItem = useComputed(() => {
+  const activeEditFeedback = useComputed(() => {
     const index = activeEditItemIndex.value
     return index !== null ? feedbacks.data[index] : null
   })
@@ -61,7 +59,7 @@ export const FeedbackPage: React.FC = () => {
     const getParams = {
       ...params,
       ...getQueryParams(filterParams.value),
-      keyword: filterKeyword.value || void 0
+      keyword: searchKeyword.value || void 0
     }
 
     loading.promise(api.getFeedbacks(getParams)).then((response) => {
@@ -94,25 +92,22 @@ export const FeedbackPage: React.FC = () => {
   const updateItem = (feedback: Feedback) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { emotion_emoji, emotion_text, ...target } = {
-      ...activeEditItem.value,
+      ...activeEditFeedback.value,
       ...feedback
     }
+    const payload = {
+      ...target,
+      ip: target.ip || null
+    }
 
-    updating
-      .promise(
-        api.putFeedback({
-          ...target,
-          ip: target.ip || null
-        })
-      )
-      .then(() => {
-        closeEditModal()
-        refreshList()
-      })
+    updating.promise(api.putFeedback(payload)).then(() => {
+      closeEditModal()
+      refreshList()
+    })
   }
 
   const resetParamsAndRefresh = () => {
-    filterKeyword.value = ''
+    searchKeyword.value = ''
     if (isEqual(toRaw(filterParams), DEFAULT_FILTER_PARAMS)) {
       fetchList()
     } else {
@@ -133,33 +128,26 @@ export const FeedbackPage: React.FC = () => {
   return (
     <Card
       bordered={false}
-      className={styles.feedback}
       title={i18n.t('page.feedback.list.title', { total: feedbacks.pagination?.total ?? '-' })}
     >
       <ListFilters
         loading={loading.state.value}
-        disabledBatchActions={!selectedIds.value.length}
-        keyword={filterKeyword.value}
-        params={filterParams.value}
+        keyword={searchKeyword.value}
+        onKeywordChange={(keyword) => (searchKeyword.value = keyword)}
         onKeywordSearch={() => fetchList()}
+        params={filterParams.value}
+        onParamsChange={(value) => Object.assign(filterParams.value, value)}
         onRefresh={resetParamsAndRefresh}
+        disabledBatchActions={!selectedIds.value.length}
         onBatchDelete={() => deleteItems(selectedFeedbacks.value)}
-        onKeywordChange={(keyword) => {
-          filterKeyword.value = keyword
-        }}
-        onParamsChange={(value) => {
-          Object.assign(filterParams.value, value)
-        }}
       />
       <Divider />
       <TableList
         loading={loading.state.value}
-        selectedIds={selectedIds.value}
-        onSelect={(ids) => {
-          selectedIds.value = ids
-        }}
         data={feedbacks.data}
-        pagination={feedbacks.pagination!}
+        pagination={feedbacks.pagination}
+        selectedIds={selectedIds.value}
+        onSelect={(ids) => (selectedIds.value = ids)}
         onDetail={(_, index) => openEditModal(index)}
         onDelete={(feedback) => deleteItems([feedback])}
         onPagination={(page, pageSize) => fetchList({ page, per_page: pageSize })}
@@ -167,7 +155,7 @@ export const FeedbackPage: React.FC = () => {
       <EditDrawer
         loading={updating.state.value}
         visible={isVisibleModal}
-        feedback={activeEditItem}
+        feedback={activeEditFeedback}
         onCancel={closeEditModal}
         onSubmit={updateItem}
       />

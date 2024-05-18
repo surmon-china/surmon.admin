@@ -1,7 +1,6 @@
 import React from 'react'
 import { Ref, useWatch } from 'veact'
 import { Form, Input, Modal, Divider, Typography } from 'antd'
-
 import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { Tag as TagType } from '@/constants/tag'
 import { stringToYMD } from '@/transforms/date'
@@ -11,16 +10,16 @@ const formLayout = {
   wrapperCol: { span: 18 }
 }
 
-export interface EditModalProps {
+export interface FormModalProps {
   title: string
   loading: boolean
   visible: Ref<boolean>
-  tag: Ref<TagType | null>
+  initTag: Ref<TagType | null>
   onSubmit(tag: TagType): void
   onCancel(): void
 }
 
-export const EditModal: React.FC<EditModalProps> = (props) => {
+export const FormModal: React.FC<FormModalProps> = (props) => {
   const [form] = Form.useForm<TagType>()
   const handleSubmit = () => {
     form.validateFields().then(props.onSubmit)
@@ -31,7 +30,7 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
       form.resetFields()
     } else {
       form.setFieldsValue(
-        props.tag.value || {
+        props.initTag.value || {
           extends: [
             {
               name: 'icon',
@@ -55,15 +54,17 @@ export const EditModal: React.FC<EditModalProps> = (props) => {
       okText="提交"
     >
       <Form {...formLayout} colon={false} form={form}>
-        {props.tag.value && (
+        {props.initTag.value && (
           <>
             <Form.Item label="ID">
-              <Typography.Text copyable={true}>{props.tag.value?.id}</Typography.Text>
+              <Typography.Text copyable={true}>{props.initTag.value?.id}</Typography.Text>
               <Divider type="vertical" />
-              <Typography.Text copyable={true}>{props.tag.value?._id}</Typography.Text>
+              <Typography.Text copyable={true}>{props.initTag.value?._id}</Typography.Text>
             </Form.Item>
-            <Form.Item label="发布于">{stringToYMD(props.tag.value?.created_at)}</Form.Item>
-            <Form.Item label="最后修改于">{stringToYMD(props.tag.value?.updated_at)}</Form.Item>
+            <Form.Item label="创建于">{stringToYMD(props.initTag.value?.created_at)}</Form.Item>
+            <Form.Item label="最后修改于">
+              {stringToYMD(props.initTag.value?.updated_at)}
+            </Form.Item>
           </>
         )}
         <Form.Item

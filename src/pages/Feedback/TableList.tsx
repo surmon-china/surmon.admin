@@ -14,7 +14,7 @@ import styles from './style.module.less'
 export interface TableListProps {
   loading: boolean
   data: Array<Feedback>
-  pagination: Pagination
+  pagination?: Pagination
   selectedIds: Array<string>
   onSelect(ids: Array<any>): void
   onPagination(page: number, pageSize?: number): void

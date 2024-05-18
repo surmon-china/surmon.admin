@@ -6,7 +6,6 @@
 import React from 'react'
 import { Card, Row, Col, Space } from 'antd'
 import * as Icon from '@ant-design/icons'
-
 import { useTranslation } from '@/i18n'
 import { APP_LAYOUT_GUTTER_SIZE } from '@/config'
 import { GeneralForm } from './General'
@@ -25,7 +24,6 @@ const PageCard: React.FC<PageCardProps> = (props) => {
       {props.title}
     </Space>
   )
-
   return (
     <Card bordered={false} title={title}>
       {props.children}

@@ -1,5 +1,5 @@
 /**
- * @file App 404 page
+ * @file 404 page
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -11,7 +11,7 @@ import { Trans } from '@/i18n'
 import styles from './style.module.less'
 
 export const NotFoundPage: React.FC = () => (
-  <Flex justify="center" align="center" className={styles.notFound}>
+  <Flex justify="center" align="center" className={styles.notFoundPage}>
     <Result
       status="warning"
       title="404 NOT FOUND"

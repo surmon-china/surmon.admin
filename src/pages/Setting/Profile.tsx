@@ -5,25 +5,26 @@ import { useNavigate } from 'react-router-dom'
 import { Form, Input, Button, Spin, Divider, notification } from 'antd'
 import * as Icon from '@ant-design/icons'
 import { RoutesKey, RoutesPath } from '@/routes'
+import { useAdminProfile } from '@/contexts/AdminProfile'
 import { ImageUploader } from '@/components/common/ImageUploader'
 import { AdminProfile } from '@/constants/admin'
-import { useAdminProfile } from '@/contexts/AdminProfile'
 import { getAdminProfile, putAdminProfile } from '@/apis/admin'
 import { scrollTo } from '@/services/scroller'
 import { removeToken } from '@/services/token'
 
 export const ProfileForm: React.FC = () => {
   const navigate = useNavigate()
-  const submitting = useLoading()
+  const loading = useLoading()
+  const updating = useLoading()
   const globalAdminProfile = useAdminProfile()
   const [form] = Form.useForm<AdminProfile>()
 
   const fetchLatestProfile = () => {
-    getAdminProfile().then(form.setFieldsValue)
+    loading.promise(getAdminProfile()).then(form.setFieldsValue)
   }
 
   const updateProfile = (adminProfile: AdminProfile) => {
-    return submitting.promise(putAdminProfile(adminProfile)).then(() => {
+    return updating.promise(putAdminProfile(adminProfile)).then(() => {
       if (adminProfile.new_password) {
         notification.info({
           message: '修改了新密码，即将跳转到登录页...'
@@ -65,7 +66,7 @@ export const ProfileForm: React.FC = () => {
   })
 
   return (
-    <Spin spinning={submitting.state.value}>
+    <Spin spinning={loading.state.value || updating.state.value}>
       <Form layout="vertical" form={form} colon={false} scrollToFirstError={true}>
         <Form.Item
           name="avatar"
@@ -132,7 +133,7 @@ export const ProfileForm: React.FC = () => {
           icon={<Icon.CheckOutlined />}
           type="primary"
           block={true}
-          loading={submitting.state.value}
+          loading={updating.state.value}
           onClick={handleSubmit}
         >
           保存
