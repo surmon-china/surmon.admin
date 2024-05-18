@@ -38,13 +38,13 @@ export enum VoteAuthorType {
   Disqus = 2
 }
 
-const voteTargetMap = new Map([
+const voteTargetTextMap = new Map([
   [VoteTarget.Post, '页面'],
   [VoteTarget.Comment, '评论']
 ])
 
 export const getVoteTargetText = (voteTarget: VoteTarget) => {
-  return voteTargetMap.get(voteTarget)!
+  return voteTargetTextMap.get(voteTarget)!
 }
 
 const voteAuthorTypeMap = new Map([

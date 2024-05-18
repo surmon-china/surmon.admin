@@ -1,52 +1,26 @@
 /**
- * @file Vote list page
+ * @file Vote page
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import _ from 'lodash'
 import React from 'react'
-import {
-  useShallowReactive,
-  useRef,
-  onMounted,
-  useReactive,
-  useWatch,
-  toRaw,
-  batchedUpdates,
-  useComputed
-} from 'veact'
+import { isEqual } from 'lodash'
+import { useShallowReactive, useRef, onMounted, useWatch, toRaw, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
-import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd'
+import { Card, Divider, Modal } from 'antd'
 import * as Icon from '@ant-design/icons'
-
-import { useTranslation } from '@/i18n'
+import * as api from '@/apis/vote'
+import type { GetVotesParams } from '@/apis/vote'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
-import { SortSelect } from '@/components/common/SortSelect'
-import { GetVotesParams, getVotes, deleteVotes } from '@/apis/vote'
 import { ResponsePaginationData } from '@/constants/nodepress'
-import { SortTypeBase } from '@/constants/sort'
-import {
-  Vote,
-  VoteTarget,
-  VoteType,
-  VoteAuthorType,
-  voteTypes,
-  getVoteTargetText,
-  getVoteAuthorTypeText
-} from '@/constants/vote'
+import { Vote } from '@/constants/vote'
+import { useTranslation } from '@/i18n'
 import { scrollTo } from '@/services/scroller'
-import { VoteListTable } from './Table'
+import { FilterTargetId, DEFAULT_TARGET_ID } from './ListFilters'
+import { ListFilters, getQueryParams, DEFAULT_FILTER_PARAMS } from './ListFilters'
+import { TableList } from './TableList'
 
 import styles from './style.module.less'
-
-const ALL_VALUE = 'ALL'
-const DEFAULT_FILTER_PARAMS = Object.freeze({
-  target_id: void 0 as number | undefined,
-  target_type: ALL_VALUE as VoteTarget | typeof ALL_VALUE,
-  vote_type: ALL_VALUE as VoteType | typeof ALL_VALUE,
-  author_type: ALL_VALUE as VoteAuthorType | typeof ALL_VALUE,
-  sort: SortTypeBase.Desc
-})
 
 export const VotePage: React.FC = () => {
   const { i18n } = useTranslation()
@@ -56,167 +30,95 @@ export const VotePage: React.FC = () => {
     pagination: void 0
   })
 
-  const filterParams = useReactive({ ...DEFAULT_FILTER_PARAMS })
-  const updateTargetID = (targetId: number | void | undefined) => {
-    filterParams.target_id = Number.isFinite(targetId) ? (targetId as number) : undefined
+  // filters
+  const filterParams = useRef({ ...DEFAULT_FILTER_PARAMS })
+  const filterTargetId = useRef<FilterTargetId>(void 0)
+  const setFilterTargetId = (id: number | void | undefined) => {
+    filterTargetId.value = Number.isFinite(id) ? (id as number) : void 0
   }
 
-  // 多选
+  // select
   const selectedIds = useRef<Array<string>>([])
-  const selectVotes = useComputed(() =>
-    votes.data.filter((c) => selectedIds.value.includes(c._id!))
-  )
-  const handleSelect = (ids: any[]) => {
-    selectedIds.value = ids
-  }
+  const selectedVotes = useComputed(() => {
+    return votes.data.filter((vote) => selectedIds.value.includes(vote._id!))
+  })
 
-  const fetchData = (params?: GetVotesParams) => {
+  const fetchList = (params?: GetVotesParams) => {
     const getParams: GetVotesParams = {
       ...params,
-      sort: filterParams.sort,
-      target_id: filterParams.target_id,
-      target_type: filterParams.target_type !== ALL_VALUE ? filterParams.target_type : void 0,
-      vote_type: filterParams.vote_type !== ALL_VALUE ? filterParams.vote_type : void 0,
-      author_type: filterParams.author_type !== ALL_VALUE ? filterParams.author_type : void 0
+      ...getQueryParams(filterParams.value),
+      target_id: filterTargetId.value
     }
 
-    loading.promise(getVotes(getParams)).then((response) => {
+    loading.promise(api.getVotes(getParams)).then((response) => {
       votes.data = response.data
       votes.pagination = response.pagination
       scrollTo(document.body)
     })
   }
 
-  const resetParamsAndRefresh = () => {
-    if (_.isEqual(toRaw(filterParams), DEFAULT_FILTER_PARAMS)) {
-      fetchData()
-    } else {
-      batchedUpdates(() => {
-        filterParams.target_type = DEFAULT_FILTER_PARAMS.target_type
-        filterParams.target_id = DEFAULT_FILTER_PARAMS.target_id
-        filterParams.vote_type = DEFAULT_FILTER_PARAMS.vote_type
-        filterParams.author_type = DEFAULT_FILTER_PARAMS.author_type
-      })
-    }
-  }
-
-  const refreshData = () => {
-    fetchData({
+  const refreshList = () => {
+    fetchList({
       page: votes.pagination?.current_page,
       per_page: votes.pagination?.per_page
     })
   }
 
-  const handleDelete = (votes: Array<Vote>) => {
+  const deleteItems = (votes: Array<Vote>) => {
     Modal.confirm({
       title: `确定要彻底删除 ${votes.length} 个记录吗？`,
       content: '该行为是物理删除，不可恢复！',
       centered: true,
-      onOk: () =>
-        deleteVotes(votes.map((c) => c._id!)).then(() => {
-          refreshData()
+      onOk: () => {
+        return api.deleteVotes(votes.map((vote) => vote._id!)).then(() => {
+          refreshList()
         })
+      }
     })
   }
 
-  useWatch(filterParams, () => fetchData())
+  const resetFiltersByTargetId = (vote: Vote) => {
+    filterTargetId.value = vote.target_id
+    filterParams.value = {
+      ...DEFAULT_FILTER_PARAMS,
+      target_type: vote.target_type
+    }
+  }
+
+  const resetParamsAndRefresh = () => {
+    if (isEqual(toRaw(filterParams), DEFAULT_FILTER_PARAMS)) {
+      fetchList()
+    } else {
+      filterTargetId.value = DEFAULT_TARGET_ID
+      filterParams.value = { ...DEFAULT_FILTER_PARAMS }
+    }
+  }
+
+  useWatch(
+    () => filterParams.value,
+    () => fetchList(),
+    { deep: true }
+  )
 
   onMounted(() => {
-    fetchData()
+    fetchList()
   })
 
   return (
     <Card
-      title={i18n.t('page.vote.list.title', { total: votes.pagination?.total ?? '-' })}
+      className={styles.votePage}
       bordered={false}
-      className={styles.vote}
+      title={i18n.t('page.vote.list.title', { total: votes.pagination?.total ?? '-' })}
     >
-      <Space className={styles.toolbar} align="center" wrap>
-        <Space wrap>
-          <Select
-            className={styles.select}
-            loading={loading.state.value}
-            value={filterParams.target_type}
-            onChange={(type) => {
-              filterParams.target_type = type
-            }}
-            options={[
-              { value: ALL_VALUE, label: '所有目标' },
-              { value: VoteTarget.Post, label: getVoteTargetText(VoteTarget.Post) },
-              { value: VoteTarget.Comment, label: getVoteTargetText(VoteTarget.Comment) }
-            ]}
-          />
-          <Space.Compact>
-            <Button onClick={() => updateTargetID(void 0)}>All</Button>
-            <Input.Search
-              className={styles.targetIdInput}
-              placeholder="目标 ID"
-              type="number"
-              min={0}
-              step={1}
-              value={filterParams.target_id}
-              onSearch={(targetInput) => {
-                if (targetInput && Number.isFinite(Number(targetInput))) {
-                  updateTargetID(Number(targetInput))
-                } else {
-                  updateTargetID(void 0)
-                }
-              }}
-            />
-          </Space.Compact>
-          <Select
-            className={styles.select}
-            loading={loading.state.value}
-            value={filterParams.vote_type}
-            onChange={(type) => {
-              filterParams.vote_type = type
-            }}
-            options={[
-              { value: ALL_VALUE, label: '所有态度' },
-              ...voteTypes.map((type) => ({
-                value: type.id,
-                label: (
-                  <Space>
-                    {type.icon}
-                    {type.name}
-                  </Space>
-                )
-              }))
-            ]}
-          />
-          <Select
-            className={styles.select}
-            loading={loading.state.value}
-            value={filterParams.author_type}
-            onChange={(type) => {
-              filterParams.author_type = type
-            }}
-            options={[
-              { value: ALL_VALUE, label: '所有用户' },
-              ...[VoteAuthorType.Anonymous, VoteAuthorType.Guest, VoteAuthorType.Disqus].map(
-                (type) => ({
-                  value: type,
-                  label: getVoteAuthorTypeText(type)
-                })
-              )
-            ]}
-          />
-          <SortSelect
-            loading={loading.state.value}
-            value={filterParams.sort}
-            onChange={(sort) => {
-              filterParams.sort = sort
-            }}
-          />
-          <Button
-            icon={<Icon.ReloadOutlined />}
-            loading={loading.state.value}
-            onClick={() => resetParamsAndRefresh()}
-          >
-            {i18n.t('common.list.filter.reset_and_refresh')}
-          </Button>
-        </Space>
-        <Space>
+      <ListFilters
+        loading={loading.state.value}
+        targetId={filterTargetId.value}
+        onTargetIdChange={setFilterTargetId}
+        onTargetIdSearch={() => fetchList()}
+        params={filterParams.value}
+        onParamsChange={(value) => Object.assign(filterParams.value, value)}
+        onRefresh={resetParamsAndRefresh}
+        extra={
           <DropdownMenu
             text="批量操作"
             disabled={!selectedIds.value.length}
@@ -224,21 +126,21 @@ export const VotePage: React.FC = () => {
               {
                 label: '彻底删除',
                 icon: <Icon.DeleteOutlined />,
-                onClick: () => handleDelete(selectVotes.value)
+                onClick: () => deleteItems(selectedVotes.value)
               }
             ]}
           />
-        </Space>
-      </Space>
+        }
+      />
       <Divider />
-      <VoteListTable
+      <TableList
         loading={loading.state.value}
         selectedIds={selectedIds.value}
         data={votes.data}
         pagination={votes.pagination!}
-        onSelecte={handleSelect}
-        onTargetID={updateTargetID}
-        onPagination={(page, pageSize) => fetchData({ page, per_page: pageSize })}
+        onSelecte={(ids) => (selectedIds.value = ids)}
+        onPagination={(page, pageSize) => fetchList({ page, per_page: pageSize })}
+        onClickTarget={(vote) => resetFiltersByTargetId(vote)}
       />
     </Card>
   )

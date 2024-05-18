@@ -5,6 +5,8 @@ import { UniversalText } from '@/components/common/UniversalText'
 import { IPLocation } from '@/components/common/IPLocation'
 import { Pagination } from '@/constants/nodepress'
 import { COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
+import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
+import { stringToYMD } from '@/transforms/date'
 import {
   Vote,
   VoteType,
@@ -12,20 +14,18 @@ import {
   getVoteTargetText,
   getVoteAuthorTypeText
 } from '@/constants/vote'
-import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
-import { stringToYMD } from '@/transforms/date'
 
-export interface VoteListTableProps {
+export interface TableListProps {
   loading: boolean
   data: Array<Vote>
   pagination: Pagination
   selectedIds: Array<string>
-  onTargetID(id: number): any
-  onSelecte(ids: Array<any>): any
-  onPagination(page: number, pageSize?: number): any
+  onSelecte(ids: Array<any>): void
+  onPagination(page: number, pageSize?: number): void
+  onClickTarget(vote: Vote): void
 }
 
-export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
+export const TableList: React.FC<TableListProps> = (props) => {
   return (
     <Table<Vote>
       rowKey="_id"
@@ -53,7 +53,7 @@ export const VoteListTable: React.FC<VoteListTableProps> = (props) => {
           title: '目标',
           dataIndex: 'target_type',
           render: (_, vote) => (
-            <Button type="link" onClick={() => props.onTargetID(vote.target_id)}>
+            <Button type="link" onClick={() => props.onClickTarget(vote)}>
               {getVoteTargetText(vote.target_type)} #
               {vote.target_id === COMMENT_GUESTBOOK_POST_ID ? 'Guestbook' : vote.target_id}
             </Button>
