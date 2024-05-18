@@ -118,7 +118,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
         },
         {
           title: '发布于',
-          width: 210,
+          width: 220,
           dataIndex: 'agent',
           render(_, comment) {
             return (
@@ -164,7 +164,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
         },
         {
           title: '状态',
-          width: 120,
+          width: 100,
           dataIndex: 'state',
           render: (_, comment) => {
             const state = getCommentState(comment.state)
