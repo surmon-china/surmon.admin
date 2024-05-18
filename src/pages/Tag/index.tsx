@@ -10,12 +10,13 @@ import { Button, Card, Divider, Modal } from 'antd'
 import * as Icon from '@ant-design/icons'
 import * as api from '@/apis/tag'
 import type { GetTagParams } from '@/apis/tag'
-import { useTranslation } from '@/i18n'
+import { DropdownMenu } from '@/components/common/DropdownMenu'
 import { ResponsePaginationData } from '@/constants/nodepress'
 import { Tag } from '@/constants/tag'
+import { useTranslation } from '@/i18n'
 import { scrollTo } from '@/services/scroller'
-import { TableList } from './TableList'
 import { ListFilters } from './ListFilters'
+import { TableList } from './TableList'
 import { FormModal } from './FormModal'
 
 export const TagPage: React.FC = () => {
@@ -146,12 +147,23 @@ export const TagPage: React.FC = () => {
     >
       <ListFilters
         loading={loading.state.value}
-        disabledBatchActions={!selectedIds.value.length}
         keyword={searchKeyword.value}
         onKeywordSearch={() => fetchList()}
         onRefresh={resetParamsAndRefresh}
-        onBatchDelete={() => deleteTags(selectedIds.value)}
         onKeywordChange={(keyword) => (searchKeyword.value = keyword)}
+        extra={
+          <DropdownMenu
+            text="批量操作"
+            disabled={!selectedIds.value.length}
+            options={[
+              {
+                label: '批量删除',
+                icon: <Icon.DeleteOutlined />,
+                onClick: () => deleteTags(selectedIds.value)
+              }
+            ]}
+          />
+        }
       />
       <Divider />
       <TableList
