@@ -30,5 +30,5 @@ export interface Comment {
   ip_location: IPLocation | null
   updated_at?: string
   created_at?: string
-  extends: Array<GeneralKeyValue>
+  extends: GeneralKeyValue[]
 }

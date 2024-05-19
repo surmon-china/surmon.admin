@@ -10,7 +10,7 @@ export interface Option {
   title: string
   sub_title: string
   description: string
-  keywords: Array<string>
+  keywords: string[]
   statement: string
   site_url: string
   site_email: string
@@ -18,11 +18,11 @@ export interface Option {
     likes: number
   }
   blocklist: {
-    ips: Array<string>
-    mails: Array<string>
-    keywords: Array<string>
+    ips: string[]
+    mails: string[]
+    keywords: string[]
   }
-  friend_links: Array<GeneralKeyValue>
+  friend_links: GeneralKeyValue[]
   ad_config: string
   updated_at: string
 }

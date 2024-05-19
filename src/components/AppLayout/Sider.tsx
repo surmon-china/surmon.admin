@@ -13,7 +13,7 @@ import { getResourceUrl } from '@/transforms/url'
 
 import styles from './style.module.less'
 
-const transRoutesToMenuItems = (routes: Array<RouteObject>): NonNullable<MenuProps['items']> => {
+const transRoutesToMenuItems = (routes: RouteObject[]): NonNullable<MenuProps['items']> => {
   return routes
     .filter((route) => !route.handle?.hiddenInMenu)
     .map((route) => ({

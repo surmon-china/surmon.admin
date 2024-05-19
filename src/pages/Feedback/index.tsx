@@ -39,7 +39,7 @@ export const FeedbackPage: React.FC = () => {
   }
 
   // select
-  const selectedIds = useRef<Array<string>>([])
+  const selectedIds = useRef<string[]>([])
   const selectedFeedbacks = useComputed(() => {
     return feedbacks.data.filter((c) => selectedIds.value.includes(c._id!))
   })
@@ -82,7 +82,7 @@ export const FeedbackPage: React.FC = () => {
     })
   }
 
-  const deleteItems = (feedbacks: Array<Feedback>) => {
+  const deleteItems = (feedbacks: Feedback[]) => {
     Modal.confirm({
       title: `确定要彻底删除 ${feedbacks.length} 个反馈吗？`,
       content: '该行为是物理删除，不可恢复！',

@@ -59,7 +59,7 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
   state: SELECT_ALL_VALUE as SelectAllType | ArticlePublish
 })
 
-export const ArticleList: React.FC = () => {
+export const ArticleListPage: React.FC = () => {
   const { i18n } = useTranslation()
   const loading = useLoading()
   const article = useShallowReactive<ResponsePaginationData<Article>>({
@@ -69,7 +69,7 @@ export const ArticleList: React.FC = () => {
 
   // 分类
   const loadingCategory = useLoading()
-  const categoriesTree = useRef<Array<CategoryTree>>([])
+  const categoriesTree = useRef<CategoryTree[]>([])
   const fetchCategories = () => {
     loadingCategory.promise(getCategories({ per_page: 50 })).then((result) => {
       categoriesTree.value = result.tree
@@ -78,7 +78,7 @@ export const ArticleList: React.FC = () => {
 
   // 标签
   const loadingTag = useLoading()
-  const tags = useRef<Array<Tag>>([])
+  const tags = useRef<Tag[]>([])
   const fetchTags = () => {
     loadingTag.promise(getTags({ per_page: 50 })).then((result) => {
       tags.value = result.data
@@ -90,7 +90,7 @@ export const ArticleList: React.FC = () => {
   const filterParams = useReactive({ ...DEFAULT_FILTER_PARAMS })
 
   // 多选
-  const selectedIds = useRef<Array<string>>([])
+  const selectedIds = useRef<string[]>([])
   const handleSelect = (ids: any[]) => {
     selectedIds.value = ids
   }
@@ -137,7 +137,7 @@ export const ArticleList: React.FC = () => {
     })
   }
 
-  const handleStateChange = (articleIds: Array<ArticleId>, state: ArticlePublish) => {
+  const handleStateChange = (articleIds: ArticleId[], state: ArticlePublish) => {
     Modal.confirm({
       title: `确定要将 ${articleIds.length} 个文章更新为「 ${getArticlePublish(state).name} 」状态吗？`,
       content: '操作不可撤销',

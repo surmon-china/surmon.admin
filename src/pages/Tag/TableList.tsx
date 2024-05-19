@@ -7,10 +7,10 @@ import { getBlogTagUrl } from '@/transforms/url'
 
 export interface TableListProps {
   loading: boolean
-  data: Array<Tag>
+  data: Tag[]
   pagination?: Pagination
-  selectedIds: Array<string>
-  onSelect(ids: Array<any>): void
+  selectedIds: string[]
+  onSelect(ids: any[]): void
   onPaginate(page: number, pageSize?: number): void
   onEdit(tag: Tag, index: number): void
   onDelete(tag: Tag, index: number): void

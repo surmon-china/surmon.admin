@@ -10,7 +10,7 @@ import { UniversalEditor } from '@/components/common/UniversalEditor'
 import { UniversalText } from '@/components/common/UniversalText'
 import { IPLocation } from '@/components/common/IPLocation'
 import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
-import { getBlogURLByPostID } from '@/transforms/url'
+import { getBlogURLByPostId } from '@/transforms/url'
 import { stringToYMD } from '@/transforms/date'
 import { CommentAvatar } from './Avatar'
 
@@ -131,7 +131,7 @@ export const EditForm: React.FC<EditFormProps> = (props) => {
           type="link"
           target="_blank"
           icon={<Icons.LinkOutlined />}
-          href={getBlogURLByPostID(props.comment?.post_id!)}
+          href={getBlogURLByPostId(props.comment?.post_id!)}
         >
           {props.comment?.post_id === COMMENT_GUESTBOOK_POST_ID
             ? '留言板'

@@ -10,7 +10,7 @@ import { stringToYMD } from '@/transforms/date'
 import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
 
 interface CommentTreeListProps {
-  comments: Array<CommentTree>
+  comments: CommentTree[]
   loading?: boolean
 }
 
@@ -96,7 +96,7 @@ export interface ArticleCommentsProps {
   visible: boolean
   loading: boolean
   count: number
-  comments: Array<CommentTree>
+  comments: CommentTree[]
   onClose(): void
   onRefresh(): void
   onNavigate(): void

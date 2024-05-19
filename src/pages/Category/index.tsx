@@ -20,7 +20,7 @@ export const CategoryPage: React.FC = () => {
   const { i18n } = useTranslation()
   const loading = useLoading()
   const submitting = useLoading()
-  const categoriesTree = useShallowRef<Array<CategoryTree>>([])
+  const categoriesTree = useShallowRef<CategoryTree[]>([])
   const categoriesList = useShallowReactive<ResponsePaginationData<CategoryType>>({
     data: [],
     pagination: void 0

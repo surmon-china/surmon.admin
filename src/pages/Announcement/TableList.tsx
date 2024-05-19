@@ -7,10 +7,10 @@ import { stringToYMD } from '@/transforms/date'
 
 export interface TableListProps {
   loading: boolean
-  data: Array<Announcement>
+  data: Announcement[]
   pagination?: Pagination
-  selectedIds: Array<string>
-  onSelect(ids: Array<any>): void
+  selectedIds: string[]
+  onSelect(ids: any[]): void
   onPaginate(page: number, pageSize?: number): void
   onEdit(announcement: Announcement, index: number): void
   onDelete(announcement: Announcement, index: number): void

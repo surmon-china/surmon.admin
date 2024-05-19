@@ -48,7 +48,7 @@ export const VotePage: React.FC = () => {
   }
 
   // select
-  const selectedIds = useRef<Array<string>>([])
+  const selectedIds = useRef<string[]>([])
   const selectedVotes = useComputed(() => {
     return votes.data.filter((vote) => selectedIds.value.includes(vote._id!))
   })
@@ -74,7 +74,7 @@ export const VotePage: React.FC = () => {
     })
   }
 
-  const deleteItems = (votes: Array<Vote>) => {
+  const deleteItems = (votes: Vote[]) => {
     Modal.confirm({
       title: `确定要彻底删除 ${votes.length} 个记录吗？`,
       content: '该行为是物理删除，不可恢复！',

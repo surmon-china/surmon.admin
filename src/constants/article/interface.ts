@@ -23,8 +23,8 @@ export interface Article {
   description: string
   keywords: string[]
   thumbnail?: string
-  tags: Array<Tag>
-  categories: Array<Category>
+  tags: Tag[]
+  categories: Category[]
   origin: ArticleOrigin
   public: ArticlePublic
   state: ArticlePublish
@@ -38,5 +38,5 @@ export interface Article {
   }
   updated_at?: string
   created_at?: string
-  extends: Array<GeneralKeyValue>
+  extends: GeneralKeyValue[]
 }

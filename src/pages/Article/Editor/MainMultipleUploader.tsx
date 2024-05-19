@@ -14,7 +14,7 @@ export interface MainMultipleUploaderProps {
 
 export const MainMultipleUploader: React.FC<MainMultipleUploaderProps> = (props) => {
   const uploader = useUploader()
-  const fileUrls = useReactive<Array<string>>([])
+  const fileUrls = useReactive<string[]>([])
 
   return (
     <div className={styles.mainMultipleImageUploader}>

@@ -17,10 +17,10 @@ import {
 
 export interface TableListProps {
   loading: boolean
-  data: Array<Vote>
+  data: Vote[]
   pagination: Pagination
-  selectedIds: Array<string>
-  onSelecte(ids: Array<any>): void
+  selectedIds: string[]
+  onSelecte(ids: any[]): void
   onPaginate(page: number, pageSize?: number): void
   onClickTarget(vote: Vote): void
 }

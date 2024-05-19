@@ -29,7 +29,7 @@ export interface ImageUploaderProps {
 
 export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
   const { i18n } = useTranslation()
-  const loading = useLoading()
+  const uploading = useLoading()
   const uploader = useUploader()
   const uploadFile = (file: File) => {
     notification.info({
@@ -65,7 +65,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
         className={styles.uploader}
         maxCount={1}
         showUploadList={false}
-        disabled={loading.state.value}
+        disabled={uploading.state.value}
         onRemove={() => props.onChange?.('')}
         customRequest={(options) => {
           if (options.file) {

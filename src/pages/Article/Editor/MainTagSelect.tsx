@@ -7,13 +7,13 @@ import type { Tag } from '@/constants/tag'
 import { getTags } from '@/apis/tag'
 
 export interface MainTagSelectProps {
-  value?: Array<string>
-  onChange?(value: Array<string>): void
+  value?: string[]
+  onChange?(value: string[]): void
 }
 
 export const MainTagSelect: React.FC<MainTagSelectProps> = (props) => {
   const tagsLoading = useLoading()
-  const tags = useRef<Array<Tag>>([])
+  const tags = useRef<Tag[]>([])
   const fetchTags = () => {
     tagsLoading.promise(getTags({ per_page: 50 })).then((result) => {
       tags.value = result.data
@@ -22,9 +22,9 @@ export const MainTagSelect: React.FC<MainTagSelectProps> = (props) => {
 
   const values = props.value || []
   const handleClick = (tag: Tag, checked: boolean) => {
-    const tagID = tag._id!
-    const tagIDs = checked ? [...values, tagID] : values.filter((t) => t !== tagID)
-    props.onChange?.(tagIDs)
+    const tagId = tag._id!
+    const tagIds = checked ? [...values, tagId] : values.filter((t) => t !== tagId)
+    props.onChange?.(tagIds)
   }
 
   onMounted(() => {

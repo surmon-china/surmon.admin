@@ -28,7 +28,7 @@ const DEFAULT_PARAMS = Object.freeze({
 export const DisqusPostsPage: React.FC = () => {
   const config = useRef<any>(null)
   const loading = useLoading()
-  const threadID = useRef(DEFAULT_THREAD_ID)
+  const threadId = useRef(DEFAULT_THREAD_ID)
   const filterParams = useShallowReactive({ ...DEFAULT_PARAMS })
   const posts = useShallowReactive({
     cursor: null as any,
@@ -41,7 +41,7 @@ export const DisqusPostsPage: React.FC = () => {
       limit: 50,
       forum: config.value!.forum,
       order: filterParams.order,
-      thread: threadID.value ? threadID.value : null,
+      thread: threadId.value ? threadId.value : null,
       include:
         filterParams.include !== SELECT_ALL_VALUE
           ? [filterParams.include]
@@ -60,7 +60,7 @@ export const DisqusPostsPage: React.FC = () => {
   }
 
   const resetFetch = () => {
-    threadID.value = DEFAULT_THREAD_ID
+    threadId.value = DEFAULT_THREAD_ID
     filterParams.order = DEFAULT_PARAMS.order
     filterParams.include = DEFAULT_PARAMS.include
     fetchData()
@@ -159,9 +159,9 @@ export const DisqusPostsPage: React.FC = () => {
           loading={loading.state.value}
           allowClear={true}
           onSearch={() => fetchData()}
-          value={threadID.value}
+          value={threadId.value}
           onChange={(event) => {
-            threadID.value = event.target.value.trim()
+            threadId.value = event.target.value.trim()
           }}
         />
         <Button

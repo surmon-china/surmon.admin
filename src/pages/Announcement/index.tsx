@@ -38,7 +38,7 @@ export const AnnouncementPage: React.FC = () => {
   }
 
   // select
-  const selectedIds = useRef<Array<string>>([])
+  const selectedIds = useRef<string[]>([])
 
   // modal
   const isVisibleModal = useRef(false)

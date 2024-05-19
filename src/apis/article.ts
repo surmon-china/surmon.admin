@@ -30,9 +30,9 @@ export function getArticles(params: GetArticleParams = {}) {
 }
 
 /** 获取文章详情 */
-export function getArticle(articleID: ArticleId) {
+export function getArticle(articleId: ArticleId) {
   return nodepress
-    .get<Article>(`${ARTICLE_API_PATH}/${articleID}`)
+    .get<Article>(`${ARTICLE_API_PATH}/${articleId}`)
     .then((response) => response.result)
 }
 

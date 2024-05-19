@@ -24,7 +24,7 @@ export function getVotes(params: GetVotesParams = {}) {
     .then((response) => response.result)
 }
 
-export function deleteVotes(voteIds: Array<string>) {
+export function deleteVotes(voteIds: string[]) {
   return nodepress
     .delete(VOTE_API_PATH, { data: { vote_ids: voteIds } })
     .then((response) => response.result)

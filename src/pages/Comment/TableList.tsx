@@ -7,7 +7,7 @@ import { IPLocation } from '@/components/common/IPLocation'
 import { Pagination } from '@/constants/nodepress'
 import { Comment, CommentState, getCommentState } from '@/constants/comment'
 import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
-import { getBlogURLByPostID } from '@/transforms/url'
+import { getBlogURLByPostId } from '@/transforms/url'
 import { stringToYMD } from '@/transforms/date'
 import { CommentAvatar } from './Avatar'
 
@@ -18,7 +18,7 @@ export interface TableListProps {
   data: Comment[]
   pagination?: Pagination
   selectedIds: string[]
-  onSelecte(ids: Array<any>): void
+  onSelecte(ids: any[]): void
   onPaginate(page: number, pageSize?: number): void
   onDetail(comment: Comment, index: number): void
   onDelete(comment: Comment, index: number): void
@@ -271,7 +271,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
                 type="link"
                 target="_blank"
                 icon={<Icons.ExportOutlined />}
-                href={getBlogURLByPostID(comment.post_id)}
+                href={getBlogURLByPostId(comment.post_id)}
               >
                 宿主页面
               </Button>

@@ -12,7 +12,7 @@ import nodepress from '@/services/nodepress'
 export const CATEGORY_API_PATH = '/category'
 
 export interface CategoryTree extends Category {
-  children?: Array<CategoryTree>
+  children?: CategoryTree[]
 }
 
 /** 获取分类列表 */
@@ -26,17 +26,17 @@ export function getCategories(params: GeneralPaginateQueryParams = {}) {
         parentId: 'pid',
         childrenField: 'children',
         dataField: null
-      }) as Array<CategoryTree>
+      }) as CategoryTree[]
     }))
 }
 
 /** 获取符合 Antd 的分类树 */
 export function getAntdTreeByTree(options: {
-  tree: Array<CategoryTree>
+  tree: CategoryTree[]
   valuer(category: Category): any
   disabledWhen?(category: Category): boolean
 }) {
-  const toAntdTree = (_tree: Array<CategoryTree>): TreeDataNode[] => {
+  const toAntdTree = (_tree: CategoryTree[]): TreeDataNode[] => {
     return _tree.map((_category) => ({
       data: _category,
       title: _category.name,

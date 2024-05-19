@@ -36,7 +36,7 @@ export interface StatisticsCalendarItem {
 export function getArticleCalendar() {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
   return nodepress
-    .get<Array<StatisticsCalendarItem>>('/article/calendar', { params: { timezone } })
+    .get<StatisticsCalendarItem[]>('/article/calendar', { params: { timezone } })
     .then((response) => response.result)
 }
 
@@ -44,7 +44,7 @@ export function getArticleCalendar() {
 export function getCommentCalendar() {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
   return nodepress
-    .get<Array<StatisticsCalendarItem>>('/comment/calendar', { params: { timezone } })
+    .get<StatisticsCalendarItem[]>('/comment/calendar', { params: { timezone } })
     .then((response) => response.result)
 }
 

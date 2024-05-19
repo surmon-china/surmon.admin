@@ -12,7 +12,7 @@ import nodepress from '@/services/nodepress'
 export const COMMENT_API_PATH = '/comment'
 
 export interface CommentTree extends Comment {
-  children?: Array<CommentTree>
+  children?: CommentTree[]
 }
 
 /** 获取评论参数 */
@@ -37,14 +37,14 @@ export function getComments(params: GetCommentsParams = {}) {
         rootParentIds: {
           0: true
         }
-      }) as Array<CommentTree>
+      }) as CommentTree[]
     }))
 }
 
 /** 获取评论详情 */
-export function getComment(commentID: string) {
+export function getComment(commentId: string) {
   return nodepress
-    .get<Comment>(`${COMMENT_API_PATH}/${commentID}`)
+    .get<Comment>(`${COMMENT_API_PATH}/${commentId}`)
     .then((response) => response.result)
 }
 
@@ -57,8 +57,8 @@ export function putComment(comment: Comment): Promise<any> {
 
 /** 更新评论状态 */
 export function updateCommentsState(
-  commentIds: Array<string>,
-  postIds: Array<number>,
+  commentIds: string[],
+  postIds: number[],
   state: CommentState
 ) {
   return nodepress
@@ -71,14 +71,14 @@ export function updateCommentsState(
 }
 
 /** 批量删除评论 */
-export function deleteComments(commentIds: Array<string>, postIds: Array<number>) {
+export function deleteComments(commentIds: string[], postIds: number[]) {
   return nodepress
     .delete(COMMENT_API_PATH, { data: { comment_ids: commentIds, post_ids: postIds } })
     .then((response) => response.result)
 }
 
-export function reviseCommentIPLocation(commentID: string) {
+export function reviseCommentIPLocation(commentId: string) {
   return nodepress
-    .put(`${COMMENT_API_PATH}/${commentID}/ip_location`)
+    .put(`${COMMENT_API_PATH}/${commentId}/ip_location`)
     .then((response) => response.result)
 }

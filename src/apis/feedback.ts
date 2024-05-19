@@ -29,7 +29,7 @@ export function putFeedback(feedback: Feedback): Promise<any> {
     .then((response) => response.result)
 }
 
-export function deleteFeedbacks(feedbackIds: Array<string>) {
+export function deleteFeedbacks(feedbackIds: string[]) {
   return nodepress
     .delete(FEEDBACK_API_PATH, { data: { feedback_ids: feedbackIds } })
     .then((response) => response.result)

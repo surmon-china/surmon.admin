@@ -21,17 +21,17 @@ import { getBlogArticleUrl } from '@/transforms/url'
 import { ArticleEditor } from '../Editor'
 import { ArticleComments } from './Comments'
 
-export const ArticleEdit: React.FC = () => {
-  const { article_id: articleID } = useParams<'article_id'>()
+export const ArticleEditPage: React.FC = () => {
+  const { article_id: articleId } = useParams<'article_id'>()
   const navigate = useNavigate()
   const fetching = useLoading()
   const submitting = useLoading()
   const article = useRef<Article | null>(null)
-  const articleCacheID = React.useMemo(() => {
-    return RoutesPather.articleDetail(articleID!)
-  }, [articleID])
+  const articleCacheId = React.useMemo(() => {
+    return RoutesPather.articleDetail(articleId!)
+  }, [articleId])
 
-  // Modal
+  // modal
   const isVisibleCommentModal = useRef<boolean>(false)
   const openCommentModal = () => {
     isVisibleCommentModal.value = true
@@ -43,7 +43,7 @@ export const ArticleEdit: React.FC = () => {
   // Comment
   const commentLoading = useLoading()
   const commentCount = useRef<number>(0)
-  const comments = useRef<Array<CommentTree>>([])
+  const comments = useRef<CommentTree[]>([])
   const fetchComments = (articleId: number) => {
     commentLoading
       .promise(getComments({ per_page: 50, sort: SortTypeWithHot.Asc, post_id: articleId }))
@@ -88,9 +88,9 @@ export const ArticleEdit: React.FC = () => {
 
   onMounted(async () => {
     try {
-      const remote = await fetching.promise(getArticle(articleID!))
+      const remote = await fetching.promise(getArticle(articleId!))
       fetchComments(remote.id!)
-      const localContent = getUnEditorCache(articleCacheID)
+      const localContent = getUnEditorCache(articleCacheId)
       if (!!localContent && localContent !== remote.content) {
         Modal.confirm({
           title: '本地缓存存在未保存的文章，是否要覆盖远程数据？',
@@ -124,7 +124,7 @@ export const ArticleEdit: React.FC = () => {
     <>
       <ArticleEditor
         article={article}
-        editorCacheID={articleCacheID}
+        editorCacheID={articleCacheId}
         loading={fetching.state.value}
         submitting={submitting.state.value}
         onSubmit={fetchUpdateArticle}

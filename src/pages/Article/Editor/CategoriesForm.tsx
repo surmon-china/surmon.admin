@@ -9,13 +9,13 @@ import type { CategoriesFormModel } from '.'
 import styles from './style.module.less'
 
 interface CategorySelectProps {
-  value?: Array<string>
-  onChange?(value: Array<string>): void
+  value?: string[]
+  onChange?(value: string[]): void
 }
 
 const CategorySelect: React.FC<CategorySelectProps> = (props) => {
   const categoriesLoading = useLoading()
-  const categories = useRef<Array<CategoryTree>>([])
+  const categories = useRef<CategoryTree[]>([])
   const fetchCategories = () => {
     categoriesLoading.promise(getCategories({ per_page: 50 })).then((result) => {
       categories.value = result.tree

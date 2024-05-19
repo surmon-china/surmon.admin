@@ -17,10 +17,10 @@ import { stringToYMD } from '@/transforms/date'
 
 export interface ArticleListTableProps {
   loading: boolean
-  data: Array<Article>
+  data: Article[]
   pagination: Pagination
-  selectedIds: Array<string>
-  onSelecte(ids: Array<any>): any
+  selectedIds: string[]
+  onSelecte(ids: any[]): any
   onPaginate(page: number, pageSize?: number): any
   onUpdateState(article: Article, state: ArticlePublish): any
 }

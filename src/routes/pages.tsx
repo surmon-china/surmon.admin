@@ -3,6 +3,9 @@ import { Navigate } from 'react-router-dom'
 import * as Icons from '@ant-design/icons'
 
 import { DashboardPage } from '@/pages/Dashboard'
+import { ArticleListPage } from '@/pages/Article/List'
+import { ArticleEditPage } from '@/pages/Article/Edit'
+import { ArticleCreatePage } from '@/pages/Article/Create'
 import { AnnouncementPage } from '@/pages/Announcement'
 import { CategoryPage } from '@/pages/Category'
 import { TagPage } from '@/pages/Tag'
@@ -12,9 +15,6 @@ import { FeedbackPage } from '@/pages/Feedback'
 import { DisqusThreadsPage } from '@/pages/Dsiqus/Thread'
 import { DisqusPostsPage } from '@/pages/Dsiqus/Post'
 import { DisqusSynchronizePage } from '@/pages/Dsiqus/Synchronize'
-import { ArticleList } from '@/pages/Article/List'
-import { ArticleEdit } from '@/pages/Article/Edit'
-import { ArticleCreate } from '@/pages/Article/Create'
 import { SettingPage } from '@/pages/Setting'
 
 import { RouteObject } from '.'
@@ -82,7 +82,7 @@ export const pageRoutes: RouteObject[] = [
       {
         id: RoutesKey.ArticleList,
         path: '/article/list',
-        element: <ArticleList />,
+        element: <ArticleListPage />,
         handle: {
           i18nKey: 'page.article.list',
           icon: <Icons.OrderedListOutlined />
@@ -91,7 +91,7 @@ export const pageRoutes: RouteObject[] = [
       {
         id: RoutesKey.ArticlePost,
         path: '/article/post',
-        element: <ArticleCreate />,
+        element: <ArticleCreatePage />,
         handle: {
           i18nKey: 'page.article.create',
           icon: <Icons.EditOutlined />
@@ -100,7 +100,7 @@ export const pageRoutes: RouteObject[] = [
       {
         id: RoutesKey.ArticleEdit,
         path: '/article/edit/:article_id',
-        element: <ArticleEdit />,
+        element: <ArticleEditPage />,
         handle: {
           i18nKey: 'page.article.edit',
           icon: <Icons.EditOutlined />,

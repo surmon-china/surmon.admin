@@ -46,7 +46,7 @@ export function deleteAnnouncement(id: string) {
 }
 
 /** 批量删除公告 */
-export function deleteAnnouncements(ids: Array<string>) {
+export function deleteAnnouncements(ids: string[]) {
   return nodepress
     .delete<any>(ANNOUNCEMENT_API_PATH, { data: { announcement_ids: ids } })
     .then((response) => response.result)

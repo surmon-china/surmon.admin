@@ -1,17 +1,22 @@
+/**
+ * @file Article create page
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLoading } from 'veact-use'
 import { RoutesPather } from '@/routes'
 import { Article } from '@/constants/article'
 import { scrollTo } from '@/services/scroller'
-import { createArticle } from '@/apis/article'
 import { ArticleEditor } from '../Editor'
+import * as api from '@/apis/article'
 
-export const ArticleCreate: React.FC = () => {
+export const ArticleCreatePage: React.FC = () => {
   const navigate = useNavigate()
-  const submitting = useLoading()
-  const fetchCreateArticle = (article: Article) => {
-    return submitting.promise(createArticle(article)).then((result) => {
+  const creating = useLoading()
+  const createArticle = (article: Article) => {
+    return creating.promise(api.createArticle(article)).then((result) => {
       navigate(RoutesPather.articleDetail(result._id!))
       scrollTo(document.body)
     })
@@ -20,8 +25,8 @@ export const ArticleCreate: React.FC = () => {
   return (
     <ArticleEditor
       loading={false}
-      submitting={submitting.state.value}
-      onSubmit={fetchCreateArticle}
+      submitting={creating.state.value}
+      onSubmit={(article) => createArticle(article)}
     />
   )
 }

@@ -44,13 +44,13 @@ export const DashboardPage: React.FC = () => {
   }
 
   const articleCalendarloading = useLoading()
-  const [articleCalendar, setArticleCalendar] = useState<Array<StatisticsCalendarItem>>([])
+  const [articleCalendar, setArticleCalendar] = useState<StatisticsCalendarItem[]>([])
   const fetchArticleCalendar = async () => {
     setArticleCalendar(await articleCalendarloading.promise(getArticleCalendar()))
   }
 
   const commentCalendarloading = useLoading()
-  const [commentCalendar, setCommentCalendar] = useState<Array<StatisticsCalendarItem>>([])
+  const [commentCalendar, setCommentCalendar] = useState<StatisticsCalendarItem[]>([])
   const fetchCommentCalendar = async () => {
     setCommentCalendar(await commentCalendarloading.promise(getCommentCalendar()))
   }

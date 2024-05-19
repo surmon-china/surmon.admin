@@ -61,7 +61,7 @@ export const CommentPage: React.FC = () => {
   }
 
   // select
-  const selectedIds = useRef<Array<string>>([])
+  const selectedIds = useRef<string[]>([])
   const selectedComments = useComputed(() => {
     return comments.data.filter((comment) => selectedIds.value.includes(comment._id!))
   })
@@ -134,7 +134,7 @@ export const CommentPage: React.FC = () => {
     })
   }
 
-  const updateCommentsState = (comments: Array<CommentType>, state: CommentState) => {
+  const updateCommentsState = (comments: CommentType[], state: CommentState) => {
     Modal.confirm({
       title: `确定要将 ${comments.length} 个评论更新为「 ${getCommentState(state).name} 」状态吗？`,
       content: '操作不可撤销',

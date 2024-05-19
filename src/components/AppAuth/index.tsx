@@ -30,21 +30,22 @@ export const AppAuth: React.FC<React.PropsWithChildren> = (props) => {
   const navigate = useNavigate()
   const { i18n } = useTranslation()
 
-  const [loading, setLoading] = useState(false)
+  const [verifying, setVerifying] = useState(false)
   const [isLogined, setLogined] = useState(false)
   const [isAnimationEnded, setAnimationEnded] = useState(false)
 
   const autoLoginByToken = async () => {
     try {
       // When the application is initialised, it first checks the local Token.
+      setVerifying(true)
       console.debug('Token verifying...')
       // 1. Verify local Token
       await (isTokenValid() ? Promise.resolve() : Promise.reject('本地 Token 无效'))
       // 2. Verify Token form NodePress
-      setLoading(true)
-      await checkTokenValidity().finally(() => setLoading(false))
+      await checkTokenValidity()
       // Verification successful
       console.debug('Token verification successful.')
+      setVerifying(false)
       // 3. Start auto-renewal of Token
       runRenewalToken()
       // A delay is needed to make sure the effect is smooth.
@@ -77,7 +78,7 @@ export const AppAuth: React.FC<React.PropsWithChildren> = (props) => {
           <Space direction="vertical" align="center">
             <Spin indicator={<Loading3QuartersOutlined spin style={{ fontSize: 48 }} />} />
             <Typography.Text type="secondary">
-              {loading ? i18n.t('login.verifying_token') : i18n.t('login.initializing')}
+              {verifying ? i18n.t('login.verifying_token') : i18n.t('login.initializing')}
             </Typography.Text>
           </Space>
         </Flex>
