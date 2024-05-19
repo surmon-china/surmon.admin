@@ -7,7 +7,6 @@ import { IPLocation } from '@/components/common/IPLocation'
 import { Pagination } from '@/constants/nodepress'
 import { Comment, CommentState, getCommentState } from '@/constants/comment'
 import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
-import { getBlogURLByPostId } from '@/transforms/url'
 import { stringToYMD } from '@/transforms/date'
 import { CommentAvatar } from './Avatar'
 
@@ -52,13 +51,6 @@ export const TableList: React.FC<TableListProps> = (props) => {
           responsive: ['md']
         },
         {
-          title: 'PID',
-          width: 70,
-          dataIndex: 'pid',
-          responsive: ['md'],
-          render: (_, comment) => <UniversalText text={comment.pid} />
-        },
-        {
           title: 'POST_ID',
           width: 50,
           dataIndex: 'post_id',
@@ -75,50 +67,55 @@ export const TableList: React.FC<TableListProps> = (props) => {
           title: '评论内容',
           dataIndex: 'content',
           render: (_, comment) => (
-            <Typography.Paragraph
-              className={styles.commentContent}
-              ellipsis={{ rows: 6, expandable: true }}
-            >
-              {comment.content}
-            </Typography.Paragraph>
+            <Space direction="vertical">
+              <Typography.Paragraph
+                className={styles.commentContent}
+                ellipsis={{ rows: 5, expandable: true }}
+              >
+                {comment.content}
+              </Typography.Paragraph>
+              <UniversalText type="secondary" text={stringToYMD(comment.created_at!)} />
+            </Space>
           )
         },
         {
           title: '个人信息',
-          width: 240,
+          width: 260,
           dataIndex: 'author',
           render(_, comment) {
             return (
               <Space direction="vertical">
                 <Space>
-                  <CommentAvatar comment={comment} size="large" />
+                  <CommentAvatar comment={comment} />
                   <UniversalText text={comment.author.name} />
                 </Space>
-                <UniversalText
-                  placeholder="Left blank"
-                  prefix={<Icons.MailOutlined />}
-                  text={comment.author.email}
-                  copyable={true}
-                />
-                <Space size="small">
-                  <Icons.LinkOutlined />
-                  <Placeholder data={comment.author.site} placeholder="Left blank">
-                    {(site) => (
-                      <Popover placement="top" content={site}>
-                        <Typography.Link target="_blank" rel="noreferrer" href={site}>
-                          点击打开
-                        </Typography.Link>
-                      </Popover>
-                    )}
-                  </Placeholder>
+                <Space direction="vertical" size="small">
+                  <UniversalText
+                    placeholder="Left blank"
+                    prefix={<Icons.MailOutlined />}
+                    text={comment.author.email}
+                    copyable={true}
+                  />
+                  <Space size="small">
+                    <Icons.LinkOutlined />
+                    <Placeholder data={comment.author.site} placeholder="Left blank">
+                      {(site) => (
+                        <Popover placement="top" content={site}>
+                          <Typography.Link target="_blank" rel="noreferrer" href={site}>
+                            点击打开
+                          </Typography.Link>
+                        </Popover>
+                      )}
+                    </Placeholder>
+                  </Space>
                 </Space>
               </Space>
             )
           }
         },
         {
-          title: '发布于',
-          width: 220,
+          title: '终端信息',
+          width: 200,
           dataIndex: 'agent',
           render(_, comment) {
             return (
@@ -154,22 +151,21 @@ export const TableList: React.FC<TableListProps> = (props) => {
                     {parseBrowser(comment.agent)}
                   </Popover>
                 </Space>
-                <UniversalText
-                  prefix={<Icons.ClockCircleOutlined />}
-                  text={stringToYMD(comment.created_at!)}
-                />
               </Space>
             )
           }
         },
         {
           title: '状态',
-          width: 100,
+          width: 80,
           dataIndex: 'state',
           render: (_, comment) => {
             const state = getCommentState(comment.state)
             return (
               <Space direction="vertical">
+                <Tag icon={state.icon} color={state.color}>
+                  {state.name}
+                </Tag>
                 <Tag
                   icon={<Icons.LikeOutlined />}
                   color={comment.likes > 0 ? 'processing' : undefined}
@@ -182,10 +178,6 @@ export const TableList: React.FC<TableListProps> = (props) => {
                 >
                   {comment.dislikes} 个踩
                 </Tag>
-                <Tag icon={state.icon} color={state.color}>
-                  {state.name}
-                </Tag>
-                <Tag icon={<Icons.LineHeightOutlined />}>{comment.content.length} 字</Tag>
               </Space>
             )
           }
@@ -265,16 +257,6 @@ export const TableList: React.FC<TableListProps> = (props) => {
                   </Button>
                 </>
               )}
-              <Button
-                size="small"
-                block={true}
-                type="link"
-                target="_blank"
-                icon={<Icons.ExportOutlined />}
-                href={getBlogURLByPostId(comment.post_id)}
-              >
-                宿主页面
-              </Button>
             </Space>
           )
         }

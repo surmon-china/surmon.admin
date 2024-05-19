@@ -184,7 +184,7 @@ export const DisqusThreadsPage: React.FC = () => {
                     <Tag key={i}>{i}</Tag>
                   ))}
                 </Space>
-                {stringToYMD(item.createdAt)}
+                <Typography.Text type="secondary">{stringToYMD(item.createdAt)}</Typography.Text>
               </Space>
             )
           },

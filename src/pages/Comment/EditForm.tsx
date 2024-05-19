@@ -140,11 +140,11 @@ export const EditForm: React.FC<EditFormProps> = (props) => {
           <span>#{props.comment?.id}</span>
         </Button>
       </Form.Item>
-      {props.comment?.pid && (
+      {props.comment?.pid ? (
         <Form.Item label="父级评论">
           <Typography.Text strong>#{props.comment?.pid}</Typography.Text>
         </Form.Item>
-      )}
+      ) : null}
       <Form.Item name="state" label="状态" rules={[{ required: true, message: '请选择状态' }]}>
         <Select
           placeholder="选择状态"

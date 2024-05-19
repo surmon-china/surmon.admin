@@ -93,7 +93,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
         },
         {
           title: '标签',
-          width: 130,
+          width: 110,
           dataIndex: 'tags',
           render(_, article) {
             return (
