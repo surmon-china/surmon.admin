@@ -19,7 +19,7 @@ export const ExtraActions: React.FC<ExtraActionsProps> = (props) => {
     running: false
   })
 
-  const doIPLocationTask = () => {
+  const runIPLocationTask = () => {
     const doRevise = async (commentId: string) => {
       try {
         await api.reviseCommentIPLocation(commentId)
@@ -35,7 +35,7 @@ export const ExtraActions: React.FC<ExtraActionsProps> = (props) => {
       ipLocationTask.running = true
       doRevise(ipLocationTask.todo[0]).then(() => {
         // 延时 3 秒
-        window.setTimeout(() => doIPLocationTask(), 3000)
+        window.setTimeout(() => runIPLocationTask(), 3000)
       })
     } else {
       ipLocationTask.running = false
@@ -48,13 +48,13 @@ export const ExtraActions: React.FC<ExtraActionsProps> = (props) => {
     }
   }
 
-  const handleReviseComemntsIPLocation = () => {
+  const startComemntsIPLocationTask = () => {
     const todoCommentIds = props.comments
       .filter((c) => Boolean(c.ip) && !c.ip_location?.region_code)
       .map((c) => c._id!)
     if (todoCommentIds.length) {
       ipLocationTask.todo.push(...todoCommentIds)
-      doIPLocationTask()
+      runIPLocationTask()
       message.info(`开始任务，共 ${todoCommentIds.length} 条数据`)
     } else {
       message.info('没有需要修正的数据')
@@ -86,7 +86,7 @@ export const ExtraActions: React.FC<ExtraActionsProps> = (props) => {
           icon={<Icons.GlobalOutlined />}
           disabled={ipLocationTask.running || props.loading}
           loading={ipLocationTask.running}
-          onClick={() => handleReviseComemntsIPLocation()}
+          onClick={() => startComemntsIPLocationTask()}
         >
           修正本页评论的 IP location 数据
         </Button>

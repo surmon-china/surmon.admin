@@ -47,7 +47,6 @@ export const GeneralForm: React.FC<GeneralFormProps> = (props) => {
         ...data.value,
         ...formValues
       }
-
       updateOption(payload).then(() => {
         scrollTo(document.body)
       })
