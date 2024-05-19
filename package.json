@@ -28,7 +28,7 @@
     "@codemirror/state": "^6.4.1",
     "@codemirror/view": "^6.26.3",
     "@uiw/react-codemirror": "^4.22.1",
-    "antd": "^5.17.2",
+    "antd": "^5.17.3",
     "axios": "^1.6.8",
     "bezier-easing": "^2.1.0",
     "classnames": "^2.5.1",
