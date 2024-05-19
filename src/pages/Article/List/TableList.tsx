@@ -53,7 +53,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
         {
           title: '文章',
           width: 360,
-          dataIndex: 'content',
+          dataIndex: 'title',
           render: (_, article) => (
             <Badge.Ribbon
               color={article.featured ? APP_PRIMARY_COLOR : 'transparent'}
@@ -94,6 +94,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
         {
           title: '标签',
           width: 130,
+          dataIndex: 'tags',
           render(_, article) {
             return (
               <Space direction="vertical" size="small" wrap>
@@ -114,7 +115,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
         {
           title: '被关注',
           width: 150,
-          dataIndex: 'created_at',
+          dataIndex: 'meta',
           render(_, article) {
             return (
               <Space direction="vertical">
