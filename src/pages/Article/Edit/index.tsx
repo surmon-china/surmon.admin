@@ -29,7 +29,7 @@ export const ArticleEditPage: React.FC = () => {
   const article = useRef<Article | null>(null)
 
   // drawer
-  const isCommentDrawerOpen = useRef<boolean>(false)
+  const isCommentDrawerOpen = useRef(false)
   const openCommentDrawer = () => {
     isCommentDrawerOpen.value = true
   }

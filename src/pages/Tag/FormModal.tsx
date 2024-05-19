@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Form, Input, Modal, Divider, Typography } from 'antd'
+import { Form, Input, Modal, Divider, Typography, ModalProps } from 'antd'
 import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { Tag as TagType } from '@/constants/tag'
 import { stringToYMD } from '@/transforms/date'
@@ -19,8 +19,9 @@ const DEFAULT_TAG_DATA: Partial<TagType> = {
 }
 
 export interface FormModalProps {
+  width?: ModalProps['width']
   title: string
-  visible: boolean
+  open: boolean
   submitting: boolean
   initData: TagType | null
   onSubmit(tag: TagType): void
@@ -37,16 +38,16 @@ export const FormModal: React.FC<FormModalProps> = (props) => {
   useEffect(() => {
     form.resetFields()
     form.setFieldsValue(props.initData ?? DEFAULT_TAG_DATA)
-  }, [props.initData, props.visible])
+  }, [props.initData, props.open])
 
   return (
     <Modal
-      width={680}
+      width={props.width}
       centered={true}
       forceRender={true}
       title={props.title}
       confirmLoading={props.submitting}
-      open={props.visible}
+      open={props.open}
       onCancel={props.onCancel}
       onOk={handleSubmit}
       okText="提交"

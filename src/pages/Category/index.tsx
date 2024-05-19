@@ -27,7 +27,7 @@ export const CategoryPage: React.FC = () => {
   })
 
   // modal
-  const isVisibleModal = useRef(false)
+  const isFormModalOpen = useRef(false)
   const activeEditCategoryId = useRef<string | null>(null)
   const activeEditCategory = useComputed(() => {
     const id = activeEditCategoryId.value
@@ -35,16 +35,16 @@ export const CategoryPage: React.FC = () => {
   })
 
   const closeModal = () => {
-    isVisibleModal.value = false
+    isFormModalOpen.value = false
   }
 
   const openEditModal = (id: string) => {
     activeEditCategoryId.value = id
-    isVisibleModal.value = true
+    isFormModalOpen.value = true
   }
 
   const openCreateModal = () => {
-    isVisibleModal.value = true
+    isFormModalOpen.value = true
     activeEditCategoryId.value = null
   }
 
@@ -123,9 +123,10 @@ export const CategoryPage: React.FC = () => {
         onDelete={(category) => deleteCategory(category)}
       />
       <FormModal
+        width={680}
         title={activeEditCategory.value ? '编辑分类' : '新分类'}
+        open={isFormModalOpen.value}
         submitting={posting.state.value}
-        visible={isVisibleModal.value}
         initData={activeEditCategory.value}
         onCancel={() => closeModal()}
         onSubmit={(category) => {

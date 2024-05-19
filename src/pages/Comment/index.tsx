@@ -67,7 +67,7 @@ export const CommentPage: React.FC = () => {
   })
 
   // drawer
-  const isVisibleDrawer = useRef(false)
+  const isEditDrawerOpen = useRef(false)
   const activeEditCommentIndex = useRef<number | null>(null)
   const activeEditComment = useComputed(() => {
     const index = activeEditCommentIndex.value
@@ -75,12 +75,12 @@ export const CommentPage: React.FC = () => {
   })
 
   const closeEditDrawer = () => {
-    isVisibleDrawer.value = false
+    isEditDrawerOpen.value = false
   }
 
   const openEditDrawer = (index: number) => {
     activeEditCommentIndex.value = index
-    isVisibleDrawer.value = true
+    isEditDrawerOpen.value = true
   }
 
   const fetchList = (params?: GetCommentsParams) => {
@@ -230,7 +230,7 @@ export const CommentPage: React.FC = () => {
         width="46rem"
         title="评论详情"
         destroyOnClose={true}
-        open={isVisibleDrawer.value}
+        open={isEditDrawerOpen.value}
         onClose={closeEditDrawer}
       >
         <Spin spinning={updating.state.value}>

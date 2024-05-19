@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { Form, Input, Modal, TreeSelect, Typography, Divider, TreeDataNode } from 'antd'
+import type { TreeDataNode, ModalProps } from 'antd'
+import { Form, Input, Modal, TreeSelect, Typography, Divider } from 'antd'
 import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { Category as CategoryType } from '@/constants/category'
 import { stringToYMD } from '@/transforms/date'
@@ -21,8 +22,9 @@ const DEFAULT_CATEGORY_DATA: Partial<CategoryType> = {
 }
 
 export interface FormModalProps {
+  width?: ModalProps['width']
   title: string
-  visible: boolean
+  open: boolean
   submitting: boolean
   initData: CategoryType | null
   selectTree: TreeDataNode[]
@@ -53,16 +55,16 @@ export const FormModal: React.FC<FormModalProps> = (props) => {
       form.resetFields()
       form.setFieldsValue({ ...DEFAULT_CATEGORY_DATA })
     }
-  }, [props.initData, props.visible])
+  }, [props.initData, props.open])
 
   return (
     <Modal
-      width={680}
+      width={props.width}
       centered={true}
       forceRender={true}
       title={props.title}
       confirmLoading={props.submitting}
-      open={props.visible}
+      open={props.open}
       onCancel={props.onCancel}
       onOk={handleSubmit}
       okText="提交"

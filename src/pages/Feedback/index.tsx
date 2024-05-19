@@ -45,7 +45,7 @@ export const FeedbackPage: React.FC = () => {
   })
 
   // edit drawer
-  const isVisibleDrawer = useRef(false)
+  const isEditDrawerOpen = useRef(false)
   const activeEditItemIndex = useRef<number | null>(null)
   const activeEditFeedback = useComputed(() => {
     const index = activeEditItemIndex.value
@@ -53,12 +53,12 @@ export const FeedbackPage: React.FC = () => {
   })
 
   const closeEditDrawer = () => {
-    isVisibleDrawer.value = false
+    isEditDrawerOpen.value = false
   }
 
   const openEditDrawer = (index: number) => {
     activeEditItemIndex.value = index
-    isVisibleDrawer.value = true
+    isEditDrawerOpen.value = true
   }
 
   const fetchList = (params?: GetFeedbacksParams) => {
@@ -164,7 +164,7 @@ export const FeedbackPage: React.FC = () => {
         width="46rem"
         title="反馈详情"
         destroyOnClose={true}
-        open={isVisibleDrawer.value}
+        open={isEditDrawerOpen.value}
         onClose={closeEditDrawer}
       >
         <Spin spinning={updating.state.value}>

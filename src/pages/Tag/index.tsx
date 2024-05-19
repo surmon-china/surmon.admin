@@ -34,8 +34,8 @@ export const TagPage: React.FC = () => {
   // select
   const selectedIds = useRef<string[]>([])
 
-  // modal
-  const isVisibleModal = useRef(false)
+  // form modal
+  const isFormModalOpen = useRef(false)
   const activeEditTagIndex = useRef<number | null>(null)
   const activeEditTag = useComputed(() => {
     const index = activeEditTagIndex.value
@@ -43,17 +43,17 @@ export const TagPage: React.FC = () => {
   })
 
   const closeModal = () => {
-    isVisibleModal.value = false
+    isFormModalOpen.value = false
   }
 
   const openEditModal = (index: number) => {
     activeEditTagIndex.value = index
-    isVisibleModal.value = true
+    isFormModalOpen.value = true
   }
 
   const openCreateModal = () => {
     activeEditTagIndex.value = null
-    isVisibleModal.value = true
+    isFormModalOpen.value = true
   }
 
   const fetchList = (params?: GetTagParams) => {
@@ -176,9 +176,10 @@ export const TagPage: React.FC = () => {
         onDelete={(tag) => deleteTag(tag)}
       />
       <FormModal
+        width={680}
         title={activeEditTag.value ? '编辑标签' : '新标签'}
         submitting={posting.state.value}
-        visible={isVisibleModal.value}
+        open={isFormModalOpen.value}
         initData={activeEditTag.value}
         onCancel={closeModal}
         onSubmit={(tag) => (activeEditTag.value ? updateTag(tag) : createTag(tag))}

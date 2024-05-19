@@ -16,7 +16,7 @@ export interface MainFormProps {
 }
 
 export const MainForm: React.FC<MainFormProps> = (props) => {
-  const isVisibleUploaderModal = useRef(false)
+  const isUploaderModalOpen = useRef(false)
 
   return (
     <>
@@ -101,7 +101,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
                     size="small"
                     icon={<Icons.CloudUploadOutlined />}
                     onClick={() => {
-                      isVisibleUploaderModal.value = true
+                      isUploaderModalOpen.value = true
                     }}
                   />
                 )
@@ -113,7 +113,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
       <Modal
         centered={true}
         closable={false}
-        open={isVisibleUploaderModal.value}
+        open={isUploaderModalOpen.value}
         styles={{
           body: {
             paddingTop: '12px',
@@ -132,7 +132,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
             block={true}
             type="dashed"
             onClick={() => {
-              isVisibleUploaderModal.value = false
+              isUploaderModalOpen.value = false
             }}
           >
             OK，我已保存好所有图片地址

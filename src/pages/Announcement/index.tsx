@@ -41,7 +41,7 @@ export const AnnouncementPage: React.FC = () => {
   const selectedIds = useRef<string[]>([])
 
   // modal
-  const isVisibleModal = useRef(false)
+  const isFormModalOpen = useRef(false)
   const activeEditItemIndex = useRef<number | null>(null)
   const activeEditAnnouncement = useComputed(() => {
     const index = activeEditItemIndex.value
@@ -49,17 +49,17 @@ export const AnnouncementPage: React.FC = () => {
   })
 
   const closeModal = () => {
-    isVisibleModal.value = false
+    isFormModalOpen.value = false
   }
 
   const openEditModal = (index: number) => {
     activeEditItemIndex.value = index
-    isVisibleModal.value = true
+    isFormModalOpen.value = true
   }
 
   const openCreateModal = () => {
     activeEditItemIndex.value = null
-    isVisibleModal.value = true
+    isFormModalOpen.value = true
   }
 
   const fetchList = (params?: GetAnnouncementsParams) => {
@@ -189,8 +189,9 @@ export const AnnouncementPage: React.FC = () => {
         onPaginate={(page, pageSize) => fetchList({ page, per_page: pageSize })}
       />
       <FormModal
+        width={680}
         title={activeEditAnnouncement.value ? '编辑公告' : '新公告'}
-        visible={isVisibleModal.value}
+        open={isFormModalOpen.value}
         submitting={posting.state.value}
         initData={activeEditAnnouncement.value}
         onCancel={closeModal}

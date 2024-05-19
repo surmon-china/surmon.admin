@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Form, Select, Modal, Space, Divider, Typography } from 'antd'
+import { Form, Select, Modal, Space, Divider, Typography, ModalProps } from 'antd'
 import { UniversalEditor } from '@/components/common/UniversalEditor'
 import { Announcement, AnnouncementState, announcementStates } from '@/constants/announcement'
 import { stringToYMD } from '@/transforms/date'
@@ -10,8 +10,9 @@ const formLayout = {
 }
 
 export interface FormModalProps {
+  width?: ModalProps['width']
   title: string
-  visible: boolean
+  open: boolean
   submitting: boolean
   initData: Announcement | null
   onSubmit(data: Announcement): void
@@ -28,16 +29,16 @@ export const FormModal: React.FC<FormModalProps> = (props) => {
   useEffect(() => {
     form.resetFields()
     form.setFieldsValue(props.initData ?? {})
-  }, [props.initData, props.visible])
+  }, [props.initData, props.open])
 
   return (
     <Modal
-      width={680}
+      width={props.width}
       centered={true}
       forceRender={true}
       destroyOnClose={true}
       title={props.title}
-      open={props.visible}
+      open={props.open}
       confirmLoading={props.submitting}
       onCancel={props.onCancel}
       onOk={handleSubmit}
