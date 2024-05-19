@@ -15,6 +15,18 @@ export interface CommentTree extends Comment {
   children?: CommentTree[]
 }
 
+export const transformCommentListToTree = (comments: Comment[]) => {
+  return arrayToTree(comments, {
+    id: 'id',
+    parentId: 'pid',
+    childrenField: 'children',
+    dataField: null,
+    rootParentIds: {
+      0: true
+    }
+  }) as CommentTree[]
+}
+
 /** 获取评论参数 */
 export interface GetCommentsParams extends GeneralPaginateQueryParams {
   keyword?: string
@@ -27,18 +39,7 @@ export interface GetCommentsParams extends GeneralPaginateQueryParams {
 export function getComments(params: GetCommentsParams = {}) {
   return nodepress
     .get<ResponsePaginationData<Comment>>(COMMENT_API_PATH, { params })
-    .then((response) => ({
-      ...response.result,
-      tree: arrayToTree(response.result.data, {
-        id: 'id',
-        parentId: 'pid',
-        childrenField: 'children',
-        dataField: null,
-        rootParentIds: {
-          0: true
-        }
-      }) as CommentTree[]
-    }))
+    .then((response) => response.result)
 }
 
 /** 获取评论详情 */

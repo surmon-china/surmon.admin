@@ -11,46 +11,63 @@ import { Modal, Button, Space, Divider, message } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { RoutesKey, RoutesPath, RoutesPather } from '@/routes'
 import { getUnEditorCache } from '@/components/common/UniversalEditor'
-import { SortTypeWithHot } from '@/constants/sort'
+import * as api from '@/apis/article'
 import { Article } from '@/constants/article'
 import { scrollTo } from '@/services/scroller'
-import * as api from '@/apis/article'
-import { getComments, CommentTree } from '@/apis/comment'
 import { numberToKilo } from '@/transforms/number'
 import { getBlogArticleUrl } from '@/transforms/url'
 import { ArticleEditor } from '../Editor'
-import { ArticleComments } from './Comments'
+import { CommentDrawer } from './CommentDrawer'
+import { CommentTreeList } from './CommentTreeList'
 
 export const ArticleEditPage: React.FC = () => {
   const { article_id: articleId } = useParams<'article_id'>()
+  const articleCacheId = RoutesPather.articleDetail(articleId!)
   const navigate = useNavigate()
   const fetching = useLoading()
   const updating = useLoading()
   const article = useRef<Article | null>(null)
-  const articleCacheId = React.useMemo(() => {
-    return RoutesPather.articleDetail(articleId!)
-  }, [articleId])
 
-  // modal
-  const isVisibleCommentModal = useRef<boolean>(false)
-  const openCommentModal = () => {
-    isVisibleCommentModal.value = true
+  // drawer
+  const isCommentDrawerOpen = useRef<boolean>(false)
+  const openCommentDrawer = () => {
+    isCommentDrawerOpen.value = true
   }
-  const closeCommentModal = () => {
-    isVisibleCommentModal.value = false
+  const closeCommentDrawer = () => {
+    isCommentDrawerOpen.value = false
   }
 
-  // Comment
-  const commentFetching = useLoading()
-  const commentCount = useRef<number>(0)
-  const comments = useRef<CommentTree[]>([])
-  const fetchComments = (articleId: number) => {
-    commentFetching
-      .promise(getComments({ per_page: 50, sort: SortTypeWithHot.Asc, post_id: articleId }))
-      .then((result) => {
-        commentCount.value = result.pagination?.total!
-        comments.value = result.tree
+  const initFetchArticleWithCache = async () => {
+    try {
+      const remoteArticle = await fetching.promise(api.getArticle(articleId!))
+      const localContent = getUnEditorCache(articleCacheId)
+      if (!!localContent && localContent !== remoteArticle.content) {
+        Modal.confirm({
+          title: '本地缓存存在未保存的文章，是否要覆盖远程数据？',
+          content: '如果覆盖错了，刷新一次就可重新选择',
+          okText: '本地覆盖远程',
+          cancelText: '使用远程数据',
+          centered: true,
+          okButtonProps: {
+            danger: true
+          },
+          onOk() {
+            article.value = { ...remoteArticle, content: localContent || '' }
+          },
+          onCancel() {
+            article.value = remoteArticle
+          }
+        })
+      } else {
+        article.value = remoteArticle
+      }
+    } catch (error: any) {
+      Modal.error({
+        centered: true,
+        title: '文章请求失败',
+        content: String(error.message)
       })
+    }
   }
 
   const updateArticle = (_article: Article) => {
@@ -61,20 +78,18 @@ export const ArticleEditPage: React.FC = () => {
   }
 
   const deleteArticle = () => {
-    return updating.promise(api.deleteArticles([article.value?._id!])).then(() => {
-      navigate(RoutesPath[RoutesKey.ArticleList])
-      scrollTo(document.body)
-    })
-  }
-
-  const handleDelete = () => {
     Modal.confirm({
       title: `你确定要彻底删除文章《${article!.value!.title}》吗？`,
       content: '该行为是物理删除，不可恢复！',
-      onOk: deleteArticle,
       okButtonProps: {
         danger: true,
         ghost: true
+      },
+      onOk: () => {
+        return updating.promise(api.deleteArticles([article.value?._id!])).then(() => {
+          navigate(RoutesPath[RoutesKey.ArticleList])
+          scrollTo(document.body)
+        })
       }
     })
   }
@@ -86,71 +101,46 @@ export const ArticleEditPage: React.FC = () => {
     })
   }
 
-  onMounted(async () => {
-    try {
-      const remote = await fetching.promise(api.getArticle(articleId!))
-      fetchComments(remote.id!)
-      const localContent = getUnEditorCache(articleCacheId)
-      if (!!localContent && localContent !== remote.content) {
-        Modal.confirm({
-          title: '本地缓存存在未保存的文章，是否要覆盖远程数据？',
-          content: '如果覆盖错了，就自己刷新吧！',
-          okText: '本地覆盖远程',
-          cancelText: '使用远程数据',
-          centered: true,
-          okButtonProps: {
-            danger: true
-          },
-          onOk() {
-            article.value = { ...remote, content: localContent || '' }
-          },
-          onCancel() {
-            article.value = remote
-          }
-        })
-      } else {
-        article.value = remote
-      }
-    } catch (error: any) {
-      Modal.error({
-        centered: true,
-        title: '文章请求失败',
-        content: String(error.message)
-      })
-    }
-  })
+  onMounted(() => initFetchArticleWithCache())
 
   return (
     <>
       <ArticleEditor
         article={article}
-        editorCacheID={articleCacheId}
+        editorCacheId={articleCacheId}
         loading={fetching.state.value}
         submitting={updating.state.value}
-        onSubmit={updateArticle}
+        onSubmit={(_article) => updateArticle(_article)}
         extra={
           <Space size="small" wrap>
             <Button.Group size="small">
-              <Button icon={<Icons.EyeOutlined />} disabled>
+              <Button icon={<Icons.EyeOutlined />} loading={fetching.state.value} disabled={true}>
                 {numberToKilo(article.value?.meta?.views ?? 0)} 阅读
               </Button>
-              <Button icon={<Icons.HeartOutlined />} disabled>
+              <Button
+                icon={<Icons.HeartOutlined />}
+                loading={fetching.state.value}
+                disabled={true}
+              >
                 {numberToKilo(article.value?.meta?.likes ?? 0)} 喜欢
               </Button>
               <Button
                 icon={<Icons.CommentOutlined />}
                 disabled={fetching.state.value}
-                onClick={openCommentModal}
+                loading={fetching.state.value}
+                onClick={openCommentDrawer}
               >
-                {numberToKilo(commentCount.value)} 评论
+                {article.value?.meta?.comments ?? ''} 评论
               </Button>
             </Button.Group>
             <Divider type="vertical" />
             <Button
               size="small"
               type="dashed"
-              icon={<Icons.ExportOutlined />}
               target="_blank"
+              icon={<Icons.ExportOutlined />}
+              loading={fetching.state.value}
+              disabled={fetching.state.value}
               href={getBlogArticleUrl(article.value?.id!)}
             >
               打开
@@ -163,22 +153,26 @@ export const ArticleEditPage: React.FC = () => {
               icon={<Icons.DeleteOutlined />}
               disabled={fetching.state.value}
               onClick={() => message.warning('双击执行删除操作')}
-              onDoubleClick={handleDelete}
+              onDoubleClick={deleteArticle}
             >
               删除文章
             </Button>
           </Space>
         }
       />
-      <ArticleComments
-        visible={isVisibleCommentModal.value}
-        loading={commentFetching.state.value}
-        count={commentCount.value}
-        comments={comments.value}
-        onClose={closeCommentModal}
-        onNavigate={navigateToCommentList}
-        onRefresh={() => fetchComments(article.value?.id!)}
-      />
+      {article.value && (
+        <CommentDrawer
+          width="68rem"
+          open={isCommentDrawerOpen.value}
+          commentCount={article.value.meta!.comments}
+          articleId={article.value.id!}
+          renderTreeList={({ comments, loading }) => (
+            <CommentTreeList comments={comments} loading={loading} />
+          )}
+          onClose={closeCommentDrawer}
+          onNavigate={navigateToCommentList}
+        />
+      )}
     </>
   )
 }

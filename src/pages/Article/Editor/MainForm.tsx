@@ -12,7 +12,7 @@ import type { MainFormModel } from '.'
 
 export interface MainFormProps {
   form: FormInstance<MainFormModel>
-  editorCacheID?: string
+  editorCacheId?: string
 }
 
 export const MainForm: React.FC<MainFormProps> = (props) => {
@@ -89,7 +89,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
           ]}
         >
           <UniversalEditor
-            eid={props.editorCacheID}
+            eid={props.editorCacheId}
             placeholder="输入文章内容..."
             rows={38}
             formStatus={true}

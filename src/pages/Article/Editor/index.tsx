@@ -21,8 +21,6 @@ import { MainForm } from './MainForm'
 import { CategoriesForm } from './CategoriesForm'
 import { StatesForm } from './StatesForm'
 
-import styles from './style.module.less'
-
 export type MainFormModel = Partial<
   Pick<Article, 'slug' | 'tags' | 'title' | 'content' | 'keywords' | 'description'>
 >
@@ -54,7 +52,7 @@ export interface ArticleEditorProps {
   loading: boolean
   submitting: boolean
   article?: Ref<Article | null>
-  editorCacheID?: string
+  editorCacheId?: string
   onSubmit(article: Article): any
 }
 
@@ -119,79 +117,72 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
   })
 
   return (
-    <div className={styles.articleeEitor}>
-      <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
-        <Col xs={24} lg={17}>
-          <Card
-            bordered={false}
-            title={i18n.t('page.article.editor.content')}
-            className={styles.articleeEitor}
-            extra={props.extra}
-          >
-            <Spin spinning={props.loading}>
-              <MainForm form={mainForm} editorCacheID={props.editorCacheID} />
-            </Spin>
-          </Card>
-        </Col>
-        <Col xs={24} lg={7}>
-          <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
-            <Col span={24}>
-              <Card title={i18n.t('page.article.editor.categories')} bordered={false}>
-                <Spin spinning={props.loading}>
-                  <CategoriesForm form={categoriesFormModel} />
-                </Spin>
-              </Card>
-            </Col>
-            <Col span={24}>
-              <Card title={i18n.t('page.article.editor.thumbnail')} bordered={false}>
-                <Spin spinning={props.loading}>
-                  <Form scrollToFirstError={true} form={thumbnailFormModel}>
-                    <Form.Item noStyle={true} name="thumbnail">
-                      <ImageUploader directory="thumbnail" />
-                    </Form.Item>
-                  </Form>
-                </Spin>
-              </Card>
-            </Col>
-            <Col span={24}>
-              <Card
-                title={i18n.t('page.article.editor.extends')}
-                bordered={false}
-                extra={
-                  <Button
-                    type="link"
-                    size="small"
-                    icon={<Icons.EditOutlined />}
-                    disabled={props.loading}
-                    onClick={handleEditExtendsAsJSON}
-                  >
-                    以 JSON 编辑
-                  </Button>
-                }
-              >
-                <Spin spinning={props.loading}>
-                  <Form scrollToFirstError={true} form={extendsFormModel}>
-                    <Form.Item noStyle={true} shouldUpdate={true}>
-                      <FormKeyValueInput fieldName="extends" />
-                    </Form.Item>
-                  </Form>
-                </Spin>
-              </Card>
-            </Col>
-            <Col span={24}>
-              <Card title={i18n.t('page.article.editor.states')} bordered={false}>
-                <Spin spinning={props.loading}>
-                  <StatesForm
-                    form={statesFormModel}
-                    submitting={props.submitting}
-                    onSubmit={handleSubmit}
-                  />
-                </Spin>
-              </Card>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </div>
+    <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
+      <Col xs={24} lg={17}>
+        <Card bordered={false} title={i18n.t('page.article.editor.content')} extra={props.extra}>
+          <Spin spinning={props.loading}>
+            <MainForm form={mainForm} editorCacheId={props.editorCacheId} />
+          </Spin>
+        </Card>
+      </Col>
+      <Col xs={24} lg={7}>
+        <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
+          <Col span={24}>
+            <Card title={i18n.t('page.article.editor.categories')} bordered={false}>
+              <Spin spinning={props.loading}>
+                <CategoriesForm form={categoriesFormModel} />
+              </Spin>
+            </Card>
+          </Col>
+          <Col span={24}>
+            <Card title={i18n.t('page.article.editor.thumbnail')} bordered={false}>
+              <Spin spinning={props.loading}>
+                <Form scrollToFirstError={true} form={thumbnailFormModel}>
+                  <Form.Item noStyle={true} name="thumbnail">
+                    <ImageUploader directory="thumbnail" />
+                  </Form.Item>
+                </Form>
+              </Spin>
+            </Card>
+          </Col>
+          <Col span={24}>
+            <Card
+              title={i18n.t('page.article.editor.extends')}
+              bordered={false}
+              extra={
+                <Button
+                  type="link"
+                  size="small"
+                  icon={<Icons.EditOutlined />}
+                  disabled={props.loading}
+                  onClick={handleEditExtendsAsJSON}
+                >
+                  以 JSON 编辑
+                </Button>
+              }
+            >
+              <Spin spinning={props.loading}>
+                <Form scrollToFirstError={true} form={extendsFormModel}>
+                  <Form.Item noStyle={true} shouldUpdate={true}>
+                    <FormKeyValueInput fieldName="extends" />
+                  </Form.Item>
+                </Form>
+              </Spin>
+            </Card>
+          </Col>
+          <Col span={24}>
+            <Card title={i18n.t('page.article.editor.states')} bordered={false}>
+              <Spin spinning={props.loading}>
+                <StatesForm
+                  form={statesFormModel}
+                  submitting={props.submitting}
+                  onSubmit={handleSubmit}
+                />
+              </Spin>
+            </Card>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   )
 }
