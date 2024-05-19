@@ -82,7 +82,7 @@ export const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
                 />
               </Space>
               {comment.children?.length ? (
-                <CommentTreeList comments={comment.children || []} loading={props.loading} />
+                <CommentTreeList comments={comment.children || []} />
               ) : (
                 ''
               )}

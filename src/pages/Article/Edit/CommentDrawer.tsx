@@ -78,7 +78,7 @@ export const CommentDrawer: React.FC<CommentDrawerProps> = (props) => {
       extra={
         <SortSelect
           withHot={true}
-          loading={initFetching.state.value || loadmoreFetching.state.value}
+          disabled={initFetching.state.value || loadmoreFetching.state.value}
           value={sortType.value}
           onChange={(value) => {
             sortType.value = value
@@ -91,6 +91,7 @@ export const CommentDrawer: React.FC<CommentDrawerProps> = (props) => {
           <Button
             size="small"
             icon={<Icons.ReloadOutlined />}
+            disabled={loadmoreFetching.state.value}
             loading={initFetching.state.value}
             onClick={() => fetchComments()}
           >
