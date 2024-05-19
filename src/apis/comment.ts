@@ -49,25 +49,21 @@ export function getComment(commentId: string) {
 }
 
 /** 更新评论 */
-export function putComment(comment: Comment): Promise<any> {
+export function updateComment(comment: Comment): Promise<any> {
   return nodepress
     .put<Comment>(`${COMMENT_API_PATH}/${comment._id}`, comment)
     .then((response) => response.result)
 }
 
 /** 更新评论状态 */
-export function updateCommentsState(
-  commentIds: string[],
-  postIds: number[],
-  state: CommentState
-) {
-  return nodepress
-    .patch(COMMENT_API_PATH, {
-      comment_ids: commentIds,
-      post_ids: postIds,
-      state
-    })
-    .then((response) => response.result)
+export function patchCommentsState(commentIds: string[], postIds: number[], state: CommentState) {
+  const payload = {
+    comment_ids: commentIds,
+    post_ids: postIds,
+    state
+  }
+
+  return nodepress.patch(COMMENT_API_PATH, payload).then((response) => response.result)
 }
 
 /** 批量删除评论 */

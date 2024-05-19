@@ -110,7 +110,7 @@ export const CommentPage: React.FC = () => {
       ...comment
     }
 
-    submitting.promise(api.putComment(payload)).then(() => {
+    submitting.promise(api.updateComment(payload)).then(() => {
       closeEditDrawer()
       refreshList()
     })
@@ -141,7 +141,7 @@ export const CommentPage: React.FC = () => {
       centered: true,
       onOk: () => {
         return api
-          .updateCommentsState(
+          .patchCommentsState(
             comments.map((comment) => comment._id!),
             uniq(comments.map((comment) => comment.post_id)),
             state

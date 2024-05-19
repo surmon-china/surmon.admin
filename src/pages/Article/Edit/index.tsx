@@ -14,7 +14,7 @@ import { getUnEditorCache } from '@/components/common/UniversalEditor'
 import { SortTypeWithHot } from '@/constants/sort'
 import { Article } from '@/constants/article'
 import { scrollTo } from '@/services/scroller'
-import { getArticle, putArticle, deleteArticles } from '@/apis/article'
+import { getArticle, updateArticle, deleteArticles } from '@/apis/article'
 import { getComments, CommentTree } from '@/apis/comment'
 import { numberToKilo } from '@/transforms/number'
 import { getBlogArticleUrl } from '@/transforms/url'
@@ -54,7 +54,7 @@ export const ArticleEditPage: React.FC = () => {
   }
 
   const fetchUpdateArticle = (_article: Article) => {
-    return submitting.promise(putArticle(_article)).then((result) => {
+    return submitting.promise(updateArticle(_article)).then((result) => {
       article.value = result
       scrollTo(document.body)
     })

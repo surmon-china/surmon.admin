@@ -55,7 +55,7 @@ export function createCategory(category: Category) {
 }
 
 /** 修改分类 */
-export function putCategory(category: Category) {
+export function updateCategory(category: Category) {
   return nodepress
     .put(`${CATEGORY_API_PATH}/${category._id}`, category)
     .then((response) => response.result)

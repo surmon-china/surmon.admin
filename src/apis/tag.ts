@@ -28,7 +28,7 @@ export function createTag(tag: Tag) {
 }
 
 /** 修改标签 */
-export function putTag(tag: Tag) {
+export function updateTag(tag: Tag) {
   return nodepress.put(`${TAG_API_PATH}/${tag._id}`, tag).then((response) => response.result)
 }
 

@@ -8,17 +8,17 @@ import nodepress from '@/services/nodepress'
 
 export const DISQUS_API_PATH = '/disqus'
 
-export enum OrderType {
+export enum DisqusOrderType {
   Desc = 'desc',
   Asc = 'asc'
 }
 
-export enum ThreadState {
+export enum DisqusThreadState {
   Open = 'open',
   Closed = 'closed'
 }
 
-export enum PostState {
+export enum DisqusPostState {
   Unapproved = 'unapproved',
   Approved = 'approved',
   Spam = 'spam',
@@ -31,15 +31,15 @@ export interface GeneralDisqusParams {
   [key: string]: any
 }
 
-export function getThreads(params: GeneralDisqusParams) {
+export function getDisqusThreads(params: GeneralDisqusParams) {
   return nodepress.get<any>(`${DISQUS_API_PATH}/threads`, { params })
 }
 
-export function getPosts(params: GeneralDisqusParams) {
+export function getDisqusPosts(params: GeneralDisqusParams) {
   return nodepress.get<any>(`${DISQUS_API_PATH}/posts`, { params })
 }
 
-export function getConfig() {
+export function getDisqusConfig() {
   return nodepress.get<any>(`${DISQUS_API_PATH}/config`)
 }
 

@@ -96,7 +96,7 @@ export const AnnouncementPage: React.FC = () => {
       ...announcement
     }
 
-    submitting.promise(api.putAnnouncement(payload)).then(() => {
+    submitting.promise(api.updateAnnouncement(payload)).then(() => {
       closeModal()
       refreshList()
     })

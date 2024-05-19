@@ -106,7 +106,7 @@ export const FeedbackPage: React.FC = () => {
       ip: target.ip || null
     }
 
-    updating.promise(api.putFeedback(payload)).then(() => {
+    updating.promise(api.updateFeedback(payload)).then(() => {
       closeEditDrawer()
       refreshList()
     })

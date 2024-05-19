@@ -32,7 +32,7 @@ export function createAnnouncement(announcement: Announcement): Promise<any> {
 }
 
 /** 更新公告 */
-export function putAnnouncement(announcement: Announcement): Promise<any> {
+export function updateAnnouncement(announcement: Announcement): Promise<any> {
   return nodepress
     .put<Announcement>(`${ANNOUNCEMENT_API_PATH}/${announcement._id}`, announcement)
     .then((response) => response.result)

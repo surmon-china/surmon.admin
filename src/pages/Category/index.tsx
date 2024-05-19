@@ -68,7 +68,7 @@ export const CategoryPage: React.FC = () => {
       ...activeEditCategory.value,
       ...category
     }
-    submitting.promise(api.putCategory(payload)).then(() => {
+    submitting.promise(api.updateCategory(payload)).then(() => {
       closeModal()
       fetchCategories()
     })

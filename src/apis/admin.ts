@@ -15,12 +15,11 @@ export function getAdminProfile() {
 }
 
 /** 更新管理员资料（包括平台密码） */
-export function putAdminProfile(profile: AdminProfile) {
-  return nodepress
-    .put<AdminProfile>(ADMIN_API_PATH, {
-      ...profile,
-      password: profile.password ? Base64.encode(profile.password) : '',
-      new_password: profile.new_password ? Base64.encode(profile.new_password) : ''
-    })
-    .then((response) => response.result)
+export function updateAdminProfile(profile: AdminProfile) {
+  const payload = {
+    ...profile,
+    password: profile.password ? Base64.encode(profile.password) : '',
+    new_password: profile.new_password ? Base64.encode(profile.new_password) : ''
+  }
+  return nodepress.put<AdminProfile>(ADMIN_API_PATH, payload).then((response) => response.result)
 }

@@ -11,7 +11,13 @@ import { Button, Card, Table, Select, Input, Space, Divider, Typography, Avatar 
 import * as Icons from '@ant-design/icons'
 import { Placeholder } from '@/components/common/Placeholder'
 import { UniversalText } from '@/components/common/UniversalText'
-import { getConfig, getPosts, PostState, OrderType, GeneralDisqusParams } from '@/apis/disqus'
+import {
+  getDisqusConfig,
+  getDisqusPosts,
+  DisqusPostState,
+  DisqusOrderType,
+  GeneralDisqusParams
+} from '@/apis/disqus'
 import { scrollTo } from '@/services/scroller'
 import { stringToYMD } from '@/transforms/date'
 
@@ -21,8 +27,8 @@ import styles from './style.module.less'
 const SELECT_ALL_VALUE = 'ALL'
 const DEFAULT_THREAD_ID = ''
 const DEFAULT_PARAMS = Object.freeze({
-  order: OrderType.Desc,
-  include: SELECT_ALL_VALUE as any as PostState | typeof SELECT_ALL_VALUE
+  order: DisqusOrderType.Desc,
+  include: SELECT_ALL_VALUE as any as DisqusPostState | typeof SELECT_ALL_VALUE
 })
 
 export const DisqusPostsPage: React.FC = () => {
@@ -45,10 +51,10 @@ export const DisqusPostsPage: React.FC = () => {
       include:
         filterParams.include !== SELECT_ALL_VALUE
           ? [filterParams.include]
-          : [...Object.values(PostState)]
+          : [...Object.values(DisqusPostState)]
     }
 
-    loading.promise(getPosts(getParams)).then((response) => {
+    loading.promise(getDisqusPosts(getParams)).then((response) => {
       posts.cursor = response.result.cursor
       if (params?.cursor) {
         posts.list.push(...response.result.response)
@@ -73,7 +79,7 @@ export const DisqusPostsPage: React.FC = () => {
   useWatch(filterParams, () => fetchData())
 
   onMounted(() => {
-    getConfig().then((response) => {
+    getDisqusConfig().then((response) => {
       config.value = response.result
       fetchData()
     })
@@ -110,27 +116,27 @@ export const DisqusPostsPage: React.FC = () => {
               label: 'All state'
             },
             {
-              value: PostState.Approved,
+              value: DisqusPostState.Approved,
               label: 'Approved'
             },
             {
-              value: PostState.Unapproved,
+              value: DisqusPostState.Unapproved,
               label: 'Unapproved'
             },
             {
-              value: PostState.Spam,
+              value: DisqusPostState.Spam,
               label: 'Spam'
             },
             {
-              value: PostState.Deleted,
+              value: DisqusPostState.Deleted,
               label: 'Deleted'
             },
             {
-              value: PostState.Flagged,
+              value: DisqusPostState.Flagged,
               label: 'Flagged'
             },
             {
-              value: PostState.Highlighted,
+              value: DisqusPostState.Highlighted,
               label: 'Highlighted'
             }
           ]}
@@ -144,11 +150,11 @@ export const DisqusPostsPage: React.FC = () => {
           }}
           options={[
             {
-              value: OrderType.Desc,
+              value: DisqusOrderType.Desc,
               label: 'Desc'
             },
             {
-              value: OrderType.Asc,
+              value: DisqusOrderType.Asc,
               label: 'Asc'
             }
           ]}

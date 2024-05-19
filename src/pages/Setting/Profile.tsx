@@ -24,7 +24,7 @@ export const ProfileForm: React.FC = () => {
   }
 
   const updateProfile = (adminProfile: AdminProfile) => {
-    return updating.promise(api.putAdminProfile(adminProfile)).then(() => {
+    return updating.promise(api.updateAdminProfile(adminProfile)).then(() => {
       if (adminProfile.new_password) {
         notification.info({
           message: '修改了新密码，即将跳转到登录页...'

@@ -23,7 +23,7 @@ export function getFeedbacks(params: GetFeedbacksParams = {}) {
     .then((response) => response.result)
 }
 
-export function putFeedback(feedback: Feedback): Promise<any> {
+export function updateFeedback(feedback: Feedback): Promise<any> {
   return nodepress
     .put<Comment>(`${FEEDBACK_API_PATH}/${feedback._id}`, feedback)
     .then((response) => response.result)

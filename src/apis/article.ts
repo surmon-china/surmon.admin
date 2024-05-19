@@ -42,7 +42,7 @@ export function createArticle(article: Article) {
 }
 
 /** 修改文章 */
-export function putArticle(article: Article) {
+export function updateArticle(article: Article) {
   return nodepress
     .put<Article>(`${ARTICLE_API_PATH}/${article._id}`, article)
     .then((response) => response.result)

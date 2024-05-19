@@ -7,7 +7,6 @@ import { Base64 } from 'js-base64'
 import nodepress from '@/services/nodepress'
 
 export const AUTH_API_PATHS = {
-  AUTH: '/auth',
   LOGIN: '/auth/login',
   CHECK_TOKEN: '/auth/check',
   RENEWAL_TOKEN: '/auth/renewal'

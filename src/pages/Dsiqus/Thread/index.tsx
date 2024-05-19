@@ -9,7 +9,13 @@ import { useLoading } from 'veact-use'
 import classnames from 'classnames'
 import { Button, Card, Table, Select, Tag, Space, Switch, Divider, Typography } from 'antd'
 import * as Icons from '@ant-design/icons'
-import { getConfig, getThreads, ThreadState, OrderType, GeneralDisqusParams } from '@/apis/disqus'
+import {
+  getDisqusConfig,
+  getDisqusThreads,
+  DisqusThreadState,
+  DisqusOrderType,
+  GeneralDisqusParams
+} from '@/apis/disqus'
 import { stringToYMD } from '@/transforms/date'
 import { scrollTo } from '@/services/scroller'
 
@@ -27,8 +33,8 @@ export const DisqusThreadsPage: React.FC = () => {
 
   // https://disqus.com/api/docs/threads/list/
   const filterParams = useShallowReactive({
-    order: OrderType.Desc,
-    include: SELECT_ALL_VALUE as any as ThreadState | typeof SELECT_ALL_VALUE
+    order: DisqusOrderType.Desc,
+    include: SELECT_ALL_VALUE as any as DisqusThreadState | typeof SELECT_ALL_VALUE
   })
 
   const fetchData = (params?: GeneralDisqusParams) => {
@@ -40,10 +46,10 @@ export const DisqusThreadsPage: React.FC = () => {
       include:
         filterParams.include !== SELECT_ALL_VALUE
           ? [filterParams.include]
-          : [...Object.values(ThreadState)]
+          : [...Object.values(DisqusThreadState)]
     }
 
-    loading.promise(getThreads(getParams)).then((response) => {
+    loading.promise(getDisqusThreads(getParams)).then((response) => {
       threads.cursor = response.result.cursor
       if (params?.cursor) {
         threads.list.push(...response.result.response)
@@ -55,7 +61,7 @@ export const DisqusThreadsPage: React.FC = () => {
   }
 
   const resetFetch = () => {
-    filterParams.order = OrderType.Desc
+    filterParams.order = DisqusOrderType.Desc
     filterParams.include = SELECT_ALL_VALUE
     fetchData()
   }
@@ -67,7 +73,7 @@ export const DisqusThreadsPage: React.FC = () => {
   useWatch(filterParams, () => fetchData())
 
   onMounted(() => {
-    getConfig().then((response) => {
+    getDisqusConfig().then((response) => {
       config.value = response.result
       fetchData()
     })
@@ -104,11 +110,11 @@ export const DisqusThreadsPage: React.FC = () => {
               label: 'All state'
             },
             {
-              value: ThreadState.Open,
+              value: DisqusThreadState.Open,
               label: 'Open'
             },
             {
-              value: ThreadState.Closed,
+              value: DisqusThreadState.Closed,
               label: 'Closed'
             }
           ]}
@@ -122,11 +128,11 @@ export const DisqusThreadsPage: React.FC = () => {
           }}
           options={[
             {
-              value: OrderType.Desc,
+              value: DisqusOrderType.Desc,
               label: 'Desc'
             },
             {
-              value: OrderType.Asc,
+              value: DisqusOrderType.Asc,
               label: 'Asc'
             }
           ]}
