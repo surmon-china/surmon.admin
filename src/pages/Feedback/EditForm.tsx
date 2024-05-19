@@ -1,6 +1,6 @@
 import React from 'react'
 import { onMounted } from 'veact'
-import { Form, Typography, Input, Button, Divider, Radio, Statistic } from 'antd'
+import { Form, Typography, Input, Button, Divider, Radio, Space, Statistic } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { IPLocation } from '@/components/common/IPLocation'
 import { UniversalText } from '@/components/common/UniversalText'
@@ -36,9 +36,11 @@ export const EditForm: React.FC<EditFormProps> = (props) => {
       form={form}
     >
       <Form.Item label="ID">
-        <Typography.Text copyable={true}>{props.feedback.id}</Typography.Text>
-        <Divider type="vertical" />
-        <Typography.Text copyable={true}>{props.feedback._id}</Typography.Text>
+        <Space size="small">
+          <Typography.Text copyable={true}>{props.feedback.id}</Typography.Text>
+          <Divider type="vertical" />
+          <Typography.Text copyable={true}>{props.feedback._id}</Typography.Text>
+        </Space>
       </Form.Item>
       <Form.Item label="TID">
         <Typography.Text copyable={true}>{props.feedback.tid}</Typography.Text>

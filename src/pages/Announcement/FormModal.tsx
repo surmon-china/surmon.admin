@@ -48,9 +48,11 @@ export const FormModal: React.FC<FormModalProps> = (props) => {
         {props.initData && (
           <>
             <Form.Item label="ID">
-              <Typography.Text copyable={true}>{props.initData.id}</Typography.Text>
-              <Divider type="vertical" />
-              <Typography.Text copyable={true}>{props.initData._id}</Typography.Text>
+              <Space size="small">
+                <Typography.Text copyable={true}>{props.initData.id}</Typography.Text>
+                <Divider type="vertical" />
+                <Typography.Text copyable={true}>{props.initData._id}</Typography.Text>
+              </Space>
             </Form.Item>
             <Form.Item label="发布于">{stringToYMD(props.initData.created_at)}</Form.Item>
             <Form.Item label="最后修改于">{stringToYMD(props.initData.updated_at)}</Form.Item>
