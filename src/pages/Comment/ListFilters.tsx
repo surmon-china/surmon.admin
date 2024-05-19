@@ -80,7 +80,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
           ]}
         />
         <SortSelect
-          style={{ width: 110 }}
+          style={{ width: 100 }}
           withHot={true}
           disabled={props.loading}
           value={props.params.sort}
