@@ -22,6 +22,11 @@ export function getTags(params: GetTagParams = {}) {
     .then((response) => response.result)
 }
 
+/** 获取所有标签 */
+export function getAllTags() {
+  return nodepress.get<Tag[]>(`${TAG_API_PATH}/all`).then((response) => response.result)
+}
+
 /** 创建标签 */
 export function createTag(tag: Tag) {
   return nodepress.post(TAG_API_PATH, tag).then((response) => response.result)

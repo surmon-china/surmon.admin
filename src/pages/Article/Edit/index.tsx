@@ -106,7 +106,7 @@ export const ArticleEditPage: React.FC = () => {
   return (
     <>
       <ArticleEditor
-        article={article}
+        article={article.value}
         editorCacheId={articleCacheId}
         loading={fetching.state.value}
         submitting={updating.state.value}

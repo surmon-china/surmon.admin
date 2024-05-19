@@ -25,6 +25,7 @@ export const ArticleCreatePage: React.FC = () => {
   return (
     <ArticleEditor
       loading={false}
+      article={null}
       submitting={creating.state.value}
       onSubmit={(article) => createArticle(article)}
     />

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useReactive } from 'veact'
-import { Modal, message, Tooltip, Button, Upload, Card } from 'antd'
+import { Modal, message, Tooltip, Button, Upload, Card, Space } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { copy } from '@/services/clipboard'
 import { useUploader } from '@/enhancers/useUploader'
@@ -8,16 +8,16 @@ import { imageURLToMarkdown } from '@/transforms/markdown'
 import { getFileName } from '@/components/common/ImageUploader'
 import styles from './style.module.less'
 
-export interface MainMultipleUploaderProps {
+export interface MultipleUploaderProps {
   directory?: string
 }
 
-export const MainMultipleUploader: React.FC<MainMultipleUploaderProps> = (props) => {
+export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
   const uploader = useUploader()
   const fileUrls = useReactive<string[]>([])
 
   return (
-    <div className={styles.mainMultipleImageUploader}>
+    <div className={styles.multipleImageUploader}>
       {!fileUrls.length ? null : (
         <Button
           block={true}
@@ -57,8 +57,8 @@ export const MainMultipleUploader: React.FC<MainMultipleUploaderProps> = (props)
             maskClosable: true,
             width: '50vw',
             modalRender: () => (
-              <Card title={file.response.key}>
-                <img style={{ width: '100%' }} src={file.response.url} />
+              <Card title={file.response?.key ?? ''}>
+                <img style={{ width: '100%' }} src={file.response?.url} />
               </Card>
             )
           })
@@ -88,5 +88,45 @@ export const MainMultipleUploader: React.FC<MainMultipleUploaderProps> = (props)
         <br />
       </Upload.Dragger>
     </div>
+  )
+}
+
+export interface MultipleUploaderModalProps {
+  open: boolean
+  onClose?(): void
+  uploaderDirectory?: MultipleUploaderProps['directory']
+}
+
+export const MultipleUploaderModal: React.FC<MultipleUploaderModalProps> = (props) => {
+  const titleElement = (
+    <Space>
+      <Icons.FileImageOutlined />
+      图片上传器
+    </Space>
+  )
+
+  const footerElement = (
+    <Button block={true} type="dashed" onClick={props.onClose}>
+      OK，我已保存好所有图片地址
+    </Button>
+  )
+
+  return (
+    <Modal
+      centered={true}
+      closable={false}
+      open={props.open}
+      title={titleElement}
+      footer={footerElement}
+      styles={{
+        body: {
+          paddingTop: '12px',
+          maxHeight: '80vh',
+          overflowY: 'auto'
+        }
+      }}
+    >
+      <MultipleUploader directory={props.uploaderDirectory} />
+    </Modal>
   )
 }

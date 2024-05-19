@@ -3,8 +3,8 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react'
-import { Ref, useWatch, onMounted } from 'veact'
+import React, { useEffect } from 'react'
+import { onMounted } from 'veact'
 import { Card, Row, Col, Form, message, Spin, Button } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { APP_LAYOUT_GUTTER_SIZE } from '@/config'
@@ -48,12 +48,12 @@ const DEFAULT_ARTICLE: Article = Object.freeze({
 })
 
 export interface ArticleEditorProps {
-  extra?: React.ReactNode
   loading: boolean
   submitting: boolean
-  article?: Ref<Article | null>
+  article: Article | null
   editorCacheId?: string
-  onSubmit(article: Article): any
+  onSubmit(article: Article): void
+  extra?: React.ReactNode
 }
 
 export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
@@ -77,7 +77,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
   const handleSubmit = async () => {
     try {
       const data = {
-        ...props.article?.value,
+        ...props.article,
         ...(await mainForm.validateFields()),
         ...(await categoriesFormModel.validateFields()),
         ...(await thumbnailFormModel.validateFields()),
@@ -87,7 +87,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
       data.slug = data.slug || null
       props.onSubmit?.(data as Article)
     } catch (error) {
-      console.warn('Article 提交错误：', error)
+      console.debug('Article 提交错误：', error)
       message.error('请检查表单中的不合法项')
     }
   }
@@ -102,15 +102,14 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
     })
   }
 
-  useWatch(
-    () => props.article?.value,
-    (article) => {
-      if (article) {
-        setFormsValue(article)
-      }
+  // set article to form when article loaded
+  useEffect(() => {
+    if (props.article) {
+      setFormsValue(props.article)
     }
-  )
+  }, [props.article])
 
+  // init default form when mounted
   onMounted(() => {
     setFormsValue(DEFAULT_ARTICLE)
     scrollTo(document.body)

@@ -1,13 +1,12 @@
 import React from 'react'
 import dayjs from 'dayjs'
 import { useRef } from 'veact'
-import { Modal, Button, Form, Select, Input, Space } from 'antd'
-import type { FormInstance } from 'antd'
+import { Button, Form, Select, Input, FormInstance } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { UniversalEditor, UnEditorLanguage } from '@/components/common/UniversalEditor'
 import { BLOG_ARTICLE_URL_PREFIX } from '@/transforms/url'
-import { MainMultipleUploader } from './MainMultipleUploader'
-import { MainTagSelect } from './MainTagSelect'
+import { MultipleUploaderModal } from './components/MultipleUploaderModal'
+import { TagSelect } from './components/TagSelect'
 import type { MainFormModel } from '.'
 
 export interface MainFormProps {
@@ -74,7 +73,7 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
           <Select placeholder="输入关键词后回车" mode="tags" />
         </Form.Item>
         <Form.Item label="标签" name="tags">
-          <MainTagSelect />
+          <TagSelect />
         </Form.Item>
         <br />
         <Form.Item
@@ -110,37 +109,11 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
           />
         </Form.Item>
       </Form>
-      <Modal
-        centered={true}
-        closable={false}
+      <MultipleUploaderModal
         open={isUploaderModalOpen.value}
-        styles={{
-          body: {
-            paddingTop: '12px',
-            maxHeight: '80vh',
-            overflowY: 'auto'
-          }
-        }}
-        title={
-          <Space>
-            <Icons.FileImageOutlined />
-            图片上传器
-          </Space>
-        }
-        footer={
-          <Button
-            block={true}
-            type="dashed"
-            onClick={() => {
-              isUploaderModalOpen.value = false
-            }}
-          >
-            OK，我已保存好所有图片地址
-          </Button>
-        }
-      >
-        <MainMultipleUploader directory={`nodepress/${dayjs().format('YYYY-MM-DD')}`} />
-      </Modal>
+        onClose={() => (isUploaderModalOpen.value = false)}
+        uploaderDirectory={`nodepress/${dayjs().format('YYYY-MM-DD')}`}
+      />
     </>
   )
 }
