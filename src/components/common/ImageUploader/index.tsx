@@ -4,7 +4,6 @@
  */
 
 import React from 'react'
-import { useLoading } from 'veact-use'
 import { Upload, notification, Input, Space, Button, Tooltip } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { copy } from '@/services/clipboard'
@@ -29,7 +28,6 @@ export interface ImageUploaderProps {
 
 export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
   const { i18n } = useTranslation()
-  const uploading = useLoading()
   const uploader = useUploader()
   const uploadFile = (file: File) => {
     notification.info({
@@ -65,7 +63,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
         className={styles.uploader}
         maxCount={1}
         showUploadList={false}
-        disabled={uploading.state.value}
+        disabled={uploader.uploading.state.value}
         onRemove={() => props.onChange?.('')}
         customRequest={(options) => {
           if (options.file) {

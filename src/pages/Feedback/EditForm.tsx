@@ -9,7 +9,7 @@ import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
 import { stringToYMD } from '@/transforms/date'
 
 export interface EditFormProps {
-  loading: boolean
+  submitting: boolean
   feedback: Feedback
   onSubmit(feedback: Feedback): void
 }
@@ -90,7 +90,7 @@ export const EditForm: React.FC<EditFormProps> = (props) => {
         <Button
           type="primary"
           icon={<Icons.CheckOutlined />}
-          loading={props.loading}
+          loading={props.submitting}
           onClick={handleSubmit}
         >
           提交更新

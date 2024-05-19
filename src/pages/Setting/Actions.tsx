@@ -5,14 +5,14 @@ import * as Icons from '@ant-design/icons'
 import * as api from '@/apis/system'
 
 export const ActionsForm: React.FC = () => {
-  const databaseLoading = useLoading()
-  const archiveLoading = useLoading()
+  const databaseUpdating = useLoading()
+  const archiveUpdating = useLoading()
 
   const updateDatabaseBackup = () => {
     Modal.confirm({
       centered: true,
       title: '更新备份会导致强制覆盖旧的数据库备份，确定要继续吗？',
-      onOk: () => databaseLoading.promise(api.updateDatabaseBackup())
+      onOk: () => databaseUpdating.promise(api.updateDatabaseBackup())
     })
   }
 
@@ -20,7 +20,7 @@ export const ActionsForm: React.FC = () => {
     Modal.confirm({
       centered: true,
       title: '将会更新全站的所有全量数据缓存，确定要继续吗？',
-      onOk: () => archiveLoading.promise(api.updateArchiveCache())
+      onOk: () => archiveUpdating.promise(api.updateArchiveCache())
     })
   }
 
@@ -29,7 +29,7 @@ export const ActionsForm: React.FC = () => {
       <Button
         type="primary"
         block={true}
-        loading={databaseLoading.state.value}
+        loading={databaseUpdating.state.value}
         onClick={updateDatabaseBackup}
         icon={<Icons.CloudUploadOutlined />}
       >
@@ -39,7 +39,7 @@ export const ActionsForm: React.FC = () => {
       <Button
         type="primary"
         block={true}
-        loading={archiveLoading.state.value}
+        loading={archiveUpdating.state.value}
         onClick={updateArchiveCache}
         icon={<Icons.CloudSyncOutlined />}
       >

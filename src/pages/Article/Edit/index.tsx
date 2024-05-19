@@ -14,7 +14,7 @@ import { getUnEditorCache } from '@/components/common/UniversalEditor'
 import { SortTypeWithHot } from '@/constants/sort'
 import { Article } from '@/constants/article'
 import { scrollTo } from '@/services/scroller'
-import { getArticle, updateArticle, deleteArticles } from '@/apis/article'
+import * as api from '@/apis/article'
 import { getComments, CommentTree } from '@/apis/comment'
 import { numberToKilo } from '@/transforms/number'
 import { getBlogArticleUrl } from '@/transforms/url'
@@ -25,7 +25,7 @@ export const ArticleEditPage: React.FC = () => {
   const { article_id: articleId } = useParams<'article_id'>()
   const navigate = useNavigate()
   const fetching = useLoading()
-  const submitting = useLoading()
+  const updating = useLoading()
   const article = useRef<Article | null>(null)
   const articleCacheId = React.useMemo(() => {
     return RoutesPather.articleDetail(articleId!)
@@ -41,11 +41,11 @@ export const ArticleEditPage: React.FC = () => {
   }
 
   // Comment
-  const commentLoading = useLoading()
+  const commentFetching = useLoading()
   const commentCount = useRef<number>(0)
   const comments = useRef<CommentTree[]>([])
   const fetchComments = (articleId: number) => {
-    commentLoading
+    commentFetching
       .promise(getComments({ per_page: 50, sort: SortTypeWithHot.Asc, post_id: articleId }))
       .then((result) => {
         commentCount.value = result.pagination?.total!
@@ -53,15 +53,15 @@ export const ArticleEditPage: React.FC = () => {
       })
   }
 
-  const fetchUpdateArticle = (_article: Article) => {
-    return submitting.promise(updateArticle(_article)).then((result) => {
+  const updateArticle = (_article: Article) => {
+    return updating.promise(api.updateArticle(_article)).then((result) => {
       article.value = result
       scrollTo(document.body)
     })
   }
 
-  const fetchDeleteArticle = () => {
-    return submitting.promise(deleteArticles([article.value?._id!])).then(() => {
+  const deleteArticle = () => {
+    return updating.promise(api.deleteArticles([article.value?._id!])).then(() => {
       navigate(RoutesPath[RoutesKey.ArticleList])
       scrollTo(document.body)
     })
@@ -71,7 +71,7 @@ export const ArticleEditPage: React.FC = () => {
     Modal.confirm({
       title: `你确定要彻底删除文章《${article!.value!.title}》吗？`,
       content: '该行为是物理删除，不可恢复！',
-      onOk: fetchDeleteArticle,
+      onOk: deleteArticle,
       okButtonProps: {
         danger: true,
         ghost: true
@@ -88,7 +88,7 @@ export const ArticleEditPage: React.FC = () => {
 
   onMounted(async () => {
     try {
-      const remote = await fetching.promise(getArticle(articleId!))
+      const remote = await fetching.promise(api.getArticle(articleId!))
       fetchComments(remote.id!)
       const localContent = getUnEditorCache(articleCacheId)
       if (!!localContent && localContent !== remote.content) {
@@ -126,8 +126,8 @@ export const ArticleEditPage: React.FC = () => {
         article={article}
         editorCacheID={articleCacheId}
         loading={fetching.state.value}
-        submitting={submitting.state.value}
-        onSubmit={fetchUpdateArticle}
+        submitting={updating.state.value}
+        onSubmit={updateArticle}
         extra={
           <Space size="small" wrap>
             <Button.Group size="small">
@@ -172,7 +172,7 @@ export const ArticleEditPage: React.FC = () => {
       />
       <ArticleComments
         visible={isVisibleCommentModal.value}
-        loading={commentLoading.state.value}
+        loading={commentFetching.state.value}
         count={commentCount.value}
         comments={comments.value}
         onClose={closeCommentModal}

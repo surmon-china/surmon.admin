@@ -22,7 +22,7 @@ import { EditForm } from './EditForm'
 
 export const FeedbackPage: React.FC = () => {
   const { i18n } = useTranslation()
-  const loading = useLoading()
+  const fetching = useLoading()
   const updating = useLoading()
   const feedbacks = useShallowReactive<ResponsePaginationData<Feedback>>({
     data: [],
@@ -68,7 +68,7 @@ export const FeedbackPage: React.FC = () => {
       keyword: searchKeyword.value || void 0
     }
 
-    loading.promise(api.getFeedbacks(getParams)).then((response) => {
+    fetching.promise(api.getFeedbacks(getParams)).then((response) => {
       feedbacks.data = response.data
       feedbacks.pagination = response.pagination
       scrollTo(document.body)
@@ -128,7 +128,7 @@ export const FeedbackPage: React.FC = () => {
       title={i18n.t('page.feedback.list.title', { total: feedbacks.pagination?.total ?? '-' })}
     >
       <ListFilters
-        loading={loading.state.value}
+        loading={fetching.state.value}
         keyword={searchKeyword.value}
         onKeywordChange={(keyword) => (searchKeyword.value = keyword)}
         onKeywordSearch={() => fetchList()}
@@ -151,7 +151,7 @@ export const FeedbackPage: React.FC = () => {
       />
       <Divider />
       <TableList
-        loading={loading.state.value}
+        loading={fetching.state.value}
         data={feedbacks.data}
         pagination={feedbacks.pagination}
         selectedIds={selectedIds.value}
@@ -170,7 +170,7 @@ export const FeedbackPage: React.FC = () => {
         <Spin spinning={updating.state.value}>
           {activeEditFeedback.value && (
             <EditForm
-              loading={updating.state.value}
+              submitting={updating.state.value}
               feedback={activeEditFeedback.value}
               onSubmit={(feedback) => updateItem(feedback)}
             />

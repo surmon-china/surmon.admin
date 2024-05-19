@@ -35,24 +35,24 @@ const calendarDataOptions = [
 ]
 
 export const DashboardPage: React.FC = () => {
-  const statisticsLoading = useLoading()
+  const statisticsFetching = useLoading()
   const [statistics, setStatistics] = useState<Statistics | null>(null)
   const fetchStatistics = () => {
-    statisticsLoading.promise(getStatistics()).then((result) => {
+    statisticsFetching.promise(getStatistics()).then((result) => {
       setStatistics(result)
     })
   }
 
-  const articleCalendarloading = useLoading()
+  const articleCalendarFetching = useLoading()
   const [articleCalendar, setArticleCalendar] = useState<StatisticsCalendarItem[]>([])
   const fetchArticleCalendar = async () => {
-    setArticleCalendar(await articleCalendarloading.promise(getArticleCalendar()))
+    setArticleCalendar(await articleCalendarFetching.promise(getArticleCalendar()))
   }
 
-  const commentCalendarloading = useLoading()
+  const commentCalendarFetching = useLoading()
   const [commentCalendar, setCommentCalendar] = useState<StatisticsCalendarItem[]>([])
   const fetchCommentCalendar = async () => {
-    setCommentCalendar(await commentCalendarloading.promise(getCommentCalendar()))
+    setCommentCalendar(await commentCalendarFetching.promise(getCommentCalendar()))
   }
 
   const [activeCalendarDataKey, setActiveCalendarDataKey] = useState<CalendarDataKey>(
@@ -64,8 +64,8 @@ export const DashboardPage: React.FC = () => {
   )
 
   const statisticsCardsElements = useMemo(() => {
-    return getStatisticsCards(statistics!, statisticsLoading.state)
-  }, [statistics, statisticsLoading.state])
+    return getStatisticsCards(statistics!, statisticsFetching.state)
+  }, [statistics, statisticsFetching.state])
 
   onMounted(() => {
     fetchStatistics()
@@ -87,7 +87,7 @@ export const DashboardPage: React.FC = () => {
           <CalendarCard
             title="日历纵览"
             data={activeCalendarData}
-            loading={articleCalendarloading.state || commentCalendarloading.state}
+            loading={articleCalendarFetching.state || commentCalendarFetching.state}
             cardExtra={
               <Select
                 size="small"

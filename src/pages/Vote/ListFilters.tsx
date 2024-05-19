@@ -43,7 +43,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
       <Space wrap>
         <Space.Compact>
           <SelectWithInput
-            loading={props.loading}
+            disabled={props.loading}
             inputStyle={{ width: 120 }}
             inputPlaceholder={
               (props.params.target_type === SELECT_ALL_VALUE
@@ -75,7 +75,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
         </Space.Compact>
         <Select
           style={{ width: 110 }}
-          loading={props.loading}
+          disabled={props.loading}
           value={props.params.vote_type}
           onChange={(vote_type) => props.onParamsChange({ vote_type })}
           options={[
@@ -93,7 +93,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
         />
         <Select
           style={{ width: 120 }}
-          loading={props.loading}
+          disabled={props.loading}
           value={props.params.author_type}
           onChange={(author_type) => props.onParamsChange({ author_type })}
           options={[
@@ -108,7 +108,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
         />
         <SortSelect
           style={{ width: 110 }}
-          loading={props.loading}
+          disabled={props.loading}
           value={props.params.sort}
           onChange={(sort) => props.onParamsChange({ sort })}
         />

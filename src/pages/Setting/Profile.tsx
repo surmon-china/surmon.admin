@@ -14,13 +14,13 @@ import { removeToken } from '@/services/token'
 
 export const ProfileForm: React.FC = () => {
   const navigate = useNavigate()
-  const loading = useLoading()
+  const fetching = useLoading()
   const updating = useLoading()
   const globalAdminProfile = useAdminProfile()
   const [form] = Form.useForm<AdminProfile>()
 
   const fetchLatestProfile = () => {
-    loading.promise(api.getAdminProfile()).then(form.setFieldsValue)
+    fetching.promise(api.getAdminProfile()).then(form.setFieldsValue)
   }
 
   const updateProfile = (adminProfile: AdminProfile) => {
@@ -66,7 +66,7 @@ export const ProfileForm: React.FC = () => {
   })
 
   return (
-    <Spin spinning={loading.state.value || updating.state.value}>
+    <Spin spinning={fetching.state.value || updating.state.value}>
       <Form layout="vertical" form={form} colon={false} scrollToFirstError={true}>
         <Form.Item
           name="avatar"

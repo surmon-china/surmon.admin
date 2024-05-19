@@ -21,8 +21,8 @@ import { FormModal } from './FormModal'
 
 export const TagPage: React.FC = () => {
   const { i18n } = useTranslation()
-  const loading = useLoading()
-  const submitting = useLoading()
+  const fetching = useLoading()
+  const posting = useLoading()
   const tags = useShallowReactive<ResponsePaginationData<Tag>>({
     data: [],
     pagination: void 0
@@ -62,7 +62,7 @@ export const TagPage: React.FC = () => {
       keyword: searchKeyword.value || void 0
     }
 
-    loading.promise(api.getTags(getParams)).then((response) => {
+    fetching.promise(api.getTags(getParams)).then((response) => {
       tags.data = response.data
       tags.pagination = response.pagination
       scrollTo(document.body)
@@ -77,7 +77,7 @@ export const TagPage: React.FC = () => {
   }
 
   const createTag = (tag: Tag) => {
-    submitting.promise(api.createTag(tag)).then(() => {
+    posting.promise(api.createTag(tag)).then(() => {
       closeModal()
       refreshList()
     })
@@ -88,7 +88,7 @@ export const TagPage: React.FC = () => {
       ...activeEditTag.value,
       ...tag
     }
-    submitting.promise(api.updateTag(payload)).then(() => {
+    posting.promise(api.updateTag(payload)).then(() => {
       closeModal()
       refreshList()
     })
@@ -145,7 +145,7 @@ export const TagPage: React.FC = () => {
       }
     >
       <ListFilters
-        loading={loading.state.value}
+        loading={fetching.state.value}
         keyword={searchKeyword.value}
         onKeywordChange={(keyword) => (searchKeyword.value = keyword)}
         onKeywordSearch={() => fetchList()}
@@ -166,7 +166,7 @@ export const TagPage: React.FC = () => {
       />
       <Divider />
       <TableList
-        loading={loading.state.value}
+        loading={fetching.state.value}
         data={tags.data}
         pagination={tags.pagination}
         selectedIds={selectedIds.value}
@@ -177,7 +177,7 @@ export const TagPage: React.FC = () => {
       />
       <FormModal
         title={activeEditTag.value ? '编辑标签' : '新标签'}
-        loading={submitting.state.value}
+        submitting={posting.state.value}
         visible={isVisibleModal.value}
         initData={activeEditTag.value}
         onCancel={closeModal}

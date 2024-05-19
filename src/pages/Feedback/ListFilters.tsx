@@ -39,7 +39,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
     <Flex justify="space-between" gap="middle" wrap>
       <Space wrap>
         <Button
-          loading={props.loading}
+          disabled={props.loading}
           type={props.params.marked ? 'primary' : 'default'}
           icon={props.params.marked ? <Icons.StarFilled /> : <Icons.StarOutlined />}
           onClick={() => props.onParamsChange({ marked: !props.params.marked })}
@@ -47,7 +47,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
           标记数据
         </Button>
         <SelectWithInput
-          loading={props.loading}
+          disabled={props.loading}
           inputStyle={{ width: 100 }}
           inputPlaceholder="TID"
           inputType="number"
@@ -65,7 +65,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
         />
         <Select
           style={{ width: 110 }}
-          loading={props.loading}
+          disabled={props.loading}
           value={props.params.emotion}
           onChange={(emotion) => props.onParamsChange({ emotion })}
           options={[
@@ -79,14 +79,14 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
         />
         <SortSelect
           style={{ width: 110 }}
-          loading={props.loading}
+          disabled={props.loading}
           value={props.params.sort}
           onChange={(sort) => props.onParamsChange({ sort })}
         />
         <Input.Search
           style={{ width: 260 }}
           placeholder="输入反馈内容、作者信息搜索"
-          loading={props.loading}
+          disabled={props.loading}
           value={props.keyword}
           onChange={(event) => props.onKeywordChange(event.target.value)}
           allowClear={true}

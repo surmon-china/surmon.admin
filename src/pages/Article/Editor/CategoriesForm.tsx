@@ -14,10 +14,10 @@ interface CategorySelectProps {
 }
 
 const CategorySelect: React.FC<CategorySelectProps> = (props) => {
-  const categoriesLoading = useLoading()
+  const fetching = useLoading()
   const categories = useRef<CategoryTree[]>([])
   const fetchCategories = () => {
-    categoriesLoading.promise(getCategories({ per_page: 50 })).then((result) => {
+    fetching.promise(getCategories({ per_page: 50 })).then((result) => {
       categories.value = result.tree
     })
   }
@@ -31,7 +31,7 @@ const CategorySelect: React.FC<CategorySelectProps> = (props) => {
       {!categories.value.length ? (
         <Typography.Text type="secondary">无分类</Typography.Text>
       ) : (
-        <Spin spinning={categoriesLoading.state.value}>
+        <Spin spinning={fetching.state.value}>
           <Tree
             className={styles.categorySelect}
             virtual={false}
@@ -68,7 +68,7 @@ const CategorySelect: React.FC<CategorySelectProps> = (props) => {
         size="small"
         type="dashed"
         icon={<Icons.ReloadOutlined />}
-        loading={categoriesLoading.state.value}
+        loading={fetching.state.value}
         onClick={fetchCategories}
       >
         刷新列表

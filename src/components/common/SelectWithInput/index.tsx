@@ -20,7 +20,8 @@ export interface SelectWithInputProps<SelectValue = any> {
   style?: React.CSSProperties
 
   // state
-  loading: boolean
+  loading?: boolean
+  disabled?: boolean
 
   // select
   selectClassName?: string
@@ -66,6 +67,7 @@ export function SelectWithInput<SV = any>(props: SelectWithInputProps<SV>) {
         style={props.selectStyle}
         placeholder={props.selectPlaceholder}
         loading={props.loading}
+        disabled={props.disabled}
         labelRender={props.selectLabelRender}
         value={props.selectValue}
         options={props.selectOptions}
@@ -77,6 +79,7 @@ export function SelectWithInput<SV = any>(props: SelectWithInputProps<SV>) {
         width={props.inputWidth}
         placeholder={props.inputPlaceholder}
         loading={props.loading}
+        disabled={props.disabled}
         allowClear={true}
         {...inputProps}
         value={props.inputValue}

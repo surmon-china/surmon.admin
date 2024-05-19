@@ -16,7 +16,7 @@ export interface GeneralFormProps {
 }
 
 export const GeneralForm: React.FC<GeneralFormProps> = (props) => {
-  const loading = useLoading()
+  const fetching = useLoading()
   const updating = useLoading()
   const data = useRef<Option | null>(null)
   const [form] = Form.useForm<Option>()
@@ -30,7 +30,7 @@ export const GeneralForm: React.FC<GeneralFormProps> = (props) => {
   }
 
   const fetchOption = () => {
-    return loading.promise(api.getOption()).then(resetForm)
+    return fetching.promise(api.getOption()).then(resetForm)
   }
 
   const updateOption = (newOption: Option) => {
@@ -38,7 +38,6 @@ export const GeneralForm: React.FC<GeneralFormProps> = (props) => {
       ...newOption,
       ad_config: formatJSONString(newOption.ad_config)
     }
-
     return updating.promise(api.putOption(payload)).then(resetForm)
   }
 
@@ -60,7 +59,7 @@ export const GeneralForm: React.FC<GeneralFormProps> = (props) => {
   })
 
   return (
-    <Spin spinning={loading.state.value || updating.state.value}>
+    <Spin spinning={fetching.state.value || updating.state.value}>
       <Form
         form={form}
         colon={false}

@@ -20,7 +20,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
         <Input.Search
           style={{ width: 220 }}
           placeholder={i18n.t('common.list.filter.search')}
-          loading={props.loading}
+          disabled={props.loading}
           value={props.keyword}
           onChange={(event) => props.onKeywordChange(event.target.value)}
           allowClear={true}

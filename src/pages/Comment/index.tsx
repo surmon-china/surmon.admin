@@ -30,8 +30,8 @@ export const CommentPage: React.FC = () => {
   const postIdParam = post_id ? Number(post_id) : void 0
 
   // comments
-  const loading = useLoading()
-  const submitting = useLoading()
+  const fetching = useLoading()
+  const updating = useLoading()
   const comments = useShallowReactive<ResponsePaginationData<CommentType>>({
     data: [],
     pagination: void 0
@@ -90,7 +90,7 @@ export const CommentPage: React.FC = () => {
       keyword: searchKeyword.value || void 0
     }
 
-    loading.promise(api.getComments(getParams)).then((response) => {
+    fetching.promise(api.getComments(getParams)).then((response) => {
       comments.data = response.data
       comments.pagination = response.pagination
       scrollTo(document.body)
@@ -110,7 +110,7 @@ export const CommentPage: React.FC = () => {
       ...comment
     }
 
-    submitting.promise(api.updateComment(payload)).then(() => {
+    updating.promise(api.updateComment(payload)).then(() => {
       closeEditDrawer()
       refreshList()
     })
@@ -167,10 +167,10 @@ export const CommentPage: React.FC = () => {
     <Card
       bordered={false}
       title={i18n.t('page.comment.list.title', { total: comments.pagination?.total ?? '-' })}
-      extra={<ExtraActions comments={comments.data} />}
+      extra={<ExtraActions comments={comments.data} loading={fetching.state.value} />}
     >
       <ListFilters
-        loading={loading.state.value}
+        loading={fetching.state.value}
         keyword={searchKeyword.value}
         onKeywordChange={(value) => (searchKeyword.value = value)}
         onKeywordSearch={() => fetchList()}
@@ -215,7 +215,7 @@ export const CommentPage: React.FC = () => {
       />
       <Divider />
       <TableList
-        loading={loading.state.value}
+        loading={fetching.state.value}
         selectedIds={selectedIds.value}
         onSelecte={(ids) => (selectedIds.value = ids)}
         data={comments.data}
@@ -233,10 +233,10 @@ export const CommentPage: React.FC = () => {
         open={isVisibleDrawer.value}
         onClose={closeEditDrawer}
       >
-        <Spin spinning={submitting.state.value}>
+        <Spin spinning={updating.state.value}>
           {activeEditComment.value && (
             <EditForm
-              loading={submitting.state.value}
+              submitting={updating.state.value}
               comment={activeEditComment.value}
               onSubmit={(comment) => updateComment(comment)}
             />

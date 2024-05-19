@@ -8,6 +8,7 @@ import { getBlogGuestbookUrl } from '@/transforms/url'
 
 export interface ExtraActionsProps extends React.PropsWithChildren {
   comments: Comment[]
+  loading: boolean
 }
 
 export const ExtraActions: React.FC<ExtraActionsProps> = (props) => {
@@ -83,7 +84,7 @@ export const ExtraActions: React.FC<ExtraActionsProps> = (props) => {
         <Button
           size="small"
           icon={<Icons.GlobalOutlined />}
-          disabled={ipLocationTask.running}
+          disabled={ipLocationTask.running || props.loading}
           loading={ipLocationTask.running}
           onClick={() => handleReviseComemntsIPLocation()}
         >

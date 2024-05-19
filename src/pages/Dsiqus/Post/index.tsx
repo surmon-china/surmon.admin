@@ -28,7 +28,7 @@ const DEFAULT_PARAMS = Object.freeze({
 
 export const DisqusPostsPage: React.FC = () => {
   const config = useRef<any>(null)
-  const loading = useLoading()
+  const fetching = useLoading()
   const threadId = useRef(DEFAULT_THREAD_ID)
   const filterParams = useShallowReactive({ ...DEFAULT_PARAMS })
   const posts = useShallowReactive({
@@ -49,7 +49,7 @@ export const DisqusPostsPage: React.FC = () => {
           : [...Object.values(DisqusPostState)]
     }
 
-    loading.promise(getDisqusPosts(getParams)).then((response) => {
+    fetching.promise(getDisqusPosts(getParams)).then((response) => {
       posts.cursor = response.result.cursor
       if (params?.cursor) {
         posts.list.push(...response.result.response)
@@ -100,7 +100,7 @@ export const DisqusPostsPage: React.FC = () => {
       <Space wrap>
         <Select
           className={classnames(styles.select)}
-          loading={loading.state.value}
+          loading={fetching.state.value}
           value={filterParams.include}
           onChange={(state) => {
             filterParams.include = state
@@ -138,7 +138,7 @@ export const DisqusPostsPage: React.FC = () => {
         />
         <Select
           className={classnames(styles.select)}
-          loading={loading.state.value}
+          loading={fetching.state.value}
           value={filterParams.order}
           onChange={(order) => {
             filterParams.order = order
@@ -157,7 +157,7 @@ export const DisqusPostsPage: React.FC = () => {
         <Input.Search
           className={styles.search}
           placeholder="thread ID"
-          loading={loading.state.value}
+          loading={fetching.state.value}
           allowClear={true}
           onSearch={() => fetchData()}
           value={threadId.value}
@@ -167,7 +167,7 @@ export const DisqusPostsPage: React.FC = () => {
         />
         <Button
           icon={<Icons.ReloadOutlined />}
-          loading={loading.state.value}
+          loading={fetching.state.value}
           onClick={() => resetFetch()}
         >
           Reset refresh
@@ -178,7 +178,7 @@ export const DisqusPostsPage: React.FC = () => {
         rowKey="id"
         dataSource={posts.list.slice()}
         pagination={false}
-        loading={loading.state.value}
+        loading={fetching.state.value}
         columns={[
           {
             title: 'ID / PID / Thread',
@@ -301,11 +301,11 @@ export const DisqusPostsPage: React.FC = () => {
         {posts.cursor?.hasNext ? (
           <Button
             size="large"
-            disabled={loading.state.value}
-            loading={loading.state.value}
+            disabled={fetching.state.value}
+            loading={fetching.state.value}
             onClick={loadNextPage}
           >
-            {loading.state.value ? 'Loading...' : 'Loadmore'}
+            {fetching.state.value ? 'Loading...' : 'Loadmore'}
           </Button>
         ) : (
           <span>NO MORE</span>

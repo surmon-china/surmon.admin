@@ -11,8 +11,8 @@ const formLayout = {
 
 export interface FormModalProps {
   title: string
-  loading: boolean
   visible: boolean
+  submitting: boolean
   initData: Announcement | null
   onSubmit(data: Announcement): void
   onCancel(): void
@@ -38,7 +38,7 @@ export const FormModal: React.FC<FormModalProps> = (props) => {
       destroyOnClose={true}
       title={props.title}
       open={props.visible}
-      confirmLoading={props.loading}
+      confirmLoading={props.submitting}
       onCancel={props.onCancel}
       onOk={handleSubmit}
       okText="提交"

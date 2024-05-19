@@ -15,7 +15,7 @@ import { stringToYMD } from '@/transforms/date'
 import { CommentAvatar } from './Avatar'
 
 export interface EditFormProps {
-  loading: boolean
+  submitting: boolean
   comment: Comment
   onSubmit(comment: Comment): void
 }
@@ -182,7 +182,7 @@ export const EditForm: React.FC<EditFormProps> = (props) => {
         <Button
           type="primary"
           icon={<Icons.CheckOutlined />}
-          loading={props.loading}
+          loading={props.submitting}
           onClick={handleSubmit}
         >
           提交更新

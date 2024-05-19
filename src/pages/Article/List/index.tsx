@@ -61,26 +61,26 @@ const DEFAULT_FILTER_PARAMS = Object.freeze({
 
 export const ArticleListPage: React.FC = () => {
   const { i18n } = useTranslation()
-  const loading = useLoading()
+  const fetching = useLoading()
   const article = useShallowReactive<ResponsePaginationData<Article>>({
     data: [],
     pagination: undefined
   })
 
   // 分类
-  const loadingCategory = useLoading()
+  const categoryFetching = useLoading()
   const categoriesTree = useRef<CategoryTree[]>([])
   const fetchCategories = () => {
-    loadingCategory.promise(getCategories({ per_page: 50 })).then((result) => {
+    categoryFetching.promise(getCategories({ per_page: 50 })).then((result) => {
       categoriesTree.value = result.tree
     })
   }
 
   // 标签
-  const loadingTag = useLoading()
+  const tagFetching = useLoading()
   const tags = useRef<Tag[]>([])
   const fetchTags = () => {
-    loadingTag.promise(getTags({ per_page: 50 })).then((result) => {
+    tagFetching.promise(getTags({ per_page: 50 })).then((result) => {
       tags.value = result.data
     })
   }
@@ -107,7 +107,7 @@ export const ArticleListPage: React.FC = () => {
       }
     })
 
-    loading.promise(getArticles(getParams)).then((result) => {
+    fetching.promise(getArticles(getParams)).then((result) => {
       batchedUpdates(() => {
         article.data = result.data
         article.pagination = result.pagination
@@ -187,7 +187,7 @@ export const ArticleListPage: React.FC = () => {
             </Button>
             <Select
               className={styles.select}
-              loading={loading.state.value}
+              loading={fetching.state.value}
               value={filterParams.state}
               onChange={(state) => {
                 filterParams.state = state
@@ -209,7 +209,7 @@ export const ArticleListPage: React.FC = () => {
             />
             <Select
               className={styles.select}
-              loading={loading.state.value}
+              loading={fetching.state.value}
               value={filterParams.public}
               onChange={(state) => {
                 filterParams.public = state
@@ -231,7 +231,7 @@ export const ArticleListPage: React.FC = () => {
             />
             <Select
               className={styles.select}
-              loading={loading.state.value}
+              loading={fetching.state.value}
               value={filterParams.origin}
               onChange={(state) => {
                 filterParams.origin = state
@@ -253,7 +253,7 @@ export const ArticleListPage: React.FC = () => {
             />
             <Select
               className={styles.select}
-              loading={loading.state.value}
+              loading={fetching.state.value}
               value={filterParams.lang}
               onChange={(state) => {
                 filterParams.lang = state
@@ -275,7 +275,7 @@ export const ArticleListPage: React.FC = () => {
             />
             <SortSelect
               className={styles.select}
-              loading={loading.state.value}
+              loading={fetching.state.value}
               withHot={true}
               value={filterParams.sort}
               onChange={(sort) => {
@@ -284,7 +284,7 @@ export const ArticleListPage: React.FC = () => {
             />
             <Select
               className={styles.tagSelect}
-              loading={loadingTag.state.value}
+              loading={tagFetching.state.value}
               value={filterParams.tag_slug}
               onChange={(slug) => {
                 filterParams.tag_slug = slug
@@ -301,7 +301,7 @@ export const ArticleListPage: React.FC = () => {
               placeholder="选择父分类"
               treeDefaultExpandAll={true}
               className={styles.categoriesSelect}
-              loading={loadingCategory.state.value}
+              loading={categoryFetching.state.value}
               value={filterParams.category_slug}
               onChange={(slug) => {
                 filterParams.category_slug = slug
@@ -323,7 +323,7 @@ export const ArticleListPage: React.FC = () => {
             <Input.Search
               className={styles.search}
               placeholder={i18n.t('page.article.list.filter.search')}
-              loading={loading.state.value}
+              loading={fetching.state.value}
               onSearch={() => fetchData()}
               value={serarchKeyword.value}
               onChange={(event) => {
@@ -332,7 +332,7 @@ export const ArticleListPage: React.FC = () => {
             />
             <Button
               icon={<Icons.ReloadOutlined />}
-              loading={loading.state.value}
+              loading={fetching.state.value}
               onClick={resetParamsAndRefresh}
             >
               {i18n.t('common.list.filter.refresh_with_reset')}
@@ -365,7 +365,7 @@ export const ArticleListPage: React.FC = () => {
       </Space>
       <Divider />
       <ArticleListTable
-        loading={loading.state.value}
+        loading={fetching.state.value}
         selectedIds={selectedIds.value}
         onSelecte={handleSelect}
         data={article.data}

@@ -12,10 +12,10 @@ export interface MainTagSelectProps {
 }
 
 export const MainTagSelect: React.FC<MainTagSelectProps> = (props) => {
-  const tagsLoading = useLoading()
+  const fetching = useLoading()
   const tags = useRef<Tag[]>([])
   const fetchTags = () => {
-    tagsLoading.promise(getTags({ per_page: 50 })).then((result) => {
+    fetching.promise(getTags({ per_page: 50 })).then((result) => {
       tags.value = result.data
     })
   }
@@ -32,7 +32,7 @@ export const MainTagSelect: React.FC<MainTagSelectProps> = (props) => {
   })
 
   return (
-    <Spin spinning={tagsLoading.state.value}>
+    <Spin spinning={fetching.state.value}>
       <Space wrap size={[12, 12]}>
         {!tags.value.length ? (
           <Typography.Text type="secondary">无数据</Typography.Text>
@@ -63,7 +63,7 @@ export const MainTagSelect: React.FC<MainTagSelectProps> = (props) => {
           size="small"
           type="dashed"
           icon={<Icons.ReloadOutlined />}
-          loading={tagsLoading.state.value}
+          loading={fetching.state.value}
           onClick={fetchTags}
         >
           刷新列表

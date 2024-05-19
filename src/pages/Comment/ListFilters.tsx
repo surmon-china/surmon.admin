@@ -39,7 +39,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
     <Flex justify="space-between" gap="middle" wrap>
       <Space wrap>
         <SelectWithInput
-          loading={props.loading}
+          disabled={props.loading}
           inputStyle={{ width: 126 }}
           inputPlaceholder="POST ID"
           inputType="number"
@@ -63,7 +63,7 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
         />
         <Select
           style={{ width: 130 }}
-          loading={props.loading}
+          disabled={props.loading}
           value={props.params.state}
           onChange={(state) => props.onParamsChange({ state })}
           options={[
@@ -82,14 +82,14 @@ export const ListFilters: React.FC<ListFiltersProps> = (props) => {
         <SortSelect
           style={{ width: 110 }}
           withHot={true}
-          loading={props.loading}
+          disabled={props.loading}
           value={props.params.sort}
           onChange={(sort) => props.onParamsChange({ sort })}
         />
         <Input.Search
           style={{ width: 260 }}
           placeholder="输入评论内容、作者信息搜索"
-          loading={props.loading}
+          disabled={props.loading}
           value={props.keyword}
           onChange={(event) => props.onKeywordChange(event.target.value)}
           allowClear={true}

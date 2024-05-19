@@ -21,8 +21,8 @@ import { FormModal } from './FormModal'
 
 export const AnnouncementPage: React.FC = () => {
   const { i18n } = useTranslation()
-  const loading = useLoading()
-  const submitting = useLoading()
+  const fetching = useLoading()
+  const posting = useLoading()
   const announcements = useShallowReactive<ResponsePaginationData<Announcement>>({
     data: [],
     pagination: undefined
@@ -69,7 +69,7 @@ export const AnnouncementPage: React.FC = () => {
       keyword: searchKeyword.value || void 0
     }
 
-    loading.promise(api.getAnnouncements(getParams)).then((response) => {
+    fetching.promise(api.getAnnouncements(getParams)).then((response) => {
       announcements.data = response.data
       announcements.pagination = response.pagination
       scrollTo(document.body)
@@ -84,7 +84,7 @@ export const AnnouncementPage: React.FC = () => {
   }
 
   const createAnnouncement = (announcement: Announcement) => {
-    submitting.promise(api.createAnnouncement(announcement)).then(() => {
+    posting.promise(api.createAnnouncement(announcement)).then(() => {
       closeModal()
       refreshList()
     })
@@ -96,7 +96,7 @@ export const AnnouncementPage: React.FC = () => {
       ...announcement
     }
 
-    submitting.promise(api.updateAnnouncement(payload)).then(() => {
+    posting.promise(api.updateAnnouncement(payload)).then(() => {
       closeModal()
       refreshList()
     })
@@ -156,7 +156,7 @@ export const AnnouncementPage: React.FC = () => {
       }
     >
       <ListFilters
-        loading={loading.state.value}
+        loading={fetching.state.value}
         keyword={searchKeyword.value}
         onKeywordChange={(keyword) => (searchKeyword.value = keyword)}
         onKeywordSearch={() => fetchList()}
@@ -179,7 +179,7 @@ export const AnnouncementPage: React.FC = () => {
       />
       <Divider />
       <TableList
-        loading={loading.state.value}
+        loading={fetching.state.value}
         data={announcements.data}
         pagination={announcements.pagination}
         selectedIds={selectedIds.value}
@@ -190,8 +190,8 @@ export const AnnouncementPage: React.FC = () => {
       />
       <FormModal
         title={activeEditAnnouncement.value ? '编辑公告' : '新公告'}
-        loading={submitting.state.value}
         visible={isVisibleModal.value}
+        submitting={posting.state.value}
         initData={activeEditAnnouncement.value}
         onCancel={closeModal}
         onSubmit={(announcement) => {

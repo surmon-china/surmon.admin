@@ -22,8 +22,8 @@ const DEFAULT_CATEGORY_DATA: Partial<CategoryType> = {
 
 export interface FormModalProps {
   title: string
-  loading: boolean
   visible: boolean
+  submitting: boolean
   initData: CategoryType | null
   selectTree: TreeDataNode[]
   onSubmit(data: CategoryType): void
@@ -61,7 +61,7 @@ export const FormModal: React.FC<FormModalProps> = (props) => {
       centered={true}
       forceRender={true}
       title={props.title}
-      confirmLoading={props.loading}
+      confirmLoading={props.submitting}
       open={props.visible}
       onCancel={props.onCancel}
       onOk={handleSubmit}

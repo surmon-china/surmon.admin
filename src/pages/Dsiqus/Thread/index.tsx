@@ -20,7 +20,7 @@ const SELECT_ALL_VALUE = 'ALL'
 
 export const DisqusThreadsPage: React.FC = () => {
   const config = useRef<any>(null)
-  const loading = useLoading()
+  const fetching = useLoading()
   const threads = useShallowReactive({
     cursor: null as any,
     list: [] as any[]
@@ -44,7 +44,7 @@ export const DisqusThreadsPage: React.FC = () => {
           : [...Object.values(DisqusThreadState)]
     }
 
-    loading.promise(getDisqusThreads(getParams)).then((response) => {
+    fetching.promise(getDisqusThreads(getParams)).then((response) => {
       threads.cursor = response.result.cursor
       if (params?.cursor) {
         threads.list.push(...response.result.response)
@@ -94,7 +94,7 @@ export const DisqusThreadsPage: React.FC = () => {
       <Space wrap>
         <Select
           className={classnames(styles.select)}
-          loading={loading.state.value}
+          loading={fetching.state.value}
           value={filterParams.include}
           onChange={(state) => {
             filterParams.include = state
@@ -116,7 +116,7 @@ export const DisqusThreadsPage: React.FC = () => {
         />
         <Select
           className={classnames(styles.select)}
-          loading={loading.state.value}
+          loading={fetching.state.value}
           value={filterParams.order}
           onChange={(order) => {
             filterParams.order = order
@@ -134,7 +134,7 @@ export const DisqusThreadsPage: React.FC = () => {
         />
         <Button
           icon={<Icons.ReloadOutlined />}
-          loading={loading.state.value}
+          loading={fetching.state.value}
           onClick={() => resetFetch()}
         >
           Reset refresh
@@ -145,7 +145,7 @@ export const DisqusThreadsPage: React.FC = () => {
         rowKey="id"
         dataSource={threads.list.slice()}
         pagination={false}
-        loading={loading.state.value}
+        loading={fetching.state.value}
         columns={[
           {
             title: 'Title / Link',
@@ -247,11 +247,11 @@ export const DisqusThreadsPage: React.FC = () => {
         {threads.cursor?.hasNext ? (
           <Button
             size="large"
-            disabled={loading.state.value}
-            loading={loading.state.value}
+            disabled={fetching.state.value}
+            loading={fetching.state.value}
             onClick={loadNextPage}
           >
-            {loading.state.value ? 'Loading...' : 'Loadmore'}
+            {fetching.state.value ? 'Loading...' : 'Loadmore'}
           </Button>
         ) : (
           <span>NO MORE</span>

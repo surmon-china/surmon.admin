@@ -18,8 +18,8 @@ import { TreeList } from './TreeList'
 
 export const CategoryPage: React.FC = () => {
   const { i18n } = useTranslation()
-  const loading = useLoading()
-  const submitting = useLoading()
+  const fetching = useLoading()
+  const posting = useLoading()
   const categoriesTree = useShallowRef<CategoryTree[]>([])
   const categoriesList = useShallowReactive<ResponsePaginationData<CategoryType>>({
     data: [],
@@ -49,7 +49,7 @@ export const CategoryPage: React.FC = () => {
   }
 
   const fetchCategories = () => {
-    return loading.promise(api.getCategories({ per_page: 50 })).then((result) => {
+    return fetching.promise(api.getCategories({ per_page: 50 })).then((result) => {
       categoriesList.data = result.data
       categoriesList.pagination = result.pagination
       categoriesTree.value = result.tree
@@ -57,7 +57,7 @@ export const CategoryPage: React.FC = () => {
   }
 
   const createCategory = (category: CategoryType) => {
-    submitting.promise(api.createCategory(category)).then(() => {
+    posting.promise(api.createCategory(category)).then(() => {
       closeModal()
       fetchCategories()
     })
@@ -68,7 +68,7 @@ export const CategoryPage: React.FC = () => {
       ...activeEditCategory.value,
       ...category
     }
-    submitting.promise(api.updateCategory(payload)).then(() => {
+    posting.promise(api.updateCategory(payload)).then(() => {
       closeModal()
       fetchCategories()
     })
@@ -109,7 +109,7 @@ export const CategoryPage: React.FC = () => {
       <Space>
         <Button
           icon={<Icons.ReloadOutlined />}
-          loading={loading.state.value}
+          loading={fetching.state.value}
           onClick={() => fetchCategories()}
         >
           {i18n.t('common.list.filter.refresh')}
@@ -118,13 +118,13 @@ export const CategoryPage: React.FC = () => {
       <Divider />
       <TreeList
         tree={categoriesTree.value}
-        loading={loading.state.value}
+        loading={fetching.state.value}
         onEdit={(category) => openEditModal(category._id!)}
         onDelete={(category) => deleteCategory(category)}
       />
       <FormModal
         title={activeEditCategory.value ? '编辑分类' : '新分类'}
-        loading={submitting.state.value}
+        submitting={posting.state.value}
         visible={isVisibleModal.value}
         initData={activeEditCategory.value}
         onCancel={() => closeModal()}

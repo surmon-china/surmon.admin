@@ -21,7 +21,7 @@ import { TableList } from './TableList'
 
 export const VotePage: React.FC = () => {
   const { i18n } = useTranslation()
-  const loading = useLoading()
+  const fetching = useLoading()
   const votes = useShallowReactive<ResponsePaginationData<Vote>>({
     data: [],
     pagination: void 0
@@ -60,7 +60,7 @@ export const VotePage: React.FC = () => {
       target_id: filterTargetId.value
     }
 
-    loading.promise(api.getVotes(getParams)).then((response) => {
+    fetching.promise(api.getVotes(getParams)).then((response) => {
       votes.data = response.data
       votes.pagination = response.pagination
       scrollTo(document.body)
@@ -103,7 +103,7 @@ export const VotePage: React.FC = () => {
       title={i18n.t('page.vote.list.title', { total: votes.pagination?.total ?? '-' })}
     >
       <ListFilters
-        loading={loading.state.value}
+        loading={fetching.state.value}
         targetId={filterTargetId.value}
         onTargetIdChange={setFilterTargetId}
         onTargetIdSearch={() => fetchList()}
@@ -126,7 +126,7 @@ export const VotePage: React.FC = () => {
       />
       <Divider />
       <TableList
-        loading={loading.state.value}
+        loading={fetching.state.value}
         selectedIds={selectedIds.value}
         data={votes.data}
         pagination={votes.pagination!}
