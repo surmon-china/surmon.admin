@@ -9,13 +9,8 @@ import { useLoading } from 'veact-use'
 import classnames from 'classnames'
 import { Button, Card, Table, Select, Tag, Space, Switch, Divider, Typography } from 'antd'
 import * as Icons from '@ant-design/icons'
-import {
-  getDisqusConfig,
-  getDisqusThreads,
-  DisqusThreadState,
-  DisqusOrderType,
-  GeneralDisqusParams
-} from '@/apis/disqus'
+import { DisqusThreadState, DisqusOrderType } from '@/constants/disqus'
+import { getDisqusConfig, getDisqusThreads, GeneralDisqusParams } from '@/apis/disqus'
 import { stringToYMD } from '@/transforms/date'
 import { scrollTo } from '@/services/scroller'
 

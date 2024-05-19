@@ -8,25 +8,6 @@ import nodepress from '@/services/nodepress'
 
 export const DISQUS_API_PATH = '/disqus'
 
-export enum DisqusOrderType {
-  Desc = 'desc',
-  Asc = 'asc'
-}
-
-export enum DisqusThreadState {
-  Open = 'open',
-  Closed = 'closed'
-}
-
-export enum DisqusPostState {
-  Unapproved = 'unapproved',
-  Approved = 'approved',
-  Spam = 'spam',
-  Deleted = 'deleted',
-  Flagged = 'flagged',
-  Highlighted = 'highlighted'
-}
-
 export interface GeneralDisqusParams {
   [key: string]: any
 }
