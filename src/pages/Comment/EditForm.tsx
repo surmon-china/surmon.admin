@@ -1,5 +1,5 @@
 import React from 'react'
-import { onMounted, useRef } from 'veact'
+import { onMounted, useShallowRef } from 'veact'
 import { Form, Typography, Input, Button, Divider, InputNumber, Select, Space } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { getArticle } from '@/apis/article'
@@ -22,7 +22,7 @@ export interface EditFormProps {
 
 export const EditForm: React.FC<EditFormProps> = (props) => {
   const [form] = Form.useForm<Comment>()
-  const commentArticle = useRef<Article | null>(null)
+  const commentArticle = useShallowRef<Article | null>(null)
   const fetchArticle = (articleId: number) => {
     getArticle(articleId).then((result) => {
       commentArticle.value = result

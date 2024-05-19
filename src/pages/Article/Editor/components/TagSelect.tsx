@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRef, onMounted } from 'veact'
+import { useShallowRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import { Spin, Skeleton, Button, Divider, Space, Typography } from 'antd'
 import * as Icons from '@ant-design/icons'
@@ -13,7 +13,7 @@ export interface TagSelectProps {
 
 export const TagSelect: React.FC<TagSelectProps> = (props) => {
   const fetching = useLoading()
-  const tags = useRef<Tag[]>([])
+  const tags = useShallowRef<Tag[]>([])
   const fetchTags = () => {
     fetching.promise(getAllTags()).then((result) => {
       tags.value = result
