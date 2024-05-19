@@ -4,13 +4,12 @@
  */
 
 import React from 'react'
-import { useShallowReactive, useShallowRef, useRef, onMounted, useComputed } from 'veact'
+import { useShallowRef, useRef, onMounted, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Divider, Modal, Space } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { useTranslation } from '@/i18n'
-import { ResponsePaginationData } from '@/constants/nodepress'
-import { Category as CategoryType } from '@/constants/category'
+import { Category as Category } from '@/constants/category'
 import type { CategoryTree } from '@/apis/category'
 import * as api from '@/apis/category'
 import { FormModal } from './FormModal'
@@ -21,17 +20,18 @@ export const CategoryPage: React.FC = () => {
   const fetching = useLoading()
   const posting = useLoading()
   const categoriesTree = useShallowRef<CategoryTree[]>([])
-  const categoriesList = useShallowReactive<ResponsePaginationData<CategoryType>>({
-    data: [],
-    pagination: void 0
-  })
+  const categoriesList = useShallowRef<Category[]>([])
 
   // modal
   const isFormModalOpen = useRef(false)
   const activeEditCategoryId = useRef<string | null>(null)
   const activeEditCategory = useComputed(() => {
-    const id = activeEditCategoryId.value
-    return id !== null ? categoriesList.data.find((c) => c._id === id)! : null
+    if (!activeEditCategoryId.value) {
+      return null
+    }
+    return categoriesList.value.find((category) => {
+      return category._id === activeEditCategoryId.value
+    })!
   })
 
   const closeModal = () => {
@@ -49,21 +49,20 @@ export const CategoryPage: React.FC = () => {
   }
 
   const fetchCategories = () => {
-    return fetching.promise(api.getCategories({ per_page: 50 })).then((result) => {
-      categoriesList.data = result.data
-      categoriesList.pagination = result.pagination
+    return fetching.promise(api.getAllCategories()).then((result) => {
+      categoriesList.value = result.list
       categoriesTree.value = result.tree
     })
   }
 
-  const createCategory = (category: CategoryType) => {
+  const createCategory = (category: Category) => {
     posting.promise(api.createCategory(category)).then(() => {
       closeModal()
       fetchCategories()
     })
   }
 
-  const updateCategory = (category: CategoryType) => {
+  const updateCategory = (category: Category) => {
     const payload = {
       ...activeEditCategory.value,
       ...category
@@ -74,7 +73,7 @@ export const CategoryPage: React.FC = () => {
     })
   }
 
-  const deleteCategory = (category: CategoryType) => {
+  const deleteCategory = (category: Category) => {
     Modal.confirm({
       title: `确定要删除分类「 ${category.name} 」吗？`,
       content: '删除后不可恢复',
@@ -93,7 +92,7 @@ export const CategoryPage: React.FC = () => {
     <Card
       bordered={false}
       title={i18n.t('page.category.list.title', {
-        total: categoriesList.pagination?.total ?? '-'
+        total: categoriesList.value?.length ?? '-'
       })}
       extra={
         <Button

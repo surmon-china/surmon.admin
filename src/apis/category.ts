@@ -3,10 +3,9 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import type { TreeDataNode } from 'antd'
 import { arrayToTree } from 'performant-array-to-tree'
-import { TreeDataNode } from 'antd'
 import { Category } from '@/constants/category'
-import { ResponsePaginationData, GeneralPaginateQueryParams } from '@/constants/nodepress'
 import nodepress from '@/services/nodepress'
 
 export const CATEGORY_API_PATH = '/category'
@@ -15,22 +14,20 @@ export interface CategoryTree extends Category {
   children?: CategoryTree[]
 }
 
-/** 获取分类列表 */
-export function getCategories(params: GeneralPaginateQueryParams = {}) {
-  return nodepress
-    .get<ResponsePaginationData<Category>>(CATEGORY_API_PATH, { params })
-    .then((response) => ({
-      ...response.result,
-      tree: arrayToTree(response.result.data, {
-        id: '_id',
-        parentId: 'pid',
-        childrenField: 'children',
-        dataField: null
-      }) as CategoryTree[]
-    }))
+/** 获取全部分类列表 */
+export function getAllCategories() {
+  return nodepress.get<Category[]>(`${CATEGORY_API_PATH}/all`).then((response) => ({
+    list: response.result,
+    tree: arrayToTree(response.result, {
+      id: '_id',
+      parentId: 'pid',
+      childrenField: 'children',
+      dataField: null
+    }) as CategoryTree[]
+  }))
 }
 
-/** 获取符合 Antd 的分类树 */
+/** 获取符合 Antd Tree 结构的分类树 */
 export function getAntdTreeByTree(options: {
   tree: CategoryTree[]
   valuer(category: Category): any

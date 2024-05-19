@@ -1,9 +1,9 @@
 import React from 'react'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
-import { Spin, Skeleton, Button, Tree, Typography, Divider, Space } from 'antd'
 import * as Icons from '@ant-design/icons'
-import { getCategories, CategoryTree, getAntdTreeByTree } from '@/apis/category'
+import { Spin, Skeleton, Button, Tree, Typography, Divider, Space } from 'antd'
+import { getAllCategories, CategoryTree, getAntdTreeByTree } from '@/apis/category'
 
 import styles from './style.module.less'
 
@@ -16,7 +16,7 @@ export const CategorySelectTree: React.FC<CategorySelectTreeProps> = (props) => 
   const fetching = useLoading()
   const categories = useRef<CategoryTree[]>([])
   const fetchCategories = () => {
-    fetching.promise(getCategories({ per_page: 50 })).then((result) => {
+    fetching.promise(getAllCategories()).then((result) => {
       categories.value = result.tree
     })
   }

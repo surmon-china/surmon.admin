@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import type { TreeDataNode, ModalProps } from 'antd'
-import { Form, Input, Modal, TreeSelect, Typography, Divider } from 'antd'
+import { Form, Input, Modal, TreeSelect, Typography, Divider, Space } from 'antd'
 import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { Category as CategoryType } from '@/constants/category'
 import { stringToYMD } from '@/transforms/date'
@@ -73,9 +73,11 @@ export const FormModal: React.FC<FormModalProps> = (props) => {
         {props.initData && (
           <>
             <Form.Item label="ID">
-              <Typography.Text copyable={true}>{props.initData.id}</Typography.Text>
-              <Divider type="vertical" />
-              <Typography.Text copyable={true}>{props.initData._id}</Typography.Text>
+              <Space size="small">
+                <Typography.Text copyable={true}>{props.initData.id}</Typography.Text>
+                <Divider type="vertical" />
+                <Typography.Text copyable={true}>{props.initData._id}</Typography.Text>
+              </Space>
             </Form.Item>
             <Form.Item label="创建于">{stringToYMD(props.initData.created_at)}</Form.Item>
             <Form.Item label="最后修改于">{stringToYMD(props.initData.updated_at)}</Form.Item>
