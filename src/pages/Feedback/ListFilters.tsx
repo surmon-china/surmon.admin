@@ -17,9 +17,9 @@ export const DEFAULT_FILTER_PARAMS = {
 
 export type FilterParams = typeof DEFAULT_FILTER_PARAMS
 export const getQueryParams = (params: FilterParams) => ({
+  marked: params.marked ? MarkedState.Yes : void 0,
   tid: params.tid !== SELECT_ALL_VALUE ? params.tid : void 0,
   emotion: params.emotion !== SELECT_ALL_VALUE ? params.emotion : void 0,
-  marked: params.marked ? MarkedState.Yes : void 0,
   sort: params.sort
 })
 

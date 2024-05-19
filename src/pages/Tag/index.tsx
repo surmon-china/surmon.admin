@@ -88,6 +88,7 @@ export const TagPage: React.FC = () => {
       ...activeEditTag.value,
       ...tag
     }
+
     posting.promise(api.updateTag(payload)).then(() => {
       closeModal()
       refreshList()

@@ -3,166 +3,108 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import _ from 'lodash'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {
-  useShallowReactive,
-  useRef,
-  toRaw,
-  onMounted,
-  batchedUpdates,
-  useReactive,
-  useWatch
-} from 'veact'
+import { useShallowReactive, useRef, useWatch, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
-import { Button, Card, Input, Select, Divider, Modal, Space, TreeSelect } from 'antd'
+import { Button, Card, Divider, Modal } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { useTranslation } from '@/i18n'
+import { scrollTo } from '@/services/scroller'
 import { RoutesKey, RoutesPath } from '@/routes'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
-import { SortSelect } from '@/components/common/SortSelect'
 import { ResponsePaginationData } from '@/constants/nodepress'
-import { SortTypeWithHot } from '@/constants/sort'
-import { Tag } from '@/constants/tag'
-import {
-  ArticleId,
-  Article,
-  ArticleOrigin,
-  articleOrigins,
-  ArticlePublic,
-  articlePublics,
-  ArticleLanguage,
-  articleLanguages,
-  articlePublishs,
-  ArticlePublish,
-  getArticlePublish
-} from '@/constants/article'
-import { scrollTo } from '@/services/scroller'
-import { getTags } from '@/apis/tag'
+import { ArticleId, Article, ArticlePublish, getArticlePublish } from '@/constants/article'
 import { getArticles, GetArticleParams, patchArticlesState } from '@/apis/article'
-import { getCategories, getAntdTreeByTree, CategoryTree } from '@/apis/category'
-import { ArticleListTable } from './Table'
-
-import styles from './style.module.less'
-
-type SelectAllType = typeof SELECT_ALL_VALUE
-const SELECT_ALL_VALUE = 'ALL'
-const DEFAULT_FILTER_PARAMS = Object.freeze({
-  sort: SortTypeWithHot.Desc,
-  tag_slug: SELECT_ALL_VALUE as SelectAllType | string,
-  category_slug: SELECT_ALL_VALUE as SelectAllType | string,
-  featured: SELECT_ALL_VALUE as SelectAllType | boolean,
-  lang: SELECT_ALL_VALUE as SelectAllType | ArticleLanguage,
-  public: SELECT_ALL_VALUE as SelectAllType | ArticlePublic,
-  origin: SELECT_ALL_VALUE as SelectAllType | ArticleOrigin,
-  state: SELECT_ALL_VALUE as SelectAllType | ArticlePublish
-})
+import { ListFilters, DEFAULT_FILTER_PARAMS, FilterParams, getQueryParams } from './ListFilters'
+import { TableList } from './TableList'
 
 export const ArticleListPage: React.FC = () => {
   const { i18n } = useTranslation()
   const fetching = useLoading()
-  const article = useShallowReactive<ResponsePaginationData<Article>>({
+  const articles = useShallowReactive<ResponsePaginationData<Article>>({
     data: [],
-    pagination: undefined
+    pagination: void 0
   })
 
-  // 分类
-  const categoryFetching = useLoading()
-  const categoriesTree = useRef<CategoryTree[]>([])
-  const fetchCategories = () => {
-    categoryFetching.promise(getCategories({ per_page: 50 })).then((result) => {
-      categoriesTree.value = result.tree
-    })
-  }
-
-  // 标签
-  const tagFetching = useLoading()
-  const tags = useRef<Tag[]>([])
-  const fetchTags = () => {
-    tagFetching.promise(getTags({ per_page: 50 })).then((result) => {
-      tags.value = result.data
-    })
-  }
-
-  // 过滤参数
-  const serarchKeyword = useRef('')
-  const filterParams = useReactive({ ...DEFAULT_FILTER_PARAMS })
-
-  // 多选
+  // select
   const selectedIds = useRef<string[]>([])
-  const handleSelect = (ids: any[]) => {
-    selectedIds.value = ids
+
+  // filters
+  const searchKeyword = useRef('')
+  const filterParams = useRef<FilterParams>({ ...DEFAULT_FILTER_PARAMS })
+
+  const resetFiltersToTarget = (target: Partial<FilterParams> = {}) => {
+    searchKeyword.value = ''
+    filterParams.value = {
+      ...DEFAULT_FILTER_PARAMS,
+      ...target
+    }
   }
 
-  const fetchData = (params?: GetArticleParams) => {
+  const fetchList = (params?: GetArticleParams) => {
     const getParams: any = {
       ...params,
-      ...filterParams,
-      keyword: Boolean(serarchKeyword.value) ? serarchKeyword.value : undefined
+      ...getQueryParams(filterParams.value),
+      keyword: searchKeyword.value || void 0
     }
-    Object.keys(getParams).forEach((paramKey) => {
-      if (getParams[paramKey] === SELECT_ALL_VALUE) {
-        Reflect.deleteProperty(getParams, paramKey)
-      }
-    })
 
     fetching.promise(getArticles(getParams)).then((result) => {
-      batchedUpdates(() => {
-        article.data = result.data
-        article.pagination = result.pagination
-      })
+      articles.data = result.data
+      articles.pagination = result.pagination
       scrollTo(document.body)
     })
   }
 
-  const resetParamsAndRefresh = () => {
-    serarchKeyword.value = ''
-    if (_.isEqual(toRaw(filterParams), DEFAULT_FILTER_PARAMS)) {
-      fetchData()
-    } else {
-      batchedUpdates(() => {
-        Object.keys(DEFAULT_FILTER_PARAMS).forEach((paramKey) => {
-          // @ts-ignore
-          filterParams[paramKey] = Reflect.get(DEFAULT_FILTER_PARAMS, paramKey)
-        })
-      })
-    }
-  }
-
-  const refreshData = () => {
-    fetchData({
-      page: article.pagination?.current_page,
-      per_page: article.pagination?.per_page
+  const refreshList = () => {
+    fetchList({
+      page: articles.pagination?.current_page,
+      per_page: articles.pagination?.per_page
     })
   }
 
-  const handleStateChange = (articleIds: ArticleId[], state: ArticlePublish) => {
+  const updateArticleState = (_article: Article, state: ArticlePublish) => {
+    const targetState = getArticlePublish(state).name
     Modal.confirm({
-      title: `确定要将 ${articleIds.length} 个文章更新为「 ${getArticlePublish(state).name} 」状态吗？`,
-      content: '操作不可撤销',
+      title: `确定要将此文章更新为「 ${targetState} 」状态吗？`,
+      content: `《${_article.title}》`,
       centered: true,
-      onOk() {
-        return patchArticlesState(articleIds, state).then(() => {
-          refreshData()
+      onOk: () => {
+        return patchArticlesState([_article._id!], state).then(() => {
+          refreshList()
         })
       }
     })
   }
 
-  useWatch(filterParams, () => fetchData())
+  const updateArticlesState = (articleIds: ArticleId[], state: ArticlePublish) => {
+    const targetState = getArticlePublish(state).name
+    Modal.confirm({
+      title: `确定要将 ${articleIds.length} 个文章更新为「 ${targetState} 」状态吗？`,
+      content: '请确认操作',
+      centered: true,
+      onOk: () => {
+        return patchArticlesState(articleIds, state).then(() => {
+          refreshList()
+        })
+      }
+    })
+  }
+
+  useWatch(
+    () => filterParams.value,
+    () => fetchList(),
+    { deep: true }
+  )
 
   onMounted(() => {
-    fetchData()
-    fetchCategories()
-    fetchTags()
+    fetchList()
   })
 
   return (
     <Card
       bordered={false}
-      className={styles.articleList}
-      title={i18n.t('page.article.list.title', { total: article.pagination?.total ?? '-' })}
+      title={i18n.t('page.article.list.title', { total: articles.pagination?.total ?? '-' })}
       extra={
         <Link to={RoutesPath[RoutesKey.ArticlePost]}>
           <Button type="primary" size="small" icon={<Icons.EditOutlined />}>
@@ -171,175 +113,15 @@ export const ArticleListPage: React.FC = () => {
         </Link>
       }
     >
-      <Space className={styles.toolbar} align="center" wrap>
-        <Space direction="vertical">
-          <Space wrap>
-            <Button
-              type={filterParams.featured === true ? 'primary' : 'default'}
-              icon={
-                filterParams.featured === true ? <Icons.StarFilled /> : <Icons.StarOutlined />
-              }
-              onClick={() => {
-                filterParams.featured = filterParams.featured === true ? SELECT_ALL_VALUE : true
-              }}
-            >
-              {i18n.t('page.article.list.filter.featured')}
-            </Button>
-            <Select
-              className={styles.select}
-              loading={fetching.state.value}
-              value={filterParams.state}
-              onChange={(state) => {
-                filterParams.state = state
-              }}
-              options={[
-                { label: '全部状态', value: SELECT_ALL_VALUE },
-                ...articlePublishs.map((state) => {
-                  return {
-                    value: state.id,
-                    label: (
-                      <Space>
-                        {state.icon}
-                        {state.name}
-                      </Space>
-                    )
-                  }
-                })
-              ]}
-            />
-            <Select
-              className={styles.select}
-              loading={fetching.state.value}
-              value={filterParams.public}
-              onChange={(state) => {
-                filterParams.public = state
-              }}
-              options={[
-                { label: '全部可见', value: SELECT_ALL_VALUE },
-                ...articlePublics.map((state) => {
-                  return {
-                    value: state.id,
-                    label: (
-                      <Space>
-                        {state.icon}
-                        {state.name}
-                      </Space>
-                    )
-                  }
-                })
-              ]}
-            />
-            <Select
-              className={styles.select}
-              loading={fetching.state.value}
-              value={filterParams.origin}
-              onChange={(state) => {
-                filterParams.origin = state
-              }}
-              options={[
-                { label: '全部来源', value: SELECT_ALL_VALUE },
-                ...articleOrigins.map((state) => {
-                  return {
-                    value: state.id,
-                    label: (
-                      <Space>
-                        {state.icon}
-                        {state.name}
-                      </Space>
-                    )
-                  }
-                })
-              ]}
-            />
-            <Select
-              className={styles.select}
-              loading={fetching.state.value}
-              value={filterParams.lang}
-              onChange={(state) => {
-                filterParams.lang = state
-              }}
-              options={[
-                { label: '全部语言', value: SELECT_ALL_VALUE },
-                ...articleLanguages.map((state) => {
-                  return {
-                    value: state.id,
-                    label: (
-                      <Space>
-                        {state.icon}
-                        {state.name}
-                      </Space>
-                    )
-                  }
-                })
-              ]}
-            />
-            <SortSelect
-              className={styles.select}
-              loading={fetching.state.value}
-              withHot={true}
-              value={filterParams.sort}
-              onChange={(sort) => {
-                filterParams.sort = sort
-              }}
-            />
-            <Select
-              className={styles.tagSelect}
-              loading={tagFetching.state.value}
-              value={filterParams.tag_slug}
-              onChange={(slug) => {
-                filterParams.tag_slug = slug
-              }}
-              options={[
-                { label: '全部标签', value: SELECT_ALL_VALUE },
-                ...tags.value.map((tag) => ({
-                  value: tag.slug,
-                  label: `${tag.name} (${tag.article_count})`
-                }))
-              ]}
-            />
-            <TreeSelect
-              placeholder="选择父分类"
-              treeDefaultExpandAll={true}
-              className={styles.categoriesSelect}
-              loading={categoryFetching.state.value}
-              value={filterParams.category_slug}
-              onChange={(slug) => {
-                filterParams.category_slug = slug
-              }}
-              treeData={[
-                {
-                  label: '全部分类',
-                  key: SELECT_ALL_VALUE,
-                  value: SELECT_ALL_VALUE
-                },
-                ...getAntdTreeByTree({
-                  tree: categoriesTree.value,
-                  valuer: (c) => c.slug
-                })
-              ]}
-            />
-          </Space>
-          <Space wrap>
-            <Input.Search
-              className={styles.search}
-              placeholder={i18n.t('page.article.list.filter.search')}
-              loading={fetching.state.value}
-              onSearch={() => fetchData()}
-              value={serarchKeyword.value}
-              onChange={(event) => {
-                serarchKeyword.value = event.target.value
-              }}
-            />
-            <Button
-              icon={<Icons.ReloadOutlined />}
-              loading={fetching.state.value}
-              onClick={resetParamsAndRefresh}
-            >
-              {i18n.t('common.list.filter.refresh_with_reset')}
-            </Button>
-          </Space>
-        </Space>
-        <Space>
+      <ListFilters
+        loading={fetching.state.value}
+        keyword={searchKeyword.value}
+        onKeywordChange={(value) => (searchKeyword.value = value)}
+        onKeywordSearch={() => fetchList()}
+        params={filterParams.value}
+        onParamsChange={(value) => Object.assign(filterParams.value, value)}
+        onResetRefresh={() => resetFiltersToTarget({})}
+        extra={
           <DropdownMenu
             text="批量操作"
             disabled={!selectedIds.value.length}
@@ -347,31 +129,33 @@ export const ArticleListPage: React.FC = () => {
               {
                 label: '退为草稿',
                 icon: <Icons.RollbackOutlined />,
-                onClick: () => handleStateChange(selectedIds.value, ArticlePublish.Draft)
+                onClick: () => updateArticlesState(selectedIds.value, ArticlePublish.Draft)
               },
               {
                 label: '直接发布',
                 icon: <Icons.CheckOutlined />,
-                onClick: () => handleStateChange(selectedIds.value, ArticlePublish.Published)
+                onClick: () => updateArticlesState(selectedIds.value, ArticlePublish.Published)
               },
               {
                 label: '移回收站',
                 icon: <Icons.DeleteOutlined />,
-                onClick: () => handleStateChange(selectedIds.value, ArticlePublish.Recycle)
+                onClick: () => updateArticlesState(selectedIds.value, ArticlePublish.Recycle)
               }
             ]}
           />
-        </Space>
-      </Space>
+        }
+      />
       <Divider />
-      <ArticleListTable
+      <TableList
         loading={fetching.state.value}
+        data={articles.data}
+        pagination={articles.pagination!}
         selectedIds={selectedIds.value}
-        onSelecte={handleSelect}
-        data={article.data}
-        pagination={article.pagination!}
-        onUpdateState={(article, state) => handleStateChange([article._id!], state)}
-        onPaginate={(page, pageSize) => fetchData({ page, per_page: pageSize })}
+        onSelect={(ids) => (selectedIds.value = ids)}
+        onPaginate={(page, pageSize) => fetchList({ page, per_page: pageSize })}
+        onUpdateState={(article, state) => updateArticleState(article, state)}
+        onClickCategory={({ slug }) => resetFiltersToTarget({ category_slug: slug })}
+        onClickTag={({ slug }) => resetFiltersToTarget({ tag_slug: slug })}
       />
     </Card>
   )

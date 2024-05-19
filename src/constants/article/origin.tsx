@@ -18,19 +18,19 @@ export const articleOrigins = [
     id: ArticleOrigin.Original,
     name: '原创',
     icon: <Icons.EditOutlined />,
-    color: 'green'
+    color: 'default'
   },
   {
     id: ArticleOrigin.Reprint,
     name: '转载',
     icon: <Icons.CopyOutlined />,
-    color: 'red'
+    color: 'default'
   },
   {
     id: ArticleOrigin.Hybrid,
     name: '衍生',
     icon: <Icons.PullRequestOutlined />,
-    color: 'orange'
+    color: 'default'
   }
 ]
 

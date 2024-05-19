@@ -1,31 +1,31 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Table, Button, Typography, Card, Tag, Space } from 'antd'
+import { Table, Button, Typography, Badge, Card, Tag, Space, Divider } from 'antd'
 import * as Icons from '@ant-design/icons'
+import { APP_PRIMARY_COLOR } from '@/config'
 import { RoutesPather } from '@/routes'
 import { Pagination } from '@/constants/nodepress'
-import {
-  Article,
-  getArticleOrigin,
-  getArticlePublic,
-  ArticlePublish,
-  getArticlePublish
-} from '@/constants/article'
+import { Tag as TagType } from '@/constants/tag'
+import { Category } from '@/constants/category'
+import { Article, ArticlePublish } from '@/constants/article'
+import { getArticleOrigin, getArticlePublic, getArticlePublish } from '@/constants/article'
 import { getBlogArticleUrl } from '@/transforms/url'
 import { numberToKilo } from '@/transforms/number'
 import { stringToYMD } from '@/transforms/date'
 
-export interface ArticleListTableProps {
+export interface TableListProps {
   loading: boolean
   data: Article[]
   pagination: Pagination
   selectedIds: string[]
-  onSelecte(ids: any[]): any
-  onPaginate(page: number, pageSize?: number): any
-  onUpdateState(article: Article, state: ArticlePublish): any
+  onSelect(ids: any[]): void
+  onPaginate(page: number, pageSize?: number): void
+  onUpdateState(article: Article, state: ArticlePublish): void
+  onClickCategory(category: Category): void
+  onClickTag(tag: TagType): void
 }
 
-export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
+export const TableList: React.FC<TableListProps> = (props) => {
   return (
     <Table<Article>
       rowKey={(aticle) => aticle._id!}
@@ -33,7 +33,7 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
       dataSource={props.data}
       rowSelection={{
         selectedRowKeys: props.selectedIds,
-        onChange: props.onSelecte
+        onChange: props.onSelect
       }}
       pagination={{
         pageSizeOptions: ['10', '20', '50'],
@@ -55,57 +55,58 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           width: 360,
           dataIndex: 'content',
           render: (_, article) => (
-            <Card
-              size="small"
-              bordered={false}
-              styles={{
-                body: { minHeight: '108px' }
-              }}
-              style={{
-                margin: 'var(--app-padding-xs) 0',
-                background: `linear-gradient(
+            <Badge.Ribbon
+              color={article.featured ? APP_PRIMARY_COLOR : 'transparent'}
+              text={article.featured ? '精选' : null}
+            >
+              <Card
+                size="small"
+                bordered={false}
+                styles={{
+                  body: { minHeight: '108px' }
+                }}
+                style={{
+                  margin: 'var(--app-padding-xs) 0',
+                  background: `linear-gradient(
                   to right bottom,
                   rgba(0, 0, 0, 0.8),
                   rgba(0, 0, 0, 0.4)
                 ),
                 url("${article.thumbnail}") center / cover`
-              }}
-            >
-              <Typography.Title
-                level={5}
-                style={{ marginTop: 'var(--app-padding-xs)', color: 'white' }}
+                }}
               >
-                {article.title}
-              </Typography.Title>
-              <Typography.Paragraph
-                style={{ color: 'rgba(255, 255, 255, 0.65)' }}
-                ellipsis={{ rows: 2, expandable: true }}
-              >
-                {article.description}
-              </Typography.Paragraph>
-            </Card>
+                <Typography.Title
+                  level={5}
+                  style={{ marginTop: 'var(--app-padding-xs)', color: 'white' }}
+                >
+                  {article.title}
+                </Typography.Title>
+                <Typography.Paragraph
+                  style={{ color: 'rgba(255, 255, 255, 0.65)' }}
+                  ellipsis={{ rows: 2, expandable: true }}
+                >
+                  {article.description}
+                </Typography.Paragraph>
+              </Card>
+            </Badge.Ribbon>
           )
         },
         {
-          title: '归类',
+          title: '标签',
           width: 130,
-          dataIndex: 'created_at',
           render(_, article) {
             return (
-              <Space direction="vertical">
-                {article.categories.map((category) => (
-                  <Space size="small" key={category._id}>
-                    <Icons.FolderOpenOutlined />
-                    {category.name}
-                  </Space>
+              <Space direction="vertical" size="small" wrap>
+                {article.tags.map((tag) => (
+                  <Tag
+                    key={tag._id}
+                    style={{ cursor: 'pointer' }}
+                    icon={<Icons.TagOutlined />}
+                    onClick={() => props.onClickTag(tag)}
+                  >
+                    {tag.name}
+                  </Tag>
                 ))}
-                <Space size="small" wrap>
-                  {article.tags.map((tag) => (
-                    <Tag icon={<Icons.TagOutlined />} key={tag._id}>
-                      {tag.name}
-                    </Tag>
-                  ))}
-                </Space>
               </Space>
             )
           }
@@ -134,21 +135,32 @@ export const ArticleListTable: React.FC<ArticleListTableProps> = (props) => {
           }
         },
         {
-          title: '更新周期',
-          width: 230,
+          title: '分类 / 更新周期',
+          width: 200,
           dataIndex: 'created_at',
           render(_, article) {
             return (
               <Space direction="vertical">
-                <span>发布：{stringToYMD(article.created_at!)}</span>
-                <span>更新：{stringToYMD(article.updated_at!)}</span>
+                <div>
+                  分类：
+                  {article.categories.map((category, index) => (
+                    <span key={index}>
+                      <Typography.Link onClick={() => props.onClickCategory(category)}>
+                        {category.name}
+                      </Typography.Link>
+                      {article.categories[index + 1] ? <Divider type="vertical" /> : ''}
+                    </span>
+                  ))}
+                </div>
+                <div>发布：{stringToYMD(article.created_at!)}</div>
+                <div>更新：{stringToYMD(article.updated_at!)}</div>
               </Space>
             )
           }
         },
         {
           title: '状态',
-          width: 120,
+          width: 100,
           dataIndex: 'state',
           render: (_, article) => {
             return (

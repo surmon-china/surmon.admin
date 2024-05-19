@@ -13,6 +13,7 @@ export const ARTICLE_API_PATH = '/article'
 
 /** 获取文章参数 */
 export interface GetArticleParams extends GeneralPaginateQueryParams {
+  featured?: boolean
   sort?: SortTypeWithHot
   state?: ArticlePublish
   public?: ArticlePublic
