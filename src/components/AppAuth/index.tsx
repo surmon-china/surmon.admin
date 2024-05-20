@@ -40,7 +40,7 @@ export const AppAuth: React.FC<React.PropsWithChildren> = (props) => {
       setVerifying(true)
       console.debug('Token verifying...')
       // 1. Verify local Token
-      await (isTokenValid() ? Promise.resolve() : Promise.reject('本地 Token 无效'))
+      await (isTokenValid() ? Promise.resolve() : Promise.reject('The local token is invalid'))
       // 2. Verify Token form NodePress
       await checkTokenValidity()
       // Verification successful
