@@ -1,18 +1,18 @@
 {
   "status": "success",
-  "message": "获取标签成功",
+  "message": "Get tags succeeded",
   "result": {
     "data": [
       {
         "_id": "5b6c8c63675aa44f25b6ca19",
-        "name": "数学",
-        "slug": "math",
-        "description": "就是数学",
-        "extends": [{ "_id": "5b6c8c63675aa44f25b6ca1a", "name": "icon", "value": "icon-math" }],
+        "name": "修行",
+        "slug": "cultivation",
+        "description": "缘起性空",
+        "extends": [{ "_id": "5b6c8c63675aa44f25b6ca1a", "name": "icon", "value": "icon-wan" }],
         "created_at": "2018-08-09T18:48:03.736Z",
         "id": 10,
         "updated_at": "2018-08-10T20:11:12.609Z",
-        "article_count": 2
+        "article_count": 34
       },
       {
         "_id": "59e25a9bf9120a4bb4800912",

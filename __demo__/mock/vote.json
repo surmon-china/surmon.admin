@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "message": "Get votes succeed",
+  "message": "Get votes succeeded",
   "result": {
     "data": [
       {

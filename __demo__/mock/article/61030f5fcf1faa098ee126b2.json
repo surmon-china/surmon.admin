@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "message": "获取文章详情成功",
+  "message": "Get article detail succeeded",
   "result": {
     "keywords": ["旅途日记", "西部之旅"],
     "state": 0,
