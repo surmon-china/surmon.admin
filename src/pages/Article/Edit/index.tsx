@@ -7,14 +7,14 @@ import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
-import { Modal, Button, Space, Divider, message, Typography } from 'antd'
+import { Modal, Button, Space, Divider, message, Typography, Tooltip } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { RoutesKey, RoutesPath, RoutesPather } from '@/routes'
 import { getUnEditorCache } from '@/components/common/UniversalEditor'
 import * as api from '@/apis/article'
 import { Article } from '@/constants/article'
 import { scrollTo } from '@/services/scroller'
-import { numberToKilo } from '@/transforms/number'
+import { numberToKilo, numberSplit } from '@/transforms/number'
 import { getBlogArticleUrl } from '@/transforms/url'
 import { ArticleEditor } from '../Editor'
 import { VoteDrawer } from './VoteDrawer'
@@ -121,10 +121,12 @@ export const ArticleEditPage: React.FC = () => {
         ]}
         mainCardExtra={
           <Space size="small" wrap>
-            <Button.Group size="small">
-              <Button icon={<Icons.EyeOutlined />} loading={fetching.state.value} disabled={true}>
-                {numberToKilo(article.value?.meta?.views ?? 0)} 阅读
-              </Button>
+            <Space.Compact size="small">
+              <Tooltip title={numberSplit(article.value?.meta?.views ?? 0)}>
+                <Button icon={<Icons.EyeOutlined />} loading={fetching.state.value}>
+                  {numberToKilo(article.value?.meta?.views ?? 0)} 阅读
+                </Button>
+              </Tooltip>
               <Button
                 icon={<Icons.HeartOutlined />}
                 loading={fetching.state.value}
@@ -141,19 +143,21 @@ export const ArticleEditPage: React.FC = () => {
               >
                 {article.value?.meta?.comments ?? ''} 评论
               </Button>
-            </Button.Group>
+            </Space.Compact>
             <Divider type="vertical" />
-            <Button
-              size="small"
-              type="dashed"
-              target="_blank"
-              icon={<Icons.ExportOutlined />}
-              loading={fetching.state.value}
-              disabled={fetching.state.value}
-              href={getBlogArticleUrl(article.value?.id!)}
-            >
-              打开
-            </Button>
+            <Tooltip title={getBlogArticleUrl(article.value?.id!)}>
+              <Button
+                size="small"
+                type="dashed"
+                target="_blank"
+                icon={<Icons.ExportOutlined />}
+                loading={fetching.state.value}
+                disabled={fetching.state.value}
+                href={getBlogArticleUrl(article.value?.id!)}
+              >
+                打开
+              </Button>
+            </Tooltip>
             <Divider type="vertical" />
             <Button
               type="dashed"

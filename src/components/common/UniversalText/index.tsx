@@ -13,6 +13,8 @@ export interface UniversalTextProps {
   type?: BaseType
   className?: string
   copyable?: boolean
+  strong?: boolean
+  small?: boolean
   prefix?: React.ReactNode
   suffix?: React.ReactNode
   placeholder?: PlaceholderProps['placeholder']
@@ -24,8 +26,8 @@ export const UniversalText: React.FC<UniversalTextProps> = (props) => {
       {props.prefix}
       <Placeholder<React.ReactNode> data={props.text} placeholder={props.placeholder}>
         {(text) => (
-          <Typography.Text copyable={props.copyable} type={props.type}>
-            {text}
+          <Typography.Text copyable={props.copyable} type={props.type} strong={props.strong}>
+            {props.small ? <small>{text}</small> : text}
           </Typography.Text>
         )}
       </Placeholder>

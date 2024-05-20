@@ -7,7 +7,7 @@ import { CommentAvatar } from '@/pages/Comment/Avatar'
 import { getCommentState } from '@/constants/comment'
 import { CommentTree } from '@/apis/comment'
 import { stringToYMD } from '@/transforms/date'
-import { parseBrowser, parseOS, parseDevice } from '@/transforms/ua'
+import { parseBrowser, parseOS } from '@/transforms/ua'
 
 export interface CommentTreeListProps {
   comments: CommentTree[]
@@ -47,11 +47,6 @@ export const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
                     <IPLocation key="ip-location" data={comment.ip_location} />
                   </Typography.Text>
                   <Divider type="vertical" />
-                  <Typography.Text key="time" type={comment.likes ? 'danger' : 'secondary'}>
-                    {comment.likes ? <Icons.HeartFilled /> : <Icons.HeartOutlined />}{' '}
-                    {comment.likes} 喜欢
-                  </Typography.Text>
-                  <Divider type="vertical" />
                   <Typography.Text type="secondary">
                     {stringToYMD(comment.created_at!)}
                   </Typography.Text>
@@ -65,20 +60,25 @@ export const CommentTreeList: React.FC<CommentTreeListProps> = (props) => {
               </Flex>
               <Typography.Paragraph style={{ margin: 0 }}>{comment.content}</Typography.Paragraph>
               <Space>
+                <Typography.Text type={comment.likes > 0 ? 'danger' : 'secondary'}>
+                  {comment.likes > 0 ? <Icons.LikeFilled /> : <Icons.LikeOutlined />}{' '}
+                  {comment.likes}
+                </Typography.Text>
+                <Typography.Text type={comment.dislikes > 0 ? 'warning' : 'secondary'}>
+                  {comment.dislikes > 0 ? <Icons.DislikeFilled /> : <Icons.DislikeOutlined />}{' '}
+                  {comment.dislikes}
+                </Typography.Text>
                 <UniversalText
                   type="secondary"
                   placeholder="未知浏览器"
-                  text={<small>{parseBrowser(comment.agent!)}</small>}
+                  small={true}
+                  text={parseBrowser(comment.agent!)}
                 />
                 <UniversalText
                   type="secondary"
                   placeholder="未知系统"
-                  text={<small>{parseOS(comment.agent!)}</small>}
-                />
-                <UniversalText
-                  type="secondary"
-                  placeholder="未知设备"
-                  text={<small>{parseDevice(comment.agent!)}</small>}
+                  small={true}
+                  text={parseOS(comment.agent!)}
                 />
               </Space>
               {comment.children?.length ? (
