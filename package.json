@@ -1,11 +1,11 @@
 {
-  "name": "veact-admin",
-  "version": "3.0.0",
+  "name": "surmon.admin",
+  "version": "3.0.1",
   "author": "Surmon",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/surmon-china/veact-admin.git"
+    "url": "https://github.com/surmon-china/surmon.admin.git"
   },
   "scripts": {
     "dev": "vite",

@@ -8,7 +8,7 @@ import { Language } from '@/contexts/Locale'
 
 export const APP_TITLE = 'Surmon.me'
 export const BLOG_URL = `https://surmon.me`
-export const GITHUB_REPO_URL = 'https://github.com/surmon-china/veact-admin'
+export const GITHUB_REPO_URL = 'https://github.com/surmon-china/surmon.admin'
 
 export const APP_AUTH_HEADER_KEY = 'Authorization'
 export const APP_CONTENT_SPACE_SIZE: SizeType = 'middle'

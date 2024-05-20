@@ -1,6 +1,6 @@
 // JSON actions
 const fetchJSON = (filePath) => {
-  return fetch(`/veact-admin/__demo__/mock/${filePath}.json`).then((response) => response.json())
+  return fetch(`/surmon.admin/__demo__/mock/${filePath}.json`).then((response) => response.json())
 }
 
 // first fetch cache data map

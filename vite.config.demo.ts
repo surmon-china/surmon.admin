@@ -1,6 +1,6 @@
 import { UserConfig } from 'vite'
 
-const DEMO_BASE_PATH = '/veact-admin/'
+const DEMO_BASE_PATH = '/surmon.admin/'
 const GOOGLE_ANALYTICS_MEASUREMENT_ID = 'G-WNSSKPKKMG'
 const GOOGLE_ADSENSE_CLIENT_ID = 'ca-pub-4710915636313788'
 
