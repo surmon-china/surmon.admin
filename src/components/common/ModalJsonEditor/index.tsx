@@ -33,16 +33,18 @@ export function openJSONEditor(options: ModalJsonEditorOptions) {
     closable: true,
     okText: i18n.t('component.modal_json_editor.save'),
     content: (
-      <EditorComponent
-        value={data}
-        onChange={(value) => (data = value)}
-        placeholder={i18n.t('component.modal_json_editor.placeholder')}
-        defaultLanguage={UnEditorLanguage.JSON}
-        disabledToolbar={true}
-        disabledStatesBar={true}
-        disabledCacheDraft={true}
-        rows={24}
-      />
+      <div style={{ display: 'grid', width: '100%' }}>
+        <EditorComponent
+          value={data}
+          onChange={(value) => (data = value)}
+          placeholder={i18n.t('component.modal_json_editor.placeholder')}
+          defaultLanguage={UnEditorLanguage.JSON}
+          disabledToolbar={true}
+          disabledStatesBar={true}
+          disabledCacheDraft={true}
+          rows={24}
+        />
+      </div>
     ),
     onOk() {
       try {

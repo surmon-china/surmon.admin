@@ -137,7 +137,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
         },
         {
           title: '分类 / 更新周期',
-          width: 200,
+          width: 220,
           dataIndex: 'created_at',
           render(_, article) {
             return (
