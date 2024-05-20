@@ -23,9 +23,9 @@ window.localStorage.setItem('id_token', 'veact_admin.mock.token')
 console.info('mock axios')
 window.__axiosAdapter = (config) => {
   console.debug('mock request:', config)
-  // 1. 仅处理所有 Get 请求
-  // 2. Auth 相关的必要 Post 请求除外
-  // 3. 所有请求返回错误，提示：Demo 站点无法操作数据
+  // 1. Only handle all GET requests.
+  // 2. Except necessary POST requests related to authentication.
+  // 3. Return an error for all requests with a DEMO error message.
   const handlers = {
     '/auth/login': {
       post: () => ensureJSON('auth/login')
@@ -54,11 +54,14 @@ window.__axiosAdapter = (config) => {
     '/announcement': {
       get: () => ensureJSON('announcement')
     },
-    '/category': {
-      get: () => ensureJSON('category')
+    '/category/all': {
+      get: () => ensureJSON('category/all')
     },
     '/tag': {
       get: () => ensureJSON('tag')
+    },
+    '/tag/all': {
+      get: () => ensureJSON('tag/all')
     },
     '/comment': {
       get: () => ensureJSON('comment/list')
@@ -109,8 +112,8 @@ window.__axiosAdapter = (config) => {
         },
         data: {
           status: 'error',
-          message: '操作失败',
-          error: 'Demo 站点不支持此数据操作',
+          message: 'API request error',
+          error: 'The demo site cannot operate this data',
           result: null
         }
       })
