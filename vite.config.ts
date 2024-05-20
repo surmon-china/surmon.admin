@@ -12,13 +12,6 @@ const config: UserConfig = {
       '@': path.resolve(__dirname, 'src')
     }
   },
-  css: {
-    preprocessorOptions: {
-      less: {
-        javascriptEnabled: true
-      }
-    }
-  },
   server: {
     open: true
   },
