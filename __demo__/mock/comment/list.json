@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "message": "获取评论列表成功",
+  "message": "Get comments succeeded",
   "result": {
     "data": [
       {

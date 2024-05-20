@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "message": "获取文章详情成功",
+  "message": "Get article detail succeeded",
   "result": {
     "keywords": ["数据结构与算法入门", "javascript算法", "数据结构入门学习"],
     "state": 1,

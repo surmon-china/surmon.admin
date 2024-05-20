@@ -1,8 +1,24 @@
 {
   "status": "success",
-  "message": "获取公告成功",
+  "message": "Get announcements succeeded",
   "result": {
     "data": [
+      {
+        "state": 0,
+        "_id": "60c2cf0dce71cd0b743fb001",
+        "content": "应无所住，而生其心",
+        "created_at": "2024-03-14T10:04:45.085Z",
+        "updated_at": "2024-03-26T18:38:24.704Z",
+        "id": 8
+      },
+      {
+        "state": 0,
+        "_id": "60c2cf0dce41cd0b743fb001",
+        "content": "一切有为法，如梦幻泡影",
+        "created_at": "2023-07-14T10:04:45.085Z",
+        "updated_at": "2023-07-26T18:38:24.704Z",
+        "id": 7
+      },
       {
         "state": 0,
         "_id": "60c2cf0dce41cd0b74cfb001",
