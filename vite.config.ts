@@ -26,16 +26,12 @@ const config: UserConfig = {
     rollupOptions: {
       output: {
         manualChunks(id) {
-          const incs = (ds: string[]) => ds.some((d) => id.includes(`node_modules/${d}`))
-          // TODO: 测试 Codemirror 如果打包后不大，且自动分包正常的话，则移除这一段
-          if (id.includes('node_modules/monaco-editor')) {
-            return 'monaco-editor'
-          } else if (
-            incs(['axios', 'lodash', 'marked', 'marked-highlight', 'dayjs', 'highlight.js'])
-          ) {
-            return 'basic'
-          } else if (id.includes('node_modules')) {
-            return 'vendor'
+          if (id.includes('node_modules/antd') || id.includes('@ant-design/icons')) {
+            return 'antd'
+          } else if (id.includes('node_modules/@codemirror')) {
+            return 'codemirror'
+          } else if (id.includes('node_modules/echarts')) {
+            return 'echarts'
           }
         }
       }
