@@ -137,7 +137,7 @@ export const CommentPage: React.FC = () => {
   const updateCommentsState = (comments: CommentType[], state: CommentState) => {
     Modal.confirm({
       title: `确定要将 ${comments.length} 个评论更新为「 ${getCommentState(state).name} 」状态吗？`,
-      content: '操作不可撤销',
+      content: '请谨慎操作',
       centered: true,
       onOk: () => {
         return api
