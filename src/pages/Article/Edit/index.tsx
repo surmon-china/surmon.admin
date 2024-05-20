@@ -7,7 +7,7 @@ import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
-import { Modal, Button, Space, Divider, message } from 'antd'
+import { Modal, Button, Space, Divider, message, Typography } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { RoutesKey, RoutesPath, RoutesPather } from '@/routes'
 import { getUnEditorCache } from '@/components/common/UniversalEditor'
@@ -17,6 +17,7 @@ import { scrollTo } from '@/services/scroller'
 import { numberToKilo } from '@/transforms/number'
 import { getBlogArticleUrl } from '@/transforms/url'
 import { ArticleEditor } from '../Editor'
+import { VoteDrawer } from './VoteDrawer'
 import { CommentDrawer } from './CommentDrawer'
 import { CommentTreeList } from './CommentTreeList'
 
@@ -28,14 +29,9 @@ export const ArticleEditPage: React.FC = () => {
   const updating = useLoading()
   const article = useRef<Article | null>(null)
 
-  // drawer
+  // drawers
   const isCommentDrawerOpen = useRef(false)
-  const openCommentDrawer = () => {
-    isCommentDrawerOpen.value = true
-  }
-  const closeCommentDrawer = () => {
-    isCommentDrawerOpen.value = false
-  }
+  const isVoteDrawerOpen = useRef(false)
 
   const initFetchArticleWithCache = async () => {
     try {
@@ -111,7 +107,19 @@ export const ArticleEditPage: React.FC = () => {
         loading={fetching.state.value}
         submitting={updating.state.value}
         onSubmit={(_article) => updateArticle(_article)}
-        extra={
+        mainFormExtraItems={[
+          {
+            label: 'ID',
+            content: (
+              <Space size="small">
+                <Typography.Text>{article.value?.id ?? '-'}</Typography.Text>
+                <Divider type="vertical" />
+                <Typography.Text>{article.value?._id ?? '-'}</Typography.Text>
+              </Space>
+            )
+          }
+        ]}
+        mainCardExtra={
           <Space size="small" wrap>
             <Button.Group size="small">
               <Button icon={<Icons.EyeOutlined />} loading={fetching.state.value} disabled={true}>
@@ -120,15 +128,16 @@ export const ArticleEditPage: React.FC = () => {
               <Button
                 icon={<Icons.HeartOutlined />}
                 loading={fetching.state.value}
-                disabled={true}
+                disabled={fetching.state.value}
+                onClick={() => (isVoteDrawerOpen.value = true)}
               >
-                {numberToKilo(article.value?.meta?.likes ?? 0)} 喜欢
+                {article.value?.meta?.likes ?? ''} 喜欢
               </Button>
               <Button
                 icon={<Icons.CommentOutlined />}
                 disabled={fetching.state.value}
                 loading={fetching.state.value}
-                onClick={openCommentDrawer}
+                onClick={() => (isCommentDrawerOpen.value = true)}
               >
                 {article.value?.meta?.comments ?? ''} 评论
               </Button>
@@ -161,17 +170,26 @@ export const ArticleEditPage: React.FC = () => {
         }
       />
       {article.value && (
-        <CommentDrawer
-          width="68rem"
-          open={isCommentDrawerOpen.value}
-          commentCount={article.value.meta!.comments}
-          articleId={article.value.id!}
-          renderTreeList={({ comments, loading }) => (
-            <CommentTreeList comments={comments} loading={loading} />
-          )}
-          onClose={closeCommentDrawer}
-          onNavigate={navigateToCommentList}
-        />
+        <>
+          <VoteDrawer
+            width="48rem"
+            open={isVoteDrawerOpen.value}
+            likeCount={article.value.meta!.likes}
+            articleId={article.value.id!}
+            onClose={() => (isVoteDrawerOpen.value = false)}
+          />
+          <CommentDrawer
+            width="68rem"
+            open={isCommentDrawerOpen.value}
+            commentCount={article.value.meta!.comments}
+            articleId={article.value.id!}
+            renderTreeList={({ comments, loading }) => (
+              <CommentTreeList comments={comments} loading={loading} />
+            )}
+            onClose={() => (isCommentDrawerOpen.value = false)}
+            onNavigate={navigateToCommentList}
+          />
+        </>
       )}
     </>
   )

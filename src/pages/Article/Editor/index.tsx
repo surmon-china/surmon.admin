@@ -17,7 +17,7 @@ import { useLocale } from '@/contexts/Locale'
 import { useTheme } from '@/contexts/Theme'
 import { useTranslation } from '@/i18n'
 import { scrollTo } from '@/services/scroller'
-import { MainForm } from './MainForm'
+import { MainForm, MainFormExtraItem } from './MainForm'
 import { CategoriesForm } from './CategoriesForm'
 import { StatesForm } from './StatesForm'
 
@@ -53,7 +53,8 @@ export interface ArticleEditorProps {
   article: Article | null
   editorCacheId?: string
   onSubmit(article: Article): void
-  extra?: React.ReactNode
+  mainCardExtra?: React.ReactNode
+  mainFormExtraItems?: MainFormExtraItem[]
 }
 
 export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
@@ -118,9 +119,17 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
   return (
     <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
       <Col xs={24} lg={17}>
-        <Card bordered={false} title={i18n.t('page.article.editor.content')} extra={props.extra}>
+        <Card
+          bordered={false}
+          title={i18n.t('page.article.editor.content')}
+          extra={props.mainCardExtra}
+        >
           <Spin spinning={props.loading}>
-            <MainForm form={mainForm} editorCacheId={props.editorCacheId} />
+            <MainForm
+              form={mainForm}
+              extraItems={props.mainFormExtraItems}
+              editorCacheId={props.editorCacheId}
+            />
           </Spin>
         </Card>
       </Col>

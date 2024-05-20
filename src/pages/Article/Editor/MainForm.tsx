@@ -1,16 +1,23 @@
 import React from 'react'
 import dayjs from 'dayjs'
 import { useRef } from 'veact'
-import { Button, Form, Select, Input, FormInstance } from 'antd'
+import { Button, Form, Select, Input } from 'antd'
+import type { FormInstance } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { UniversalEditor, UnEditorLanguage } from '@/components/common/UniversalEditor'
-import { BLOG_ARTICLE_URL_PREFIX } from '@/transforms/url'
 import { MultipleUploaderModal } from './components/MultipleUploaderModal'
+import { BLOG_ARTICLE_URL_PREFIX } from '@/transforms/url'
 import { TagSelect } from './components/TagSelect'
 import type { MainFormModel } from '.'
 
+export interface MainFormExtraItem {
+  label: string
+  content: React.ReactNode
+}
+
 export interface MainFormProps {
   form: FormInstance<MainFormModel>
+  extraItems?: MainFormExtraItem[]
   editorCacheId?: string
 }
 
@@ -26,6 +33,11 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
         wrapperCol={{ span: 22 }}
         form={props.form}
       >
+        {props.extraItems?.map((extra, index) => (
+          <Form.Item label={extra.label} wrapperCol={{ span: 12 }} key={index}>
+            {extra.content}
+          </Form.Item>
+        ))}
         <Form.Item
           label="别名"
           name="slug"
