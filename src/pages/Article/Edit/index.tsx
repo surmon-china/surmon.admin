@@ -7,94 +7,40 @@ import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
-import { Modal, Button, Space, Badge, Divider, message } from 'antd'
-import * as Icon from '@ant-design/icons'
-import { RouteKey, rc } from '@/routes'
-import { getUEditorCache } from '@/components/common/UniversalEditor'
+import { Modal, Button, Space, Divider, message, Typography, Tooltip } from 'antd'
+import * as Icons from '@ant-design/icons'
+import { RoutesKey, RoutesPath, RoutesPather } from '@/routes'
+import { getUnEditorCache } from '@/components/common/UniversalEditor'
+import * as api from '@/apis/article'
 import { Article } from '@/constants/article'
-import { SortTypeWithHot } from '@/constants/sort'
 import { scrollTo } from '@/services/scroller'
-import { getArticle, putArticle, deleteArticles } from '@/store/article'
-import { getComments, CommentTree } from '@/store/comment'
+import { numberToKilo, numberSplit } from '@/transforms/number'
 import { getBlogArticleUrl } from '@/transforms/url'
 import { ArticleEditor } from '../Editor'
-import { ArticleComment } from './Comment'
+import { VoteDrawer } from './VoteDrawer'
+import { CommentDrawer } from './CommentDrawer'
+import { CommentTreeList } from './CommentTreeList'
 
-export const ArticleEdit: React.FC = () => {
-  const { article_id: articleID } = useParams<'article_id'>()
+export const ArticleEditPage: React.FC = () => {
+  const { article_id: articleId } = useParams<'article_id'>()
+  const articleCacheId = RoutesPather.articleDetail(articleId!)
   const navigate = useNavigate()
   const fetching = useLoading()
-  const submitting = useLoading()
+  const updating = useLoading()
   const article = useRef<Article | null>(null)
-  const articleCacheID = React.useMemo(
-    () => rc(RouteKey.ArticleEdit).pather!(articleID),
-    [articleID]
-  )
 
-  // Modal
-  const isVisibleCommentModal = useRef<boolean>(false)
-  const openCommentModal = () => {
-    isVisibleCommentModal.value = true
-  }
-  const closeCommentModal = () => {
-    isVisibleCommentModal.value = false
-  }
+  // drawers
+  const isCommentDrawerOpen = useRef(false)
+  const isVoteDrawerOpen = useRef(false)
 
-  // Comment
-  const commentLoading = useLoading()
-  const commentCount = useRef<number>(0)
-  const comments = useRef<Array<CommentTree>>([])
-  const fetchComments = (articleId: number) => {
-    commentLoading
-      .promise(getComments({ per_page: 50, sort: SortTypeWithHot.Asc, post_id: articleId }))
-      .then((result) => {
-        commentCount.value = result.pagination?.total!
-        comments.value = result.tree
-      })
-  }
-
-  const fetchUpdateArticle = (_article: Article) => {
-    return submitting.promise(putArticle(_article)).then((result) => {
-      article.value = result
-      scrollTo(document.body)
-    })
-  }
-
-  const fetchDeleteArticle = () => {
-    return submitting.promise(deleteArticles([article.value?._id!])).then(() => {
-      navigate(rc(RouteKey.ArticleList).path)
-      scrollTo(document.body)
-    })
-  }
-
-  const handleManageComment = () => {
-    navigate({
-      pathname: rc(RouteKey.Comment).path,
-      search: `post_id=${article.value?.id!}`
-    })
-  }
-
-  const handleDelete = () => {
-    Modal.confirm({
-      title: `你确定要彻底删除文章 《${article!.value!.title}》 吗？`,
-      content: '该行为是物理删除，不可恢复！',
-      onOk: fetchDeleteArticle,
-      okButtonProps: {
-        danger: true,
-        type: 'ghost'
-      }
-    })
-  }
-
-  onMounted(async () => {
+  const initFetchArticleWithCache = async () => {
     try {
-      const _article = await fetching.promise(getArticle(articleID!))
-      fetchComments(_article.id!)
-      const localContent = getUEditorCache(articleCacheID)
-      if (Boolean(localContent) && localContent !== _article.content) {
+      const remoteArticle = await fetching.promise(api.getArticle(articleId!))
+      const localContent = getUnEditorCache(articleCacheId)
+      if (!!localContent && localContent !== remoteArticle.content) {
         Modal.confirm({
           title: '本地缓存存在未保存的文章，是否要覆盖远程数据？',
-          content: '如果覆盖错了，就自己刷新吧！',
+          content: '如果覆盖错了，刷新一次就可重新选择',
           okText: '本地覆盖远程',
           cancelText: '使用远程数据',
           centered: true,
@@ -102,14 +48,14 @@ export const ArticleEdit: React.FC = () => {
             danger: true
           },
           onOk() {
-            article.value = { ..._article, content: localContent || '' }
+            article.value = { ...remoteArticle, content: localContent || '' }
           },
           onCancel() {
-            article.value = _article
+            article.value = remoteArticle
           }
         })
       } else {
-        article.value = _article
+        article.value = remoteArticle
       }
     } catch (error: any) {
       Modal.error({
@@ -118,68 +64,137 @@ export const ArticleEdit: React.FC = () => {
         content: String(error.message)
       })
     }
-  })
+  }
+
+  const updateArticle = (_article: Article) => {
+    return updating.promise(api.updateArticle(_article)).then((result) => {
+      article.value = result
+      scrollTo(document.body)
+    })
+  }
+
+  const deleteArticle = () => {
+    Modal.confirm({
+      title: `你确定要彻底删除文章《${article!.value!.title}》吗？`,
+      content: '该行为是物理删除，不可恢复！',
+      okButtonProps: {
+        danger: true,
+        ghost: true
+      },
+      onOk: () => {
+        return updating.promise(api.deleteArticles([article.value?._id!])).then(() => {
+          navigate(RoutesPath[RoutesKey.ArticleList])
+          scrollTo(document.body)
+        })
+      }
+    })
+  }
+
+  const navigateToCommentList = () => {
+    navigate({
+      pathname: RoutesPath[RoutesKey.Comment],
+      search: `post_id=${article.value?.id!}`
+    })
+  }
+
+  onMounted(() => initFetchArticleWithCache())
 
   return (
     <>
       <ArticleEditor
-        title="编辑文章"
-        article={article}
-        editorCacheID={articleCacheID}
+        article={article.value}
+        editorCacheId={articleCacheId}
         loading={fetching.state.value}
-        submitting={submitting.state.value}
-        onSubmit={fetchUpdateArticle}
-        extra={
-          <Space wrap>
-            <Button.Group>
-              <Button size="small" icon={<Icon.HeartOutlined />} disabled>
-                {article.value?.meta?.likes} 喜欢
-              </Button>
-              <Button size="small" icon={<Icon.EyeOutlined />} disabled>
-                {article.value?.meta?.views} 阅读
-              </Button>
+        submitting={updating.state.value}
+        onSubmit={(_article) => updateArticle(_article)}
+        mainFormExtraItems={[
+          {
+            label: 'ID',
+            content: (
+              <Space size="small">
+                <Typography.Text>{article.value?.id ?? '-'}</Typography.Text>
+                <Divider type="vertical" />
+                <Typography.Text>{article.value?._id ?? '-'}</Typography.Text>
+              </Space>
+            )
+          }
+        ]}
+        mainCardExtra={
+          <Space size="small" wrap>
+            <Space.Compact size="small">
+              <Tooltip title={numberSplit(article.value?.meta?.views ?? 0)}>
+                <Button icon={<Icons.EyeOutlined />} loading={fetching.state.value}>
+                  {numberToKilo(article.value?.meta?.views ?? 0)} 阅读
+                </Button>
+              </Tooltip>
               <Button
-                size="small"
-                icon={<Icon.LinkOutlined />}
-                target="_blank"
-                href={getBlogArticleUrl(article.value?.id!)}
-              />
-            </Button.Group>
-            <Badge count={commentCount.value}>
-              <Button
-                type="ghost"
-                size="small"
-                icon={<Icon.CommentOutlined />}
+                icon={<Icons.HeartOutlined />}
+                loading={fetching.state.value}
                 disabled={fetching.state.value}
-                onClick={openCommentModal}
+                onClick={() => (isVoteDrawerOpen.value = true)}
               >
-                文章评论
+                {article.value?.meta?.likes ?? ''} 喜欢
               </Button>
-            </Badge>
+              <Button
+                icon={<Icons.CommentOutlined />}
+                disabled={fetching.state.value}
+                loading={fetching.state.value}
+                onClick={() => (isCommentDrawerOpen.value = true)}
+              >
+                {article.value?.meta?.comments ?? ''} 评论
+              </Button>
+            </Space.Compact>
+            <Divider type="vertical" />
+            <Tooltip title={getBlogArticleUrl(article.value?.id!)}>
+              <Button
+                size="small"
+                type="dashed"
+                target="_blank"
+                icon={<Icons.ExportOutlined />}
+                loading={fetching.state.value}
+                disabled={fetching.state.value}
+                href={getBlogArticleUrl(article.value?.id!)}
+              >
+                打开
+              </Button>
+            </Tooltip>
             <Divider type="vertical" />
             <Button
               type="dashed"
               size="small"
               danger={true}
-              icon={<Icon.DeleteOutlined />}
+              icon={<Icons.DeleteOutlined />}
               disabled={fetching.state.value}
               onClick={() => message.warning('双击执行删除操作')}
-              onDoubleClick={handleDelete}
+              onDoubleClick={deleteArticle}
             >
               删除文章
             </Button>
           </Space>
         }
       />
-      <ArticleComment
-        visible={isVisibleCommentModal.value}
-        loading={commentLoading.state.value}
-        count={commentCount.value}
-        comments={comments.value}
-        onClose={closeCommentModal}
-        onManage={handleManageComment}
-        onRefresh={() => fetchComments(article.value?.id!)}
-      />
+      {article.value && (
+        <>
+          <VoteDrawer
+            width="48rem"
+            open={isVoteDrawerOpen.value}
+            likeCount={article.value.meta!.likes}
+            articleId={article.value.id!}
+            onClose={() => (isVoteDrawerOpen.value = false)}
+          />
+          <CommentDrawer
+            width="68rem"
+            open={isCommentDrawerOpen.value}
+            commentCount={article.value.meta!.comments}
+            articleId={article.value.id!}
+            renderTreeList={({ comments, loading }) => (
+              <CommentTreeList comments={comments} loading={loading} />
+            )}
+            onClose={() => (isCommentDrawerOpen.value = false)}
+            onNavigate={navigateToCommentList}
+          />
+        </>
+      )}
     </>
   )
 }

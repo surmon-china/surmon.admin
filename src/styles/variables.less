@@ -1,60 +1,57 @@
-@import 'antd/lib/style/themes/dark.less';
-
-// overwrite antd
-@primary-color: #0088f5;
-@border-radius-base: 4px;
-@border-radius-sm: 2px;
-@font-family:
-  'DINRegular',
-  'PingFang SC',
-  -apple-system,
-  BlinkMacSystemFont,
-  'Roboto',
-  'Century Gothic',
-  'Segoe UI',
-  'Microsoft yahei',
-  '微软雅黑',
-  'Helvetica Neue',
-  Arial,
-  'Noto Sans',
-  sans-serif,
-  SimHei,
-  'Apple Color Emoji',
-  'Segoe UI Emoji',
-  'Segoe UI Symbol',
-  'Noto Color Emoji';
-
-// app
-@app-primary-color: @primary-color;
-@app-error-color: @error-color;
-@app-disabled-color: @disabled-color;
-
-// module
-@app-body-background: @body-background;
-@app-module-background: @component-background;
-@app-module-hover-background: @item-hover-bg;
-@app-module-background-lighter: @popover-background;
-
 // layout
-@app-header-height: 50px;
-@app-border-color: @border-color-base;
-@app-border-radius: @border-radius-base;
-@app-gap: @margin-md;
+@header-height: 50px;
 
-// size
-@app-font-size-base: @font-size-base; // 14px
-@app-font-size-large: @font-size-lg; // 16px
-@app-font-size-small: @font-size-sm; // 12px
-@app-font-size-h1: @heading-1-size;
-@app-font-size-h2: @heading-2-size;
-@app-font-size-h3: @heading-3-size;
-@app-font-size-h4: @heading-4-size;
-@app-font-size-h5: @heading-5-size;
+// color
+@color-primary: var(--app-color-primary);
+@color-error: var(--app-red);
 
-// global font family
-@app-font-family: @font-family;
+// background color
+@body-background: var(--app-color-bg-layout);
+@module-background: var(--app-color-bg-container);
 
-// times
-@transition-time-fast: 0.1s;
-@transition-time-normal: 0.25s;
-@transition-time-slow: 0.38s;
+// text color
+@color-link: var(--app-color-link);
+@color-text: var(--app-color-text);
+@color-text-secondary: var(--app-color-text-secondary);
+@color-text-tertiary: var(--app-color-text-tertiary);
+@color-text-quaternary: var(--app-color-text-quaternary);
+
+@color-text-placeholder: var(--app-color-text-placeholder);
+@color-text-disabled: var(--app-color-text-disabled);
+@color-text-heading: var(--app-color-text-heading);
+@color-text-label: var(--app-color-text-label);
+@color-text-description: var(--app-color-text-description);
+
+// border color
+@color-border: var(--app-color-border);
+@color-border-secondary: var(--app-color-border-secondary);
+
+// radius
+@border-radius: var(--app-border-radius); // 6px
+@border-radius-xs: var(--app-border-radius-xs); // 2px
+@border-radius-sm: var(--app-border-radius-sm); // 4px
+@border-radius-lg: var(--app-border-radius-lg); // 8px
+
+// gap
+@gap-xx: var(--app-padding-xxs); // 4px
+@gap-x: var(--app-padding-xs); // 8px
+@gap-sm: var(--app-padding-sm); // 12px
+@gap: var(--app-padding); // 16px
+@gap-md: var(--app-padding-md); // 20px
+@gap-lg: var(--app-padding-lg); // 24px
+@gap-xl: var(--app-padding-xl); // 32px
+
+// font size
+@font-size-sm: var(--app-font-size-sm); // 12px
+@font-size-lg: var(--app-font-size-lg); // 16px
+@font-size-xl: var(--app-font-size-xl); // 20px
+@font-size-h1: var(--app-font-size-heading-1); // 38px
+@font-size-h2: var(--app-font-size-heading-2); // 30px
+@font-size-h3: var(--app-font-size-heading-3); // 24px
+@font-size-h4: var(--app-font-size-heading-4); // 20px
+@font-size-h5: var(--app-font-size-heading-5); // 16px
+
+// durations
+@motion-duration-fast: var(--app-motion-duration-fast); // 0.1s
+@motion-duration-mid: var(--app-motion-duration-mid); // 0.2s
+@motion-duration-slow: var(--app-motion-duration-slow); // 0.3s

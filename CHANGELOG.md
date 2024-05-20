@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+### 3.0.0 (2024-05-16)
+
+- Added i18n support.
+- Added theme switching.
+- Upgraded antd to v5.
+- Removed unnecessary transition components.
+- Refactored `/dashboard` page.
+- Refactored the structure of the App component.
+- Refactored the layout design of the `/setting` page.
+- Refactored global style variables (utilizing CSS3 variables).
+- Refactored global state management (utilizing `React.Context` for state management).
+- Refactored routing configuration (using unified configuration of `react-router` v6).
+- Refactored UniversalEditor (migrated from Monaco to CodeMirror).
+  - Monaco resulted in excessive build size (3.8mb).
+  - [Monaco only supports a single global theme](https://github.com/Microsoft/monaco-editor/issues/338).
+  - [`codesandbox` migrated the editor to CodeMirror](https://github.com/codesandbox/sandpack/issues/305).
+  - [Comparison between Monaco and CodeMirror editors](https://blog.replit.com/code-editors).
+
 ### 2.6.0 (2023-10-09)
 
 - Add `featured` field in article

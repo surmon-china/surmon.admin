@@ -1,11 +1,10 @@
 {
   "status": "success",
-  "message": "获取管理员信息成功",
+  "message": "Get admin profile succeeded",
   "result": {
     "name": "Admin",
-    "slogan": "veact admin system",
+    "slogan": "Surmon.me admin system",
     "email": "admin@example.com",
-    "avatar": "/veact-admin/images/nodepress.png",
-    "_id": "589e015d5af07d59124234cc"
+    "avatar": "/veact-admin/images/nodepress.png"
   }
 }

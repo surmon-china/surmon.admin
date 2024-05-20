@@ -1,126 +1,86 @@
-/**
- * @desc General universal editor
- * @author Surmon <https://github.com/surmon-china>
- */
-
 import classnames from 'classnames'
-import React, { useRef, useState, useMemo, useEffect } from 'react'
-import { CSSTransition } from 'react-transition-group'
-import { Button, Select, Space, Typography, Spin } from 'antd'
-import * as Icon from '@ant-design/icons'
-import Editor from '@monaco-editor/react'
+import React, { useState, useEffect } from 'react'
+import { useTheme } from '@/contexts/Theme'
 import { saveFile } from '@/services/file'
 import { timestampToYMD } from '@/transforms/date'
-import { markdownToHTML } from '@/transforms/markdown'
-import { editor, KeyMod, KeyCode } from './monaco'
-import { UEditorLanguage, UEditorLanguages, UEditorLanguageMap, setUEditorCache } from './shared'
+import { MarkdownPreview } from '@/components/common/MarkdownPreview'
+import { UnEditorLanguage, UnEditorLanguageMap, setUnEditorCache } from './shared'
+import { EditorCore, EditorStates } from './Core'
+import { EditorToolbar } from './Toolbar'
+import { EditorStatesBar } from './StatesBar'
 
 import styles from './style.module.less'
 
-export * from './shared'
-
 export interface UniversalEditorProps {
+  style?: React.CSSProperties
   value?: string
   onChange?(value?: string): void
   placeholder?: string
+  /** Disable editor input */
   disbaled?: boolean
-  loading?: boolean
-  /** 编辑器高度（行数） */
+  /** Auto focus when editor mounted */
+  autoFocus?: boolean
+  /** Number of fixed rows (height) for editor */
   rows?: number
-  /** 编辑区域唯一 ID，默认为 `window.location.pathname` */
+  /** Unique ID for editor, default: `window.location.pathname` */
   eid?: string
-  /** 初始化使用语言 */
-  defaultLanguage?: UEditorLanguage
-  /** 是否禁用顶部工具栏 */
+  /** Initial code language */
+  defaultLanguage?: UnEditorLanguage
+  /** Disable the top toolbar */
   disabledToolbar?: boolean
-  /** 是否禁用编辑器 minimap */
-  disabledMinimap?: boolean
-  /** 是否禁用草稿缓存 */
+  /** Disable the code language selector */
+  disabledLanguageSelect?: boolean
+  /** Disable the bottom status bar */
+  disabledStatesBar?: boolean
+  /** Disable the side line numbers */
+  disabledLineNumbers?: boolean
+  /** Disable the side gutter folding */
+  disabledFoldGutter?: boolean
+  /** Disable draft caching */
   disabledCacheDraft?: boolean
-  /** 自定义 Toolbar 扩展渲染 */
-  renderToolbarExtra?(language: UEditorLanguage): React.ReactNode
-  /** 是否在 UI 上响应 Form 状态 */
+  /** Custom rendering for Toolbar extra */
+  renderToolbarExtra?(language: UnEditorLanguage): React.ReactNode
+  /** Respond to Form status on the UI */
   formStatus?: boolean
-  style?: React.CSSProperties
 }
 
 export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
-  const placeholder = props.placeholder ?? '请输入内容...'
   const propValue = props.value ?? ''
-  const editorID = props.eid || window.location.pathname
-  const ueditor = useRef<editor.IStandaloneCodeEditor>()
-  const [isFullscreen, setFullscreen] = useState(false)
+  const editorId = props.eid || window.location.pathname
+  const theme = useTheme()
+  const [editorStates, setEditorStates] = useState<EditorStates>()
+  const [isFullscreen, setFullscreen] = useState<boolean>(false)
   const [isPreviewing, setPreviewing] = useState<boolean>(false)
-  const [language, setLanguage] = useState<UEditorLanguage>(
-    props.defaultLanguage || UEditorLanguage.Markdown
+  const [language, setLanguage] = useState<UnEditorLanguage>(
+    props.defaultLanguage || UnEditorLanguage.Markdown
   )
-
-  const editorOptions: editor.IStandaloneEditorConstructionOptions = useMemo(() => {
-    return {
-      tabSize: 2,
-      fontSize: 14,
-      lineHeight: 24,
-      smoothScrolling: true,
-      readOnly: Boolean(props.disbaled),
-      minimap: {
-        enabled: !props.disabledMinimap
-      },
-      folding: true, // 文件夹
-      contextmenu: false, // 禁用右键菜单
-      roundedSelection: false, // 选中区域直角
-      scrollBeyondLastLine: false, // 底部不留空
-      occurrencesHighlight: 'multiFile',
-      wordBasedSuggestions: 'currentDocument', // 根据已有单词自动提示
-      acceptSuggestionOnEnter: 'on', // 回车命中选中词
-      scrollbar: {
-        // `alwaysConsumeMouseWheel: false` 用于确保滚动事件始终可冒泡至外层
-        // MARK: updateOptions 对 scrollbar.alwaysConsumeMouseWheel 暂时是无效的
-        // https://github.com/suren-atoyan/monaco-react/issues/262
-        // https://github.com/microsoft/monaco-editor/issues/859
-        alwaysConsumeMouseWheel: false
-      }
-    }
-  }, [props.disbaled, props.disabledMinimap])
-
-  const editorHeight = useMemo<React.CSSProperties>(() => {
-    const rows = props.rows || 34
-    const lineHeight = editorOptions.lineHeight || 24
-    return { height: isFullscreen ? '100%' : `${rows * lineHeight}px` }
-  }, [props.rows, editorOptions.lineHeight, isFullscreen])
-
-  const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor) => {
-    ueditor.current = editor
-    // Only bind command when editor is focused.
-    // https://github.com/microsoft/monaco-editor/issues/2947#issuecomment-1422265201
-    ueditor.current.onDidFocusEditorText(() => {
-      // Command + S = save content
-      ueditor.current?.addCommand(KeyMod.CtrlCmd | KeyCode.KeyS, handleSaveContent)
-      // Esc = exit fullscreen
-      ueditor.current?.addCommand(KeyCode.Escape, () => setFullscreen(false))
-    })
-  }
 
   const handleContentChange = (newValue?: string) => {
     if (!props.disabledCacheDraft) {
-      setUEditorCache(editorID, newValue || '')
+      setUnEditorCache(editorId, newValue || '')
     }
     props.onChange?.(newValue)
   }
 
-  const handleSaveContent = () => {
+  const handleStatesChange = (states: EditorStates) => {
+    if (JSON.stringify(states) !== JSON.stringify(editorStates)) {
+      setEditorStates(states)
+    }
+  }
+
+  const saveContentToFile = () => {
     const time = timestampToYMD(Date.now())
-    const fileExt = UEditorLanguageMap.get(language)!.ext
-    const fileName = `${editorID}-${time}.${fileExt}`
+    const fileExt = UnEditorLanguageMap.get(language)!.ext
+    const fileName = `${editorId}-${time}.${fileExt}`
     saveFile(propValue, fileName)
   }
 
   // effects when fullscreen change
   useEffect(() => {
     if (isFullscreen) {
-      ueditor.current?.focus()
-      document.body.classList.add('fullscreen')
+      document.body.style.overflowY = 'hidden'
     } else {
-      document.body.classList.remove('fullscreen')
+      document.body.style.removeProperty('overflow-y')
     }
   }, [isFullscreen])
 
@@ -129,95 +89,56 @@ export const UniversalEditor: React.FC<UniversalEditorProps> = (props) => {
       style={props.style}
       className={classnames(
         styles.universalEditor,
-        props.formStatus && styles.formStatus,
-        isFullscreen && styles.fullScreen
+        isFullscreen && styles.fullScreen,
+        props.formStatus && styles.formStatus
       )}
     >
       {!props.disabledToolbar && (
-        <div className={styles.toolbar}>
-          <Space className={styles.left} wrap>
-            <Typography.Text type="secondary" strong={true} className={styles.logo}>
-              UEditor
-            </Typography.Text>
-            <Button
-              size="small"
-              disabled={props.disbaled}
-              icon={<Icon.DownloadOutlined />}
-              onClick={handleSaveContent}
-            />
-          </Space>
-          <Space className={styles.right} wrap>
-            {props.renderToolbarExtra?.(language)}
-            {language === UEditorLanguage.Markdown && (
-              <Button
-                size="small"
-                disabled={props.disbaled}
-                icon={isPreviewing ? <Icon.EyeInvisibleOutlined /> : <Icon.EyeOutlined />}
-                onClick={() => setPreviewing(!isPreviewing)}
-              />
-            )}
-            <Select
-              size="small"
-              className={styles.language}
-              value={language}
-              onChange={setLanguage}
-              disabled={props.disbaled || isPreviewing}
-              options={UEditorLanguages.map((lang) => ({
-                label: lang.name,
-                value: lang.id
-              }))}
-            />
-            <Button
-              size="small"
-              disabled={props.disbaled}
-              icon={isFullscreen ? <Icon.FullscreenExitOutlined /> : <Icon.FullscreenOutlined />}
-              onClick={() => setFullscreen(!isFullscreen)}
-            />
-          </Space>
-        </div>
+        <EditorToolbar
+          title="UnEditor"
+          disbaled={props.disbaled}
+          language={language}
+          isFullscreen={isFullscreen}
+          isPreviewing={isPreviewing}
+          disabledLanguageSelect={props.disabledLanguageSelect}
+          onFullscreenChange={setFullscreen}
+          onPreviewingChange={setPreviewing}
+          onLanguageChange={setLanguage}
+          onPressSaveContent={() => saveContentToFile()}
+          renderToolbarExtra={props.renderToolbarExtra}
+        />
       )}
-      <Spin
-        spinning={Boolean(props.loading)}
-        indicator={<Icon.LoadingOutlined style={{ fontSize: 24 }} spin />}
-      >
-        <div className={styles.container}>
-          <Editor
-            // for editor wrapper <section>
-            wrapperProps={{
-              'data-placeholder': placeholder,
-              'data-nonempty': Boolean(propValue),
-              className: styles.editorWrapper,
-              style: {
-                width: isPreviewing ? '50%' : '100%',
-                ...editorHeight
-              }
-            }}
-            // for manaco editor
-            className={styles.editor}
-            theme="vs-dark"
-            language={language}
-            value={propValue}
-            options={editorOptions}
-            onChange={handleContentChange}
-            onMount={handleEditorDidMount}
-          />
-          <CSSTransition
-            in={isPreviewing}
-            timeout={200}
-            unmountOnExit={true}
-            classNames="fade-fast"
-          >
-            <div className={classnames(styles.preview)}>
-              <div
-                className={styles.markdown}
-                dangerouslySetInnerHTML={{
-                  __html: markdownToHTML(propValue)
-                }}
-              ></div>
-            </div>
-          </CSSTransition>
-        </div>
-      </Spin>
+      <div className={styles.editorWrapper}>
+        <EditorCore
+          className={styles.editorCore}
+          style={{ width: isPreviewing ? '50%' : '100%' }}
+          value={propValue}
+          language={language}
+          onChange={handleContentChange}
+          onStatesChange={handleStatesChange}
+          onPressExitFullscreen={() => setFullscreen(false)}
+          onPressSave={() => saveContentToFile()}
+          isFullscreen={isFullscreen}
+          isPreviewing={isPreviewing}
+          darkTheme={theme.isDark}
+          rows={props.rows}
+          placeholder={props.placeholder}
+          autoFocus={props.autoFocus}
+          disbaled={props.disbaled}
+          disabledLineNumbers={props.disabledLineNumbers}
+          disabledFoldGutter={props.disabledFoldGutter}
+        />
+        {isPreviewing && (
+          <MarkdownPreview className={styles.editorPreview} markdown={propValue} />
+        )}
+      </div>
+      {!props.disabledStatesBar && (
+        <EditorStatesBar
+          id={editorId}
+          states={editorStates}
+          enabledCache={!props.disabledCacheDraft}
+        />
+      )}
     </div>
   )
 }

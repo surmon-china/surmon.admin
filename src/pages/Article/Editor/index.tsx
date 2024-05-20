@@ -3,33 +3,31 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react'
-import { Ref, useWatch, onMounted } from 'veact'
+import React, { useEffect } from 'react'
+import { onMounted } from 'veact'
 import { Card, Row, Col, Form, message, Spin, Button } from 'antd'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 import { APP_LAYOUT_GUTTER_SIZE } from '@/config'
 import { ImageUploader } from '@/components/common/ImageUploader'
-import { FormDataKeyValue } from '@/components/common/FormDataKeyValue'
+import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { openJSONEditor } from '@/components/common/ModalJsonEditor'
-import { Article } from '@/constants/article'
-import { PublishState } from '@/constants/publish'
-import { ArticleOrigin } from '@/constants/article/origin'
-import { ArticlePublic } from '@/constants/article/public'
-import { ArticleLanguage } from '@/constants/article/language'
+import { ArticleOrigin, ArticlePublic, ArticlePublish } from '@/constants/article'
+import { Article, ArticleLanguage } from '@/constants/article'
+import { useLocale } from '@/contexts/Locale'
+import { useTheme } from '@/contexts/Theme'
+import { useTranslation } from '@/i18n'
 import { scrollTo } from '@/services/scroller'
-import { MainForm } from './Main'
-import { CategoryForm } from './Category'
-import { StateForm } from './State'
+import { MainForm, MainFormExtraItem } from './MainForm'
+import { CategoriesForm } from './CategoriesForm'
+import { StatesForm } from './StatesForm'
 
-import styles from './style.module.less'
-
-export type BaseFormModel = Partial<
+export type MainFormModel = Partial<
   Pick<Article, 'slug' | 'tags' | 'title' | 'content' | 'keywords' | 'description'>
 >
-export type CategoryFormModel = Pick<Article, 'categories'>
+export type CategoriesFormModel = Pick<Article, 'categories'>
 export type ThumbnailFormModel = Pick<Article, 'thumbnail'>
-export type ExtendFormModel = Pick<Article, 'extends'>
-export type StateFormModel = Pick<Article, 'state' | 'origin' | 'public'>
+export type ExtendsFormModel = Pick<Article, 'extends'>
+export type StatesFormModel = Pick<Article, 'state' | 'origin' | 'public'>
 
 const DEFAULT_ARTICLE: Article = Object.freeze({
   slug: null,
@@ -39,7 +37,7 @@ const DEFAULT_ARTICLE: Article = Object.freeze({
   content: '',
   thumbnail: '',
   origin: ArticleOrigin.Original,
-  state: PublishState.Published,
+  state: ArticlePublish.Published,
   public: ArticlePublic.Public,
   lang: ArticleLanguage.Chinese,
   featured: false,
@@ -50,141 +48,149 @@ const DEFAULT_ARTICLE: Article = Object.freeze({
 })
 
 export interface ArticleEditorProps {
-  title: string
-  extra?: React.ReactNode
   loading: boolean
   submitting: boolean
-  article?: Ref<Article | null>
-  editorCacheID?: string
-  onSubmit(article: Article): any
+  article: Article | null
+  editorCacheId?: string
+  onSubmit(article: Article): void
+  mainCardExtra?: React.ReactNode
+  mainFormExtraItems?: MainFormExtraItem[]
 }
+
 export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
-  const [mainForm] = Form.useForm<BaseFormModel>()
-  const [categoryFormModel] = Form.useForm<CategoryFormModel>()
+  const { i18n } = useTranslation()
+  const { language } = useLocale()
+  const { theme } = useTheme()
+  const [mainForm] = Form.useForm<MainFormModel>()
+  const [categoriesFormModel] = Form.useForm<CategoriesFormModel>()
   const [thumbnailFormModel] = Form.useForm<ThumbnailFormModel>()
-  const [extendFormModel] = Form.useForm<ExtendFormModel>()
-  const [stateFormModel] = Form.useForm<StateFormModel>()
+  const [extendsFormModel] = Form.useForm<ExtendsFormModel>()
+  const [statesFormModel] = Form.useForm<StatesFormModel>()
 
   const setFormsValue = (formValue: Article) => {
     mainForm.setFieldsValue(formValue)
-    categoryFormModel.setFieldsValue(formValue)
+    categoriesFormModel.setFieldsValue(formValue)
     thumbnailFormModel.setFieldsValue(formValue)
-    extendFormModel.setFieldsValue(formValue)
-    stateFormModel.setFieldsValue(formValue)
+    extendsFormModel.setFieldsValue(formValue)
+    statesFormModel.setFieldsValue(formValue)
   }
 
   const handleSubmit = async () => {
     try {
       const data = {
-        ...props.article?.value,
+        ...props.article,
         ...(await mainForm.validateFields()),
-        ...(await categoryFormModel.validateFields()),
+        ...(await categoriesFormModel.validateFields()),
         ...(await thumbnailFormModel.validateFields()),
-        ...(await extendFormModel.validateFields()),
-        ...(await stateFormModel.validateFields())
+        ...(await extendsFormModel.validateFields()),
+        ...(await statesFormModel.validateFields())
       }
       data.slug = data.slug || null
       props.onSubmit?.(data as Article)
     } catch (error) {
-      console.warn('Article 提交错误：', error)
+      console.debug('Article 提交错误：', error)
       message.error('请检查表单中的不合法项')
     }
   }
 
   const handleEditExtendsAsJSON = () => {
-    openJSONEditor('以 JSON 编辑自定义扩展', extendFormModel.getFieldsValue(), (newValue) => {
-      extendFormModel.setFieldsValue(newValue)
+    openJSONEditor({
+      title: '以 JSON 编辑自定义扩展',
+      initTheme: theme,
+      initLanguage: language,
+      initValue: extendsFormModel.getFieldsValue(),
+      callback: (newValue) => extendsFormModel.setFieldsValue(newValue)
     })
   }
 
-  useWatch(
-    () => props.article?.value,
-    (article) => {
-      if (article) {
-        setFormsValue(article)
-      }
+  // set article to form when article loaded
+  useEffect(() => {
+    if (props.article) {
+      setFormsValue(props.article)
     }
-  )
+  }, [props.article])
 
+  // init default form when mounted
   onMounted(() => {
     setFormsValue(DEFAULT_ARTICLE)
     scrollTo(document.body)
   })
 
   return (
-    <div className={styles.articleeEitor}>
-      <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
-        <Col xs={24} lg={17}>
-          <Card
-            bordered={false}
-            title={props.title}
-            className={styles.articleeEitor}
-            extra={props.extra}
-          >
-            <Spin spinning={props.loading}>
-              <MainForm form={mainForm} editorCacheID={props.editorCacheID} />
-            </Spin>
-          </Card>
-        </Col>
-        <Col xs={24} lg={7}>
-          <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
-            <Col span={24}>
-              <Card title="分类目录" bordered={false}>
-                <Spin spinning={props.loading}>
-                  <CategoryForm form={categoryFormModel} />
-                </Spin>
-              </Card>
-            </Col>
-            <Col span={24}>
-              <Card title="缩略图" bordered={false}>
-                <Spin spinning={props.loading}>
-                  <Form scrollToFirstError={true} form={thumbnailFormModel}>
-                    <Form.Item noStyle={true} name="thumbnail">
-                      <ImageUploader directory="thumbnail" />
-                    </Form.Item>
-                  </Form>
-                </Spin>
-              </Card>
-            </Col>
-            <Col span={24}>
-              <Card
-                title="自定义扩展"
-                bordered={false}
-                extra={
-                  <Button
-                    type="link"
-                    size="small"
-                    icon={<Icon.EditOutlined />}
-                    disabled={props.loading}
-                    onClick={handleEditExtendsAsJSON}
-                  >
-                    以 JSON 编辑
-                  </Button>
-                }
-              >
-                <Spin spinning={props.loading}>
-                  <Form scrollToFirstError={true} form={extendFormModel}>
-                    <Form.Item noStyle={true} shouldUpdate={true}>
-                      <FormDataKeyValue fieldName="extends" />
-                    </Form.Item>
-                  </Form>
-                </Spin>
-              </Card>
-            </Col>
-            <Col span={24}>
-              <Card title="发布选项" bordered={false}>
-                <Spin spinning={props.loading}>
-                  <StateForm
-                    form={stateFormModel}
-                    submitting={props.submitting}
-                    onSubmit={handleSubmit}
-                  />
-                </Spin>
-              </Card>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </div>
+    <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
+      <Col xs={24} lg={17}>
+        <Card
+          bordered={false}
+          title={i18n.t('page.article.editor.content')}
+          extra={props.mainCardExtra}
+        >
+          <Spin spinning={props.loading}>
+            <MainForm
+              form={mainForm}
+              extraItems={props.mainFormExtraItems}
+              editorCacheId={props.editorCacheId}
+            />
+          </Spin>
+        </Card>
+      </Col>
+      <Col xs={24} lg={7}>
+        <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
+          <Col span={24}>
+            <Card title={i18n.t('page.article.editor.categories')} bordered={false}>
+              <Spin spinning={props.loading}>
+                <CategoriesForm form={categoriesFormModel} />
+              </Spin>
+            </Card>
+          </Col>
+          <Col span={24}>
+            <Card title={i18n.t('page.article.editor.thumbnail')} bordered={false}>
+              <Spin spinning={props.loading}>
+                <Form scrollToFirstError={true} form={thumbnailFormModel}>
+                  <Form.Item noStyle={true} name="thumbnail">
+                    <ImageUploader directory="thumbnail" />
+                  </Form.Item>
+                </Form>
+              </Spin>
+            </Card>
+          </Col>
+          <Col span={24}>
+            <Card
+              title={i18n.t('page.article.editor.extends')}
+              bordered={false}
+              extra={
+                <Button
+                  type="link"
+                  size="small"
+                  icon={<Icons.EditOutlined />}
+                  disabled={props.loading}
+                  onClick={handleEditExtendsAsJSON}
+                >
+                  以 JSON 编辑
+                </Button>
+              }
+            >
+              <Spin spinning={props.loading}>
+                <Form scrollToFirstError={true} form={extendsFormModel}>
+                  <Form.Item noStyle={true} shouldUpdate={true}>
+                    <FormKeyValueInput fieldName="extends" />
+                  </Form.Item>
+                </Form>
+              </Spin>
+            </Card>
+          </Col>
+          <Col span={24}>
+            <Card title={i18n.t('page.article.editor.states')} bordered={false}>
+              <Spin spinning={props.loading}>
+                <StatesForm
+                  form={statesFormModel}
+                  submitting={props.submitting}
+                  onSubmit={handleSubmit}
+                />
+              </Spin>
+            </Card>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   )
 }

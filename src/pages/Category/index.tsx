@@ -1,229 +1,149 @@
 /**
- * @file Article category page
+ * @file Category page
  * @author Surmon <https://github.com/surmon-china>
  */
 
 import React from 'react'
-import { useShallowReactive, useRef, onMounted, useComputed } from 'veact'
+import { useShallowRef, useRef, onMounted, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
-import { Button, Card, Empty, Divider, Modal, Space, Spin, Tree, Typography } from 'antd'
-import * as Icon from '@ant-design/icons'
-import { UniversalText } from '@/components/common/UniversalText'
-import { ResponsePaginationData } from '@/constants/request'
-import { Category as CategoryType } from '@/constants/category'
-import { getBlogCategoryUrl } from '@/transforms/url'
-import {
-  getAntdTreeByTree,
-  CategoryTree,
-  getCategories,
-  deleteCategory,
-  putCategory,
-  createCategory
-} from '@/store/category'
-import { EditModal } from './EditModal'
-
-import styles from './style.module.less'
+import { Button, Card, Divider, Modal, Space } from 'antd'
+import * as Icons from '@ant-design/icons'
+import { useTranslation } from '@/i18n'
+import { Category as Category } from '@/constants/category'
+import type { CategoryTree } from '@/apis/category'
+import * as api from '@/apis/category'
+import { FormModal } from './FormModal'
+import { TreeList } from './TreeList'
 
 export const CategoryPage: React.FC = () => {
-  const loading = useLoading()
-  const submitting = useLoading()
-  const loaded = useRef(false)
-  const categories = useShallowReactive<
-    ResponsePaginationData<CategoryType> & { tree: Array<CategoryTree> }
-  >({ tree: [], data: [], pagination: void 0 })
+  const { i18n } = useTranslation()
+  const fetching = useLoading()
+  const posting = useLoading()
+  const categoriesTree = useShallowRef<CategoryTree[]>([])
+  const categoriesList = useShallowRef<Category[]>([])
 
-  // 弹窗
-  const activeEditDataId = useRef<string | null>(null)
-  const isVisibleModal = useRef(false)
-  const activeEditData = useComputed(() => {
-    const id = activeEditDataId.value
-    return id !== null ? categories.data.find((c) => c._id === id)! : null
+  // modal
+  const isFormModalOpen = useRef(false)
+  const activeEditCategoryId = useRef<string | null>(null)
+  const activeEditCategory = useComputed(() => {
+    if (!activeEditCategoryId.value) {
+      return null
+    }
+    return categoriesList.value.find((category) => {
+      return category._id === activeEditCategoryId.value
+    })!
   })
 
   const closeModal = () => {
-    isVisibleModal.value = false
-  }
-  // 编辑创建
-  const editData = (id: string) => {
-    activeEditDataId.value = id
-    isVisibleModal.value = true
-  }
-  const createNewData = () => {
-    activeEditDataId.value = null
-    isVisibleModal.value = true
+    isFormModalOpen.value = false
   }
 
-  const fetchData = () => {
-    return loading.promise(getCategories({ per_page: 50 })).then((result) => {
-      categories.data = result.data
-      categories.tree = result.tree
-      categories.pagination = result.pagination
+  const openEditModal = (id: string) => {
+    activeEditCategoryId.value = id
+    isFormModalOpen.value = true
+  }
+
+  const openCreateModal = () => {
+    isFormModalOpen.value = true
+    activeEditCategoryId.value = null
+  }
+
+  const fetchCategories = () => {
+    return fetching.promise(api.getAllCategories()).then((result) => {
+      categoriesList.value = result.list
+      categoriesTree.value = result.tree
     })
   }
 
-  const handleDelete = (category: CategoryType) => {
+  const createCategory = (category: Category) => {
+    posting.promise(api.createCategory(category)).then(() => {
+      closeModal()
+      fetchCategories()
+    })
+  }
+
+  const updateCategory = (category: Category) => {
+    const payload = {
+      ...activeEditCategory.value,
+      ...category
+    }
+    posting.promise(api.updateCategory(payload)).then(() => {
+      closeModal()
+      fetchCategories()
+    })
+  }
+
+  const deleteCategory = (category: Category) => {
     Modal.confirm({
-      title: `确定要删除分类 “${category.name}” 吗？`,
+      title: `确定要删除分类「 ${category.name} 」吗？`,
       content: '删除后不可恢复',
       centered: true,
       onOk: () => {
-        return deleteCategory(category._id!).then(() => {
-          fetchData()
+        return api.deleteCategory(category._id!).then(() => {
+          fetchCategories()
         })
       }
     })
   }
 
-  const handleSubmit = (category: CategoryType) => {
-    if (activeEditData.value) {
-      submitting
-        .promise(
-          putCategory({
-            ...activeEditData.value,
-            ...category
-          })
-        )
-        .then(() => {
-          closeModal()
-          fetchData()
-        })
-    } else {
-      submitting.promise(createCategory(category)).then(() => {
-        closeModal()
-        fetchData()
-      })
-    }
-  }
-
-  onMounted(() => {
-    fetchData().then(() => {
-      // Fix for Tree
-      setTimeout(() => {
-        loaded.value = true
-      })
-    })
-  })
+  onMounted(() => fetchCategories())
 
   return (
     <Card
-      title={`分类列表（${categories.pagination?.total ?? '-'}）`}
       bordered={false}
-      className={styles.category}
+      title={i18n.t('page.category.list.title', {
+        total: categoriesList.value?.length ?? '-'
+      })}
       extra={
-        <Button type="primary" size="small" icon={<Icon.PlusOutlined />} onClick={createNewData}>
+        <Button
+          type="primary"
+          size="small"
+          icon={<Icons.PlusOutlined />}
+          onClick={openCreateModal}
+        >
           创建新分类
         </Button>
       }
     >
-      <Space className={styles.toolbar}>
-        <Space>
-          <Button
-            icon={<Icon.ReloadOutlined />}
-            loading={loading.state.value}
-            onClick={() => fetchData()}
-          >
-            刷新
-          </Button>
-        </Space>
+      <Space>
+        <Button
+          icon={<Icons.ReloadOutlined />}
+          loading={fetching.state.value}
+          onClick={() => fetchCategories()}
+        >
+          {i18n.t('common.list.filter.refresh')}
+        </Button>
       </Space>
       <Divider />
-      <Spin spinning={loading.state.value}>
-        {loaded.value && !categories.pagination?.total ? (
-          <Empty
-            description="暂无分类"
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-            style={{ marginBottom: '1rem' }}
-          />
-        ) : (
-          <Tree
-            className={styles.tree}
-            checkable={false}
-            blockNode={true}
-            autoExpandParent={true}
-            defaultExpandAll={true}
-            virtual={false}
-            showLine={true}
-            showIcon={false}
-            selectable={false}
-            treeData={getAntdTreeByTree({
-              tree: categories.tree,
-              valuer: (c) => c._id
-            })}
-            titleRender={(nodeData) => {
-              const category: CategoryTree = (nodeData as any).data
-              return (
-                <div className={styles.categoryNode}>
-                  <div className={styles.content}>
-                    <Space className={styles.title}>
-                      <Typography.Text strong={true}>{category.name}</Typography.Text>
-                      <Divider type="vertical" />
-                      <Typography.Text type="secondary">{category.slug}</Typography.Text>
-                      <Divider type="vertical" />
-                      <Typography.Text type="secondary">
-                        {category.article_count} 篇
-                      </Typography.Text>
-                    </Space>
-                    <div>
-                      <UniversalText type="secondary" text={category.description} />
-                    </div>
-                  </div>
-                  <div className={styles.actions}>
-                    <Button
-                      size="small"
-                      type="text"
-                      icon={<Icon.EditOutlined />}
-                      onClick={() => editData(category._id!)}
-                    >
-                      编辑
-                    </Button>
-                    <Divider type="vertical" />
-                    <Button
-                      size="small"
-                      type="text"
-                      danger={true}
-                      icon={<Icon.DeleteOutlined />}
-                      onClick={() => handleDelete(category)}
-                    >
-                      删除
-                    </Button>
-                    <Divider type="vertical" />
-                    <Button
-                      size="small"
-                      icon={<Icon.LinkOutlined />}
-                      type="link"
-                      target="_blank"
-                      href={getBlogCategoryUrl(category.slug)}
-                    >
-                      查看
-                    </Button>
-                  </div>
-                </div>
-              )
-            }}
-          />
-        )}
-      </Spin>
-      <EditModal
-        title={activeEditData.value ? '编辑分类' : '新分类'}
-        loading={submitting.state.value}
-        tree={getAntdTreeByTree({
-          tree: categories.tree,
-          valuer: (c) => c._id,
-          disabledWhen: (c) => {
-            if (c._id === activeEditData.value?._id) {
+      <TreeList
+        tree={categoriesTree.value}
+        loading={fetching.state.value}
+        onEdit={(category) => openEditModal(category._id!)}
+        onDelete={(category) => deleteCategory(category)}
+      />
+      <FormModal
+        width={680}
+        title={activeEditCategory.value ? '编辑分类' : '新分类'}
+        open={isFormModalOpen.value}
+        submitting={posting.state.value}
+        initData={activeEditCategory.value}
+        onCancel={() => closeModal()}
+        onSubmit={(category) => {
+          activeEditCategory.value ? updateCategory(category) : createCategory(category)
+        }}
+        selectTree={api.getAntdTreeByTree({
+          tree: categoriesTree.value,
+          valuer: (category) => category._id,
+          disabledWhen: (category) => {
+            if (category._id === activeEditCategory.value?._id) {
               return true
-            }
-            if (c.pid === activeEditData.value?._id) {
+            } else if (category.pid === activeEditCategory.value?._id) {
               return true
+            } else {
+              return false
             }
-            return false
           }
         })}
-        categories={categories.data}
-        visible={isVisibleModal}
-        category={activeEditData}
-        onCancel={closeModal}
-        onSubmit={handleSubmit}
       />
     </Card>
   )

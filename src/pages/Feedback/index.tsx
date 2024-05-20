@@ -1,298 +1,182 @@
 /**
- * @file Feedback list page
+ * @file Feedback page
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import _ from 'lodash'
 import React from 'react'
-import {
-  useShallowReactive,
-  useRef,
-  onMounted,
-  useReactive,
-  useWatch,
-  toRaw,
-  batchedUpdates,
-  useComputed
-} from 'veact'
+import { useShallowReactive, useRef, onMounted, useWatch, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
-import { Button, Card, Input, Select, Divider, Modal, Space } from 'antd'
-import * as Icon from '@ant-design/icons'
+import { useTranslation } from '@/i18n'
+import { Card, Divider, Modal, Drawer, Spin } from 'antd'
+import * as Icons from '@ant-design/icons'
+import * as api from '@/apis/feedback'
+import type { GetFeedbacksParams } from '@/apis/feedback'
 import { DropdownMenu } from '@/components/common/DropdownMenu'
-import { SortSelect } from '@/components/common/SortSelect'
-import { getFeedbacks, GetFeedbacksParams, deleteFeedbacks, putFeedback } from '@/store/feedback'
-import { ResponsePaginationData } from '@/constants/request'
-import { SortTypeBase } from '@/constants/sort'
-import { Feedback, markedStates } from '@/constants/feedback'
+import { ResponsePaginationData } from '@/constants/nodepress'
+import { Feedback } from '@/constants/feedback'
 import { scrollTo } from '@/services/scroller'
-import { EditDrawer } from './EditDrawer'
-import { FeedbackListTable } from './Table'
-
-import styles from './style.module.less'
-
-const ALL_VALUE = 'ALL'
-const DEFAULT_FILTER_PARAMS = Object.freeze({
-  tid: ALL_VALUE as number | typeof ALL_VALUE,
-  emotion: ALL_VALUE as number | typeof ALL_VALUE,
-  marked: ALL_VALUE as 0 | 1 | typeof ALL_VALUE,
-  sort: SortTypeBase.Desc
-})
+import type { FilterParams } from './ListFilters'
+import { ListFilters, DEFAULT_FILTER_PARAMS, getQueryParams } from './ListFilters'
+import { TableList } from './TableList'
+import { EditForm } from './EditForm'
 
 export const FeedbackPage: React.FC = () => {
-  const loading = useLoading()
-  const submitting = useLoading()
+  const { i18n } = useTranslation()
+  const fetching = useLoading()
+  const updating = useLoading()
   const feedbacks = useShallowReactive<ResponsePaginationData<Feedback>>({
     data: [],
-    pagination: undefined
+    pagination: void 0
   })
 
-  // 过滤参数
-  const serarchKeyword = useRef('')
-  const filterParams = useReactive({
-    ...DEFAULT_FILTER_PARAMS,
-    tid: DEFAULT_FILTER_PARAMS.tid
+  // filters
+  const searchKeyword = useRef('')
+  const filterParams = useRef<FilterParams>({ ...DEFAULT_FILTER_PARAMS })
+
+  const resetFiltersToDefault = () => {
+    searchKeyword.value = ''
+    filterParams.value = { ...DEFAULT_FILTER_PARAMS }
+  }
+
+  // select
+  const selectedIds = useRef<string[]>([])
+  const selectedFeedbacks = useComputed(() => {
+    return feedbacks.data.filter((c) => selectedIds.value.includes(c._id!))
   })
-  const updateTargetID = (postId: number | string) => {
-    filterParams.tid = Number(postId)
-  }
 
-  // 多选
-  const selectedIds = useRef<Array<string>>([])
-  const selectFeedbacks = useComputed(() =>
-    feedbacks.data.filter((c) => selectedIds.value.includes(c._id!))
-  )
-  const handleSelect = (ids: any[]) => {
-    selectedIds.value = ids
-  }
-
-  // 编辑
-  const activeEditDataIndex = useRef<number | null>(null)
-  const isVisibleModal = useRef(false)
-  const activeEditData = useComputed(() => {
-    const index = activeEditDataIndex.value
+  // edit drawer
+  const isEditDrawerOpen = useRef(false)
+  const activeEditItemIndex = useRef<number | null>(null)
+  const activeEditFeedback = useComputed(() => {
+    const index = activeEditItemIndex.value
     return index !== null ? feedbacks.data[index] : null
   })
-  const closeModal = () => {
-    isVisibleModal.value = false
-  }
-  const editData = (index: number) => {
-    activeEditDataIndex.value = index
-    isVisibleModal.value = true
+
+  const closeEditDrawer = () => {
+    isEditDrawerOpen.value = false
   }
 
-  const fetchData = (params?: GetFeedbacksParams) => {
+  const openEditDrawer = (index: number) => {
+    activeEditItemIndex.value = index
+    isEditDrawerOpen.value = true
+  }
+
+  const fetchList = (params?: GetFeedbacksParams) => {
     const getParams = {
       ...params,
-      sort: filterParams.sort,
-      tid: filterParams.tid !== ALL_VALUE ? filterParams.tid : undefined,
-      emotion: filterParams.emotion !== ALL_VALUE ? filterParams.emotion : undefined,
-      marked: filterParams.marked !== ALL_VALUE ? filterParams.marked : undefined,
-      keyword: Boolean(serarchKeyword.value) ? serarchKeyword.value : undefined
+      ...getQueryParams(filterParams.value),
+      keyword: searchKeyword.value || void 0
     }
 
-    loading.promise(getFeedbacks(getParams)).then((response) => {
+    fetching.promise(api.getFeedbacks(getParams)).then((response) => {
       feedbacks.data = response.data
       feedbacks.pagination = response.pagination
       scrollTo(document.body)
     })
   }
 
-  const resetParamsAndRefresh = () => {
-    serarchKeyword.value = ''
-    if (_.isEqual(toRaw(filterParams), DEFAULT_FILTER_PARAMS)) {
-      fetchData()
-    } else {
-      batchedUpdates(() => {
-        filterParams.tid = DEFAULT_FILTER_PARAMS.tid
-        filterParams.emotion = DEFAULT_FILTER_PARAMS.emotion
-        filterParams.marked = DEFAULT_FILTER_PARAMS.marked
-        filterParams.sort = DEFAULT_FILTER_PARAMS.sort
-      })
-    }
-  }
-
-  const refreshData = () => {
-    fetchData({
+  const refreshList = () => {
+    fetchList({
       page: feedbacks.pagination?.current_page,
       per_page: feedbacks.pagination?.per_page
     })
   }
 
-  const handleDelete = (feedbacks: Array<Feedback>) => {
+  const deleteItems = (feedbacks: Feedback[]) => {
     Modal.confirm({
       title: `确定要彻底删除 ${feedbacks.length} 个反馈吗？`,
       content: '该行为是物理删除，不可恢复！',
       centered: true,
-      onOk: () =>
-        deleteFeedbacks(feedbacks.map((c) => c._id!)).then(() => {
-          refreshData()
+      onOk: () => {
+        return api.deleteFeedbacks(feedbacks.map((f) => f._id!)).then(() => {
+          refreshList()
         })
+      }
     })
   }
 
-  const handleSubmit = (feedback: Feedback) => {
+  const updateItem = (feedback: Feedback) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { emotion_emoji, emotion_text, ...target } = {
-      ...activeEditData.value,
+      ...activeEditFeedback.value,
       ...feedback
     }
+    const payload = {
+      ...target,
+      ip: target.ip || null
+    }
 
-    submitting
-      .promise(
-        putFeedback({
-          ...target,
-          ip: target.ip || null
-        })
-      )
-      .then(() => {
-        closeModal()
-        refreshData()
-      })
+    updating.promise(api.updateFeedback(payload)).then(() => {
+      closeEditDrawer()
+      refreshList()
+    })
   }
 
-  useWatch(filterParams, () => fetchData())
+  useWatch(
+    () => filterParams.value,
+    () => fetchList(),
+    { deep: true }
+  )
 
   onMounted(() => {
-    fetchData()
+    fetchList()
   })
 
   return (
     <Card
-      title={`反馈列表（${feedbacks.pagination?.total ?? '-'}）`}
       bordered={false}
-      className={styles.feedback}
+      title={i18n.t('page.feedback.list.title', { total: feedbacks.pagination?.total ?? '-' })}
     >
-      <Space className={styles.toolbar} align="center" wrap>
-        <Space wrap>
-          <Select
-            className={styles.select}
-            loading={loading.state.value}
-            value={filterParams.tid}
-            onChange={(postId) => {
-              filterParams.tid = postId
-            }}
-            options={[
-              {
-                value: ALL_VALUE,
-                label: '所有反馈'
-              },
-              {
-                value: 0,
-                label: '站点反馈'
-              }
-            ]}
-            dropdownRender={(menu) => (
-              <div>
-                {menu}
-                <div className={styles.postIdInput}>
-                  <Input.Search
-                    allowClear={true}
-                    size="small"
-                    type="number"
-                    className={styles.input}
-                    placeholder="TID"
-                    enterButton={<span>GO</span>}
-                    onSearch={updateTargetID}
-                  />
-                </div>
-              </div>
-            )}
-          />
-          <Select
-            className={styles.select}
-            loading={loading.state.value}
-            value={filterParams.emotion}
-            onChange={(emotion) => {
-              filterParams.emotion = emotion
-            }}
-            options={[
-              { value: ALL_VALUE, label: '所有评分' },
-              { value: 1, label: '1 分' },
-              { value: 2, label: '2 分' },
-              { value: 3, label: '3 分' },
-              { value: 4, label: '4 分' },
-              { value: 5, label: '5 分' }
-            ]}
-          />
-          <Select
-            className={styles.select}
-            loading={loading.state.value}
-            value={filterParams.marked}
-            onChange={(marked) => {
-              filterParams.marked = marked
-            }}
-            options={[
-              { value: ALL_VALUE, label: '标记状态' },
-              ...markedStates.map((state) => ({
-                value: state.number,
-                label: (
-                  <Space>
-                    {state.icon}
-                    {state.name}
-                  </Space>
-                )
-              }))
-            ]}
-          />
-          <SortSelect
-            loading={loading.state.value}
-            value={filterParams.sort}
-            onChange={(sort) => {
-              filterParams.sort = sort
-            }}
-          />
-          <Input.Search
-            className={styles.search}
-            placeholder="输入反馈内容、作者信息搜索"
-            loading={loading.state.value}
-            onSearch={() => fetchData()}
-            value={serarchKeyword.value}
-            onChange={(event) => {
-              serarchKeyword.value = event.target.value
-            }}
-          />
-          <Button
-            icon={<Icon.ReloadOutlined />}
-            loading={loading.state.value}
-            onClick={() => resetParamsAndRefresh()}
-          >
-            重置并刷新
-          </Button>
-        </Space>
-        <Space>
+      <ListFilters
+        loading={fetching.state.value}
+        keyword={searchKeyword.value}
+        onKeywordChange={(keyword) => (searchKeyword.value = keyword)}
+        onKeywordSearch={() => fetchList()}
+        params={filterParams.value}
+        onParamsChange={(value) => Object.assign(filterParams.value, value)}
+        onResetRefresh={resetFiltersToDefault}
+        extra={
           <DropdownMenu
+            text="批量操作"
             disabled={!selectedIds.value.length}
             options={[
               {
                 label: '彻底删除',
-                icon: <Icon.DeleteOutlined />,
-                onClick: () => handleDelete(selectFeedbacks.value)
+                icon: <Icons.DeleteOutlined />,
+                onClick: () => deleteItems(selectedFeedbacks.value)
               }
             ]}
-          >
-            批量操作
-          </DropdownMenu>
-        </Space>
-      </Space>
+          />
+        }
+      />
       <Divider />
-      <FeedbackListTable
-        loading={loading.state.value}
-        selectedIds={selectedIds.value}
-        onSelecte={handleSelect}
+      <TableList
+        loading={fetching.state.value}
         data={feedbacks.data}
-        pagination={feedbacks.pagination!}
-        onTargetID={updateTargetID}
-        onDetail={(_, index) => editData(index)}
-        onDelete={(feedback) => handleDelete([feedback])}
-        onPagination={(page, pageSize) => fetchData({ page, per_page: pageSize })}
+        pagination={feedbacks.pagination}
+        selectedIds={selectedIds.value}
+        onSelect={(ids) => (selectedIds.value = ids)}
+        onDetail={(_, index) => openEditDrawer(index)}
+        onDelete={(feedback) => deleteItems([feedback])}
+        onPaginate={(page, pageSize) => fetchList({ page, per_page: pageSize })}
       />
-      <EditDrawer
-        loading={submitting.state.value}
-        visible={isVisibleModal}
-        feedback={activeEditData}
-        onCancel={closeModal}
-        onSubmit={handleSubmit}
-      />
+      <Drawer
+        width="46rem"
+        title="反馈详情"
+        destroyOnClose={true}
+        open={isEditDrawerOpen.value}
+        onClose={closeEditDrawer}
+      >
+        <Spin spinning={updating.state.value}>
+          {activeEditFeedback.value && (
+            <EditForm
+              submitting={updating.state.value}
+              feedback={activeEditFeedback.value}
+              onSubmit={(feedback) => updateItem(feedback)}
+            />
+          )}
+        </Spin>
+      </Drawer>
     </Card>
   )
 }

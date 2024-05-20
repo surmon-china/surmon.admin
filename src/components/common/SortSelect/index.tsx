@@ -3,12 +3,9 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import classnames from 'classnames'
 import React from 'react'
 import { Select, Space } from 'antd'
-import { st, SortTypeBase, SortTypeWithHot } from '@/constants/sort'
-
-import styles from './style.module.less'
+import { getSortType, SortTypeBase, SortTypeWithHot } from '@/constants/sort'
 
 export interface SortSelectProps {
   value?: number
@@ -17,6 +14,7 @@ export interface SortSelectProps {
   loading?: boolean
   disabled?: boolean
   className?: string
+  style?: React.CSSProperties
 }
 
 export const SortSelect: React.FC<SortSelectProps> = (props) => {
@@ -25,7 +23,8 @@ export const SortSelect: React.FC<SortSelectProps> = (props) => {
 
   return (
     <Select
-      className={classnames(styles.select, props.className)}
+      className={props.className}
+      style={props.style}
       loading={props.loading}
       disabled={props.disabled}
       value={props.value}
@@ -34,9 +33,9 @@ export const SortSelect: React.FC<SortSelectProps> = (props) => {
         return {
           value: sortType,
           label: (
-            <Space>
-              {st(sortType).icon}
-              {st(sortType).name}
+            <Space size="small">
+              {getSortType(sortType).icon}
+              {getSortType(sortType).name}
             </Space>
           )
         }

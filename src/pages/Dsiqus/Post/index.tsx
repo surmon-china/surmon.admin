@@ -1,81 +1,76 @@
 /**
- * @file Post list page
+ * @file Disqts posts page
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import classnames from 'classnames'
 import React from 'react'
 import { useShallowReactive, onMounted, useRef, useWatch } from 'veact'
 import { useLoading } from 'veact-use'
-import { Button, Card, Table, Select, Input, Space, Divider, Typography, Avatar } from 'antd'
-import * as Icon from '@ant-design/icons'
-import { Placeholder } from '@/components/common/Placeholder'
-import { UniversalText } from '@/components/common/UniversalText'
-import { getConfig, getPosts, PostState, OrderType, GeneralDisqusParams } from '@/store/disqus'
+import { Button, Card, Divider, Flex, Typography } from 'antd'
+import * as Icons from '@ant-design/icons'
 import { scrollTo } from '@/services/scroller'
-import { stringToYMD } from '@/transforms/date'
-
-import styles from './style.module.less'
-
-// https://disqus.com/api/docs/posts/list/
-const SELECT_ALL_VALUE = 'ALL'
-const DEFAULT_THREAD_ID = ''
-const DEFAULT_PARAMS = Object.freeze({
-  order: OrderType.Desc,
-  include: SELECT_ALL_VALUE as any as PostState | typeof SELECT_ALL_VALUE
-})
+import { DisqusPostState } from '@/constants/disqus'
+import { getDisqusConfig, getDisqusPosts, GeneralDisqusParams } from '@/apis/disqus'
+import { ListFilters, DEFAULT_FILTER_PARAMS, SELECT_ALL_VALUE } from './ListFilters'
+import { TableList } from './TableList'
 
 export const DisqusPostsPage: React.FC = () => {
-  const config = useRef<any>(null)
-  const loading = useLoading()
-  const threadID = useRef(DEFAULT_THREAD_ID)
-  const filterParams = useShallowReactive({ ...DEFAULT_PARAMS })
+  const disqusConfig = useRef<any>(null)
+  const fetching = useLoading()
   const posts = useShallowReactive({
     cursor: null as any,
     list: [] as any[]
   })
 
-  const fetchData = (params?: GeneralDisqusParams) => {
+  // filters
+  const threadIdInput = useRef('')
+  const filterParams = useRef({ ...DEFAULT_FILTER_PARAMS })
+
+  // https://disqus.com/api/docs/posts/list/
+  const fetchList = (params?: GeneralDisqusParams) => {
     const getParams = {
       ...params,
       limit: 50,
-      forum: config.value!.forum,
-      order: filterParams.order,
-      thread: threadID.value ? threadID.value : null,
+      forum: disqusConfig.value!.forum,
+      order: filterParams.value.order,
+      thread: threadIdInput.value || null,
       include:
-        filterParams.include !== SELECT_ALL_VALUE
-          ? [filterParams.include]
-          : [...Object.values(PostState)]
+        filterParams.value.include !== SELECT_ALL_VALUE
+          ? [filterParams.value.include]
+          : [...Object.values(DisqusPostState)]
     }
 
-    loading.promise(getPosts(getParams)).then((response) => {
-      posts.cursor = response.result.cursor
+    fetching.promise(getDisqusPosts(getParams)).then((response) => {
       if (params?.cursor) {
+        posts.cursor = response.result.cursor
         posts.list.push(...response.result.response)
       } else {
+        posts.cursor = response.result.cursor
         posts.list = response.result.response
         scrollTo(document.body)
       }
     })
   }
 
-  const resetFetch = () => {
-    threadID.value = DEFAULT_THREAD_ID
-    filterParams.order = DEFAULT_PARAMS.order
-    filterParams.include = DEFAULT_PARAMS.include
-    fetchData()
-  }
-
   const loadNextPage = () => {
-    fetchData({ cursor: posts.cursor.next })
+    fetchList({ cursor: posts.cursor.next })
   }
 
-  useWatch(filterParams, () => fetchData())
+  const resetFiltersToDefault = () => {
+    threadIdInput.value = ''
+    filterParams.value = { ...DEFAULT_FILTER_PARAMS }
+  }
+
+  useWatch(
+    () => filterParams.value,
+    () => fetchList(),
+    { deep: true }
+  )
 
   onMounted(() => {
-    getConfig().then((response) => {
-      config.value = response.result
-      fetchData()
+    getDisqusConfig().then((response) => {
+      disqusConfig.value = response.result
+      fetchList()
     })
   })
 
@@ -83,233 +78,44 @@ export const DisqusPostsPage: React.FC = () => {
     <Card
       title={`Posts (${posts.list.length})`}
       bordered={false}
-      className={styles.posts}
       extra={
         <Button
           type="primary"
           size="small"
           target="_blank"
-          icon={<Icon.DashboardOutlined />}
-          href={`https://${config.value?.forum}.disqus.com/admin/moderate/all/`}
+          icon={<Icons.DashboardOutlined />}
+          href={`https://${disqusConfig.value?.forum}.disqus.com/admin/moderate/all/`}
         >
           Disqus Moderate
         </Button>
       }
     >
-      <Space wrap>
-        <Select
-          className={classnames(styles.select)}
-          loading={loading.state.value}
-          value={filterParams.include}
-          onChange={(state) => {
-            filterParams.include = state
-          }}
-          options={[
-            {
-              value: SELECT_ALL_VALUE,
-              label: 'All state'
-            },
-            {
-              value: PostState.Approved,
-              label: 'Approved'
-            },
-            {
-              value: PostState.Unapproved,
-              label: 'Unapproved'
-            },
-            {
-              value: PostState.Spam,
-              label: 'Spam'
-            },
-            {
-              value: PostState.Deleted,
-              label: 'Deleted'
-            },
-            {
-              value: PostState.Flagged,
-              label: 'Flagged'
-            },
-            {
-              value: PostState.Highlighted,
-              label: 'Highlighted'
-            }
-          ]}
-        />
-        <Select
-          className={classnames(styles.select)}
-          loading={loading.state.value}
-          value={filterParams.order}
-          onChange={(order) => {
-            filterParams.order = order
-          }}
-          options={[
-            {
-              value: OrderType.Desc,
-              label: 'Desc'
-            },
-            {
-              value: OrderType.Asc,
-              label: 'Asc'
-            }
-          ]}
-        />
-        <Input.Search
-          className={styles.search}
-          placeholder="thread ID"
-          loading={loading.state.value}
-          allowClear={true}
-          onSearch={() => fetchData()}
-          value={threadID.value}
-          onChange={(event) => {
-            threadID.value = event.target.value.trim()
-          }}
-        />
-        <Button
-          icon={<Icon.ReloadOutlined />}
-          loading={loading.state.value}
-          onClick={() => resetFetch()}
-        >
-          Reset refresh
-        </Button>
-      </Space>
-      <Divider />
-      <Table
-        rowKey="id"
-        dataSource={posts.list.slice()}
-        pagination={false}
-        loading={loading.state.value}
-        columns={[
-          {
-            title: 'ID / PID / Thread',
-            dataIndex: 'id',
-            width: 160,
-            render: (_, item) => (
-              <Space direction="vertical">
-                <UniversalText text={item.id} copyable={true} type="secondary" />
-                <UniversalText text={item.parent} copyable={true} type="secondary" />
-                <UniversalText text={item.thread} copyable={true} />
-              </Space>
-            )
-          },
-          {
-            title: 'Message',
-            dataIndex: 'message',
-            width: 450,
-            render: (_, item) => {
-              return <div dangerouslySetInnerHTML={{ __html: item.message }}></div>
-            }
-          },
-          {
-            title: 'Author',
-            key: 'author',
-            width: 138,
-            render: (_, item) => {
-              return (
-                <Space>
-                  <Avatar size={38} shape="square" src={item.author.avatar.cache} />
-                  <Space direction="vertical" size="small">
-                    <span>{item.author.name}</span>
-                    <Placeholder data={item.author.url}>
-                      {(url) => (
-                        <Typography.Link href={url} target="_blank">
-                          homepage
-                        </Typography.Link>
-                      )}
-                    </Placeholder>
-                  </Space>
-                </Space>
-              )
-            }
-          },
-          {
-            title: 'Role',
-            key: 'author.isAnonymous',
-            render: (_, item) =>
-              item.author.isAnonymous ? (
-                <Typography.Text type="secondary">Guest</Typography.Text>
-              ) : (
-                <Typography.Text type="success">Disqus</Typography.Text>
-              )
-          },
-          {
-            title: 'Likes',
-            key: 'likes',
-            render: (_, item) => (
-              <Space size="small">
-                <Icon.LikeOutlined />
-                {item.likes}
-              </Space>
-            )
-          },
-          {
-            title: 'Dislikes',
-            key: 'dislikes',
-            render: (_, item) => (
-              <Space size="small">
-                <Icon.DislikeOutlined />
-                {item.dislikes}
-              </Space>
-            )
-          },
-          {
-            title: 'State',
-            dataIndex: 'isApproved',
-            width: 120,
-            render: (_, item) => (
-              <div>
-                {[
-                  {
-                    value: item.isApproved,
-                    label: 'Approved',
-                    state: 'success',
-                    icon: <Icon.CheckCircleOutlined />
-                  },
-                  {
-                    value: item.isDeleted,
-                    label: 'Deleted',
-                    state: 'danger',
-                    icon: <Icon.CloseCircleOutlined />
-                  },
-                  {
-                    value: item.isSpam,
-                    label: 'SPAM',
-                    state: 'danger',
-                    icon: <Icon.CloseCircleOutlined />
-                  }
-                ]
-                  .filter((i) => i.value)
-                  .map((i, index) => (
-                    <Typography.Text key={index} type={i.state as any}>
-                      {i.icon}
-                      &nbsp;
-                      {i.label}
-                    </Typography.Text>
-                  ))}
-              </div>
-            )
-          },
-          {
-            title: 'Create at',
-            dataIndex: 'createdAt',
-            width: 160,
-            render: (_, item) => stringToYMD(item.createdAt)
-          }
-        ]}
+      <ListFilters
+        loading={fetching.state.value}
+        threadId={threadIdInput.value}
+        onThreadIdChange={(id) => (threadIdInput.value = id)}
+        onThreadIdSearch={() => fetchList()}
+        params={filterParams.value}
+        onParamsChange={(value) => Object.assign(filterParams.value, value)}
+        onResetRefresh={resetFiltersToDefault}
       />
-      <div className={styles.loadmore}>
+      <Divider />
+      <TableList loading={fetching.state.value} data={posts.list.slice()} />
+      <br />
+      <Flex justify="center">
         {posts.cursor?.hasNext ? (
           <Button
             size="large"
-            disabled={loading.state.value}
-            loading={loading.state.value}
+            disabled={fetching.state.value}
+            loading={fetching.state.value}
             onClick={loadNextPage}
           >
-            {loading.state.value ? 'Loading...' : 'Loadmore'}
+            {fetching.state.value ? 'Loading...' : 'Loadmore'}
           </Button>
         ) : (
-          <span>NO MORE</span>
+          <Typography.Text type="secondary">NO MORE</Typography.Text>
         )}
-      </div>
+      </Flex>
     </Card>
   )
 }

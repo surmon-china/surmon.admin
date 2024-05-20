@@ -1,41 +1,66 @@
 import React from 'react'
+import { onMounted } from 'veact'
 import { useLocation, matchPath } from 'react-router-dom'
-import { Breadcrumb, BackTop, Typography } from 'antd'
-import * as Icon from '@ant-design/icons'
-import { scrollTo } from '@/services/scroller'
-import { routeMap } from '@/routes'
-import { PageHeaderAD } from './PageAD'
+import { Card, Breadcrumb, FloatButton, Typography, Flex } from 'antd'
+import { CaretUpOutlined } from '@ant-design/icons'
 import { ENABLED_AD } from '@/config'
+import { flatRoutes } from '@/routes'
+import { useTranslation } from '@/i18n'
+import { scrollTo } from '@/services/scroller'
 
 import styles from './style.module.less'
 
+const HeaderAdvert: React.FC = () => {
+  onMounted(() => {
+    const win: any = window
+    ;(win.adsbygoogle = win.adsbygoogle || []).push({})
+  })
+
+  return (
+    <div className={styles.pageHeaderAdvert}>
+      <Card classNames={{ body: styles.adCard }} size="small" bordered={false}>
+        <ins
+          className="adsbygoogle"
+          style={{ display: 'inline-block', width: 728, height: 90 }}
+          data-ad-client="ca-pub-4710915636313788"
+          data-ad-slot="5883149084"
+        ></ins>
+      </Card>
+    </div>
+  )
+}
+
 export const AppContent: React.FC<React.PropsWithChildren> = (props) => {
+  const { i18n } = useTranslation()
   const location = useLocation()
   const [, ...paths] = location.pathname.split('/')
-  const currentRoute = Array.from(routeMap.values()).find((route) => {
-    return matchPath(route.path, location.pathname)
+  const currentRoute = flatRoutes.find((route) => {
+    return matchPath(route.path!, location.pathname)
   })
 
   return (
     <div className={styles.pageContainer}>
-      <div className={styles.pageHeader}>
+      <Flex align="center" justify="space-between" className={styles.pageHeader}>
         <Typography.Title className={styles.title} level={4}>
-          <span className={styles.icon}>{currentRoute?.icon}</span>
-          {currentRoute?.name}
+          <span className={styles.icon}>{currentRoute?.handle?.icon}</span>
+          {currentRoute?.handle?.i18nKey
+            ? i18n.t(currentRoute.handle.i18nKey)
+            : currentRoute?.handle?.name}
         </Typography.Title>
-        <Breadcrumb className={styles.breadcrumb}>
-          {paths.map((path) => (
-            <Breadcrumb.Item key={path}>{path}</Breadcrumb.Item>
-          ))}
-        </Breadcrumb>
-      </div>
-      {ENABLED_AD && <PageHeaderAD />}
+        <Breadcrumb
+          className={styles.breadcrumb}
+          items={paths.map((path) => ({ title: path }))}
+        />
+      </Flex>
+      {ENABLED_AD && <HeaderAdvert />}
       <div className={styles.pageContent}>{props?.children}</div>
-      <BackTop className={styles.backTop} onClick={() => scrollTo(document.body)}>
-        <div className={styles.tigger}>
-          <Icon.CaretUpOutlined />
-        </div>
-      </BackTop>
+      <FloatButton.BackTop
+        className={styles.backTop}
+        shape="square"
+        type="primary"
+        icon={<CaretUpOutlined />}
+        onClick={() => scrollTo(document.body)}
+      />
     </div>
   )
 }

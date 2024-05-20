@@ -7,6 +7,7 @@ import React from 'react'
 import { IPLocation as IPLocationType } from '@/constants/general'
 import { countryCodeToEmoji } from '@/transforms/emoji'
 import { Placeholder, PlaceholderProps } from '../Placeholder'
+
 import styles from './style.module.less'
 
 export interface IPLocationProps {
@@ -20,11 +21,10 @@ export const IPLocation: React.FC<IPLocationProps> = (props) => {
   return (
     <Placeholder data={props.data} placeholder={props.placeholder}>
       {(location) => {
+        const emoji = location.country_code && countryCodeToEmoji(location.country_code)
         const texts = props.fullname
           ? [location.country, location.region, location.city]
           : [location.country_code || location.country, location.city]
-
-        const emoji = location.country_code && countryCodeToEmoji(location.country_code)
 
         return (
           <span className={props.className}>

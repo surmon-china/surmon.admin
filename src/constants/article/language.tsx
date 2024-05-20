@@ -5,6 +5,10 @@
 
 import React from 'react'
 
+const EmojiIcon: React.FC<{ emoji: string }> = ({ emoji }) => {
+  return <span style={{ transform: 'scale(1.3)', display: 'inline-block' }}>{emoji}</span>
+}
+
 // 文章语言: https://github.com/surmon-china/nodepress/blob/main/src/constants/biz.constant.ts#L8
 // language: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 export enum ArticleLanguage {
@@ -13,31 +17,26 @@ export enum ArticleLanguage {
   Mixed = 'mix' // 多语言混合
 }
 
-const EmojiIcon: React.FC<{ emoji: string }> = ({ emoji }) => {
-  return <span style={{ transform: 'scale(1.3)', display: 'inline-block' }}>{emoji}</span>
-}
+export const articleLanguages = [
+  {
+    id: ArticleLanguage.Chinese,
+    name: '中文',
+    icon: <EmojiIcon emoji="🇨🇳" />
+  },
+  {
+    id: ArticleLanguage.English,
+    name: 'English',
+    icon: <EmojiIcon emoji="🇺🇸" />
+  },
+  {
+    id: ArticleLanguage.Mixed,
+    name: '多语言',
+    icon: <EmojiIcon emoji="🌐" />
+  }
+]
 
-const articleLanguageMap = new Map(
-  [
-    {
-      id: ArticleLanguage.Chinese,
-      name: '中文',
-      icon: <EmojiIcon emoji="🇨🇳" />
-    },
-    {
-      id: ArticleLanguage.English,
-      name: 'English',
-      icon: <EmojiIcon emoji="🇺🇸" />
-    },
-    {
-      id: ArticleLanguage.Mixed,
-      name: '多语言',
-      icon: <EmojiIcon emoji="🌐" />
-    }
-  ].map((item) => [item.id, item])
-)
+const articleLanguageMap = new Map(articleLanguages.map((item) => [item.id, item]))
 
-export const al = (language: ArticleLanguage) => {
+export const getArticleLanguage = (language: ArticleLanguage) => {
   return articleLanguageMap.get(language)!
 }
-export const articleLanguages = Array.from<ReturnType<typeof al>>(articleLanguageMap.values())

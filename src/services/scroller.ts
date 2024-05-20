@@ -1,6 +1,5 @@
 /**
  * @file Scroll to anywhere
- * @module services.scroll-to
  * @author Surmon <https://github.com/surmon-china>
  */
 

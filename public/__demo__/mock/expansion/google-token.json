@@ -1,6 +1,0 @@
-{
-  "status": "error",
-  "message": "获取失败",
-  "error": "Demo 站点无法获取有效的 Google Token",
-  "result": null
-}

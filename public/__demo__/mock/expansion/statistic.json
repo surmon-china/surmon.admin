@@ -1,13 +1,13 @@
 {
   "status": "success",
-  "message": "Get statistic succeed",
+  "message": "Get statistic succeeded",
   "result": {
     "tags": 29,
     "articles": 161,
     "comments": 2060,
     "totalViews": 574127,
     "totalLikes": 4896,
-    "todayViews": 17,
+    "todayViews": 639,
     "averageEmotion": 4.89
   }
 }

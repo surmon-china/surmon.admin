@@ -1,0 +1,81 @@
+{
+  "login.verifying_token": "Verifying token...",
+  "login.initializing": "Initializing...",
+  "login.invalid_token_message_title": "Please log-in again",
+  "login.invalid_token_message_description": "Invalid token!",
+
+  "logout.title": "Logout",
+  "logout.confirmation": "Are you sure you want to log out?",
+
+  "nodepress.request.invalid_token.title": "Invalid Token",
+  "nodepress.request.invalid_token.description": "Token is invalid or doesn't exist",
+  "nodepress.response.success": "NodePress Response",
+
+  "component.form_key_value.add": "Add item",
+  "component.modal_json_editor.save": "Save",
+  "component.modal_json_editor.error": "Invalid JSON format",
+  "component.modal_json_editor.placeholder": "Input JSON here...",
+  "component.image_uploader.state.start": "Start uploading",
+  "component.image_uploader.state.succeeded": "Upload succeeded",
+  "component.image_uploader.state.failed": "Upload failed",
+  "component.image_uploader.input.placeholder": "Input image URL",
+  "component.universal_editor.cacheable_title": "Cached drafts are enabled",
+  "component.universal_editor.state.length": "Length",
+  "component.universal_editor.state.line_count": "Line Count",
+  "component.universal_editor.state.selected_count": "Selected Count",
+  "component.universal_editor.state.selected_length": "Selected Length",
+
+  "common.list.filter.search": "Input keywords to search",
+  "common.list.filter.refresh": "Refresh",
+  "common.list.filter.refresh_with_reset": "Reset and Refresh",
+
+  "common.table.states": "States",
+  "common.table.actions": "Actions",
+
+  "page.404.link": "Back to Home",
+
+  "page.dashboard.title": "Dashboard",
+
+  "page.announcement.title": "Announcements",
+  "page.announcement.list.title": "Announcements ({{total}})",
+
+  "page.category.title": "Categories",
+  "page.category.list.title": "Categories ({{total}})",
+
+  "page.tag.title": "Tags",
+  "page.tag.list.title": "Tags ({{total}})",
+
+  "page.article.title": "Articles",
+  "page.article.list": "All Articles",
+  "page.article.create": "Add New",
+  "page.article.edit": "Edit Article",
+
+  "page.article.list.title": "Articles ({{total}})",
+  "page.article.list.filter.featured": "Featured",
+  "page.article.list.filter.search": "Input title, content... to search",
+
+  "page.article.editor.content": "Basic Content",
+  "page.article.editor.categories": "Categories",
+  "page.article.editor.thumbnail": "Thumbnail",
+  "page.article.editor.extends": "Extends",
+  "page.article.editor.states": "States",
+
+  "page.comment.title": "Comments",
+  "page.comment.list.title": "Comments ({{total}})",
+
+  "page.vote.title": "Votes",
+  "page.vote.list.title": "Votes ({{total}})",
+
+  "page.feedback.title": "Feedbacks",
+  "page.feedback.list.title": "Feedbacks ({{total}})",
+
+  "page.disqus.title": "Disqus",
+  "page.disqus.posts": "Posts",
+  "page.disqus.threads": "Threads",
+  "page.disqus.synchronize": "Synchronize",
+
+  "page.setting.title": "Setting",
+  "page.setting.general.title": "General Settings",
+  "page.setting.data.title": "Cloud Data",
+  "page.setting.userinfo.title": "Admin Profile"
+}

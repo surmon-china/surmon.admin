@@ -14,6 +14,6 @@ export interface Tag {
   description: string
   updated_at: string
   created_at: string
-  extends: Array<GeneralKeyValue>
+  extends: GeneralKeyValue[]
   article_count?: number
 }

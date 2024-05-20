@@ -1,6 +1,5 @@
 /**
- * @file Token
- * @module service.token
+ * @file Token service
  * @author Surmon <https://github.com/surmon-china>
  */
 

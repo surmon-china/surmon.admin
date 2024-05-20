@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "message": "获取文章成功",
+  "message": "Get articles succeeded",
   "result": {
     "data": [
       {
@@ -66,6 +66,7 @@
         "description": "学习总结",
         "thumbnail": "/veact-admin/images/thumbnail.jpg",
         "extends": [],
+        "featured": true,
         "meta": { "likes": 14, "views": 297, "comments": 2 },
         "created_at": "2021-08-30T06:56:50.474Z",
         "updated_at": "2021-08-31T06:27:24.341Z",
@@ -133,6 +134,7 @@
         "title": "今日日记",
         "description": "今天发生的一些事情",
         "thumbnail": "/veact-admin/images/thumbnail.jpg",
+        "featured": true,
         "extends": [],
         "meta": { "likes": 9, "views": 915, "comments": 11 },
         "created_at": "2021-08-05T18:09:07.585Z",

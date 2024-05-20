@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "message": "获取文章详情成功",
+  "message": "Get article detail succeeded",
   "result": {
     "keywords": ["每日一记", "上海天气"],
     "state": 0,

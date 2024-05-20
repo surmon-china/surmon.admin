@@ -1,17 +1,27 @@
 {
   "status": "success",
-  "message": "获取设置成功",
+  "message": "Get app options succeeded",
   "result": {
-    "keywords": ["Veact", "JavaScript"],
-    "ad_config": "",
     "_id": "589e01b75af07d59124234cd",
+    "meta": { "likes": 600 },
     "title": "Blog name",
-    "sub_title": "sub title",
-    "description": "site description",
+    "sub_title": "Sub title",
+    "description": "Site description",
+    "keywords": ["Veact", "JavaScript", "Surmon's Blog"],
     "site_url": "https://surmon.me",
     "site_email": "admin@example.com",
-    "site_icp": "",
+    "friend_links": [
+      {
+        "name": "Surmon.me",
+        "value": "https://surmon.me"
+      },
+      {
+        "name": "Surmon's GitHub",
+        "value": "https://github.com/surmon-china"
+      }
+    ],
     "blocklist": {
+      "keywords": ["asd", "sss", "阿什顿发", "dsds", "asasas", "sdf", "test", "阿萨德"],
       "ips": [
         "115.220.179.189",
         "113.88.157.115",
@@ -30,10 +40,9 @@
         "q@qq.com",
         "e@qq.com",
         "sfsfsfs@email.com"
-      ],
-      "keywords": ["asd", "sss", "阿什顿发", "dsds", "asasas", "sdf", "test", "阿萨德"]
+      ]
     },
-    "meta": { "likes": 600 },
+    "ad_config": "{\"PC_NAV\":[{\"icon\":\"icon-tencent-cloud\",\"color\":\"#006eff\",\"url\":\"https://curl.qcloud.com/WfO7qXy9\",\"i18n\":{\"en\":\"QCloud\",\"zh\":\"新春上云\"}}],\"PC_ASIDE_SWIPER\":[{\"url\":\"https://curl.qcloud.com/n4x6k4h3\",\"src\":\"https://static.surmon.me/assets/pc-aside-tencent.jpg\"}]}",
     "updated_at": "2019-01-23T17:44:13.425Z"
   }
 }

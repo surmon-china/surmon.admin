@@ -1,5 +1,5 @@
 /**
- * @file 链接转换
+ * @file URL transform
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -12,8 +12,8 @@ export const getResourceUrl = (uri: string) => {
 }
 
 export const BLOG_ARTICLE_URL_PREFIX = `${BLOG_URL}/article/`
-export const getBlogArticleUrl = (articleID: number) => {
-  return `${BLOG_ARTICLE_URL_PREFIX}${articleID}`
+export const getBlogArticleUrl = (articleId: number) => {
+  return `${BLOG_ARTICLE_URL_PREFIX}${articleId}`
 }
 
 export const getBlogTagUrl = (tagSlug: string) => {
@@ -28,6 +28,6 @@ export const getBlogGuestbookUrl = () => {
   return `${BLOG_URL}/guestbook`
 }
 
-export const getBlogURLByPostID = (postID: number) => {
-  return postID === COMMENT_GUESTBOOK_POST_ID ? getBlogGuestbookUrl() : getBlogArticleUrl(postID)
+export const getBlogURLByPostId = (postId: number) => {
+  return postId === COMMENT_GUESTBOOK_POST_ID ? getBlogGuestbookUrl() : getBlogArticleUrl(postId)
 }

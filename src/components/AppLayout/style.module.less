@@ -2,15 +2,15 @@
 @import '@/styles/variables.less';
 
 .appLayout {
-  height: 100vh;
-
   .appSider {
-    position: fixed;
-    left: 0;
+    position: sticky;
+    top: 0;
     height: 100vh;
-    overflow: auto;
+    overflow: hidden;
+    background-color: @module-background;
+    border-right: 1px solid @color-border-secondary;
 
-    .siderMenu {
+    .siderContent {
       height: 100%;
       position: relative;
       overflow: hidden;
@@ -21,25 +21,14 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: @app-header-height;
-        border-bottom: 1px solid @app-module-background;
-
-        .image {
-          width: 60%;
-          &.collapsed {
-            width: 46%;
-          }
-        }
+        height: @header-height;
+        border-bottom: 1px solid @color-border-secondary;
       }
 
       @userinfo-height: 188px;
       .userInfo {
         height: @userinfo-height;
-        border-bottom: 1px solid @app-module-background;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        border-bottom: 1px solid @color-border-secondary;
         overflow: hidden;
         user-select: none;
         &.collapsed {
@@ -50,6 +39,7 @@
             width: @size;
             height: @size;
           }
+
           .name {
             font-size: 85%;
           }
@@ -59,10 +49,10 @@
           @size: 5rem;
           width: @size;
           height: @size;
-          border-radius: 100%;
-          border: 4px solid @app-module-background;
           margin-bottom: 1rem;
-          background-color: @app-module-background;
+          border-radius: 100%;
+          border: 4px solid @color-border-secondary;
+          background-color: @color-border;
           background-image: url('/images/nodepress.png');
           background-size: contain;
           transform: rotate(0deg);
@@ -72,63 +62,74 @@
           }
         }
 
+        .name {
+          margin-top: 0;
+        }
+
         .slogan {
-          font-size: @app-font-size-small;
+          font-size: @font-size-sm;
           max-width: 80%;
         }
       }
 
       .menus {
-        height: calc(100vh - @app-header-height - @app-header-height - @userinfo-height);
+        border: none;
+        padding: 4px;
+        height: calc(100vh - @header-height - @userinfo-height - 3em);
         overflow-y: auto;
+        &::-webkit-scrollbar {
+          width: 3px;
+          height: 3px;
+          background: @body-background;
+        }
+        &::-webkit-scrollbar-track {
+          border-radius: 0;
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 0;
+          background-color: @color-border-secondary;
+        }
       }
 
       .footerLink {
         position: absolute;
         bottom: 0;
+        display: flex;
+        align-items: center;
         width: 100%;
-        border-top: 1px solid @app-module-background;
+        height: 3em;
+        padding-inline: @gap-xl;
+        border-top: 1px solid @color-border-secondary;
+        &.collapsed {
+          padding: 0;
+          justify-content: center;
+        }
       }
     }
   }
 
   .appHeader {
-    width: 100%;
-    height: @app-header-height;
-    padding: 0;
-    position: fixed;
+    position: sticky;
     top: 0;
     right: 0;
-    z-index: 1;
-    background-color: @app-module-background;
+    z-index: 9;
+    padding: 0;
+    width: 100%;
+    height: @header-height;
+    background-color: @module-background;
+    border-bottom: 1px solid @color-border-secondary;
 
     .headerContent {
       height: 100%;
-      display: flex;
-      justify-content: space-between;
+      padding-inline: @gap-lg;
 
-      .siderToggler {
-        height: 100%;
-        width: 60px;
+      .userMenu {
         display: flex;
-        justify-content: center;
         align-items: center;
-      }
+        cursor: pointer;
 
-      .user {
-        margin-right: 1.6rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .content {
-          display: flex;
-          align-items: center;
-          cursor: pointer;
-
-          .avatar {
-            margin-left: 10px;
-          }
+        .avatar {
+          margin-left: @font-size-sm;
         }
       }
     }
@@ -137,79 +138,49 @@
   .appFooter {
     text-align: center;
     user-select: none;
-    background-color: @app-module-background;
+    background-color: @module-background;
   }
 
   .appContent {
-    margin-top: @app-header-height;
-
     .pageContainer {
       .pageHeader {
         height: 5rem;
-        padding: 0 2rem;
-        border-top: 1px solid @app-module-background-lighter;
-        background-color: @app-module-background;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        padding-inline: @gap-xl;
+        background-color: @module-background;
+        user-select: none;
 
         .title {
-          user-select: none;
           margin: 0;
-
           .icon {
-            margin-right: 10px;
+            margin-right: @gap-sm;
           }
         }
 
         .breadcrumb {
+          font-weight: bold;
           text-transform: uppercase;
-          user-select: none;
         }
       }
+
       .pageContent {
-        padding: 2rem;
+        padding: @gap-lg;
       }
     }
 
     .backTop {
       right: 3rem;
       bottom: 3rem;
-
-      .tigger {
-        @size: 40px;
-        width: @size;
-        height: @size;
-        line-height: @size;
-        border-radius: @app-border-radius;
-        background-color: rgba(@app-primary-color, 75%);
-        font-size: @app-font-size-large;
-        text-align: center;
-        &:hover {
-          background-color: @app-primary-color;
-        }
-      }
     }
   }
 
-  .appPageHeaderMammon {
-    padding: 2rem;
+  .pageHeaderAdvert {
+    padding: @gap-lg;
     padding-bottom: 0;
 
-    .mammonBox {
+    .adCard {
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: @app-module-background;
-
-      .closeButton {
-        margin-left: 2rem;
-        opacity: 0.3;
-
-        &:hover {
-          opacity: 0.6;
-        }
-      }
     }
   }
 }

@@ -1,12 +1,9 @@
-// Ant design
-@import './antd';
+// antd reset
+@import 'antd/dist/reset.css';
 
 // init
 @import './mixins';
 @import './variables';
-
-// transition
-@import './transition';
 
 // font
 @font-face {
@@ -18,40 +15,32 @@
   unicode-range: U+21-3B, U+3D, U+3F-5F, U+61-7D;
 }
 
-// scrollbar
-*::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background: @app-module-background-lighter;
-}
-*::-webkit-scrollbar-track {
-  border-radius: 0;
-}
-*::-webkit-scrollbar-thumb {
-  border-radius: 0;
-  background-color: rgba(@app-primary-color, 0.4);
-  transition: background-color 0.2s;
-  &:hover {
-    background-color: @app-primary-color;
-  }
-}
-
-// global
-html {
-  background-color: @app-body-background;
-}
-
 body {
   margin: 0;
-  overflow-y: scroll;
-  font-family: @app-font-family;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  &.fullscreen {
-    overflow: hidden;
-  }
+  font-family:
+    'DINRegular',
+    'PingFang SC',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    'Noto Sans',
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji';
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+// fix for antd skeleton list margin
+.ant-skeleton-paragraph {
+  margin-bottom: 0;
 }

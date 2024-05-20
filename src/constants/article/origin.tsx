@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import * as Icon from '@ant-design/icons'
+import * as Icons from '@ant-design/icons'
 
 /** 文章来源 */
 export enum ArticleOrigin {
@@ -13,28 +13,29 @@ export enum ArticleOrigin {
   Hybrid = 2 // 混合
 }
 
-const articleOriginMap = new Map(
-  [
-    {
-      id: ArticleOrigin.Original,
-      name: '原创',
-      icon: <Icon.EditOutlined />,
-      color: 'green'
-    },
-    {
-      id: ArticleOrigin.Reprint,
-      name: '转载',
-      icon: <Icon.CopyOutlined />,
-      color: 'red'
-    },
-    {
-      id: ArticleOrigin.Hybrid,
-      name: '衍生',
-      icon: <Icon.PullRequestOutlined />,
-      color: 'orange'
-    }
-  ].map((item) => [item.id, item])
-)
+export const articleOrigins = [
+  {
+    id: ArticleOrigin.Original,
+    name: '原创',
+    icon: <Icons.EditOutlined />,
+    color: 'default'
+  },
+  {
+    id: ArticleOrigin.Reprint,
+    name: '转载',
+    icon: <Icons.CopyOutlined />,
+    color: 'default'
+  },
+  {
+    id: ArticleOrigin.Hybrid,
+    name: '衍生',
+    icon: <Icons.PullRequestOutlined />,
+    color: 'default'
+  }
+]
 
-export const ao = (state: ArticleOrigin) => articleOriginMap.get(state)!
-export const articleOrigins = Array.from<ReturnType<typeof ao>>(articleOriginMap.values())
+const articleOriginMap = new Map(articleOrigins.map((item) => [item.id, item]))
+
+export const getArticleOrigin = (state: ArticleOrigin) => {
+  return articleOriginMap.get(state)!
+}

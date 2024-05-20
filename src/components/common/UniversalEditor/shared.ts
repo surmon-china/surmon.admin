@@ -1,41 +1,41 @@
 import { debounce } from 'lodash'
 import storage from '@/services/storage'
 
-export enum UEditorLanguage {
+export enum UnEditorLanguage {
   Markdown = 'markdown',
   JSON = 'json',
   YAML = 'yaml'
 }
 
-export const UEditorLanguages = [
+export const UnEditorLanguages = [
   {
-    id: UEditorLanguage.Markdown,
+    id: UnEditorLanguage.Markdown,
     name: 'Markdown',
     ext: 'md'
   },
   {
-    id: UEditorLanguage.JSON,
+    id: UnEditorLanguage.JSON,
     name: 'JSON',
     ext: 'json'
   },
   {
-    id: UEditorLanguage.YAML,
+    id: UnEditorLanguage.YAML,
     name: 'YAML',
     ext: 'yaml'
   }
 ]
 
-export const UEditorLanguageMap: ReadonlyMap<UEditorLanguage, (typeof UEditorLanguages)[0]> =
-  new Map(UEditorLanguages.map((item) => [item.id, item]))
+export const UnEditorLanguageMap: ReadonlyMap<UnEditorLanguage, (typeof UnEditorLanguages)[0]> =
+  new Map(UnEditorLanguages.map((item) => [item.id, item]))
 
 const getEditorCacheStorageKey = (id: string) => {
-  return `ueditor-${id}`
+  return `uneditor-${id}`
 }
 
-export const setUEditorCache = debounce((id: string, content: string) => {
+export const setUnEditorCache = debounce((id: string, content: string) => {
   return storage.set(getEditorCacheStorageKey(id), content)
 }, 666)
 
-export const getUEditorCache = (id: string) => {
+export const getUnEditorCache = (id: string) => {
   return storage.get(getEditorCacheStorageKey(id))
 }

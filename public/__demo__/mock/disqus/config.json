@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "message": "Get Disqus config succeed",
+  "message": "Get Disqus config succeeded",
   "result": {
     "admin": "surmon",
     "forum": "surmon",

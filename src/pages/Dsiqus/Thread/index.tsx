@@ -1,96 +1,90 @@
 /**
- * @file Thread list page
+ * @file Disqus threads page
  * @author Surmon <https://github.com/surmon-china>
  */
 
 import React from 'react'
 import { useShallowReactive, onMounted, useRef, useWatch } from 'veact'
 import { useLoading } from 'veact-use'
-import classnames from 'classnames'
-import { Button, Card, Table, Select, Tag, Space, Switch, Divider, Typography } from 'antd'
-import * as Icon from '@ant-design/icons'
-import {
-  getConfig,
-  getThreads,
-  ThreadState,
-  OrderType,
-  GeneralDisqusParams
-} from '@/store/disqus'
+import * as Icons from '@ant-design/icons'
+import { Button, Card, Table, Select, Tag, Space, Switch, Divider, Flex, Typography } from 'antd'
+import { getDisqusConfig, getDisqusThreads, GeneralDisqusParams } from '@/apis/disqus'
+import { DisqusThreadState, DisqusOrderType } from '@/constants/disqus'
 import { stringToYMD } from '@/transforms/date'
 import { scrollTo } from '@/services/scroller'
 
-import styles from './style.module.less'
-
 const SELECT_ALL_VALUE = 'ALL'
+const DEFAULT_FILTER_PARAMS = {
+  order: DisqusOrderType.Desc,
+  include: SELECT_ALL_VALUE as any as DisqusThreadState | typeof SELECT_ALL_VALUE
+}
 
 export const DisqusThreadsPage: React.FC = () => {
-  const config = useRef<any>(null)
-  const loading = useLoading()
+  const disqusConfig = useRef<any>(null)
+  const fetching = useLoading()
   const threads = useShallowReactive({
     cursor: null as any,
     list: [] as any[]
   })
 
   // https://disqus.com/api/docs/threads/list/
-  const filterParams = useShallowReactive({
-    order: OrderType.Desc,
-    include: SELECT_ALL_VALUE as any as ThreadState | typeof SELECT_ALL_VALUE
-  })
+  const filterParams = useRef({ ...DEFAULT_FILTER_PARAMS })
+  const resetFilterParams = () => {
+    filterParams.value = { ...DEFAULT_FILTER_PARAMS }
+  }
 
-  const fetchData = (params?: GeneralDisqusParams) => {
+  const fetchList = (params?: GeneralDisqusParams) => {
     const getParams = {
       ...params,
       limit: 50,
-      forum: config.value!.forum,
-      order: filterParams.order,
+      forum: disqusConfig.value.forum,
+      order: filterParams.value.order,
       include:
-        filterParams.include !== SELECT_ALL_VALUE
-          ? [filterParams.include]
-          : [...Object.values(ThreadState)]
+        filterParams.value.include !== SELECT_ALL_VALUE
+          ? [filterParams.value.include]
+          : [...Object.values(DisqusThreadState)]
     }
 
-    loading.promise(getThreads(getParams)).then((response) => {
-      threads.cursor = response.result.cursor
+    fetching.promise(getDisqusThreads(getParams)).then((response) => {
       if (params?.cursor) {
+        threads.cursor = response.result.cursor
         threads.list.push(...response.result.response)
       } else {
+        threads.cursor = response.result.cursor
         threads.list = response.result.response
         scrollTo(document.body)
       }
     })
   }
 
-  const resetFetch = () => {
-    filterParams.order = OrderType.Desc
-    filterParams.include = SELECT_ALL_VALUE
-    fetchData()
-  }
-
   const loadNextPage = () => {
-    fetchData({ cursor: threads.cursor.next })
+    fetchList({ cursor: threads.cursor.next })
   }
 
-  useWatch(filterParams, () => fetchData())
+  useWatch(
+    () => filterParams.value,
+    () => fetchList(),
+    { deep: true }
+  )
 
   onMounted(() => {
-    getConfig().then((response) => {
-      config.value = response.result
-      fetchData()
+    getDisqusConfig().then((response) => {
+      disqusConfig.value = response.result
+      fetchList()
     })
   })
 
   return (
     <Card
-      title={`Threads (${threads.list.length})`}
       bordered={false}
-      className={styles.threads}
+      title={`Threads (${threads.list.length})`}
       extra={
         <Button
           type="primary"
           size="small"
           target="_blank"
-          icon={<Icon.DashboardOutlined />}
-          href={`https://${config.value?.forum}.disqus.com/admin/discussions/`}
+          icon={<Icons.DashboardOutlined />}
+          href={`https://${disqusConfig.value?.forum}.disqus.com/admin/discussions/`}
         >
           Disqus Discussions
         </Button>
@@ -98,51 +92,47 @@ export const DisqusThreadsPage: React.FC = () => {
     >
       <Space wrap>
         <Select
-          className={classnames(styles.select)}
-          loading={loading.state.value}
-          value={filterParams.include}
-          onChange={(state) => {
-            filterParams.include = state
-          }}
+          style={{ width: 110 }}
+          disabled={fetching.state.value}
+          value={filterParams.value.include}
+          onChange={(state) => (filterParams.value.include = state)}
           options={[
             {
               value: SELECT_ALL_VALUE,
               label: 'All state'
             },
             {
-              value: ThreadState.Open,
+              value: DisqusThreadState.Open,
               label: 'Open'
             },
             {
-              value: ThreadState.Closed,
+              value: DisqusThreadState.Closed,
               label: 'Closed'
             }
           ]}
         />
         <Select
-          className={classnames(styles.select)}
-          loading={loading.state.value}
-          value={filterParams.order}
-          onChange={(order) => {
-            filterParams.order = order
-          }}
+          style={{ width: 80 }}
+          disabled={fetching.state.value}
+          value={filterParams.value.order}
+          onChange={(order) => (filterParams.value.order = order)}
           options={[
             {
-              value: OrderType.Desc,
+              value: DisqusOrderType.Desc,
               label: 'Desc'
             },
             {
-              value: OrderType.Asc,
+              value: DisqusOrderType.Asc,
               label: 'Asc'
             }
           ]}
         />
         <Button
-          icon={<Icon.ReloadOutlined />}
-          loading={loading.state.value}
-          onClick={() => resetFetch()}
+          icon={<Icons.ReloadOutlined />}
+          loading={fetching.state.value}
+          onClick={() => resetFilterParams()}
         >
-          Reset refresh
+          Reset and refresh
         </Button>
       </Space>
       <Divider />
@@ -150,7 +140,7 @@ export const DisqusThreadsPage: React.FC = () => {
         rowKey="id"
         dataSource={threads.list.slice()}
         pagination={false}
-        loading={loading.state.value}
+        loading={fetching.state.value}
         columns={[
           {
             title: 'Title / Link',
@@ -185,13 +175,16 @@ export const DisqusThreadsPage: React.FC = () => {
             )
           },
           {
-            title: 'Identifiers',
+            title: 'Identifiers / Time',
             key: 'identifiers',
             render: (_, item) => (
-              <Space>
-                {item.identifiers.map((i: any) => (
-                  <Tag key={i}>{i}</Tag>
-                ))}
+              <Space direction="vertical">
+                <Space>
+                  {item.identifiers.map((i: any) => (
+                    <Tag key={i}>{i}</Tag>
+                  ))}
+                </Space>
+                <Typography.Text type="secondary">{stringToYMD(item.createdAt)}</Typography.Text>
               </Space>
             )
           },
@@ -200,7 +193,7 @@ export const DisqusThreadsPage: React.FC = () => {
             dataIndex: 'posts',
             render: (_, item) => (
               <Space size="small">
-                <Icon.CommentOutlined />
+                <Icons.CommentOutlined />
                 {item.posts}
               </Space>
             )
@@ -210,7 +203,7 @@ export const DisqusThreadsPage: React.FC = () => {
             key: 'likes',
             render: (_, item) => (
               <Space size="small">
-                <Icon.LikeOutlined />
+                <Icons.LikeOutlined />
                 {item.likes}
               </Space>
             )
@@ -220,7 +213,7 @@ export const DisqusThreadsPage: React.FC = () => {
             key: 'dislikes',
             render: (_, item) => (
               <Space size="small">
-                <Icon.DislikeOutlined />
+                <Icons.DislikeOutlined />
                 {item.dislikes}
               </Space>
             )
@@ -240,28 +233,24 @@ export const DisqusThreadsPage: React.FC = () => {
                 unCheckedChildren="Closed"
               />
             )
-          },
-          {
-            title: 'Create at',
-            dataIndex: 'createdAt',
-            render: (_, item) => stringToYMD(item.createdAt)
           }
         ]}
       />
-      <div className={styles.loadmore}>
+      <br />
+      <Flex justify="center">
         {threads.cursor?.hasNext ? (
           <Button
             size="large"
-            disabled={loading.state.value}
-            loading={loading.state.value}
+            disabled={fetching.state.value}
+            loading={fetching.state.value}
             onClick={loadNextPage}
           >
-            {loading.state.value ? 'Loading...' : 'Loadmore'}
+            {fetching.state.value ? 'Loading...' : 'Loadmore'}
           </Button>
         ) : (
-          <span>NO MORE</span>
+          <Typography.Text type="secondary">NO MORE</Typography.Text>
         )}
-      </div>
+      </Flex>
     </Card>
   )
 }

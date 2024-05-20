@@ -1,100 +1,84 @@
 /**
- * @file HTTP requester service
- * @module service.http
+ * @file NodePress request service
  * @author Surmon <https://github.com/surmon-china>
  */
 
 import { notification } from 'antd'
 import axios, { AxiosInstance, Method as AxiosMethod } from 'axios'
-
-import { loadingState } from '@/state/loading'
-import { AUTH_API_PATH } from '@/store/auth'
 import { API_URL, APP_AUTH_HEADER_KEY } from '@/config'
-import { rc, RouteKey } from '@/routes'
+import { AUTH_API_PATHS } from '@/apis/auth'
+import { RoutesKey, RoutesPath } from '@/routes'
+import { i18n } from '@/i18n'
 import token from './token'
 
-enum HTTPCode {
+enum HttpCode {
   SUCCESS = 200,
-  CREATE_SUCCESS = 201, // 创建成功
+  CREATE_SUCCESS = 201,
   BAD_REQUEST = 400,
-  UNAUTHORIZED = 401, // 未授权
-  NO_PERMISSION = 403, // 无权限
+  UNAUTHORIZED = 401,
+  NO_PERMISSION = 403,
   NOT_FOUND = 404,
-  SERVER_ERROR = 500, // 服务器挂了
-  GATEWAY_TIMEOUT = 504, // 请求超时
-  UNKNOWN_ERROR = 0 // 未知
+  SERVER_ERROR = 500,
+  GATEWAY_TIMEOUT = 504,
+  UNKNOWN_ERROR = 0
 }
 
-export enum HTTPStatus {
+export enum HttpStatus {
   Error = 'error',
   Success = 'success'
 }
 
-// 请求参数
-export interface RequestParams {
-  [key: string]: string | number
-}
-
-// 响应体
-export interface IResponse {
-  status: number
-  statusText?: string
-  message?: string
-  error?: any
-}
-
-// 响应数据
-export interface HTTPResult<T = any> {
-  status: HTTPStatus.Success
+export interface HttpResult<T = any> {
+  status: HttpStatus.Success
   debug?: any
   error: string
   message: string
   result: T
 }
 
-const nodepress = axios.create({
+export interface RequestParams {
+  [key: string]: string | number
+}
+
+export const nodepress = axios.create({
   baseURL: API_URL,
-  // adapter: WORKAROUND for outside
+  // MARK: WORKAROUND for demo site
   adapter: (window as any).__axiosAdapter || undefined
 })
 
-// request
+// request interceptor
 nodepress.interceptors.request.use((config) => {
-  loadingState.start()
   if (token.isTokenValid()) {
     config.headers = config.headers || {}
     config.headers[APP_AUTH_HEADER_KEY] = `Bearer ${token.getToken()}`
-  } else if (config.url !== AUTH_API_PATH.LOGIN) {
+  } else if (config.url !== AUTH_API_PATHS.LOGIN) {
     notification.error({
-      message: 'Token 无效',
-      description: 'Token 不存在或是无效的',
+      message: i18n.t('nodepress.request.invalid_token.title'),
+      description: i18n.t('nodepress.request.invalid_token.description'),
       duration: 2
     })
   }
   return config
 })
 
-// response
+// response interceptor
 nodepress.interceptors.response.use(
   (response) => {
     if (!response.headers['content-type']?.includes('json')) {
-      loadingState.complete()
       notification.success({
-        message: '数据请求成功',
+        message: i18n.t('nodepress.response.success'),
         description: response.statusText,
         duration: 2
       })
       return response
-    } else if (response.data.status === HTTPStatus.Success) {
-      loadingState.complete()
+    } else if (response.data.status === HttpStatus.Success) {
       notification.success({
-        message: '数据请求成功',
+        message: i18n.t('nodepress.response.success'),
         description: response.data.message,
         duration: 2
       })
       return Promise.resolve(response.data)
     } else {
-      loadingState.fail()
       notification.error({
         message: response.data.message,
         description: response.data.error,
@@ -107,26 +91,28 @@ nodepress.interceptors.response.use(
     const errorJSON = error?.toJSON?.()
     const messageText = error.response?.data?.message || 'Error'
     const errorText =
-      error.response?.data?.error || error.response?.statusText || errorJSON?.message
+      error.response?.data?.error || error.response?.statusText || errorJSON?.message || ''
     const errorInfo = {
       ...errorJSON,
       config: error.config,
       request: error.request,
       response: error.response,
-      code: error.code || error.response?.status || HTTPCode.BAD_REQUEST,
-      message: messageText + ': ' + errorText
+      code: error.code || error.response?.status || HttpCode.BAD_REQUEST,
+      message: `${messageText}: ${errorText}`
     }
+
     console.debug('axios error:', errorInfo)
-    loadingState.fail()
     notification.error({
       message: messageText,
       description: errorText,
       duration: 3
     })
-    // 如果是 401，即：登陆失败，则删除 token 并跳转到登陆页
-    if (error.response?.status === HTTPCode.UNAUTHORIZED) {
+
+    // If a 401 response is received, it means that the authentication has failed,
+    // the token is deleted and you are redirected to the login page.
+    if (error.response?.status === HttpCode.UNAUTHORIZED) {
       token.removeToken()
-      window.location.href = rc(RouteKey.Hello).path
+      window.location.href = RoutesPath[RoutesKey.Hello]
     }
     return Promise.reject(errorInfo)
   }
@@ -134,7 +120,7 @@ nodepress.interceptors.response.use(
 
 type Method = Exclude<Lowercase<AxiosMethod>, 'unlink' | 'purge' | 'link'> | 'request'
 const overwrite = (method: Method) => {
-  return <T = any>(...args: Parameters<AxiosInstance[typeof method]>): Promise<HTTPResult<T>> => {
+  return <T = any>(...args: Parameters<AxiosInstance[typeof method]>): Promise<HttpResult<T>> => {
     return (nodepress[method] as any)(...args)
   }
 }

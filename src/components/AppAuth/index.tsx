@@ -3,108 +3,86 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react'
+import React, { useState } from 'react'
+import { onMounted, onBeforeUnmount } from 'veact'
 import { useNavigate } from 'react-router-dom'
-import { useRef, onMounted, onBeforeUnmount } from 'veact'
-import { useLoading } from 'veact-use'
-import { notification, Typography } from 'antd'
-import { SwitchTransition, CSSTransition } from 'react-transition-group'
-
-import { RouteKey, rc } from '@/routes'
-import { renewalToken, checkTokenValidity } from '@/store/auth'
-import { getTokenCountdown, setToken, removeToken, isTokenValid } from '@/services/token'
+import { notification, Typography, Spin, Space, Flex } from 'antd'
+import { Loading3QuartersOutlined } from '@ant-design/icons'
+import { useTranslation } from '@/i18n'
+import { RoutesKey, RoutesPath } from '@/routes'
+import { checkTokenValidity } from '@/apis/auth'
+import { removeToken, isTokenValid } from '@/services/token'
+import { runRenewalToken, stopRenewalToken } from './token'
 
 import styles from './style.module.less'
 
-let renewalTimer: null | number = null
+const LOADING_ANIMATED_DELAY = 600
+const LOADING_ANIMATED_DURATION = 200
+const LOADING_ANIMATED_STYLE: React.CSSProperties = {
+  transitionProperty: 'all',
+  transitionDuration: `${LOADING_ANIMATED_DURATION}ms`,
+  transitionDelay: `${LOADING_ANIMATED_DELAY - LOADING_ANIMATED_DURATION}ms`,
+  backgroundColor: 'transparent',
+  opacity: 0
+}
 
 export const AppAuth: React.FC<React.PropsWithChildren> = (props) => {
   const navigate = useNavigate()
-  const loading = useLoading()
-  const isLogined = useRef(false)
+  const { i18n } = useTranslation()
 
-  // 停止 Token 续约
-  const stopRenewalToken = (): void => {
-    if (typeof renewalTimer === 'number') {
-      window.clearTimeout(renewalTimer)
-    }
-  }
+  const [verifying, setVerifying] = useState(false)
+  const [isLogined, setLogined] = useState(false)
+  const [isAnimationEnded, setAnimationEnded] = useState(false)
 
-  // 自动续约 Token
-  const runRenewalToken = (): void => {
-    stopRenewalToken()
-    const countdown = getTokenCountdown()
-    const seconds = countdown - 10
-    console.info(`Token 自动续约正在工作，Token 将在 ${seconds}s 后自动更新！`)
-    renewalTimer = window.setTimeout(() => {
-      renewalToken().then((auth) => {
-        setToken(auth.access_token, auth.expires_in)
-        runRenewalToken()
-      })
-    }, seconds * 1000)
-  }
-
-  onMounted(async () => {
+  const autoLoginByToken = async () => {
     try {
-      // 程序初始化时检查本地 Token
-      console.info('Token 校验中...')
-      // Token 本地校验
-      await (isTokenValid() ? Promise.resolve() : Promise.reject('本地 Token 无效'))
-      // Token 远程校验
-      await loading.promise(checkTokenValidity())
-      // 通过验证，则初始化 APP
-      console.info('Token 验证成功，正常工作')
-      // 开始自动续约 Token
+      // When the application is initialised, it first checks the local Token.
+      setVerifying(true)
+      console.debug('Token verifying...')
+      // 1. Verify local Token
+      await (isTokenValid() ? Promise.resolve() : Promise.reject('The local token is invalid'))
+      // 2. Verify Token form NodePress
+      await checkTokenValidity()
+      // Verification successful
+      console.debug('Token verification successful.')
+      setVerifying(false)
+      // 3. Start auto-renewal of Token
       runRenewalToken()
-      // 需要一个延时效果
-      setTimeout(() => {
-        isLogined.value = true
-      }, 668)
+      // A delay is needed to make sure the effect is smooth.
+      setLogined(true)
+      setTimeout(() => setAnimationEnded(true), LOADING_ANIMATED_DELAY)
     } catch (error) {
-      console.warn('Token 被验证是无效的，跳登陆页：', error)
+      console.debug('Invalid token, need to log in again.', error)
       notification.info({
-        message: '好久不见！',
-        description: '你还好吗？'
+        message: i18n.t('login.invalid_token_message_title'),
+        description: i18n.t('login.invalid_token_message_description')
       })
       removeToken()
-      navigate(rc(RouteKey.Hello).path)
+      navigate(RoutesPath[RoutesKey.Hello])
     }
-  })
+  }
 
-  onBeforeUnmount(() => {
-    stopRenewalToken()
-  })
+  onMounted(() => autoLoginByToken())
+  onBeforeUnmount(() => stopRenewalToken())
 
   return (
-    <SwitchTransition mode="out-in">
-      <CSSTransition
-        classNames="fade"
-        key={Number(isLogined.value)}
-        addEndListener={(node, done) => {
-          node.addEventListener('transitionend', done, false)
-        }}
-      >
-        {isLogined.value ? (
-          <div className={styles.authContainer}>{props.children}</div>
-        ) : (
-          <div className={styles.loading}>
-            <div className={styles.animation}>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <Typography.Text className={styles.text} disabled>
-              {loading.state.value ? '校验 Token...' : '初始化...'}
+    <div id="app-auth">
+      {isLogined && props.children}
+      {!isAnimationEnded && (
+        <Flex
+          align="center"
+          justify="center"
+          className={styles.appLoading}
+          style={isLogined ? LOADING_ANIMATED_STYLE : {}}
+        >
+          <Space direction="vertical" align="center">
+            <Spin indicator={<Loading3QuartersOutlined spin style={{ fontSize: 48 }} />} />
+            <Typography.Text type="secondary">
+              {verifying ? i18n.t('login.verifying_token') : i18n.t('login.initializing')}
             </Typography.Text>
-          </div>
-        )}
-      </CSSTransition>
-    </SwitchTransition>
+          </Space>
+        </Flex>
+      )}
+    </div>
   )
 }

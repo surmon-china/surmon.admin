@@ -15,7 +15,7 @@ export interface Category {
   description: string
   updated_at: string
   created_at: string
-  children?: Array<Category>
-  extends: Array<GeneralKeyValue>
+  children?: Category[]
+  extends: GeneralKeyValue[]
   article_count?: number
 }

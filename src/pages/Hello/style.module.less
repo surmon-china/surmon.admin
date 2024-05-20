@@ -7,11 +7,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: @body-background;
 
-  .title {
-    font-size: @app-font-size-h1 * 2;
+  .icon {
+    font-size: 5em;
     user-select: none;
     cursor: pointer;
+    text-align: center;
     filter: grayscale(1);
     &:hover {
       filter: grayscale(0);
@@ -19,15 +21,9 @@
   }
 
   .input {
-    display: block;
-    width: 30rem;
-    height: 6rem;
-    padding: 2rem;
-    border-radius: @app-border-radius * 2;
-    background-color: @app-module-background;
-    font-size: @app-font-size-h2;
+    padding: @gap;
+    font-size: @font-size-h3;
     text-align: center;
-    border: none;
-    outline: none;
+    background-color: @module-background;
   }
 }
