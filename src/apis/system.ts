@@ -9,11 +9,11 @@ import { Option } from '@/constants/option'
 
 export const OPTION_API_PATH = '/option'
 export const ARCHIVE_API_PATH = '/archive'
-export const EXPANSION_API_PATHS = {
-  UPLOAD: '/expansion/upload',
-  STATISTIC: '/expansion/statistic',
-  GOOGLE_TOKEN: '/expansion/google-token',
-  DATA_BASE_BACKUP: '/expansion/database-backup'
+export const EXTENSION_API_PATHS = {
+  UPLOAD: '/extension/upload',
+  STATISTIC: '/extension/statistic',
+  GOOGLE_TOKEN: '/extension/google-token',
+  DATA_BASE_BACKUP: '/extension/database-backup'
 }
 
 export interface Statistics {
@@ -23,7 +23,7 @@ export interface Statistics {
 /** 获取全站统计信息 */
 export function getStatistics() {
   return nodepress
-    .get<Statistics>(EXPANSION_API_PATHS.STATISTIC)
+    .get<Statistics>(EXTENSION_API_PATHS.STATISTIC)
     .then((response) => response.result)
 }
 
@@ -51,7 +51,7 @@ export function getCommentCalendar() {
 /** 获取 GA Token（仅适用于 V3） */
 export function getGAToken(): Promise<string> {
   return nodepress
-    .get<any>(EXPANSION_API_PATHS.GOOGLE_TOKEN)
+    .get<any>(EXTENSION_API_PATHS.GOOGLE_TOKEN)
     .then(({ result: credentials }) => credentials.access_token as string)
 }
 
@@ -62,7 +62,7 @@ export function updateArchiveCache() {
 
 /** 更新数据库备份 */
 export function updateDatabaseBackup() {
-  return nodepress.patch(EXPANSION_API_PATHS.DATA_BASE_BACKUP).then((response) => response.result)
+  return nodepress.patch(EXTENSION_API_PATHS.DATA_BASE_BACKUP).then((response) => response.result)
 }
 
 /** 获取系统配置 */
@@ -89,7 +89,7 @@ export async function uploadStaticToNodePress(options: {
       url: string
       key: string
       size: number
-    }>(EXPANSION_API_PATHS.UPLOAD, param, {
+    }>(EXTENSION_API_PATHS.UPLOAD, param, {
       onUploadProgress: ({ loaded, total }) => {
         if (lodash.isNumber(total)) {
           const progress = (loaded / total) * 100

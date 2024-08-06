@@ -36,14 +36,11 @@ window.__axiosAdapter = (config) => {
     '/auth/admin': {
       get: () => ensureJSON('auth/admin')
     },
-    '/expansion/statistic': {
-      get: () => ensureJSON('expansion/statistic')
+    '/extension/statistic': {
+      get: () => ensureJSON('extension/statistic')
     },
-    '/expansion/google-token': {
-      get: () => ensureJSON('expansion/google-token')
-    },
-    '/expansion/uptoken': {
-      get: () => ensureJSON('expansion/uptoken')
+    '/extension/uptoken': {
+      get: () => ensureJSON('extension/uptoken')
     },
     '/vote': {
       get: () => ensureJSON('vote')
