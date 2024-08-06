@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import lodash from 'lodash'
+import _isNumber from 'lodash/isNumber'
 import nodepress from '@/services/nodepress'
 import { Option } from '@/constants/option'
 
@@ -91,7 +91,7 @@ export async function uploadStaticToNodePress(options: {
       size: number
     }>(EXTENSION_API_PATHS.UPLOAD, param, {
       onUploadProgress: ({ loaded, total }) => {
-        if (lodash.isNumber(total)) {
+        if (_isNumber(total)) {
           const progress = (loaded / total) * 100
           options.onProgress?.(progress)
         }

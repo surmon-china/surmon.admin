@@ -5,7 +5,7 @@
 
 import React from 'react'
 import queryString from 'query-string'
-import { uniq } from 'lodash'
+import _uniq from 'lodash/uniq'
 import { useLocation } from 'react-router-dom'
 import { useShallowReactive, useRef, onMounted, useWatch, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
@@ -125,7 +125,7 @@ export const CommentPage: React.FC = () => {
         return api
           .deleteComments(
             comments.map((comment) => comment._id!),
-            uniq(comments.map((comment) => comment.post_id))
+            _uniq(comments.map((comment) => comment.post_id))
           )
           .then(() => {
             refreshList()
@@ -143,7 +143,7 @@ export const CommentPage: React.FC = () => {
         return api
           .patchCommentsState(
             comments.map((comment) => comment._id!),
-            uniq(comments.map((comment) => comment.post_id)),
+            _uniq(comments.map((comment) => comment.post_id)),
             state
           )
           .then(() => {

@@ -1,4 +1,4 @@
-import { debounce } from 'lodash'
+import _debounce from 'lodash/debounce'
 import storage from '@/services/storage'
 
 export enum UnEditorLanguage {
@@ -32,7 +32,7 @@ const getEditorCacheStorageKey = (id: string) => {
   return `uneditor-${id}`
 }
 
-export const setUnEditorCache = debounce((id: string, content: string) => {
+export const setUnEditorCache = _debounce((id: string, content: string) => {
   return storage.set(getEditorCacheStorageKey(id), content)
 }, 666)
 

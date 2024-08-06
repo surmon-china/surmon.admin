@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import lodash from 'lodash'
+import _isNil from 'lodash/isNil'
 import React from 'react'
 import { Typography } from 'antd'
 
@@ -14,7 +14,7 @@ export interface PlaceholderProps<T = any> {
 }
 
 export function Placeholder<T = any>(props: PlaceholderProps<T>) {
-  if (lodash.isNil(props.data)) {
+  if (_isNil(props.data)) {
     return <Typography.Text type="secondary">{props.placeholder ?? '-'}</Typography.Text>
   }
 
