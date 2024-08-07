@@ -13,7 +13,8 @@ hljs.registerLanguage('typescript', typescript)
 
 const renderer = new marked.Renderer()
 
-renderer.link = (href, title, text) => {
+renderer.link = ({ href, title, tokens }) => {
+  const text = renderer.parser.parseInline(tokens)
   const textIsImage = text.includes('<img')
   const linkHtml = `
     <a

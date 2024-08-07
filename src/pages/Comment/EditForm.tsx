@@ -135,7 +135,7 @@ export const EditForm: React.FC<EditFormProps> = (props) => {
         >
           {props.comment?.post_id === COMMENT_GUESTBOOK_POST_ID
             ? '留言板'
-            : commentArticle.value?.title ?? '加载中⋯'}
+            : (commentArticle.value?.title ?? '加载中⋯')}
           <Divider type="vertical" />
           <span>#{props.comment?.id}</span>
         </Button>
