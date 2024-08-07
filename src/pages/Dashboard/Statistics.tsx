@@ -37,6 +37,7 @@ const StatisticCard: React.FC<StatisticCardProps> = (props) => (
 export const getStatisticsCards = (statistics: Statistics | null, loading: boolean) => {
   return [
     <StatisticCard
+      key="views"
       loading={loading}
       title="今日阅读"
       value={statistics?.todayViews ?? '-'}
@@ -54,6 +55,7 @@ export const getStatisticsCards = (statistics: Statistics | null, loading: boole
       }
     />,
     <StatisticCard
+      key="comments"
       loading={loading}
       title="全站评论"
       value={statistics?.comments ?? '-'}
@@ -72,6 +74,7 @@ export const getStatisticsCards = (statistics: Statistics | null, loading: boole
       }
     />,
     <StatisticCard
+      key="likes"
       loading={loading}
       title="累计获得喜欢"
       value={statistics?.totalLikes ?? '-'}
@@ -87,6 +90,7 @@ export const getStatisticsCards = (statistics: Statistics | null, loading: boole
       }
     />,
     <StatisticCard
+      key="contents"
       loading={loading}
       title="共发布文章"
       value={statistics?.articles ?? '-'}

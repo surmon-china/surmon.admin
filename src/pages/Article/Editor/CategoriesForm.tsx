@@ -19,7 +19,7 @@ export const CategoriesForm: React.FC<CategoriesFormProps> = (props) => {
           {
             message: '至少应该选择一个分类',
             validator(_, value: string[]) {
-              if (!!value?.length) {
+              if (value?.length) {
                 return Promise.resolve()
               } else {
                 return Promise.reject()

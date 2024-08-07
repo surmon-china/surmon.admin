@@ -81,6 +81,7 @@ export const AppSider: React.FC<AppSiderProps> = ({ isSiderCollapsed }) => {
       <a
         type="link"
         target="_blank"
+        rel="noreferrer"
         href={GITHUB_REPO_URL}
         className={classnames(styles.footerLink, isSiderCollapsed && styles.collapsed)}
       >

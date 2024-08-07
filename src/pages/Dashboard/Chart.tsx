@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useImperativeHandle, useRef } from 'react'
 import * as echarts from 'echarts/core'
 import { EChartsType } from 'echarts/core'
