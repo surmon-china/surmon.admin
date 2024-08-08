@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import React, { useMemo, useRef } from 'react'
 import { Button, Card, Divider, Space } from 'antd'
+import { APP_PRIMARY_COLOR } from '@/config'
 import { StatisticsCalendarItem } from '@/apis/system'
 import { CalendarChart, ChartRef, ChartOptions } from './Chart'
 import { getChartConfig } from './chartConfig'
@@ -11,47 +12,70 @@ const CHART_DATE_KEY_FORMAT = 'YYYY/MM/DD'
 export interface CalendarCardProps extends React.PropsWithChildren {
   title: string
   loading: boolean
-  data: StatisticsCalendarItem[]
+  height: number
+  articleData: StatisticsCalendarItem[]
+  commentData: StatisticsCalendarItem[]
   cardExtra?: React.ReactElement
 }
 
 export const CalendarCard: React.FC<CalendarCardProps> = (props) => {
   const chartRef = useRef<ChartRef>(null)
-  const activeDataMap = useMemo(
-    () => new Map(props.data.flatMap((item) => [[item.date, item.count]])),
-    [props.data]
-  )
-
   const today = useMemo<dayjs.Dayjs>(() => dayjs(), [])
   const firstDay = useMemo<dayjs.Dayjs | null>(() => {
-    return props.data.length ? dayjs(props.data[0].date) : null
-  }, [props.data])
+    if (!props.articleData.length || !props.commentData.length) {
+      return null
+    }
+    const firstArticleDay = dayjs(props.articleData[0].date)
+    const firstCommentDay = dayjs(props.commentData[0].date)
+    return firstArticleDay.isBefore(firstCommentDay) ? firstArticleDay : firstCommentDay
+  }, [props.articleData, props.commentData])
 
   const chartData = useMemo(() => {
     if (!firstDay) {
       return null
     }
 
+    // data map
+    const articleDataMap = new Map(props.articleData.flatMap((item) => [[item.date, item.count]]))
+    const commentDataMap = new Map(props.commentData.flatMap((item) => [[item.date, item.count]]))
+    // date list
     const daysDiff = today.diff(firstDay, 'day')
     const dateList = []
-    const countList = []
+    const articleCountList = []
+    const commentCountList = []
     for (let i = 0; i <= daysDiff; i++) {
       const day = firstDay.add(i, 'day')
       const dataKey = day.format(DATE_DATE_KEY_FORMAT)
       const chartKey = day.format(CHART_DATE_KEY_FORMAT)
       dateList.push(chartKey)
-      countList.push(activeDataMap.get(dataKey) || 0)
+      articleCountList.push(articleDataMap.get(dataKey) || 0)
+      commentCountList.push(commentDataMap.get(dataKey) || 0)
     }
 
-    return { dateList, countList }
-  }, [props.data])
+    return {
+      dateList,
+      articleCountList,
+      commentCountList
+    }
+  }, [firstDay, props.articleData, props.commentData])
 
   const chartConfig = useMemo<ChartOptions>(() => {
     return getChartConfig({
-      countList: chartData?.countList ?? [],
-      dateList: chartData?.dateList ?? [],
       startValue: today.subtract(3, 'months').format(CHART_DATE_KEY_FORMAT),
-      endValue: today.format(CHART_DATE_KEY_FORMAT)
+      endValue: today.format(CHART_DATE_KEY_FORMAT),
+      categoryData: chartData?.dateList ?? [],
+      barDatas: [
+        {
+          data: chartData?.articleCountList ?? [],
+          name: 'Articles',
+          color: APP_PRIMARY_COLOR
+        },
+        {
+          data: chartData?.commentCountList ?? [],
+          name: 'Comments',
+          color: '#f8981d'
+        }
+      ]
     })
   }, [chartData])
 
@@ -99,7 +123,7 @@ export const CalendarCard: React.FC<CalendarCardProps> = (props) => {
       <CalendarChart
         ref={chartRef}
         options={chartConfig}
-        style={{ width: '100%', height: '280px' }}
+        style={{ width: '100%', height: props.height }}
       />
     </Card>
   )

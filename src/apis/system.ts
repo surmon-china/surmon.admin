@@ -12,7 +12,6 @@ export const ARCHIVE_API_PATH = '/archive'
 export const EXTENSION_API_PATHS = {
   UPLOAD: '/extension/upload',
   STATISTIC: '/extension/statistic',
-  GOOGLE_TOKEN: '/extension/google-token',
   DATA_BASE_BACKUP: '/extension/database-backup'
 }
 
@@ -46,13 +45,6 @@ export function getCommentCalendar() {
   return nodepress
     .get<StatisticsCalendarItem[]>('/comment/calendar', { params: { timezone } })
     .then((response) => response.result)
-}
-
-/** 获取 GA Token（仅适用于 V3） */
-export function getGAToken(): Promise<string> {
-  return nodepress
-    .get<any>(EXTENSION_API_PATHS.GOOGLE_TOKEN)
-    .then(({ result: credentials }) => credentials.access_token as string)
 }
 
 /** 更新 Archive 缓存 */

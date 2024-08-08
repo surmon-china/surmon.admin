@@ -99,7 +99,7 @@ export const getStatisticsCards = (statistics: Statistics | null, loading: boole
       extra={
         <Flex justify="space-between">
           <Typography.Text type="secondary">
-            创建 <strong>{statistics?.tags ?? '-'}</strong> 个文章标签
+            <strong>{statistics?.tags ?? '-'}</strong> 个文章标签
           </Typography.Text>
           <Link className={styles.link} to={RoutesPath[RoutesKey.Tag]}>
             管理标签

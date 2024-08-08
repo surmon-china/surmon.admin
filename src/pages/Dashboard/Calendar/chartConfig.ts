@@ -2,35 +2,38 @@ import { APP_PRIMARY_COLOR } from '@/config'
 import { ChartOptions } from './Chart'
 
 export interface ChartOptionsConfig {
-  countList: number[]
-  dateList: string[]
   startValue: string
   endValue: string
+  categoryData: string[]
+  barDatas: Array<{
+    data: number[]
+    name?: string
+    color?: string
+  }>
 }
 
 export const getChartConfig = (config: ChartOptionsConfig): ChartOptions => ({
   grid: {
     show: true,
-    top: '6',
+    top: '4',
     left: '0',
     right: '0',
+    bottom: '58',
     borderWidth: 0,
     containLabel: true
   },
-  series: [
-    {
-      type: 'bar',
-      name: 'Count',
-      data: config.countList,
-      itemStyle: {
-        color: APP_PRIMARY_COLOR
-      }
+  series: config.barDatas.map((item) => ({
+    type: 'bar',
+    name: item.name,
+    data: item.data,
+    itemStyle: {
+      color: item.color
     }
-  ],
+  })),
   xAxis: [
     {
       type: 'category',
-      data: config.dateList,
+      data: config.categoryData,
       axisTick: {
         lineStyle: {
           color: 'var(--app-color-text-quaternary)'
@@ -52,7 +55,11 @@ export const getChartConfig = (config: ChartOptionsConfig): ChartOptions => ({
       type: 'value',
       minInterval: 1,
       axisLabel: {
-        show: false
+        fontFamily: 'inherit',
+        color: 'var(--app-color-text-secondary)',
+        formatter(value) {
+          return value ? String(value) : ''
+        }
       },
       splitLine: {
         lineStyle: {
@@ -81,6 +88,7 @@ export const getChartConfig = (config: ChartOptionsConfig): ChartOptions => ({
       label: {
         show: true,
         margin: 24,
+        padding: [4, 12, 4, 4],
         fontFamily: 'inherit',
         fontWeight: 'bolder',
         color: '#fff',
@@ -121,7 +129,7 @@ export const getChartConfig = (config: ChartOptionsConfig): ChartOptions => ({
       left: 2,
       right: 6,
       bottom: 0,
-      height: 36,
+      height: 28,
       textStyle: {
         fontWeight: 'bolder',
         fontFamily: 'inherit',

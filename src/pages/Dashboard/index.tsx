@@ -5,7 +5,7 @@
 
 import React, { useMemo, useState } from 'react'
 import { onMounted } from 'veact'
-import { Space, Row, Col, Select, Card, Result } from 'antd'
+import { Space, Row, Col, Button, Card } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { useLoading } from '@/enhancers/useLoading'
 import { APP_LAYOUT_SPACE_SIZE, APP_LAYOUT_GUTTER_SIZE } from '@/config'
@@ -13,28 +13,22 @@ import { StatisticsCalendarItem, getArticleCalendar, getCommentCalendar } from '
 import { Statistics, getStatistics } from '@/apis/system'
 import { getStatisticsCards } from './Statistics'
 import { CalendarCard } from './Calendar'
+import { GoogleAnalytics } from './GoogleAnalytics'
+import { GoogleAnalyticsRealtime } from './GoogleAnalytics/Realtime'
 
 import styles from './style.module.less'
 
-export enum CalendarDataKey {
-  Article = 'article',
-  Comment = 'comment'
-}
-
-const calendarDataOptions = [
-  {
-    value: CalendarDataKey.Comment,
-    icon: <Icons.CommentOutlined />,
-    text: '评论'
-  },
-  {
-    value: CalendarDataKey.Article,
-    icon: <Icons.CoffeeOutlined />,
-    text: '文章'
-  }
-]
-
 export const DashboardPage: React.FC = () => {
+  const calendarFetching = useLoading()
+  const [articleCalendar, setArticleCalendar] = useState<StatisticsCalendarItem[]>([])
+  const [commentCalendar, setCommentCalendar] = useState<StatisticsCalendarItem[]>([])
+  const fetchCalendarData = async () => {
+    const request = Promise.all([getArticleCalendar(), getCommentCalendar()])
+    const [articleData, commentData] = await calendarFetching.promise(request)
+    setArticleCalendar(articleData)
+    setCommentCalendar(commentData)
+  }
+
   const statisticsFetching = useLoading()
   const [statistics, setStatistics] = useState<Statistics | null>(null)
   const fetchStatistics = () => {
@@ -43,34 +37,13 @@ export const DashboardPage: React.FC = () => {
     })
   }
 
-  const articleCalendarFetching = useLoading()
-  const [articleCalendar, setArticleCalendar] = useState<StatisticsCalendarItem[]>([])
-  const fetchArticleCalendar = async () => {
-    setArticleCalendar(await articleCalendarFetching.promise(getArticleCalendar()))
-  }
-
-  const commentCalendarFetching = useLoading()
-  const [commentCalendar, setCommentCalendar] = useState<StatisticsCalendarItem[]>([])
-  const fetchCommentCalendar = async () => {
-    setCommentCalendar(await commentCalendarFetching.promise(getCommentCalendar()))
-  }
-
-  const [activeCalendarDataKey, setActiveCalendarDataKey] = useState<CalendarDataKey>(
-    CalendarDataKey.Comment
-  )
-  const activeCalendarData = useMemo(
-    () => (activeCalendarDataKey === CalendarDataKey.Article ? articleCalendar : commentCalendar),
-    [activeCalendarDataKey, articleCalendar, commentCalendar]
-  )
-
   const statisticsCardsElements = useMemo(() => {
     return getStatisticsCards(statistics!, statisticsFetching.state)
   }, [statistics, statisticsFetching.state])
 
   onMounted(() => {
     fetchStatistics()
-    fetchArticleCalendar()
-    fetchCommentCalendar()
+    fetchCalendarData()
   })
 
   return (
@@ -86,42 +59,47 @@ export const DashboardPage: React.FC = () => {
         <Col xs={24}>
           <CalendarCard
             title="日历纵览"
-            data={activeCalendarData}
-            loading={articleCalendarFetching.state || commentCalendarFetching.state}
+            height={220}
+            articleData={articleCalendar}
+            commentData={commentCalendar}
+            loading={calendarFetching.state}
             cardExtra={
-              <Select
+              <Button
                 size="small"
-                value={activeCalendarDataKey}
-                onChange={(value) => setActiveCalendarDataKey(value)}
-                options={calendarDataOptions.map((option) => ({
-                  value: option.value,
-                  label: (
-                    <Space size="small">
-                      {option.icon}
-                      {option.text}
-                    </Space>
-                  )
-                }))}
+                loading={calendarFetching.state}
+                icon={<Icons.ReloadOutlined />}
+                onClick={() => fetchCalendarData()}
               />
             }
           />
         </Col>
       </Row>
       <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
-        <Col xs={12}>
-          <Card bordered={false} title="Analytics">
-            <Result
-              icon={<Icons.StockOutlined style={{ color: 'var(--app-color-text-quaternary)' }} />}
-            />
+        <Col xs={16}>
+          <Card bordered={false} title="GoogleAnalytics Overview">
+            <GoogleAnalytics />
           </Card>
         </Col>
+        <Col xs={8}>
+          <Card bordered={false} title="GoogleAnalytics Realtime">
+            <GoogleAnalyticsRealtime />
+          </Card>
+        </Col>
+      </Row>
+      <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
         <Col xs={12}>
-          <Card bordered={false} title="PieChart">
-            <Result
-              icon={
-                <Icons.PieChartOutlined style={{ color: 'var(--app-color-text-quaternary)' }} />
-              }
-            />
+          <Card bordered={false} title="GoogleAnalytics Countries">
+            国家分类
+          </Card>
+        </Col>
+        <Col xs={6}>
+          <Card bordered={false} title="GoogleAnalytics Cities">
+            城市分类
+          </Card>
+        </Col>
+        <Col xs={6}>
+          <Card bordered={false} title="GoogleAnalytics Pages">
+            页面分类
           </Card>
         </Col>
       </Row>
