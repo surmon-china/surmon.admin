@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Card, Statistic, Flex, Divider, Skeleton, Rate, Typography } from 'antd'
+import { Flex, Divider, Rate, Typography } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { Statistics } from '@/apis/system'
 import { RoutesKey, RoutesPath } from '@/routes'
@@ -14,7 +14,7 @@ export const getStatisticsCards = (statistics: Statistics | null, loading: boole
     <StatisticCard
       key="views"
       loading={loading}
-      title="今日阅读"
+      title="今日阅读（文章 PV）"
       value={statistics?.todayViews ?? '-'}
       suffix="次"
       icon={<Icons.EyeOutlined />}
