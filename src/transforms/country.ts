@@ -12,3 +12,11 @@ export const countryCodeToEmoji = (countryCode: string): string => {
     .toUpperCase()
     .replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + OFFSET))
 }
+
+export const countryCodeToFullName = (
+  countryCode: string,
+  language = navigator.language
+): string | void => {
+  const regionNames = new Intl.DisplayNames([language], { type: 'region' })
+  return regionNames.of(countryCode)
+}

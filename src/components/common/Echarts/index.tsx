@@ -3,7 +3,13 @@ import React, { useEffect, useImperativeHandle, useRef } from 'react'
 import * as echarts from 'echarts/core'
 import { EChartsType } from 'echarts/core'
 import { SVGRenderer } from 'echarts/renderers'
-import { BarChart, BarSeriesOption } from 'echarts/charts'
+import {
+  LineChart,
+  LineSeriesOption,
+  LinesSeriesOption,
+  BarChart,
+  BarSeriesOption
+} from 'echarts/charts'
 import {
   GridComponent,
   GridComponentOption,
@@ -14,11 +20,23 @@ import {
 } from 'echarts/components'
 
 // echarts features
-echarts.use([GridComponent, TooltipComponent, DataZoomComponent, SVGRenderer, BarChart])
+echarts.use([
+  GridComponent,
+  TooltipComponent,
+  DataZoomComponent,
+  SVGRenderer,
+  BarChart,
+  LineChart
+])
 
 // echarts options
 export type ChartOptions = echarts.ComposeOption<
-  DataZoomComponentOption | GridComponentOption | TooltipComponentOption | BarSeriesOption
+  | DataZoomComponentOption
+  | GridComponentOption
+  | TooltipComponentOption
+  | BarSeriesOption
+  | LineSeriesOption
+  | LinesSeriesOption
 >
 
 export interface ChartProps {
@@ -31,7 +49,7 @@ export interface ChartRef {
   instance(): EChartsType | undefined
 }
 
-export const CalendarChart = React.forwardRef<ChartRef, ChartProps>((props, ref) => {
+export const ECharts = React.forwardRef<ChartRef, ChartProps>((props, ref) => {
   const domRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<EChartsType>()
 

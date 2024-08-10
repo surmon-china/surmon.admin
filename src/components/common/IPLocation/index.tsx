@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { IPLocation as IPLocationType } from '@/constants/general'
-import { countryCodeToEmoji } from '@/transforms/emoji'
+import { countryCodeToEmoji } from '@/transforms/country'
 import { Placeholder, PlaceholderProps } from '../Placeholder'
 
 import styles from './style.module.less'

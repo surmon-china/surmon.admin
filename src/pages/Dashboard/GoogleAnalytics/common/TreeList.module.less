@@ -1,0 +1,24 @@
+@import '@/styles/mixins.less';
+@import '@/styles/variables.less';
+
+.childList {
+  margin-top: @gap-xx;
+  padding-left: @gap-xl;
+}
+
+.listItem {
+  position: relative;
+  padding-inline: 0 !important;
+
+  .listItemPercent {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
+    .percentCore {
+      height: 2px;
+      background-color: @color-primary;
+    }
+  }
+}

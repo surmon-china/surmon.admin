@@ -11,6 +11,10 @@ export const getResourceUrl = (uri: string) => {
   return uri.startsWith('/') ? path + uri.substring(1, uri.length) : path + uri
 }
 
+export const getBlogUrl = (uri: string) => {
+  return `${BLOG_URL}${uri}`
+}
+
 export const BLOG_ARTICLE_URL_PREFIX = `${BLOG_URL}/article/`
 export const getBlogArticleUrl = (articleId: number) => {
   return `${BLOG_ARTICLE_URL_PREFIX}${articleId}`

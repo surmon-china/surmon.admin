@@ -3,8 +3,8 @@ import React, { useMemo, useRef } from 'react'
 import { Button, Card, Divider, Space } from 'antd'
 import { APP_PRIMARY_COLOR } from '@/config'
 import { StatisticsCalendarItem } from '@/apis/system'
-import { CalendarChart, ChartRef, ChartOptions } from './Chart'
-import { getChartConfig } from './chartConfig'
+import { ECharts, ChartRef, ChartOptions } from '@/components/common/Echarts'
+import { getBarChartConfig } from '@/components/common/Echarts/config.bar'
 
 const DATE_DATE_KEY_FORMAT = 'YYYY-MM-DD'
 const CHART_DATE_KEY_FORMAT = 'YYYY/MM/DD'
@@ -60,11 +60,12 @@ export const CalendarCard: React.FC<CalendarCardProps> = (props) => {
   }, [firstDay, props.articleData, props.commentData])
 
   const chartConfig = useMemo<ChartOptions>(() => {
-    return getChartConfig({
+    return getBarChartConfig({
+      dataZoom: true,
       startValue: today.subtract(3, 'months').format(CHART_DATE_KEY_FORMAT),
       endValue: today.format(CHART_DATE_KEY_FORMAT),
       categoryData: chartData?.dateList ?? [],
-      barDatas: [
+      barsData: [
         {
           data: chartData?.articleCountList ?? [],
           name: 'Articles',
@@ -120,7 +121,7 @@ export const CalendarCard: React.FC<CalendarCardProps> = (props) => {
         </Space>
       }
     >
-      <CalendarChart
+      <ECharts
         ref={chartRef}
         options={chartConfig}
         style={{ width: '100%', height: props.height }}
