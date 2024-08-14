@@ -14,7 +14,7 @@ export const getStatisticsCards = (statistics: Statistics | null, loading: boole
     <StatisticCard
       key="views"
       loading={loading}
-      title="今日阅读（文章 PV）"
+      title="今日阅读（文章页 PV）"
       value={statistics?.todayViews ?? '-'}
       suffix="次"
       icon={<Icons.EyeOutlined />}
