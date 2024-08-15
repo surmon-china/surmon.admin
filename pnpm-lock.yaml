@@ -106,7 +106,7 @@ importers:
         version: 0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0-beta.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
     devDependencies:
       '@eslint/js':
-        specifier: ^9.9.0
+        specifier: ^9.x
         version: 9.9.0
       '@types/lodash':
         specifier: ^4.17.7
@@ -115,25 +115,25 @@ importers:
         specifier: ^22.3.0
         version: 22.3.0
       '@types/react':
-        specifier: ^18.3.3
+        specifier: ^18.x
         version: 18.3.3
       '@types/react-dom':
-        specifier: ^18.3.0
+        specifier: ^18.x
         version: 18.3.0
       '@types/ua-parser-js':
         specifier: ^0.7.39
         version: 0.7.39
       '@vitejs/plugin-react':
-        specifier: ^4.3.1
+        specifier: ^4.x
         version: 4.3.1(vite@5.4.0(@types/node@22.3.0)(less@4.2.0))
       eslint:
-        specifier: ^9.9.0
+        specifier: ^9.x
         version: 9.9.0
       eslint-plugin-prettier:
-        specifier: ^5.2.1
+        specifier: ^5.x
         version: 5.2.1(eslint-config-prettier@9.1.0(eslint@9.9.0))(eslint@9.9.0)(prettier@3.3.3)
       eslint-plugin-react:
-        specifier: ^7.35.0
+        specifier: ^7.x
         version: 7.35.0(eslint@9.9.0)
       globals:
         specifier: ^15.9.0
@@ -142,16 +142,16 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0
       prettier:
-        specifier: ^3.3.3
+        specifier: ^3.x
         version: 3.3.3
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
       typescript-eslint:
-        specifier: ^8.1.0
+        specifier: ^8.x
         version: 8.1.0(eslint@9.9.0)(typescript@5.5.4)
       vite:
-        specifier: ^5.4.0
+        specifier: ^5.x
         version: 5.4.0(@types/node@22.3.0)(less@4.2.0)
 
 packages:
@@ -1798,9 +1798,6 @@ packages:
   performant-array-to-tree@1.11.0:
     resolution: {integrity: sha512-YwCqIDvnaebXaKuKQhI5yJD6ryDc3FxvoeX/5ougXTKDUWb7s5S2BuBgIyftCa4sBe1+ZU5Kmi4RJy+pjjjrpw==}
 
-  picocolors@1.0.0:
-    resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
-
   picocolors@1.0.1:
     resolution: {integrity: sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==}
 
@@ -2523,7 +2520,7 @@ snapshots:
   '@babel/code-frame@7.24.2':
     dependencies:
       '@babel/highlight': 7.24.5
-      picocolors: 1.0.0
+      picocolors: 1.0.1
 
   '@babel/compat-data@7.24.4': {}
 
@@ -2615,7 +2612,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.5
       chalk: 2.4.2
       js-tokens: 4.0.0
-      picocolors: 1.0.0
+      picocolors: 1.0.1
 
   '@babel/parser@7.24.5':
     dependencies:
@@ -4487,8 +4484,6 @@ snapshots:
 
   performant-array-to-tree@1.11.0: {}
 
-  picocolors@1.0.0: {}
-
   picocolors@1.0.1: {}
 
   picomatch@2.3.0: {}
@@ -5183,7 +5178,7 @@ snapshots:
     dependencies:
       browserslist: 4.23.0
       escalade: 3.1.2
-      picocolors: 1.0.0
+      picocolors: 1.0.1
 
   uri-js@4.4.1:
     dependencies:
