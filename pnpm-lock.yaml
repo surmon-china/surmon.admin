@@ -102,8 +102,8 @@ importers:
         specifier: ^1.0.0-beta.1
         version: 1.0.0-beta.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       veact-use:
-        specifier: ^0.1.3
-        version: 0.1.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0-beta.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        specifier: ^0.1.4
+        version: 0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0-beta.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
     devDependencies:
       '@eslint/js':
         specifier: ^9.9.0
@@ -2377,12 +2377,12 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-  veact-use@0.1.3:
-    resolution: {integrity: sha512-R2li3/kLeELHsR71u33RTqqVPIhuHDK/YbClXLACg820QUjqM38YL6HKtPL9Duv82xPlFBE3BYz9uMpyKOX7CQ==}
+  veact-use@0.1.4:
+    resolution: {integrity: sha512-6BRbgPcVngwa71pfYg1mLh605mSMIqxOLK0C/Q4VWLetG7I7D9l9/iw35iYk73Se9RoKADubxVJefI62cXZxCQ==}
     peerDependencies:
-      react: ^16.8.0  || ^17.0.0
-      react-dom: ^16.8.0  || ^17.0.0
-      veact: ^0.1
+      react: ^16.8.0 || ^17 || ^18 || ^19
+      react-dom: ^16.8.0 || ^17 || ^18 || ^19
+      veact: '*'
 
   veact@1.0.0-beta.1:
     resolution: {integrity: sha512-eg4tk4ftsFurXgeC/bzkg0kCZwEYUbsD3lhVk0td0Wg2aakuD/2iELqJ2fx57PPWiugvi3sbLF5+XUY+mSV4Xw==}
@@ -5189,7 +5189,7 @@ snapshots:
     dependencies:
       punycode: 2.1.1
 
-  veact-use@0.1.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0-beta.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  veact-use@0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0-beta.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
