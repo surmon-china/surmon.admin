@@ -99,11 +99,11 @@ importers:
         specifier: ^1.0.38
         version: 1.0.38
       veact:
-        specifier: ^1.0.0-beta.1
-        version: 1.0.0-beta.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^1.0.0-beta.2
+        version: 1.0.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       veact-use:
         specifier: ^0.1.4
-        version: 0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0-beta.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
     devDependencies:
       '@eslint/js':
         specifier: ^9.x
@@ -935,11 +935,11 @@ packages:
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0
 
-  '@vue/reactivity@3.5.0-beta.1':
-    resolution: {integrity: sha512-3dBZPdQxGcVCgeJv9KlGuK8a++PUj+OAJ8U89h+77SHMDAKXpLLjnpL+VfreAl37Z39ye4AJyfeYvaXV7fdlcA==}
+  '@vue/reactivity@3.5.0-beta.2':
+    resolution: {integrity: sha512-/OMAO+vGHfPAPvofdW9lRJEBNBoLt6vpRYS4TMbbz+wMgQQ23vvOvp6W8s0pkcSsw0mm697Z3WDz1ZZhUW/NzA==}
 
-  '@vue/shared@3.5.0-beta.1':
-    resolution: {integrity: sha512-RbjXOkVFA+92CWL8HLexUKIl3yUH0PGuzfjDtaNmr4WRP8vlA7xOyRm4iX+jl/KCbZb9JjC0r8yYWqNiMdeSJQ==}
+  '@vue/shared@3.5.0-beta.2':
+    resolution: {integrity: sha512-cexku/B2Ezno4tBTSfgNwaY+WUAF1rI3S3D9mOOYDn3gEpRn+HR5cLNW3bVC8yxoH4cNd4YMpbELuhMv67+/cw==}
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -2381,11 +2381,11 @@ packages:
       react-dom: ^16.8.0 || ^17 || ^18 || ^19
       veact: '*'
 
-  veact@1.0.0-beta.1:
-    resolution: {integrity: sha512-eg4tk4ftsFurXgeC/bzkg0kCZwEYUbsD3lhVk0td0Wg2aakuD/2iELqJ2fx57PPWiugvi3sbLF5+XUY+mSV4Xw==}
+  veact@1.0.0-beta.2:
+    resolution: {integrity: sha512-u0o7bFo1Ruw5sgx1TsbHVLfoHJUPUow8P+35AfBOisfELkO3Nnccn4U7F8EfSfuGQenzE97ZnH5fRWMIuhAdVg==}
     peerDependencies:
-      react: ^16.8.0 || ^17 || ^18
-      react-dom: ^16.8.0 || ^17 || ^18
+      react: ^16.8.0 || ^17 || ^18 || ^19
+      react-dom: ^16.8.0 || ^17 || ^18 || ^19
 
   vite@5.4.0:
     resolution: {integrity: sha512-5xokfMX0PIiwCMCMb9ZJcMyh5wbBun0zUzKib+L65vAZ8GY9ePZMXxFrHbr/Kyll2+LSCY7xtERPpxkBDKngwg==}
@@ -3442,11 +3442,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vue/reactivity@3.5.0-beta.1':
+  '@vue/reactivity@3.5.0-beta.2':
     dependencies:
-      '@vue/shared': 3.5.0-beta.1
+      '@vue/shared': 3.5.0-beta.2
 
-  '@vue/shared@3.5.0-beta.1': {}
+  '@vue/shared@3.5.0-beta.2': {}
 
   acorn-jsx@5.3.2(acorn@8.12.1):
     dependencies:
@@ -5184,15 +5184,15 @@ snapshots:
     dependencies:
       punycode: 2.1.1
 
-  veact-use@0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0-beta.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  veact-use@0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      veact: 1.0.0-beta.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      veact: 1.0.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  veact@1.0.0-beta.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  veact@1.0.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@vue/reactivity': 3.5.0-beta.1
+      '@vue/reactivity': 3.5.0-beta.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
