@@ -86,7 +86,7 @@ export const GoogleAnalyticsRealtime: React.FC<GoogleAnalyticsRealtimeProps> = (
     window.clearTimeout(intervalId.current)
   })
 
-  const renderList = (dataSource: ReportRowItem[]) => (
+  const renderRegionList = (dataSource: ReportRowItem[]) => (
     <List
       style={{ maxHeight: 120, overflowY: 'auto' }}
       size="small"
@@ -95,13 +95,23 @@ export const GoogleAnalyticsRealtime: React.FC<GoogleAnalyticsRealtimeProps> = (
       renderItem={(item, index) => (
         <List.Item key={index} style={{ paddingInline: 0 }}>
           <Flex justify="space-between">
-            <UniversalText
-              text={item.dimensionValues[0].value}
-              prefix={countryCodeToEmoji(item.dimensionValues[0].value)}
-              suffix={
-                <UniversalText text={item.dimensionValues[1].value} type="secondary" small />
-              }
-            />
+            {item.dimensionValues[0].value.includes('other') ? (
+              <UniversalText
+                text={'__'}
+                prefix="🌍"
+                suffix={
+                  <UniversalText text={item.dimensionValues[1].value} type="secondary" small />
+                }
+              />
+            ) : (
+              <UniversalText
+                text={item.dimensionValues[0].value}
+                prefix={countryCodeToEmoji(item.dimensionValues[0].value)}
+                suffix={
+                  <UniversalText text={item.dimensionValues[1].value} type="secondary" small />
+                }
+              />
+            )}
             <UniversalText text={item.metricValues[0].value} type="secondary" />
           </Flex>
         </List.Item>
@@ -125,7 +135,7 @@ export const GoogleAnalyticsRealtime: React.FC<GoogleAnalyticsRealtimeProps> = (
         />
         <Divider style={{ marginBottom: 0, marginTop: 14 }} />
         {regionReports.length ? (
-          renderList(regionReports)
+          renderRegionList(regionReports)
         ) : (
           <Empty image={null} imageStyle={{ height: '1rem' }} />
         )}
