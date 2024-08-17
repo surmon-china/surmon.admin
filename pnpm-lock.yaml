@@ -57,8 +57,8 @@ importers:
         specifier: ^11.10.0
         version: 11.10.0
       i18next:
-        specifier: ^23.12.3
-        version: 23.12.3
+        specifier: ^23.13.0
+        version: 23.13.0
       i18next-browser-languagedetector:
         specifier: ^8.0.0
         version: 8.0.0
@@ -81,16 +81,16 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0
       react:
-        specifier: ^18.3.1
+        specifier: ^18.x
         version: 18.3.1
       react-dom:
-        specifier: ^18.3.1
+        specifier: ^18.x
         version: 18.3.1(react@18.3.1)
       react-i18next:
         specifier: ^15.0.1
-        version: 15.0.1(i18next@23.12.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 15.0.1(i18next@23.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router-dom:
-        specifier: ^6.26.0
+        specifier: ^6.26.x
         version: 6.26.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-top-loading-bar:
         specifier: ^2.3.1
@@ -112,8 +112,8 @@ importers:
         specifier: ^4.17.7
         version: 4.17.7
       '@types/node':
-        specifier: ^22.3.0
-        version: 22.3.0
+        specifier: ^22.4.0
+        version: 22.4.0
       '@types/react':
         specifier: ^18.x
         version: 18.3.3
@@ -125,7 +125,7 @@ importers:
         version: 0.7.39
       '@vitejs/plugin-react':
         specifier: ^4.x
-        version: 4.3.1(vite@5.4.0(@types/node@22.3.0)(less@4.2.0))
+        version: 4.3.1(vite@5.4.0(@types/node@22.4.0)(less@4.2.0))
       eslint:
         specifier: ^9.x
         version: 9.9.0
@@ -152,7 +152,7 @@ importers:
         version: 8.1.0(eslint@9.9.0)(typescript@5.5.4)
       vite:
         specifier: ^5.x
-        version: 5.4.0(@types/node@22.3.0)(less@4.2.0)
+        version: 5.4.0(@types/node@22.4.0)(less@4.2.0)
 
 packages:
 
@@ -835,8 +835,8 @@ packages:
   '@types/lodash@4.17.7':
     resolution: {integrity: sha512-8wTvZawATi/lsmNu10/j2hk1KEP0IvjubqPE3cu1Xz7xfXXt5oCq3SNUz4fMIP4XGF9Ky+Ue2tBA3hcS7LSBlA==}
 
-  '@types/node@22.3.0':
-    resolution: {integrity: sha512-nrWpWVaDZuaVc5X84xJ0vNrLvomM205oQyLsRt7OHNZbSHslcWsvgFR7O7hire2ZonjLrWBbedmotmIlJDVd6g==}
+  '@types/node@22.4.0':
+    resolution: {integrity: sha512-49AbMDwYUz7EXxKU/r7mXOsxwFr4BYbvB7tWYxVuLdb2ibd30ijjXINSMAHiEEZk5PCRBmW1gUeisn2VMKt3cQ==}
 
   '@types/prop-types@15.7.4':
     resolution: {integrity: sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==}
@@ -1459,8 +1459,8 @@ packages:
   i18next-browser-languagedetector@8.0.0:
     resolution: {integrity: sha512-zhXdJXTTCoG39QsrOCiOabnWj2jecouOqbchu3EfhtSHxIB5Uugnm9JaizenOy39h7ne3+fLikIjeW88+rgszw==}
 
-  i18next@23.12.3:
-    resolution: {integrity: sha512-DyigQmrR10V9U2N6pjhbfahW13GY7n8BQD9swN09JuRRropgsksWVi4vRLeex0Qf7zCPnBfIqQfhcBzdZBQBYw==}
+  i18next@23.13.0:
+    resolution: {integrity: sha512-B+g0/KTKmN3+NeMKPljQxdrih6Q6lyDF5O2e/Ofd0JQsTLojJD/BSTTN04iw6OVc0yBiHeypu5hoBNV6ag44Zw==}
 
   iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
@@ -2362,8 +2362,8 @@ packages:
   unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
 
-  undici-types@6.18.2:
-    resolution: {integrity: sha512-5ruQbENj95yDYJNS3TvcaxPMshV7aizdv/hWYjGIKoANWKjhWNBsr2YEuYZKodQulB1b8l7ILOuDQep3afowQQ==}
+  undici-types@6.19.6:
+    resolution: {integrity: sha512-e/vggGopEfTKSvj4ihnOLTsqhrKRN3LeO6qSN/GxohhuRv8qH9bNQ4B8W7e/vFL+0XTnmHPB4/kegunZGA4Org==}
 
   update-browserslist-db@1.0.15:
     resolution: {integrity: sha512-K9HWH62x3/EalU1U6sjSZiylm9C8tgq2mSvshZpqc7QE69RaA2qjhkW2HlNA0tFpEbtyFz7HTqbSdN4MSwUodA==}
@@ -3306,9 +3306,9 @@ snapshots:
 
   '@types/lodash@4.17.7': {}
 
-  '@types/node@22.3.0':
+  '@types/node@22.4.0':
     dependencies:
-      undici-types: 6.18.2
+      undici-types: 6.19.6
 
   '@types/prop-types@15.7.4': {}
 
@@ -3431,14 +3431,14 @@ snapshots:
       - '@codemirror/lint'
       - '@codemirror/search'
 
-  '@vitejs/plugin-react@4.3.1(vite@5.4.0(@types/node@22.3.0)(less@4.2.0))':
+  '@vitejs/plugin-react@4.3.1(vite@5.4.0(@types/node@22.4.0)(less@4.2.0))':
     dependencies:
       '@babel/core': 7.24.5
       '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.24.5)
       '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.24.5)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.4.0(@types/node@22.3.0)(less@4.2.0)
+      vite: 5.4.0(@types/node@22.4.0)(less@4.2.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -4157,7 +4157,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.5
 
-  i18next@23.12.3:
+  i18next@23.13.0:
     dependencies:
       '@babel/runtime': 7.25.0
 
@@ -4862,11 +4862,11 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-i18next@15.0.1(i18next@23.12.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-i18next@15.0.1(i18next@23.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.25.0
       html-parse-stringify: 3.0.1
-      i18next: 23.12.3
+      i18next: 23.13.0
       react: 18.3.1
     optionalDependencies:
       react-dom: 18.3.1(react@18.3.1)
@@ -5172,7 +5172,7 @@ snapshots:
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
 
-  undici-types@6.18.2: {}
+  undici-types@6.19.6: {}
 
   update-browserslist-db@1.0.15(browserslist@4.23.0):
     dependencies:
@@ -5196,13 +5196,13 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  vite@5.4.0(@types/node@22.3.0)(less@4.2.0):
+  vite@5.4.0(@types/node@22.4.0)(less@4.2.0):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.41
       rollup: 4.17.2
     optionalDependencies:
-      '@types/node': 22.3.0
+      '@types/node': 22.4.0
       fsevents: 2.3.3
       less: 4.2.0
 
