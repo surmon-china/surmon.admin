@@ -69,23 +69,10 @@ export const TableList: React.FC<TableListProps> = (props) => {
     },
 
     {
-      width: 160,
-      title: 'ETag / StorageClass',
+      width: 120,
+      title: 'StorageClass',
       dataIndex: 'storageClass',
-      render: (_, item) => {
-        if (isFolder(item)) {
-          return '-'
-        }
-
-        return (
-          <Space size="small">
-            <Tooltip title={item.eTag}>
-              <Icons.TagOutlined />
-            </Tooltip>
-            <span>{item.storageClass}</span>
-          </Space>
-        )
-      }
+      render: (_, item) => (isFolder(item) ? '-' : item.storageClass)
     }
   ]
 

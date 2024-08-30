@@ -148,6 +148,9 @@ export const FileManager: React.FC<FileManagerProps> = (props) => {
         <Descriptions.Item label="ETag" span={2}>
           {fileObject.eTag}
         </Descriptions.Item>
+        <Descriptions.Item label="Key" span={2}>
+          <Typography.Text copyable={{ text: fileObject.url }}>{fileObject.key}</Typography.Text>
+        </Descriptions.Item>
         <Descriptions.Item span={2}>{renderPreview()}</Descriptions.Item>
       </Descriptions>
     )
