@@ -5,7 +5,7 @@
 
 import { useRef } from 'veact'
 import { useLoading } from 'veact-use'
-import { uploadStaticToNodePress } from '@/apis/system'
+import { uploadStaticToNodePress } from '@/apis/static'
 
 const UPLOAD_FILE_SIZE_LIMIT = 3000000
 

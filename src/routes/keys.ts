@@ -2,6 +2,7 @@ export enum RoutesKey {
   Hello = 'hello',
   Dashboard = 'dashboard',
   Setting = 'setting',
+  Static = 'static',
   Announcement = 'announcement',
   Category = 'category',
   Tag = 'tag',

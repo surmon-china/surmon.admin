@@ -77,5 +77,8 @@
   "page.setting.title": "系統設置",
   "page.setting.general.title": "通用設置",
   "page.setting.data.title": "數據安全",
-  "page.setting.userinfo.title": "站長資料"
+  "page.setting.userinfo.title": "站長資料",
+
+  "page.setting.statics": "媒體管理",
+  "page.statics.list.title": "媒體列表"
 }

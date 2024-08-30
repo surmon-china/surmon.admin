@@ -77,5 +77,8 @@
   "page.setting.title": "Setting",
   "page.setting.general.title": "General Settings",
   "page.setting.data.title": "Cloud Data",
-  "page.setting.userinfo.title": "Admin Profile"
+  "page.setting.userinfo.title": "Admin Profile",
+
+  "page.setting.statics": "Statics",
+  "page.statics.list.title": "File list"
 }

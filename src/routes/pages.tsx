@@ -16,6 +16,7 @@ import { DisqusThreadsPage } from '@/pages/Dsiqus/Thread'
 import { DisqusPostsPage } from '@/pages/Dsiqus/Post'
 import { DisqusSynchronizePage } from '@/pages/Dsiqus/Synchronize'
 import { SettingPage } from '@/pages/Setting'
+import { StaticPage } from '@/pages/Static'
 
 import { RouteObject } from '.'
 import { RoutesKey } from './keys'
@@ -178,6 +179,15 @@ export const pageRoutes: RouteObject[] = [
     handle: {
       i18nKey: 'page.feedback.title',
       icon: <Icons.BulbOutlined />
+    }
+  },
+  {
+    id: RoutesKey.Static,
+    path: '/static',
+    element: <StaticPage />,
+    handle: {
+      i18nKey: 'page.setting.statics',
+      icon: <Icons.FileImageOutlined />
     }
   },
   {

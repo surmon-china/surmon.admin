@@ -1,10 +1,11 @@
 import React from 'react'
 import dayjs from 'dayjs'
 import { useRef } from 'veact'
-import { Button, Form, Select, Input } from 'antd'
+import { Button, Form, Select, Input, Modal } from 'antd'
 import type { FormInstance } from 'antd'
 import * as Icons from '@ant-design/icons'
-import { UniversalEditor, UnEditorLanguage } from '@/components/common/UniversalEditor'
+import { FileManager } from '@/components/common/FileManager'
+import { UniversalEditor } from '@/components/common/UniversalEditor'
 import { MultipleUploaderModal } from './components/MultipleUploaderModal'
 import { BLOG_ARTICLE_URL_PREFIX } from '@/transforms/url'
 import { TagSelect } from './components/TagSelect'
@@ -23,6 +24,7 @@ export interface MainFormProps {
 
 export const MainForm: React.FC<MainFormProps> = (props) => {
   const isUploaderModalOpen = useRef(false)
+  const isFileManagerModalOpen = useRef(false)
 
   return (
     <>
@@ -105,19 +107,24 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
             rows={38}
             formStatus={true}
             autoFocus={true}
-            renderToolbarExtra={(language) => {
-              if (language === UnEditorLanguage.Markdown) {
-                return (
-                  <Button
-                    size="small"
-                    icon={<Icons.CloudUploadOutlined />}
-                    onClick={() => {
-                      isUploaderModalOpen.value = true
-                    }}
-                  />
-                )
-              }
-            }}
+            renderToolbarExtra={() => (
+              <>
+                <Button
+                  size="small"
+                  icon={<Icons.CloudDownloadOutlined />}
+                  onClick={() => {
+                    isFileManagerModalOpen.value = true
+                  }}
+                />
+                <Button
+                  size="small"
+                  icon={<Icons.CloudUploadOutlined />}
+                  onClick={() => {
+                    isUploaderModalOpen.value = true
+                  }}
+                />
+              </>
+            )}
           />
         </Form.Item>
       </Form>
@@ -126,6 +133,26 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
         onClose={() => (isUploaderModalOpen.value = false)}
         uploaderDirectory={`nodepress/${dayjs().format('YYYY-MM-DD')}`}
       />
+      <Modal
+        title="云存储文件管理"
+        centered={true}
+        closable={true}
+        width={880}
+        footer={null}
+        open={isFileManagerModalOpen.value}
+        onClose={() => (isFileManagerModalOpen.value = false)}
+        onCancel={() => (isFileManagerModalOpen.value = false)}
+        styles={{
+          body: {
+            paddingTop: '12px',
+            paddingRight: '14px',
+            maxHeight: '80vh',
+            overflowY: 'auto'
+          }
+        }}
+      >
+        <FileManager initPrefix="nodepress/" tableListSize="small" />
+      </Modal>
     </>
   )
 }

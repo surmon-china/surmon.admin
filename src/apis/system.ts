@@ -10,7 +10,6 @@ import { Option } from '@/constants/option'
 export const OPTION_API_PATH = '/option'
 export const ARCHIVE_API_PATH = '/archive'
 export const EXTENSION_API_PATHS = {
-  UPLOAD: '/extension/upload',
   STATISTIC: '/extension/statistic',
   DATA_BASE_BACKUP: '/extension/database-backup'
 }
@@ -65,29 +64,4 @@ export function getOption() {
 /** 更新系统配置 */
 export function putOption(option: Option) {
   return nodepress.put<Option>(OPTION_API_PATH, option).then((response) => response.result)
-}
-
-/** 上传静态文件 */
-export async function uploadStaticToNodePress(options: {
-  file: File
-  name: string
-  onProgress?: (progress: number) => void
-}) {
-  const param = new FormData()
-  param.append('file', options.file)
-  param.append('name', options.name)
-  return nodepress
-    .post<{
-      url: string
-      key: string
-      size: number
-    }>(EXTENSION_API_PATHS.UPLOAD, param, {
-      onUploadProgress: ({ loaded, total }) => {
-        if (_isNumber(total)) {
-          const progress = (loaded / total) * 100
-          options.onProgress?.(progress)
-        }
-      }
-    })
-    .then((response) => response.result)
 }
