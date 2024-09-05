@@ -1,6 +1,6 @@
 {
   "name": "surmon.admin",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "author": "Surmon",
   "license": "MIT",
   "repository": {
@@ -50,7 +50,7 @@
     "react-router-dom": "^6.26.x",
     "react-top-loading-bar": "^2.3.1",
     "ua-parser-js": "^1.0.38",
-    "veact": "^1.0.0-beta.2",
+    "veact": "^1.0.0",
     "veact-use": "^0.1.4"
   },
   "devDependencies": {
@@ -62,6 +62,7 @@
     "@types/ua-parser-js": "^0.7.39",
     "@vitejs/plugin-react": "^4.x",
     "eslint": "^9.x",
+    "eslint-config-prettier": "^9.x",
     "eslint-plugin-prettier": "^5.x",
     "eslint-plugin-react": "^7.x",
     "globals": "^15.9.0",

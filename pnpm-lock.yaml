@@ -99,11 +99,11 @@ importers:
         specifier: ^1.0.38
         version: 1.0.38
       veact:
-        specifier: ^1.0.0-beta.2
-        version: 1.0.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^1.0.0
+        version: 1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       veact-use:
         specifier: ^0.1.4
-        version: 0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
     devDependencies:
       '@eslint/js':
         specifier: ^9.x
@@ -129,9 +129,12 @@ importers:
       eslint:
         specifier: ^9.x
         version: 9.9.1
+      eslint-config-prettier:
+        specifier: ^9.x
+        version: 9.1.0(eslint@9.9.1)
       eslint-plugin-prettier:
         specifier: ^5.x
-        version: 5.2.1(eslint@9.9.1)(prettier@3.3.3)
+        version: 5.2.1(eslint-config-prettier@9.1.0(eslint@9.9.1))(eslint@9.9.1)(prettier@3.3.3)
       eslint-plugin-react:
         specifier: ^7.x
         version: 7.35.0(eslint@9.9.1)
@@ -904,11 +907,11 @@ packages:
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0
 
-  '@vue/reactivity@3.5.0-rc.1':
-    resolution: {integrity: sha512-aE5Yvz/2oez2b02LvB9INUQLhjAMYYK87LjvzKkCDXjBQOdW8vzATJ4MJ1Rxm9RdNN5KQI8yK8F2hStycvULWg==}
+  '@vue/reactivity@3.5.2':
+    resolution: {integrity: sha512-lJwWL5bNht+2vIwU/+lnGdH+FKFxzz6z8WkoIJityPLiasWU+HDUvEsC7gm3JFwbTf7Kk+Nr9kJMaPy0HXwwxQ==}
 
-  '@vue/shared@3.5.0-rc.1':
-    resolution: {integrity: sha512-iulYMVPJ+gYaK+PjkM7mNXr+DKkniGH0F3LyuyBak3X2amiG/gMDbnqTEH5ScTbV5DuzpQJMuFgW6VtIzKprTg==}
+  '@vue/shared@3.5.2':
+    resolution: {integrity: sha512-Ce89WNFBzcDca/AgFTxgX4/K4iAyF7oFIp8Z5aBbFBNbtpwnQr+5pZOoHndxnjE2h+YFcipVMzs9UL11XB6dwA==}
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -1177,6 +1180,12 @@ packages:
   escape-string-regexp@4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
+
+  eslint-config-prettier@9.1.0:
+    resolution: {integrity: sha512-NSWl5BFQWEPi1j4TjVNItzYV7dZXZ+wP6I6ZhrBGpChQhZRUaElihE9uRRkcbRnNb76UMKDF3r+WTmNcGPKsqw==}
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
 
   eslint-plugin-prettier@5.2.1:
     resolution: {integrity: sha512-gH3iR3g4JfF+yYPaJYkN7jEl9QbweL/YfkoRlNnuIEHEz1vHVlCmWOS+eGGiRuzHQXdJFCOTxRgvju9b8VUmrw==}
@@ -2297,8 +2306,8 @@ packages:
       react-dom: ^16.8.0 || ^17 || ^18 || ^19
       veact: '*'
 
-  veact@1.0.0-beta.2:
-    resolution: {integrity: sha512-u0o7bFo1Ruw5sgx1TsbHVLfoHJUPUow8P+35AfBOisfELkO3Nnccn4U7F8EfSfuGQenzE97ZnH5fRWMIuhAdVg==}
+  veact@1.0.0:
+    resolution: {integrity: sha512-/gXOhlGrGkxsDlAS/QyXg2npSqgOUM4QdXE9TFdKsNrZsBzTAAbVF4CoLgOGZWEDVB8ePY9ykDl4IQUZMa4+ZA==}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
       react-dom: ^16.8.0 || ^17 || ^18 || ^19
@@ -3333,11 +3342,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vue/reactivity@3.5.0-rc.1':
+  '@vue/reactivity@3.5.2':
     dependencies:
-      '@vue/shared': 3.5.0-rc.1
+      '@vue/shared': 3.5.2
 
-  '@vue/shared@3.5.0-rc.1': {}
+  '@vue/shared@3.5.2': {}
 
   acorn-jsx@5.3.2(acorn@8.12.1):
     dependencies:
@@ -3777,12 +3786,18 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-plugin-prettier@5.2.1(eslint@9.9.1)(prettier@3.3.3):
+  eslint-config-prettier@9.1.0(eslint@9.9.1):
+    dependencies:
+      eslint: 9.9.1
+
+  eslint-plugin-prettier@5.2.1(eslint-config-prettier@9.1.0(eslint@9.9.1))(eslint@9.9.1)(prettier@3.3.3):
     dependencies:
       eslint: 9.9.1
       prettier: 3.3.3
       prettier-linter-helpers: 1.0.0
       synckit: 0.9.1
+    optionalDependencies:
+      eslint-config-prettier: 9.1.0(eslint@9.9.1)
 
   eslint-plugin-react@7.35.0(eslint@9.9.1):
     dependencies:
@@ -5017,15 +5032,15 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  veact-use@0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  veact-use@0.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(veact@1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      veact: 1.0.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      veact: 1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  veact@1.0.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  veact@1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@vue/reactivity': 3.5.0-rc.1
+      '@vue/reactivity': 3.5.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 

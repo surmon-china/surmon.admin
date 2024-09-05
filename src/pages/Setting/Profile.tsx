@@ -52,6 +52,7 @@ export const ProfileForm: React.FC = () => {
   const validatePassword = async () => {
     const password = form.getFieldValue('password')
     const newPassword = form.getFieldValue('new_password')
+    // @ts-ignore
     const reallyNewPassword = form.getFieldValue('rel_new_password')
     if (!password && !newPassword && !reallyNewPassword) {
       return
