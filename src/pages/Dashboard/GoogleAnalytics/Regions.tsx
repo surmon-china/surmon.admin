@@ -1,6 +1,10 @@
 import React from 'react'
 import { useLocale } from '@/contexts/Locale'
-import { countryCodeToEmoji, countryCodeToFullName } from '@/transforms/country'
+import {
+  isValidCountryCode,
+  countryCodeToEmoji,
+  countryCodeToFullName
+} from '@/transforms/country'
 import { GoogleAnalyticsTreeList } from './common/TreeList'
 import { ReportRowItem } from './common/helper'
 
@@ -16,7 +20,7 @@ export const GoogleAnalyticsRegions: React.FC<GoogleAnalyticsRegionsProps> = (pr
       defaultExpanded={false}
       limit={8}
       strongLabel
-      labelPrefix={(item) => countryCodeToEmoji(item.name)}
+      labelPrefix={({ name }) => (isValidCountryCode(name) ? countryCodeToEmoji(name) : '🌍')}
       labelSuffix={(item) => countryCodeToFullName(item.name, language) ?? ''}
     />
   )

@@ -96,7 +96,7 @@ export const fetchAnalyticsReports = async (
         startDate,
         endDate
       }),
-      // UV: os + device model
+      // UV: OS + device model
       getRunReportRequestByDimensions({
         dimensions: ['operatingSystem', 'mobileDeviceModel'],
         metrics: ['activeUsers'],
