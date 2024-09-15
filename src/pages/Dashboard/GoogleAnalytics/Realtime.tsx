@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react'
+import React, { useState, useRef, useMemo, useEffect } from 'react'
 import { onBeforeUnmount, onMounted } from 'veact'
 import * as Icons from '@ant-design/icons'
 import { Col, Row, List, Flex, Statistic, Divider, Empty } from 'antd'
@@ -26,6 +26,8 @@ export interface GoogleAnalyticsRealtimeProps extends React.PropsWithChildren {
 
 export const GoogleAnalyticsRealtime: React.FC<GoogleAnalyticsRealtimeProps> = (props) => {
   const intervalId = useRef<number>()
+  const isCanceled = useRef(false)
+
   const [timelineReports, setTimelineReports] = useState<ReportRowItem[]>([])
   const [regionReports, setRegionReports] = useState<ReportRowItem[]>([])
   // for chart
@@ -71,10 +73,12 @@ export const GoogleAnalyticsRealtime: React.FC<GoogleAnalyticsRealtimeProps> = (
       setRegionReports(response.result.data.rows ?? [])
     })
     Promise.all([request1, request2]).then(() => {
-      intervalId.current = window.setTimeout(
-        fetchRealtimeReports,
-        props.pollIntervalSeconds * 1000
-      )
+      if (!isCanceled.current) {
+        intervalId.current = window.setTimeout(
+          fetchRealtimeReports,
+          props.pollIntervalSeconds * 1000
+        )
+      }
     })
   }
 
@@ -83,6 +87,7 @@ export const GoogleAnalyticsRealtime: React.FC<GoogleAnalyticsRealtimeProps> = (
   })
 
   onBeforeUnmount(() => {
+    isCanceled.current = true
     window.clearTimeout(intervalId.current)
   })
 
