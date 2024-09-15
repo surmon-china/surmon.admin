@@ -104,7 +104,7 @@ export const DashboardPage: React.FC = () => {
             classNames={{ body: styles.gaChartContent }}
             title="GA Realtime（过去 30 分钟）"
           >
-            <GoogleAnalyticsRealtime pollIntervalSeconds={10} chartHeight={200} />
+            <GoogleAnalyticsRealtime pollIntervalSeconds={16} chartHeight={200} />
           </Card>
         </Col>
         <Col xs={24} md={24} lg={15}>
