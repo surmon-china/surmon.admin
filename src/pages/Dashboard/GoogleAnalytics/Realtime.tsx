@@ -66,13 +66,15 @@ export const GoogleAnalyticsRealtime: React.FC<GoogleAnalyticsRealtimeProps> = (
 
   const fetchRealtimeReports = () => {
     window.clearTimeout(intervalId.current)
-    const request1 = fetchAnalyticsRealtimeReports(['minutesAgo']).then((response) => {
+    const timeRequest = fetchAnalyticsRealtimeReports(['minutesAgo']).then((response) => {
       setTimelineReports(response.result.data.rows ?? [])
     })
-    const request2 = fetchAnalyticsRealtimeReports(['countryId', 'city']).then((response) => {
-      setRegionReports(response.result.data.rows ?? [])
-    })
-    Promise.all([request1, request2]).then(() => {
+    const regionRequest = fetchAnalyticsRealtimeReports(['countryId', 'city']).then(
+      (response) => {
+        setRegionReports(response.result.data.rows ?? [])
+      }
+    )
+    Promise.all([timeRequest, regionRequest]).then(() => {
       if (!isCanceled.current) {
         intervalId.current = window.setTimeout(
           fetchRealtimeReports,
