@@ -120,7 +120,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
     <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
       <Col xs={24} lg={17}>
         <Card
-          bordered={false}
+          variant="borderless"
           title={i18n.t('page.article.editor.content')}
           extra={props.mainCardExtra}
         >
@@ -136,14 +136,14 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
       <Col xs={24} lg={7}>
         <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
           <Col span={24}>
-            <Card title={i18n.t('page.article.editor.categories')} bordered={false}>
+            <Card title={i18n.t('page.article.editor.categories')} variant="borderless">
               <Spin spinning={props.loading}>
                 <CategoriesForm form={categoriesFormModel} />
               </Spin>
             </Card>
           </Col>
           <Col span={24}>
-            <Card title={i18n.t('page.article.editor.thumbnail')} bordered={false}>
+            <Card title={i18n.t('page.article.editor.thumbnail')} variant="borderless">
               <Spin spinning={props.loading}>
                 <Form scrollToFirstError={true} form={thumbnailFormModel}>
                   <Form.Item noStyle={true} name="thumbnail">
@@ -156,7 +156,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
           <Col span={24}>
             <Card
               title={i18n.t('page.article.editor.extends')}
-              bordered={false}
+              variant="borderless"
               extra={
                 <Button
                   type="link"
@@ -179,7 +179,7 @@ export const ArticleEditor: React.FC<ArticleEditorProps> = (props) => {
             </Card>
           </Col>
           <Col span={24}>
-            <Card title={i18n.t('page.article.editor.states')} bordered={false}>
+            <Card title={i18n.t('page.article.editor.states')} variant="borderless">
               <Spin spinning={props.loading}>
                 <StatesForm
                   form={statesFormModel}

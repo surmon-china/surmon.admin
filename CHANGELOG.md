@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### 3.4.0 (2025-06-16)
+
+- Upgrade all dependencies to their latest versions.
+
 ### 3.0.0 (2024-05-16)
 
 - Added i18n support.

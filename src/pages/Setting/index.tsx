@@ -25,7 +25,7 @@ const PageCard: React.FC<PageCardProps> = (props) => {
     </Space>
   )
   return (
-    <Card bordered={false} title={title}>
+    <Card variant="borderless" title={title}>
       {props.children}
     </Card>
   )

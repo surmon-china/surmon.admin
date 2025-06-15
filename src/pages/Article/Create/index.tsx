@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { useLoading } from 'veact-use'
 import { RoutesPather } from '@/routes'
 import { Article } from '@/constants/article'

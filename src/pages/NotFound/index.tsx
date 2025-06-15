@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { Flex, Result, Button } from 'antd'
 import { Trans } from '@/i18n'
 

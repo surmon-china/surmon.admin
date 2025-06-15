@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useShallowReactive, useRef, useWatch, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import { Button, Card, Divider, Modal } from 'antd'
@@ -103,7 +103,7 @@ export const ArticleListPage: React.FC = () => {
 
   return (
     <Card
-      bordered={false}
+      variant="borderless"
       title={i18n.t('page.article.list.title', { total: articles.pagination?.total ?? '-' })}
       extra={
         <Link to={RoutesPath[RoutesKey.ArticlePost]}>

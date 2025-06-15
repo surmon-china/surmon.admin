@@ -100,7 +100,7 @@ export const DashboardPage: React.FC = () => {
       <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
         <Col xs={24} md={24} lg={9}>
           <Card
-            bordered={false}
+            variant="borderless"
             classNames={{ body: styles.gaChartContent }}
             title="GA Realtime（过去 30 分钟）"
           >
@@ -109,7 +109,7 @@ export const DashboardPage: React.FC = () => {
         </Col>
         <Col xs={24} md={24} lg={15}>
           <Card
-            bordered={false}
+            variant="borderless"
             classNames={{ body: styles.gaChartContent }}
             loading={analyticsFetching.state}
             title="GA Overview"
@@ -146,7 +146,7 @@ export const DashboardPage: React.FC = () => {
       <Row gutter={[APP_LAYOUT_GUTTER_SIZE, APP_LAYOUT_GUTTER_SIZE]}>
         <Col xs={24} md={12} lg={6}>
           <Card
-            bordered={false}
+            variant="borderless"
             title="GA Regions Rank"
             loading={analyticsFetching.state}
             classNames={{ body: styles.gaTreeListContent }}
@@ -158,7 +158,7 @@ export const DashboardPage: React.FC = () => {
         </Col>
         <Col xs={24} md={12} lg={6}>
           <Card
-            bordered={false}
+            variant="borderless"
             title="GA Devices Rank"
             loading={analyticsFetching.state}
             classNames={{ body: styles.gaTreeListContent }}
@@ -170,7 +170,7 @@ export const DashboardPage: React.FC = () => {
         </Col>
         <Col xs={24} md={12} lg={6}>
           <Card
-            bordered={false}
+            variant="borderless"
             title="GA Urls Rank"
             loading={analyticsFetching.state}
             classNames={{ body: styles.gaTreeListContent }}
@@ -182,7 +182,7 @@ export const DashboardPage: React.FC = () => {
         </Col>
         <Col xs={24} md={12} lg={6}>
           <Card
-            bordered={false}
+            variant="borderless"
             title="GA Page Titles Rank"
             loading={analyticsFetching.state}
             classNames={{ body: styles.gaTreeListContent }}

@@ -115,7 +115,6 @@ export const TableList: React.FC<TableListProps> = (props) => {
         },
         {
           title: '终端信息',
-          width: 210,
           dataIndex: 'agent',
           render(_, comment) {
             return (

@@ -36,7 +36,7 @@ export const FormModal: React.FC<FormModalProps> = (props) => {
       width={props.width}
       centered={true}
       forceRender={true}
-      destroyOnClose={true}
+      destroyOnHidden={true}
       title={props.title}
       open={props.open}
       confirmLoading={props.submitting}

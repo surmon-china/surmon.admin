@@ -144,7 +144,7 @@ export const GoogleAnalyticsRealtime: React.FC<GoogleAnalyticsRealtimeProps> = (
         {regionReports.length ? (
           renderRegionList(regionReports)
         ) : (
-          <Empty image={null} imageStyle={{ height: '1rem' }} />
+          <Empty image={null} styles={{ image: { height: '1rem' } }} />
         )}
       </Col>
     </Row>

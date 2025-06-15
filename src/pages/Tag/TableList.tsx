@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Button } from 'antd'
+import { Table, Button, Space } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { Pagination } from '@/constants/nodepress'
 import { Tag } from '@/constants/tag'
@@ -67,7 +67,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
           align: 'right',
           dataIndex: 'actions',
           render: (_, tag, index) => (
-            <Button.Group size="small">
+            <Space.Compact size="small">
               <Button
                 type="text"
                 icon={<Icons.EditOutlined />}
@@ -91,7 +91,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
               >
                 查看
               </Button>
-            </Button.Group>
+            </Space.Compact>
           )
         }
       ]}

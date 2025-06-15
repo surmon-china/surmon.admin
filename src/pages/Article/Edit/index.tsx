@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router'
 import { useRef, onMounted } from 'veact'
 import { useLoading } from 'veact-use'
 import { Modal, Button, Space, Divider, message, Typography, Tooltip } from 'antd'

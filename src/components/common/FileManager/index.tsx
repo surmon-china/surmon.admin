@@ -162,11 +162,10 @@ export const FileManager: React.FC<FileManagerProps> = (props) => {
         title={modalFileObject.value?.key ?? '文件详情'}
         centered={true}
         closable={true}
-        destroyOnClose={true}
+        destroyOnHidden={true}
         footer={null}
         open={isFileModalOpen.value}
         onCancel={closeFileModal}
-        onClose={closeFileModal}
       >
         {modalFileObject.value ? renderFileModalContent(modalFileObject.value) : null}
       </Modal>

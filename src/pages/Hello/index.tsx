@@ -5,7 +5,7 @@
 
 import classnames from 'classnames'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { Spin, Input } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { RoutesKey, RoutesPath } from '@/routes'

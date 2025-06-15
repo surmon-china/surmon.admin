@@ -16,7 +16,7 @@ export const StaticPage: React.FC = () => {
 
   return (
     <Card
-      bordered={false}
+      variant="borderless"
       title={i18n.t('page.statics.list.title', {
         total: '-'
       })}
@@ -25,7 +25,7 @@ export const StaticPage: React.FC = () => {
           type="primary"
           size="small"
           icon={<Icons.UploadOutlined />}
-          disabled
+          // disabled
           onClick={() => (isUploaderModalOpen.value = true)}
         >
           上传新文件
@@ -39,7 +39,7 @@ export const StaticPage: React.FC = () => {
         closable={false}
         footer={null}
         open={isUploaderModalOpen.value}
-        onClose={() => (isUploaderModalOpen.value = false)}
+        onCancel={() => (isUploaderModalOpen.value = false)}
       >
         <p>TODO</p>
       </Modal>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Steps, Result, Button } from 'antd'
+import { Steps, Result, Button, Space } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { downloadNodePressXMLToDisqus } from '@/apis/disqus'
 
@@ -26,7 +26,7 @@ export const NodePresstoDisqus: React.FC = () => {
         icon={<Icons.CloudSyncOutlined />}
         title="NodePress To Disqus"
         extra={
-          <Button.Group>
+          <Space.Compact>
             <Button
               size="large"
               type="primary"
@@ -44,7 +44,7 @@ export const NodePresstoDisqus: React.FC = () => {
             >
               Upload to Disqus
             </Button>
-          </Button.Group>
+          </Space.Compact>
         }
       />
     </div>

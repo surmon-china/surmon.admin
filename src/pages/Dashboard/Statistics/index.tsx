@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { Flex, Divider, Rate, Typography } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { Statistics } from '@/apis/system'

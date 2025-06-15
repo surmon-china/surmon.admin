@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router'
 import * as Icons from '@ant-design/icons'
 
 import { DashboardPage } from '@/pages/Dashboard'

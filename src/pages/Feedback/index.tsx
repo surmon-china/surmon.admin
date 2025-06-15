@@ -123,7 +123,7 @@ export const FeedbackPage: React.FC = () => {
 
   return (
     <Card
-      bordered={false}
+      variant="borderless"
       title={i18n.t('page.feedback.list.title', { total: feedbacks.pagination?.total ?? '-' })}
     >
       <ListFilters
@@ -162,7 +162,7 @@ export const FeedbackPage: React.FC = () => {
       <Drawer
         width="46rem"
         title="反馈详情"
-        destroyOnClose={true}
+        destroyOnHidden={true}
         open={isEditDrawerOpen.value}
         onClose={closeEditDrawer}
       >

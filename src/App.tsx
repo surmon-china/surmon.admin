@@ -5,8 +5,8 @@
 
 import React from 'react'
 import { onMounted } from 'veact'
-import type { RouteObject } from 'react-router-dom'
-import { RouterProvider, createHashRouter, createBrowserRouter } from 'react-router-dom'
+import type { RouteObject } from 'react-router'
+import { RouterProvider, createHashRouter, createBrowserRouter } from 'react-router'
 import { VITE_ENV, APP_PRIMARY_COLOR, ENABLED_HASH_ROUTER } from '@/config'
 import { App as AntdAppContainer } from 'antd'
 import { AntdConfigProvider } from '@/contexts/AntdConfig'

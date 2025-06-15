@@ -140,7 +140,7 @@ export const AnnouncementPage: React.FC = () => {
 
   return (
     <Card
-      bordered={false}
+      variant="borderless"
       title={i18n.t('page.announcement.list.title', {
         total: announcements.pagination?.total ?? '-'
       })}

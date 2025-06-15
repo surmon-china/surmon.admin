@@ -6,7 +6,7 @@
 import React from 'react'
 import queryString from 'query-string'
 import _uniq from 'lodash/uniq'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import { useShallowReactive, useRef, onMounted, useWatch, useComputed } from 'veact'
 import { useLoading } from 'veact-use'
 import { Card, Divider, Modal, Drawer, Spin } from 'antd'
@@ -165,7 +165,7 @@ export const CommentPage: React.FC = () => {
 
   return (
     <Card
-      bordered={false}
+      variant="borderless"
       title={i18n.t('page.comment.list.title', { total: comments.pagination?.total ?? '-' })}
       extra={<ExtraActions comments={comments.data} loading={fetching.state.value} />}
     >
@@ -229,7 +229,7 @@ export const CommentPage: React.FC = () => {
       <Drawer
         width="46rem"
         title="评论详情"
-        destroyOnClose={true}
+        destroyOnHidden={true}
         open={isEditDrawerOpen.value}
         onClose={closeEditDrawer}
       >

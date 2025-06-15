@@ -35,7 +35,7 @@ export const GridList: React.FC<GridListProps> = (props) => {
           <Tooltip
             key={index}
             placement="topLeft"
-            destroyTooltipOnHide={true}
+            destroyOnHidden={true}
             mouseEnterDelay={0.01}
             mouseLeaveDelay={0.01}
             title={isFolder(item) ? item.prefix : item.key}

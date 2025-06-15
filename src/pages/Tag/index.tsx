@@ -132,7 +132,7 @@ export const TagPage: React.FC = () => {
 
   return (
     <Card
-      bordered={false}
+      variant="borderless"
       title={i18n.t('page.tag.list.title', { total: tags.pagination?.total ?? '-' })}
       extra={
         <Button

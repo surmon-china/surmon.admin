@@ -140,7 +140,7 @@ export const VoteDrawer: React.FC<VoteDrawerProps> = (props) => {
       width={props.width}
       title={`文章获赞记录（${props.likeCount ?? '-'}）`}
       loading={initFetching.state.value}
-      destroyOnClose={true}
+      destroyOnHidden={true}
       open={props.open}
       onClose={props.onClose}
       extra={

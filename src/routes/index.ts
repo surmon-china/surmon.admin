@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { RouteObject as ReactRouteObject } from 'react-router-dom'
+import { RouteObject as ReactRouteObject } from 'react-router'
 
 export { routes } from './routes'
 export { pageRoutes } from './pages'

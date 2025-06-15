@@ -13,7 +13,7 @@ interface StatisticCardProps extends React.PropsWithChildren {
 }
 
 export const StatisticCard: React.FC<StatisticCardProps> = (props) => (
-  <Card bordered={false} className={styles.statisticCard}>
+  <Card variant="borderless" className={styles.statisticCard}>
     <Flex justify="space-between">
       <Statistic
         valueStyle={{ fontWeight: 'bold' }}
@@ -24,7 +24,7 @@ export const StatisticCard: React.FC<StatisticCardProps> = (props) => (
       />
       <div className={styles.icon}>{props.icon}</div>
     </Flex>
-    <Divider className={styles.divider} />
+    <Divider size="middle" />
     {props.loading ? <Skeleton.Input block active size="small" /> : props.extra}
   </Card>
 )

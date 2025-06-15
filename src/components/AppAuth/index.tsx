@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react'
 import { onMounted, onBeforeUnmount } from 'veact'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { notification, Typography, Spin, Space, Flex } from 'antd'
 import { Loading3QuartersOutlined } from '@ant-design/icons'
 import { useTranslation } from '@/i18n'

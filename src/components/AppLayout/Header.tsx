@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { Dropdown, Avatar, Button, Modal, Select, Flex } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { RoutesKey, RoutesPath } from '@/routes'

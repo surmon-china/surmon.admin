@@ -99,7 +99,7 @@ export const VotePage: React.FC = () => {
 
   return (
     <Card
-      bordered={false}
+      variant="borderless"
       title={i18n.t('page.vote.list.title', { total: votes.pagination?.total ?? '-' })}
     >
       <ListFilters

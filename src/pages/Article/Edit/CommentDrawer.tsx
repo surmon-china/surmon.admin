@@ -72,7 +72,7 @@ export const CommentDrawer: React.FC<CommentDrawerProps> = (props) => {
       width={props.width}
       title={`文章评论（${props.commentCount ?? '-'}）`}
       loading={initFetching.state.value}
-      destroyOnClose={true}
+      destroyOnHidden={true}
       open={props.open}
       onClose={props.onClose}
       extra={

@@ -1,7 +1,7 @@
 import React from 'react'
 import { onMounted } from 'veact'
 import { useLoading } from 'veact-use'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { Form, Input, Button, Spin, Divider, notification } from 'antd'
 import * as Icons from '@ant-design/icons'
 import * as api from '@/apis/admin'

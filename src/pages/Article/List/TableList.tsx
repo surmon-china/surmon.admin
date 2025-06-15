@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { Table, Button, Typography, Badge, Card, Tag, Space, Divider } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { APP_PRIMARY_COLOR } from '@/config'
@@ -61,7 +61,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
             >
               <Card
                 size="small"
-                bordered={false}
+                variant="borderless"
                 styles={{
                   body: { minHeight: '108px' }
                 }}

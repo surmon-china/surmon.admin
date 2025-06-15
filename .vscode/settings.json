@@ -6,6 +6,5 @@
   },
   "prettier.semi": false,
   "prettier.singleQuote": true,
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.enabled": false
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

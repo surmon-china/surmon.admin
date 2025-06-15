@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import React, { useMemo } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router'
 import { Menu, Spin, Typography, MenuProps, Space, Flex } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { GITHUB_REPO_URL } from '@/config'

@@ -101,12 +101,12 @@ export const CalendarCard: React.FC<CalendarCardProps> = (props) => {
 
   return (
     <Card
-      bordered={false}
+      variant="borderless"
       title={props.title}
       loading={props.loading}
       extra={
         <Space wrap>
-          <Button.Group size="small">
+          <Space.Compact size="small">
             <Button onClick={() => selectDataRange(dayjs().subtract(1, 'month'))}>
               最近一月
             </Button>
@@ -115,7 +115,7 @@ export const CalendarCard: React.FC<CalendarCardProps> = (props) => {
             </Button>
             <Button onClick={() => selectDataRange(dayjs().subtract(1, 'year'))}>最近一年</Button>
             <Button onClick={selectAllData}>全部视图</Button>
-          </Button.Group>
+          </Space.Compact>
           <Divider type="vertical" />
           {props.cardExtra}
         </Space>

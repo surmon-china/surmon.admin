@@ -140,7 +140,6 @@ export const MainForm: React.FC<MainFormProps> = (props) => {
         width={880}
         footer={null}
         open={isFileManagerModalOpen.value}
-        onClose={() => (isFileManagerModalOpen.value = false)}
         onCancel={() => (isFileManagerModalOpen.value = false)}
         styles={{
           body: {

@@ -76,7 +76,7 @@ export const DisqusThreadsPage: React.FC = () => {
 
   return (
     <Card
-      bordered={false}
+      variant="borderless"
       title={`Threads (${threads.list.length})`}
       extra={
         <Button

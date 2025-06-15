@@ -1,6 +1,6 @@
 import React from 'react'
 import { onMounted } from 'veact'
-import { useLocation, matchPath } from 'react-router-dom'
+import { useLocation, matchPath } from 'react-router'
 import { Card, Breadcrumb, FloatButton, Typography, Flex } from 'antd'
 import { CaretUpOutlined } from '@ant-design/icons'
 import { ENABLED_AD } from '@/config'
@@ -18,7 +18,7 @@ const HeaderAdvert: React.FC = () => {
 
   return (
     <div className={styles.pageHeaderAdvert}>
-      <Card classNames={{ body: styles.adCard }} size="small" bordered={false}>
+      <Card classNames={{ body: styles.adCard }} size="small" variant="borderless">
         <ins
           className="adsbygoogle"
           style={{ display: 'inline-block', width: 728, height: 90 }}

@@ -63,7 +63,7 @@ export const ExtraActions: React.FC<ExtraActionsProps> = (props) => {
 
   return (
     <Space wrap>
-      <Button.Group>
+      <Space.Compact>
         {ipLocationTask.running && (
           <Button
             size="small"
@@ -90,7 +90,7 @@ export const ExtraActions: React.FC<ExtraActionsProps> = (props) => {
         >
           修正本页评论的 IP location 数据
         </Button>
-      </Button.Group>
+      </Space.Compact>
       <Button
         type="primary"
         size="small"

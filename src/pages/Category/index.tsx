@@ -90,7 +90,7 @@ export const CategoryPage: React.FC = () => {
 
   return (
     <Card
-      bordered={false}
+      variant="borderless"
       title={i18n.t('page.category.list.title', {
         total: categoriesList.value?.length ?? '-'
       })}

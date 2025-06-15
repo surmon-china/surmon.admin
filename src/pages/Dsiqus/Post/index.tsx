@@ -77,7 +77,7 @@ export const DisqusPostsPage: React.FC = () => {
   return (
     <Card
       title={`Posts (${posts.list.length})`}
-      bordered={false}
+      variant="borderless"
       extra={
         <Button
           type="primary"

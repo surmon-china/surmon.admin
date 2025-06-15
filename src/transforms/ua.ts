@@ -6,16 +6,16 @@
 import { UAParser } from 'ua-parser-js'
 
 export const parseBrowser = (userAgent: string) => {
-  const result = new UAParser(userAgent).getBrowser()
-  return result.name && result.version ? `${result.name} | ${result.version}` : null
+  const { browser } = UAParser(userAgent)
+  return browser.name && browser.version ? `${browser.name} | ${browser.version}` : null
 }
 
 export const parseOS = (userAgent: string) => {
-  const result = new UAParser(userAgent).getOS()
-  return result.name && result.version ? `${result.name} | ${result.version}` : null
+  const { os } = UAParser(userAgent)
+  return os.name && os.version ? `${os.name} | ${os.version}` : null
 }
 
 export const parseDevice = (userAgent: string) => {
-  const result = new UAParser(userAgent).getDevice()
-  return result.model && result.vendor ? `${result.model} | ${result.vendor}` : null
+  const { device } = UAParser(userAgent)
+  return device.model && device.vendor ? `${device.model} | ${device.vendor}` : null
 }
