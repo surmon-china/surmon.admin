@@ -9,14 +9,34 @@
   align-items: center;
   background-color: @body-background;
 
-  .icon {
-    font-size: 5em;
+  .iconWrapper {
+    @icon-size: 5em;
+    display: block;
+    position: relative;
     user-select: none;
     cursor: pointer;
-    text-align: center;
-    filter: grayscale(1);
+    width: @icon-size;
+    height: @icon-size;
+
+    .icon {
+      position: absolute;
+      font-size: @icon-size;
+      &.lockIcon {
+        filter: grayscale(1);
+        opacity: 1;
+      }
+      &.unlockIcon {
+        opacity: 0;
+      }
+    }
+
     &:hover {
-      filter: grayscale(0);
+      .lockIcon {
+        opacity: 0;
+      }
+      .unlockIcon {
+        opacity: 1;
+      }
     }
   }
 
