@@ -60,6 +60,7 @@ export const HelloPage: React.FC = () => {
       className={styles.input}
       id="password"
       size="large"
+      autoComplete="off"
       autoFocus={true}
       disabled={isLoggingIn}
       value={inputValue}
