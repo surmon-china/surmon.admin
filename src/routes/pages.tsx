@@ -20,6 +20,7 @@ import { StaticPage } from '@/pages/Static'
 
 import { RouteObject } from '.'
 import { RoutesKey } from './keys'
+import { getResourceUrl } from '@/transforms/url'
 
 export const pageRoutes: RouteObject[] = [
   {
@@ -124,7 +125,7 @@ export const pageRoutes: RouteObject[] = [
     path: '/disqus',
     handle: {
       i18nKey: 'page.disqus.title',
-      icon: <Icons.MessageOutlined />
+      icon: <img src={getResourceUrl('/images/disqus.svg')} width="1em" />
     },
     children: [
       {
