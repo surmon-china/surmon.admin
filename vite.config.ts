@@ -3,6 +3,7 @@ import viteReact from '@vitejs/plugin-react'
 import { defineConfig, UserConfig } from 'vite'
 import { proxyConfiger } from './vite.config.proxy'
 import { demoConfiger } from './vite.config.demo'
+import packageJSON from './package.json'
 
 // https://vitejs.dev/config/
 const config: UserConfig = {
@@ -11,6 +12,9 @@ const config: UserConfig = {
     alias: {
       '@': path.resolve(__dirname, 'src')
     }
+  },
+  define: {
+    __APP_VERSION__: JSON.stringify(packageJSON.version)
   },
   server: {
     open: true

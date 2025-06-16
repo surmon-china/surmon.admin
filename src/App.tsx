@@ -27,7 +27,9 @@ export const App: React.FC = () => {
   const { language } = useLocale()
 
   onMounted(() => {
-    console.info('App is running.', VITE_ENV)
+    console.group('🟢 App is running.')
+    console.table({ VITE_ENV })
+    console.groupEnd()
   })
 
   return (

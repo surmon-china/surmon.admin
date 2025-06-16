@@ -10,6 +10,8 @@ export const APP_TITLE = 'Surmon.me'
 export const BLOG_URL = `https://surmon.me`
 export const GITHUB_REPO_URL = 'https://github.com/surmon-china/surmon.admin'
 
+// defined in vite.config.ts
+export const APP_VERSION = __APP_VERSION__
 export const APP_AUTH_HEADER_KEY = 'Authorization'
 export const APP_CONTENT_SPACE_SIZE: SizeType = 'middle'
 export const APP_LAYOUT_SPACE_SIZE: SizeType = 'large'
@@ -18,8 +20,8 @@ export const APP_PRIMARY_COLOR = '#0088f5'
 export const APP_PRIMARY_LANGUAGE = Language.English
 
 export const VITE_ENV = import.meta.env
-export const ENV = import.meta.env.MODE
-export const isDev = ENV === 'development'
+export const ENV_MODE = import.meta.env.MODE
+export const isDev = ENV_MODE === 'development'
 export const BASE_PATH = import.meta.env.BASE_URL as string
 export const API_URL = import.meta.env.VITE_API_URL as string
 export const ENABLED_AD = Boolean(import.meta.env.VITE_ENABLE_AD)
