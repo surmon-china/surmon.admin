@@ -50,8 +50,8 @@ export const HelloPage: React.FC = () => {
 
   const lockIcon = (
     <div className={styles.iconWrapper} onClick={switchToInput} onTouchEnd={switchToInput}>
-      <Icons.LockTwoTone className={classnames(styles.icon, styles.lockIcon)} />
-      <Icons.UnlockTwoTone className={classnames(styles.icon, styles.unlockIcon)} />
+      <Icons.LockOutlined className={classnames(styles.icon, styles.lockIcon)} />
+      <Icons.UnlockOutlined className={classnames(styles.icon, styles.unlockIcon)} />
     </div>
   )
 

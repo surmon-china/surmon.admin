@@ -116,6 +116,7 @@ export const TableList: React.FC<TableListProps> = (props) => {
         {
           title: '终端信息',
           dataIndex: 'agent',
+          minWidth: 200,
           render(_, comment) {
             return (
               <Space direction="vertical">
