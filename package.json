@@ -1,6 +1,6 @@
 {
   "name": "surmon.admin",
-  "version": "3.4.3",
+  "version": "3.4.4",
   "author": "Surmon",
   "license": "MIT",
   "repository": {
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.x",
-    "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/lang-json": "^6.0.x",
     "@codemirror/lang-markdown": "^6.3.x",
     "@codemirror/lang-yaml": "^6.1.x",
     "@codemirror/language": "^6.11.x",

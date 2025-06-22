@@ -12,7 +12,7 @@ importers:
         specifier: ^5.x
         version: 5.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@codemirror/lang-json':
-        specifier: ^6.0.1
+        specifier: ^6.0.x
         version: 6.0.1
       '@codemirror/lang-markdown':
         specifier: ^6.3.x
