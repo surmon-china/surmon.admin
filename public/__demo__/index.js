@@ -1,6 +1,8 @@
 // JSON actions
 const fetchJSON = (filePath) => {
-  return fetch(`/surmon.admin/__demo__/mock/${filePath}.json`).then((response) => response.json())
+  const base = (window.DEMO_BASE_URL || '').replace(/\/+$/, '')
+  const url = `${base}/__demo__/mock/${filePath}.json`
+  return fetch(url).then((response) => response.json())
 }
 
 // first fetch cache data map

@@ -4,32 +4,32 @@
  */
 
 import { COMMENT_GUESTBOOK_POST_ID } from '@/constants/comment'
-import { BLOG_URL, BASE_PATH } from '@/config'
+import { BLOG_BASE_URL, APP_BASE_URL } from '@/config'
 
 export const getResourceUrl = (uri: string) => {
-  const path = BASE_PATH.endsWith('/') ? BASE_PATH : `${BASE_PATH}/`
+  const path = APP_BASE_URL.endsWith('/') ? APP_BASE_URL : `${APP_BASE_URL}/`
   return uri.startsWith('/') ? path + uri.substring(1, uri.length) : path + uri
 }
 
 export const getBlogUrl = (uri: string) => {
-  return `${BLOG_URL}${uri}`
+  return `${BLOG_BASE_URL}${uri}`
 }
 
-export const BLOG_ARTICLE_URL_PREFIX = `${BLOG_URL}/article/`
+export const BLOG_ARTICLE_URL_PREFIX = `${BLOG_BASE_URL}/article/`
 export const getBlogArticleUrl = (articleId: number) => {
   return `${BLOG_ARTICLE_URL_PREFIX}${articleId}`
 }
 
 export const getBlogTagUrl = (tagSlug: string) => {
-  return `${BLOG_URL}/tag/${tagSlug}`
+  return `${BLOG_BASE_URL}/tag/${tagSlug}`
 }
 
 export const getBlogCategoryUrl = (categorySlug: string) => {
-  return `${BLOG_URL}/category/${categorySlug}`
+  return `${BLOG_BASE_URL}/category/${categorySlug}`
 }
 
 export const getBlogGuestbookUrl = () => {
-  return `${BLOG_URL}/guestbook`
+  return `${BLOG_BASE_URL}/guestbook`
 }
 
 export const getBlogURLByPostId = (postId: number) => {

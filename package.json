@@ -3,6 +3,7 @@
   "version": "3.5.0",
   "author": "Surmon",
   "license": "MIT",
+  "homepage": "https://github.com/surmon-china/surmon.admin",
   "repository": {
     "type": "git",
     "url": "https://github.com/surmon-china/surmon.admin.git"
@@ -10,10 +11,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:proxy": "vite --mode proxy",
-    "dev:demo": "vite --mode demo",
+    "dev:demo": "vite --config vite.config.demo.ts",
+    "dev:proxy": "vite --config vite.config.proxy.ts",
     "build": "vite build",
-    "build:demo": "vite build --mode demo",
+    "build:demo": "vite build --config vite.config.demo.ts",
     "serve": "vite preview",
     "lint": "eslint src",
     "format": "npm run lint --fix",

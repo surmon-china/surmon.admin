@@ -7,7 +7,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
-import { APP_VERSION, APP_PRIMARY_LANGUAGE, ENV_MODE } from './config'
+import { APP_VERSION, APP_PRIMARY_LANGUAGE, VITE_MODE } from './config'
 import { ThemeProvider, Theme } from '@/contexts/Theme'
 import { LocaleProvider, Language } from '@/contexts/Locale'
 import { initI18next } from './i18n'
@@ -37,7 +37,7 @@ const handleLocaleChange = (language: Language) => {
 }
 
 console.group('🔵 App booting up...')
-console.table({ APP_VERSION, ENV_MODE, INIT_THEME, INIT_LANGUAGE })
+console.table({ APP_VERSION, VITE_MODE, INIT_THEME, INIT_LANGUAGE })
 console.groupEnd()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

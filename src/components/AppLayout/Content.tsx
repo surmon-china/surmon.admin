@@ -3,7 +3,7 @@ import { onMounted } from 'veact'
 import { useLocation, matchPath } from 'react-router'
 import { Card, Breadcrumb, FloatButton, Typography, Flex } from 'antd'
 import { CaretUpOutlined } from '@ant-design/icons'
-import { ENABLED_AD } from '@/config'
+import { ENABLED_HEADER_AD } from '@/config'
 import { flatRoutes } from '@/routes'
 import { useTranslation } from '@/i18n'
 import { scrollTo } from '@/services/scroller'
@@ -52,7 +52,7 @@ export const AppContent: React.FC<React.PropsWithChildren> = (props) => {
           items={paths.map((path) => ({ title: path }))}
         />
       </Flex>
-      {ENABLED_AD && <HeaderAdvert />}
+      {ENABLED_HEADER_AD && <HeaderAdvert />}
       <div className={styles.pageContent}>{props?.children}</div>
       <FloatButton.BackTop
         className={styles.backTop}
