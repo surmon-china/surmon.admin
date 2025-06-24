@@ -1,12 +1,12 @@
 import path from 'path'
 import viteReact from '@vitejs/plugin-react'
 import { defineConfig, UserConfig } from 'vite'
-import { proxyConfiger } from './vite.config.proxy'
-import { demoConfiger } from './vite.config.demo'
+import { withProxyConfig } from './vite.config.proxy'
+import { withDemoConfig } from './vite.config.demo'
 import packageJSON from './package.json'
 
-// https://vitejs.dev/config/
-const config: UserConfig = {
+// https://vite.dev/config
+const defaultConfig: UserConfig = {
   plugins: [viteReact()],
   resolve: {
     alias: {
@@ -37,13 +37,7 @@ const config: UserConfig = {
 }
 
 export default defineConfig(({ mode }) => {
-  if (mode === 'proxy') {
-    return proxyConfiger(config)
-  }
-
-  if (mode === 'demo') {
-    return demoConfiger(config)
-  }
-
-  return config
+  if (mode === 'proxy') return withProxyConfig(defaultConfig)
+  if (mode === 'demo') return withDemoConfig(defaultConfig)
+  return defaultConfig
 })

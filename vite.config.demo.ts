@@ -24,10 +24,9 @@ const GOOGLE_ADSENSE_SCRIPT = `
 ></script>
 `
 
-export const demoConfiger = (defaultConfig: UserConfig): UserConfig => {
+export const withDemoConfig = (defaultConfig: UserConfig): UserConfig => {
   return {
     ...defaultConfig,
-    // base path
     base: DEMO_BASE_PATH,
     plugins: [
       ...Array.from(defaultConfig.plugins!),

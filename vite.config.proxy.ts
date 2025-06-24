@@ -1,6 +1,6 @@
 import { loadEnv, UserConfig } from 'vite'
 
-export const proxyConfiger = (defaultConfig: UserConfig): UserConfig => {
+export const withProxyConfig = (defaultConfig: UserConfig): UserConfig => {
   const prodEnv = loadEnv('production', '.')
   return {
     ...defaultConfig,
