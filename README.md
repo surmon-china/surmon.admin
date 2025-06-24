@@ -26,7 +26,7 @@ Admin client for [surmon.me](https://github.com/surmon-china/surmon.me) blog, po
 
 ## Screenshot
 
-![](/screenhots/dashboard.png)
+![](/screenshots/dashboard.png)
 
 ## Development setup
 
@@ -51,6 +51,7 @@ pnpm run serve
 
 **Rule:**
 
-- Any PR opend → `CI:Build test`
-- New tag `v*` → `CI:Create Release`
-- Release created → `CI:Deploy` → `release to product branch (release / demo)`
+- Any PR opend → [`CI:Build test`](.github/workflows/test.yml)
+- New tag `v*` → [`CI:Create Release`](.github/workflows/release.yml)
+- New release created → [`CI:Deploy`](/.github/workflows/deploy-demo-to-github-pages.yml.yml) → `release to "demo" branch` → [`GitHub Pages`](https://docs.github.com/en/pages)
+- New release created → [`CI:Deploy`](/.github/workflows/deploy-release-to-cloudflare-workers.yml) → `release to "release" branch` → [`Cloudflare Workers`](https://github.com/cloudflare/wrangler-action)
