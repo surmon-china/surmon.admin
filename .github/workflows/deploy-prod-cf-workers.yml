@@ -48,4 +48,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           # https://developers.cloudflare.com/workers/wrangler/commands/#deploy
-          command: deploy --name=surmon-me-admin --compatibility-date="2025-06-25" --assets="./dist"
+          # command: deploy --name=surmon-me-admin --compatibility-date="2025-06-25" --assets="./dist"
