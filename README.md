@@ -52,6 +52,6 @@ pnpm run serve
 **Rule:**
 
 - Any PR opend → [`CI:Build test`](.github/workflows/test.yml)
-- New tag `v*` → [`CI:Create Release`](.github/workflows/release.yml)
-- New release created → [`CI:Deploy`](/.github/workflows/deploy-demo-gh-pages.yml) → [`GitHub Pages`](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
-- New release created → [`CI:Deploy`](/.github/workflows/deploy-prod-cf-workers.yml) → [`Cloudflare Workers`](https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/)
+- New tag `v*` → [`CI:Create Release`](.github/workflows/create-release.yml)
+- New release created → [`CI:Release demo branch`](/.github/workflows/release-demo-branch.yml) → [GitHub Pages](http://docs.github.com/en/pages)
+- New release created → [`CI:Release prod branch`](/.github/workflows/release-prod-branch.yml) → [Cloudflare Pages](https://developers.cloudflare.com/pages/)

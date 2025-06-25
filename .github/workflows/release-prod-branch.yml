@@ -1,4 +1,4 @@
-name: Deploy Production to Cloudflare Workers
+name: Release Production branch
 
 on:
   release:
@@ -38,14 +38,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: prod
           publish_dir: ./dist
-
-      # https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/#serving-behavior
-      # https://developers.cloudflare.com/workers/static-assets/binding/#ignoring-assets
-      # https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/
-      - name: Deploy content to Workers
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # https://developers.cloudflare.com/workers/wrangler/commands/#deploy
-          # command: deploy --name=surmon-me-admin --compatibility-date="2025-06-25" --assets="./dist"
