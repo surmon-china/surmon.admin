@@ -1,5 +1,4 @@
-name: Deploy demo branch to GitHub Pages
-# https://docs.github.com/zh/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
+name: Deploy Demo to GitHub Pages
 
 on:
   release:
@@ -48,13 +47,6 @@ jobs:
       - name: Vite build
         run: pnpm run build:demo --base=/surmon.admin/
 
-      # - name: Demo branch
-      #   uses: peaceiris/actions-gh-pages@v4
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_branch: demo
-      #     publish_dir: ./dist
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -63,6 +55,6 @@ jobs:
         with:
           path: './dist'
 
-      - name: Deploy content to GitHub Pages
+      - name: Deploy content to Pages
         id: deployment
         uses: actions/deploy-pages@v4
