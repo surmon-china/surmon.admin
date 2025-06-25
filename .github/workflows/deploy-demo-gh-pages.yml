@@ -47,6 +47,13 @@ jobs:
       - name: Vite build
         run: pnpm run build:demo --base=/surmon.admin/
 
+      - name: Release branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: demo
+          publish_dir: ./dist
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
