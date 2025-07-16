@@ -7,7 +7,7 @@ import * as api from '@/apis/system'
 import { UniversalEditor, UnEditorLanguage } from '@/components/common/UniversalEditor'
 import { FormKeyValueInput } from '@/components/common/FormKeyValueInput'
 import { Option } from '@/constants/option'
-import { scrollTo } from '@/services/scroller'
+import { scrollTo } from '@/utils/scroller'
 import { formatJSONString } from '@/transforms/json'
 
 export interface GeneralFormProps {

@@ -3,37 +3,40 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import axios from 'axios'
+import type { AxiosError, AxiosInstance, Method as AxiosMethod } from 'axios'
 import { notification } from 'antd'
-import axios, { AxiosInstance, Method as AxiosMethod } from 'axios'
 import { API_URL, APP_AUTH_HEADER_KEY } from '@/config'
-import { AUTH_API_PATHS } from '@/apis/auth'
+import { ADMIN_AUTH_API_PATHS } from '@/apis/admin'
 import { RoutesKey, RoutesPath } from '@/routes'
 import { i18n } from '@/i18n'
 import token from './token'
 
 enum HttpCode {
   SUCCESS = 200,
-  CREATE_SUCCESS = 201,
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
-  NO_PERMISSION = 403,
   NOT_FOUND = 404,
   SERVER_ERROR = 500,
-  GATEWAY_TIMEOUT = 504,
-  UNKNOWN_ERROR = 0
+  GATEWAY_TIMEOUT = 504
 }
 
-export enum HttpStatus {
-  Error = 'error',
-  Success = 'success'
+export enum ResponseStatus {
+  Success = 'success',
+  Error = 'error'
 }
 
-export interface HttpResult<T = any> {
-  status: HttpStatus.Success
-  debug?: any
-  error: string
+export interface HttpSuccessResponse<T = any> {
+  status: ResponseStatus.Success
   message: string
   result: T
+}
+
+export interface HttpErrorResponse {
+  status: ResponseStatus.Error
+  message: string
+  error: string
+  timestamp: string
 }
 
 export interface RequestParams {
@@ -51,7 +54,7 @@ nodepress.interceptors.request.use((config) => {
   if (token.isTokenValid()) {
     config.headers = config.headers || {}
     config.headers[APP_AUTH_HEADER_KEY] = `Bearer ${token.getToken()}`
-  } else if (config.url !== AUTH_API_PATHS.LOGIN) {
+  } else if (config.url !== ADMIN_AUTH_API_PATHS.LOGIN) {
     notification.error({
       message: i18n.t('nodepress.request.invalid_token.title'),
       description: i18n.t('nodepress.request.invalid_token.description'),
@@ -71,40 +74,25 @@ nodepress.interceptors.response.use(
         duration: 2
       })
       return response
-    } else if (response.data.status === HttpStatus.Success) {
+    }
+
+    if (response.data.status === ResponseStatus.Success) {
       notification.success({
         message: i18n.t('nodepress.response.success'),
         description: response.data.message,
         duration: 2
       })
-      return Promise.resolve(response.data)
-    } else {
-      notification.error({
-        message: response.data.message,
-        description: response.data.error,
-        duration: 3
-      })
-      return Promise.reject(response)
-    }
-  },
-  (error) => {
-    const errorJSON = error?.toJSON?.()
-    const messageText = error.response?.data?.message || 'Error'
-    const errorText =
-      error.response?.data?.error || error.response?.statusText || errorJSON?.message || ''
-    const errorInfo = {
-      ...errorJSON,
-      config: error.config,
-      request: error.request,
-      response: error.response,
-      code: error.code || error.response?.status || HttpCode.BAD_REQUEST,
-      message: `${messageText}: ${errorText}`
+      return response.data
     }
 
-    console.debug('axios error:', errorInfo)
+    return Promise.reject(response)
+  },
+  (error: AxiosError<HttpErrorResponse>) => {
+    console.debug('axios error:', error)
+
     notification.error({
-      message: messageText,
-      description: errorText,
+      message: error.response?.data.error ?? error.response?.statusText ?? error.message,
+      description: error.response?.data.message ?? '-',
       duration: 3
     })
 
@@ -112,15 +100,18 @@ nodepress.interceptors.response.use(
     // the token is deleted and you are redirected to the login page.
     if (error.response?.status === HttpCode.UNAUTHORIZED) {
       token.removeToken()
-      window.location.href = RoutesPath[RoutesKey.Hello]
+      window.router.navigate(RoutesPath[RoutesKey.Hello])
     }
-    return Promise.reject(errorInfo)
+
+    return Promise.reject(error)
   }
 )
 
 type Method = Exclude<Lowercase<AxiosMethod>, 'unlink' | 'purge' | 'link'> | 'request'
 const overwrite = (method: Method) => {
-  return <T = any>(...args: Parameters<AxiosInstance[typeof method]>): Promise<HttpResult<T>> => {
+  return <T = any>(
+    ...args: Parameters<AxiosInstance[typeof method]>
+  ): Promise<HttpSuccessResponse<T>> => {
     return (nodepress[method] as any)(...args)
   }
 }

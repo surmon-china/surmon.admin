@@ -23,7 +23,16 @@ export const useUploader = () => {
   const progressing = useRef(false)
   const progress = useRef(0)
 
-  const upload = (file: File, fileName: string | null = null, options?: UploaderOptions) => {
+  const resetProgress = () => {
+    progressing.value = false
+    progress.value = 0
+  }
+
+  const upload = (
+    file: File,
+    fileName: string | null = null,
+    onProgress?: (percent: number) => void
+  ) => {
     // file size
     if (file.size > UPLOAD_FILE_SIZE_LIMIT) {
       return Promise.reject({ code: UploadErrorCode.FileSizeLimit })
@@ -32,19 +41,17 @@ export const useUploader = () => {
     progressing.value = true
     progress.value = 0
 
-    // upload file
+    // rename file
     const _fileName = (fileName ?? file.name).replace(/ /gi, '')
     console.debug('[upoader]', 'Start uploading:', _fileName)
+
+    // upload file
     return uploading.promise(
-      uploadStaticToNodePress({
-        file,
-        name: _fileName,
-        onProgress: (_progress) => {
-          console.debug('[upoader]', 'New upload progress:', _progress)
-          progressing.value = true
-          progress.value = _progress * 100
-          options?.onProgress?.(_progress)
-        }
+      uploadStaticToNodePress(file, _fileName, (_progress) => {
+        console.debug('[upoader]', 'New upload progress:', _progress)
+        progressing.value = true
+        progress.value = _progress * 100
+        onProgress?.(_progress)
       })
         .then((result) => {
           console.debug('[upoader]', 'Upload completed:', result.url)
@@ -57,9 +64,7 @@ export const useUploader = () => {
             error
           })
         })
-        .finally(() => {
-          progressing.value = false
-        })
+        .finally(() => resetProgress())
     )
   }
 

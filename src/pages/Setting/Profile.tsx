@@ -9,7 +9,7 @@ import { RoutesKey, RoutesPath } from '@/routes'
 import { useAdminProfile } from '@/contexts/AdminProfile'
 import { ImageUploader } from '@/components/common/ImageUploader'
 import { AdminProfile } from '@/constants/admin'
-import { scrollTo } from '@/services/scroller'
+import { scrollTo } from '@/utils/scroller'
 import { removeToken } from '@/services/token'
 
 export const ProfileForm: React.FC = () => {

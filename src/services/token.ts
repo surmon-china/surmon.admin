@@ -27,8 +27,7 @@ export const removeToken = () => {
 
 export const isTokenValid = () => {
   const token = getToken()
-  const tokenIsOk = token?.split('.').length === 3
-  return tokenIsOk
+  return token?.split('.').length === 3
 }
 
 export const getTokenCountdown = (): number => {
@@ -39,12 +38,10 @@ export const getTokenCountdown = (): number => {
   return deadLine > now ? Math.floor(deadLine - now) : 0
 }
 
-const token = {
+export default {
   getToken,
   setToken,
   removeToken,
   isTokenValid,
   getTokenCountdown
 }
-
-export default token

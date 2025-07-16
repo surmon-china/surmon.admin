@@ -10,9 +10,9 @@ import { notification, Typography, Spin, Space, Flex } from 'antd'
 import { Loading3QuartersOutlined } from '@ant-design/icons'
 import { useTranslation } from '@/i18n'
 import { RoutesKey, RoutesPath } from '@/routes'
-import { checkTokenValidity } from '@/apis/auth'
+import { checkTokenValidity } from '@/apis/admin'
 import { removeToken, isTokenValid } from '@/services/token'
-import { runRenewalToken, stopRenewalToken } from './token'
+import { startTokenAutoRefresh, stopTokenAutoRefresh } from './token'
 
 import styles from './style.module.less'
 
@@ -46,8 +46,8 @@ export const AppAuth: React.FC<React.PropsWithChildren> = (props) => {
       // Verification successful
       console.debug('Token verification successful.')
       setVerifying(false)
-      // 3. Start auto-renewal of Token
-      runRenewalToken()
+      // 3. Start auto-refresh of Token
+      startTokenAutoRefresh()
       // A delay is needed to make sure the effect is smooth.
       setLogined(true)
       setTimeout(() => setAnimationEnded(true), LOADING_ANIMATED_DELAY)
@@ -63,7 +63,7 @@ export const AppAuth: React.FC<React.PropsWithChildren> = (props) => {
   }
 
   onMounted(() => autoLoginByToken())
-  onBeforeUnmount(() => stopRenewalToken())
+  onBeforeUnmount(() => stopTokenAutoRefresh())
 
   return (
     <div id="app-auth">

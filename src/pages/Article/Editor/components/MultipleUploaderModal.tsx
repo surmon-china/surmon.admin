@@ -2,8 +2,8 @@ import React from 'react'
 import { useReactive } from 'veact'
 import { Modal, message, Tooltip, Button, Upload, Card, Space } from 'antd'
 import * as Icons from '@ant-design/icons'
-import { copy } from '@/services/clipboard'
-import { useUploader } from '@/enhancers/useUploader'
+import { copyToClipboard } from '@/utils/clipboard'
+import { useUploader } from '@/hooks/useUploader'
 import { imageURLToMarkdown } from '@/transforms/markdown'
 import { getFileName } from '@/components/common/ImageUploader'
 import styles from './style.module.less'
@@ -24,7 +24,7 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
           type="dashed"
           className={styles.copyButton}
           onClick={() => {
-            copy(fileUrls.map(imageURLToMarkdown).join(`\n`))
+            copyToClipboard(fileUrls.map(imageURLToMarkdown).join(`\n`))
             message.info(`${fileUrls.length} 个地址 复制成功`)
           }}
         >
@@ -47,7 +47,7 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
           )
         }}
         onDownload={(file) => {
-          copy(imageURLToMarkdown(file.response.url))
+          copyToClipboard(imageURLToMarkdown(file.response.url))
           message.info('复制成功')
         }}
         onPreview={(file) => {
@@ -67,8 +67,8 @@ export const MultipleUploader: React.FC<MultipleUploaderProps> = (props) => {
           if (options.file) {
             const file = options.file as File
             uploader
-              .upload(file, getFileName(file, props.directory), {
-                onProgress: (percent) => options.onProgress?.({ percent })
+              .upload(file, getFileName(file, props.directory), (percent) => {
+                options.onProgress?.({ percent })
               })
               .then((result) => {
                 fileUrls.push(result.url)

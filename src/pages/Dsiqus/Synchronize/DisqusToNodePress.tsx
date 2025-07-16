@@ -1,5 +1,6 @@
 import React from 'react'
 import { useLoading } from 'veact-use'
+import { isAxiosError } from 'axios'
 import { Steps, Result, Button, Upload, Modal, Space } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { importDisqusXMLToNodePress } from '@/apis/disqus'
@@ -7,10 +8,12 @@ import { importDisqusXMLToNodePress } from '@/apis/disqus'
 export const DisqusToNodePress: React.FC = () => {
   const uploading = useLoading()
   const uploadFile = (file: File) => {
-    uploading.promise(importDisqusXMLToNodePress(file)).catch((error) => {
+    uploading.promise(importDisqusXMLToNodePress(file)).catch((error: unknown) => {
       Modal.error({
         title: 'Upload XML error',
-        content: String(error)
+        content: isAxiosError(error)
+          ? error.response?.data?.message || error.message
+          : String(error)
       })
     })
   }

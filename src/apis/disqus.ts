@@ -3,7 +3,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { saveFile } from '@/services/file'
+import { saveFile } from '@/utils/file'
 import nodepress from '@/services/nodepress'
 
 export const DISQUS_API_PATH = '/disqus'

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router'
 import { useLoading } from 'veact-use'
 import { RoutesPather } from '@/routes'
 import { Article } from '@/constants/article'
-import { scrollTo } from '@/services/scroller'
+import { scrollTo } from '@/utils/scroller'
 import { ArticleEditor } from '../Editor'
 import * as api from '@/apis/article'
 

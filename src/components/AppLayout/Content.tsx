@@ -4,9 +4,9 @@ import { useLocation, matchPath } from 'react-router'
 import { Card, Breadcrumb, FloatButton, Typography, Flex } from 'antd'
 import { CaretUpOutlined } from '@ant-design/icons'
 import { ENABLED_HEADER_AD } from '@/config'
-import { flatRoutes } from '@/routes'
 import { useTranslation } from '@/i18n'
-import { scrollTo } from '@/services/scroller'
+import { flatRoutes } from '@/routes'
+import { scrollTo } from '@/utils/scroller'
 
 import styles from './style.module.less'
 

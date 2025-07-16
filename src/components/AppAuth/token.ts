@@ -1,28 +1,28 @@
-import { renewalToken } from '@/apis/auth'
+import { refreshToken } from '@/apis/admin'
 import { getTokenCountdown, setToken } from '@/services/token'
 
-let renewalTimer: null | number = null
+let refreshTimer: null | number = null
 
-// Stop renewal token
-export const stopRenewalToken = (): void => {
-  if (typeof renewalTimer === 'number') {
-    window.clearTimeout(renewalTimer)
+// Stop refresh token
+export const stopTokenAutoRefresh = (): void => {
+  if (typeof refreshTimer === 'number') {
+    window.clearTimeout(refreshTimer)
   }
 }
 
-// Auto renewal token
-export const runRenewalToken = (): void => {
-  stopRenewalToken()
+// Auto refresh token
+export const startTokenAutoRefresh = (): void => {
+  stopTokenAutoRefresh()
   const countdown = getTokenCountdown()
   const seconds = countdown - 10
   console.debug(
-    `Token auto-renewal is working.`,
+    `Token auto-refresh is working.`,
     `Token will be updated automatically after ${seconds}s!`
   )
-  renewalTimer = window.setTimeout(() => {
-    renewalToken().then((auth) => {
+  refreshTimer = window.setTimeout(() => {
+    refreshToken().then((auth) => {
       setToken(auth.access_token, auth.expires_in)
-      runRenewalToken()
+      startTokenAutoRefresh()
     })
   }, seconds * 1000)
 }

@@ -6,10 +6,10 @@
 import React from 'react'
 import { Upload, notification, Input, Space, Button, Tooltip } from 'antd'
 import * as Icons from '@ant-design/icons'
-import { copy } from '@/services/clipboard'
 import { useTranslation } from '@/i18n'
-import { useUploader, UploadErrorCode } from '@/enhancers/useUploader'
+import { useUploader, UploadErrorCode } from '@/hooks/useUploader'
 import { imageURLToMarkdown } from '@/transforms/markdown'
+import { copyToClipboard } from '@/utils/clipboard'
 
 import styles from './style.module.less'
 
@@ -101,7 +101,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = (props) => {
           <Tooltip title="Copy Markdown">
             <Button
               icon={<Icons.CopyOutlined />}
-              onClick={() => copy(imageURLToMarkdown(props.value!))}
+              onClick={() => copyToClipboard(imageURLToMarkdown(props.value!))}
             />
           </Tooltip>
         </Space.Compact>

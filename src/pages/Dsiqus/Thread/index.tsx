@@ -11,7 +11,7 @@ import { Button, Card, Table, Select, Tag, Space, Switch, Divider, Flex, Typogra
 import { getDisqusConfig, getDisqusThreads, GeneralDisqusParams } from '@/apis/disqus'
 import { DisqusThreadState, DisqusOrderType } from '@/constants/disqus'
 import { stringToYMD } from '@/transforms/date'
-import { scrollTo } from '@/services/scroller'
+import { scrollTo } from '@/utils/scroller'
 
 const SELECT_ALL_VALUE = 'ALL'
 const DEFAULT_FILTER_PARAMS = {

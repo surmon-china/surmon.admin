@@ -23,12 +23,10 @@ export const getJSON = <T = any>(key: string): T | null => {
   return typeof data === 'string' ? JSON.parse(data) : null
 }
 
-const storage = {
+export default {
   get,
   set,
   remove,
   setJSON,
   getJSON
 }
-
-export default storage

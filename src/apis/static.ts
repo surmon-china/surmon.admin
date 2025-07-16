@@ -44,20 +44,22 @@ export async function getStaticFileList(params?: {
 }
 
 /** 上传静态文件 */
-export async function uploadStaticToNodePress(options: {
-  file: File
-  name: string
+export async function uploadStaticToNodePress(
+  file: File,
+  key: string,
   onProgress?: (progress: number) => void
-}) {
-  const param = new FormData()
-  param.append('file', options.file)
-  param.append('name', options.name)
+) {
+  const formData = new FormData()
+  // https://github.com/fastify/fastify-multipart
+  // MARK: Always keep the file at the end of the FormData to ensure that other field values can be read by the server.
+  formData.append('key', key)
+  formData.append('file', file)
+
   return nodepress
-    .post<StaticFileObject>(STATIC_API_PATHS.UPLOAD, param, {
+    .post<StaticFileObject>(STATIC_API_PATHS.UPLOAD, formData, {
       onUploadProgress: ({ loaded, total }) => {
         if (_isNumber(total)) {
-          const progress = (loaded / total) * 100
-          options.onProgress?.(progress)
+          onProgress?.((loaded / total) * 100)
         }
       }
     })

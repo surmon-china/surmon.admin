@@ -1,5 +1,5 @@
 /**
- * @file File service
+ * @file File utilities
  * @author Surmon <macichong@bytedance.com>
  */
 

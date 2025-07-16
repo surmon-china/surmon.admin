@@ -18,7 +18,7 @@ import { nodepress } from '@/services/nodepress'
 import { routes } from './routes'
 
 // MARK: WORKAROUND for demo site
-const router = ENABLED_HASH_ROUTER
+export const router = ENABLED_HASH_ROUTER
   ? createHashRouter(routes as RouteObject[])
   : createBrowserRouter(routes as RouteObject[])
 

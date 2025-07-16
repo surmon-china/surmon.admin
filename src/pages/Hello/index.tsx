@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router'
 import { Spin, Input } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { RoutesKey, RoutesPath } from '@/routes'
-import { authLogin } from '@/apis/auth'
+import { authLogin } from '@/apis/admin'
 import tokenService from '@/services/token'
 
 import styles from './style.module.less'
@@ -26,12 +26,12 @@ export const HelloPage: React.FC = () => {
   const login = async (password: string) => {
     try {
       setLoggingIn(true)
-      const newAuth = await authLogin(password)
-      tokenService.setToken(newAuth.access_token, newAuth.expires_in)
+      const { access_token, expires_in } = await authLogin(password)
+      tokenService.setToken(access_token, expires_in)
+      console.info('Login successful')
       navigate(RoutesPath[RoutesKey.Dashboard])
     } catch (error) {
       console.warn('Login failed！', error)
-      return Promise.reject(error)
     } finally {
       setLoggingIn(false)
     }

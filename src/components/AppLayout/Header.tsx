@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import { Dropdown, Avatar, Button, Modal, Select, Flex } from 'antd'
 import * as Icons from '@ant-design/icons'
 import { RoutesKey, RoutesPath } from '@/routes'
+import { authLogout } from '@/apis/admin'
 import { useTranslation } from '@/i18n'
 import { useTheme } from '@/contexts/Theme'
 import { useLocale, languages } from '@/contexts/Locale'
@@ -23,17 +24,20 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
   const adminProfile = useAdminProfile()
   const { i18n } = useTranslation()
 
-  const redriectToSettingPage = () => {
-    navigate(RoutesPath[RoutesKey.Setting])
-  }
-
   const logout = () => {
     Modal.confirm({
       title: i18n.t('logout.confirmation'),
       centered: true,
       onOk() {
-        removeToken()
-        navigate(RoutesPath[RoutesKey.Hello])
+        authLogout()
+          .then(() => {
+            console.info('Logout successful')
+            removeToken()
+            navigate(RoutesPath[RoutesKey.Hello])
+          })
+          .catch((error) => {
+            console.warn('Logout failed！', error)
+          })
       }
     })
   }
@@ -76,7 +80,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => {
                 key: 'profile',
                 icon: <Icons.SettingOutlined />,
                 label: i18n.t('page.setting.title'),
-                onClick: redriectToSettingPage
+                onClick: () => navigate(RoutesPath[RoutesKey.Setting])
               },
               {
                 key: 'divider',

@@ -3,10 +3,10 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import React from 'react'
-import ReactDOM from 'react-dom/client'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import { APP_VERSION, APP_PRIMARY_LANGUAGE, VITE_MODE } from './config'
 import { ThemeProvider, Theme } from '@/contexts/Theme'
 import { LocaleProvider, Language } from '@/contexts/Locale'
@@ -14,7 +14,10 @@ import { initI18next } from './i18n'
 import { locales } from './locales'
 
 import '@/styles/app.less'
-import { App } from './App'
+import { App, router } from './App'
+
+// init export router to global
+window.router = router
 
 // init library
 dayjs.extend(duration)
